@@ -46,6 +46,27 @@
   .video-ph .big{font-family:var(--round);font-weight:700;font-size:20px;color:#fff;margin-bottom:8px;}
   .video-ph .small{font-size:13.5px;color:rgba(255,255,255,.6);max-width:44ch;}
   .owned-note{margin-top:18px;padding:14px 18px;background:rgba(22,176,168,.1);border:1px solid rgba(22,176,168,.25);border-radius:14px;color:var(--teal-deep);font-size:14px;display:flex;align-items:center;gap:9px;}
+  /* 分集播放器 */
+  .course-layout{display:grid;grid-template-columns:1fr 330px;gap:22px;align-items:start;margin-bottom:10px;}
+  @media(max-width:860px){.course-layout{grid-template-columns:1fr;}}
+  .now-playing{margin-top:12px;font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .ep-list{background:#fff;border:1px solid var(--hair);border-radius:18px;box-shadow:var(--shadow-sm);overflow:hidden;max-height:70vh;overflow-y:auto;}
+  @media(max-width:860px){.ep-list{max-height:none;}}
+  .ep-list-h{font-family:var(--round);font-weight:800;font-size:15px;color:var(--indigo);padding:16px 18px;border-bottom:1px solid var(--hair);position:sticky;top:0;background:#fff;z-index:1;}
+  .ep-group{padding:14px 18px 8px;font-family:var(--round);font-weight:800;font-size:13.5px;color:var(--indigo);background:var(--paper-2);border-bottom:1px solid var(--hair);}
+  .ep{display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid var(--hair);cursor:pointer;font-size:14px;color:var(--ink);transition:background .15s;}
+  .ep:last-child{border-bottom:none;}
+  .ep:hover{background:var(--paper-2);}
+  .ep.active{background:rgba(22,176,168,.12);}
+  .ep.active .et{color:var(--teal-deep);font-weight:700;}
+  .ep .no{font-family:var(--round);font-weight:800;font-size:12.5px;color:#fff;background:linear-gradient(135deg,#16B0A8,#0d8a83);border-radius:8px;min-width:34px;height:26px;display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .ep .et{flex:1;}
+  .ep.part{padding-left:26px;}
+  .ep.part .no{background:var(--paper-2);color:var(--teal-deep);}
+  .ep.soon{color:var(--ink-soft);cursor:default;}
+  .ep.soon:hover{background:none;}
+  .ep.soon .no{background:#e5e3da;color:var(--ink-soft);}
+  .ep .tag{margin-left:auto;font-size:11px;color:var(--ink-soft);background:var(--paper-2);padding:2px 8px;border-radius:10px;flex:none;}
   /* locked */
   .lock{max-width:560px;margin:30px auto 70px;background:#fff;border:1px solid var(--hair);border-radius:24px;box-shadow:var(--shadow-md);padding:44px 36px;text-align:center;}
   .lock .lk-ic{width:70px;height:70px;border-radius:20px;background:var(--paper-2);display:grid;place-items:center;font-size:32px;margin:0 auto 20px;}
@@ -116,27 +137,71 @@
     const color = course.accent==='teal' ? 'teal' : 'amber';
 
     if(owned){
-      // 已購買 → 顯示付費版 Vimeo 嵌入
-      const vimeo = (course.vimeo_id||'').trim();
-      const playerHtml = vimeo
-        ? `<iframe src="https://player.vimeo.com/video/${encodeURIComponent(vimeo)}?title=0&byline=0&portrait=0"
-             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
-        : `<div class="video-ph">
-             <div>
-               <div class="ic">🎬</div>
-               <div class="big">影片即將上線</div>
-               <div class="small">此課程尚未設定 Vimeo 影片。請於 courses 資料表把這門課的 <b>vimeo_id</b> 填入付費版影片 ID，播放器就會自動載入。</div>
-             </div>
-           </div>`;
-      $('content').innerHTML = `
+      const eps = Array.isArray(course.episodes) ? course.episodes : [];
+      const headHtml = `
         <div class="player-head">
           <span class="lv ${color}">Level ${course.level}・${course.subtitle||''}</span>
           <h1>${course.name}</h1>
           <div class="h-sub">${course.description||''}</div>
-        </div>
-        <div class="video-frame">${playerHtml}</div>
-        <div class="owned-note">✅ 你已購買本課程，買斷永久觀看，隨時都能回來複習。</div>
-        <a class="back-dash" href="member.html">← 回我的課程</a>`;
+        </div>`;
+      const phHtml = (txt)=>`<div class="video-ph"><div><div class="ic">🎬</div><div class="big">影片即將上線</div><div class="small">${txt}</div></div></div>`;
+      const iframeHtml = (vid)=>`<iframe src="https://player.vimeo.com/video/${encodeURIComponent(vid)}?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+
+      if(eps.length){
+        // ===== 分集播放器 =====
+        const items = [];
+        let listHtml = '<div class="ep-list-h">課程單元</div>';
+        eps.forEach(ep=>{
+          if(Array.isArray(ep.parts) && ep.parts.length){
+            listHtml += `<div class="ep-group">第${ep.no}課${ep.title?'・'+ep.title:''}</div>`;
+            ep.parts.forEach((pt,i)=>{
+              const ptitle = pt.title || ('第'+(i+1)+'部分');
+              if(pt.vimeo_id){ const idx=items.length; items.push({vid:pt.vimeo_id,label:`第${ep.no}課-${i+1}・${ptitle}`});
+                listHtml += `<div class="ep part" data-idx="${idx}"><span class="no">${ep.no}-${i+1}</span><span class="et">${ptitle}</span></div>`;
+              } else {
+                listHtml += `<div class="ep part soon"><span class="no">${ep.no}-${i+1}</span><span class="et">${ptitle}</span><span class="tag">即將上線</span></div>`;
+              }
+            });
+          } else {
+            const t = ep.title || '';
+            if(ep.vimeo_id){ const idx=items.length; items.push({vid:ep.vimeo_id,label:`第${ep.no}課・${t}`});
+              listHtml += `<div class="ep" data-idx="${idx}"><span class="no">${ep.no}</span><span class="et">${t}</span></div>`;
+            } else {
+              listHtml += `<div class="ep soon"><span class="no">${ep.no}</span><span class="et">${t}</span><span class="tag">即將上線</span></div>`;
+            }
+          }
+        });
+        $('content').innerHTML = `
+          ${headHtml}
+          <div class="course-layout">
+            <div class="player-col">
+              <div class="video-frame" id="player"></div>
+              <div class="now-playing" id="nowPlaying"></div>
+              <div class="owned-note">✅ 你已開通本課程，買斷永久觀看，隨時都能回來複習。</div>
+            </div>
+            <aside class="ep-list">${listHtml}</aside>
+          </div>
+          <a class="back-dash" href="member.html">← 回我的課程</a>`;
+        const setPlayer=(vid,label,el)=>{
+          $('player').innerHTML = iframeHtml(vid);
+          $('nowPlaying').textContent = label ? ('▶ 正在播放：'+label) : '';
+          document.querySelectorAll('.ep').forEach(x=>x.classList.remove('active'));
+          if(el) el.classList.add('active');
+        };
+        document.querySelectorAll('.ep[data-idx]').forEach(el=>{
+          el.onclick=()=>{ const it=items[+el.dataset.idx]; setPlayer(it.vid,it.label,el); window.scrollTo({top:0,behavior:'smooth'}); };
+        });
+        if(items.length){ const first=document.querySelector('.ep[data-idx]'); setPlayer(items[0].vid,items[0].label,first); }
+        else { $('player').innerHTML = phHtml('單元都排好了，等你把各集的 Vimeo 連結補上就會自動播放。'); }
+      } else {
+        // ===== 單一影片（沒有分集）=====
+        const vimeo = (course.vimeo_id||'').trim();
+        $('content').innerHTML = `
+          ${headHtml}
+          <div class="video-frame">${vimeo ? iframeHtml(vimeo) : phHtml('此課程尚未設定影片。之後把 Vimeo 連結補上就會自動播放。')}</div>
+          <div class="owned-note">✅ 你已開通本課程，買斷永久觀看，隨時都能回來複習。</div>
+          <a class="back-dash" href="member.html">← 回我的課程</a>`;
+      }
     }else if((course.price||0)===0){
       // 免費課・尚未開通 → NT$0 自助開通
       $('content').innerHTML = `
