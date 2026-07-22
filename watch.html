@@ -137,8 +137,32 @@
         <div class="video-frame">${playerHtml}</div>
         <div class="owned-note">✅ 你已購買本課程，買斷永久觀看，隨時都能回來複習。</div>
         <a class="back-dash" href="member.html">← 回我的課程</a>`;
+    }else if((course.price||0)===0){
+      // 免費課・尚未開通 → NT$0 自助開通
+      $('content').innerHTML = `
+        <div class="lock">
+          <div class="lk-ic">🎁</div>
+          <h2>免費課程・登入就能看</h2>
+          <p>「${course.name}」是免費體驗課。按下方按鈕以 NT$0 開通，開通後就會出現在你的「我的課程」，隨時都能回來看。</p>
+          <div class="price">NT$0<small> ・免費・永久觀看</small></div>
+          <div class="btns">
+            <button class="btn btn-buy teal" id="freeUnlock">✓ NT$0 免費開通・立即觀看</button>
+          </div>
+          <div id="freeErr" style="color:#d64545;font-size:13.5px;margin-top:14px;display:none;"></div>
+          <div style="margin-top:22px;"><a class="btn btn-ghost" href="member.html">← 回我的課程</a></div>
+        </div>`;
+      $('freeUnlock').onclick = async ()=>{
+        const btn=$('freeUnlock'); btn.disabled=true; btn.textContent='開通中…';
+        const { error } = await supabase.from('enrollments')
+          .insert({ user_id: session.user.id, course_id: courseId, source: 'free' });
+        if(error && !/duplicate|unique|conflict/i.test(error.message)){
+          btn.disabled=false; btn.textContent='再試一次';
+          const e=$('freeErr'); e.style.display='block'; e.textContent='開通失敗：'+error.message; return;
+        }
+        location.reload();
+      };
     }else{
-      // 未購買 → 鎖定 + 購買 CTA
+      // 付費課・未購買 → 鎖定 + 購買 CTA
       const introHref = courseId==='super-memory' ? 'course-memory.html'
                       : courseId==='super-thinking' ? 'course-thinking.html'
                       : 'index.html#courses';

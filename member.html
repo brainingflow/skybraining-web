@@ -74,6 +74,7 @@
       強腦力
     </a>
     <div class="nav-right">
+      <a href="index.html" style="color:var(--ink-soft);font-weight:500;">← 回首頁</a>
       <span class="who" id="who"></span>
       <button class="logout" id="logout">登出</button>
     </div>
@@ -142,12 +143,17 @@
     const color = c.accent==='teal' ? 'teal' : 'amber';
     const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-10倍聯想力' : '');
     const introHref = c.id==='super-memory' ? 'course-memory.html' : (c.id==='super-thinking' ? 'course-thinking.html' : 'index.html#courses');
+    const isFree = (c.price||0)===0;
     const action = owned
       ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">▶ 開始觀看</a>`
-      : `<a class="btn btn-buy" href="${introHref}">了解課程 · NT$${c.price.toLocaleString()} →</a>`;
+      : (isFree
+          ? `<a class="btn btn-watch teal" href="watch.html?course=${encodeURIComponent(c.id)}">免費開通・立即觀看 →</a>`
+          : `<a class="btn btn-buy" href="${introHref}">了解課程 · NT$${c.price.toLocaleString()} →</a>`);
     const status = owned
       ? `<span class="status owned"><span class="dot"></span>已開通・永久觀看</span>`
-      : `<span class="status locked"><span class="dot"></span>尚未購買</span>`;
+      : (isFree
+          ? `<span class="status owned"><span class="dot"></span>免費・登入就能看</span>`
+          : `<span class="status locked"><span class="dot"></span>尚未購買</span>`);
     return `<div class="course">
       <div class="course-top ${color}">
         <span class="course-lv">Level ${c.level}</span>
