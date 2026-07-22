@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>過目不忘・超級記憶力 — 強腦力 SkyBraining</title>
+<meta name="description" content="孩子不是記性差，只是沒學過記憶的方法。過目不忘用圖像記憶與記憶宮殿，讓國小到國中的孩子把單字、課文、公式記得又快又牢。買斷永久觀看，NT$3,600。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--indigo-2:#22264f;--paper:#FAF9F5;--paper-2:#F2F0E8;
+    --ink:#1B1D33;--ink-soft:#5b5f7a;--amber:#FFB020;--orange:#FF8A3D;
+    --teal:#16B0A8;--teal-deep:#0d8a83;--line-brand:#06C755;--line-deep:#05A648;
+    --hair:rgba(21,23,49,0.10);
+    --sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --accent:linear-gradient(120deg,var(--amber),var(--orange));
+    --accent-solid:#FF8A3D;--accent-soft:rgba(255,138,61,.14);
+    --shadow-sm:0 6px 20px rgba(21,23,49,.06);--shadow-md:0 18px 44px rgba(21,23,49,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.72;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,44px);}
+  .narrow{max-width:820px;}
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(250,249,245,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:13px clamp(20px,5vw,44px);max-width:1160px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--round);font-weight:800;font-size:20px;color:var(--indigo);}
+  .logo-mark{width:36px;height:36px;flex:none;border-radius:10px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--shadow-sm);}
+  .logo-mark svg{width:22px;height:22px;}
+  .nav-links{display:flex;gap:26px;font-weight:500;font-size:15px;}
+  .nav-links a{color:var(--ink-soft);transition:color .2s;}
+  .nav-links a:hover{color:var(--indigo);}
+  .nav-line{font-weight:700;font-size:14px;color:#fff;background:var(--line-brand);padding:9px 17px;border-radius:30px;display:inline-flex;align-items:center;gap:7px;box-shadow:0 8px 20px rgba(6,199,85,.28);transition:transform .2s,background .2s;}
+  .nav-line:hover{background:var(--line-deep);transform:translateY(-1px);}
+  .nav-line svg{width:15px;height:15px;fill:#fff;}
+  @media(max-width:820px){.nav-links{display:none;}}
+  /* hero */
+  .c-hero{padding:130px 0 60px;background:radial-gradient(120% 90% at 85% 0%,var(--accent-soft),transparent 55%);}
+  .crumb{font-size:13.5px;color:var(--ink-soft);margin-bottom:22px;}
+  .crumb a:hover{color:var(--accent-solid);}
+  .c-hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;}
+  @media(max-width:880px){.c-hero-grid{grid-template-columns:1fr;gap:30px;}}
+  .lv-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--round);font-weight:700;font-size:13px;color:#fff;background:var(--accent);padding:7px 15px;border-radius:30px;margin-bottom:18px;}
+  h1.c-title{font-weight:800;font-size:clamp(32px,5.4vw,56px);line-height:1.12;color:var(--indigo);letter-spacing:-.01em;}
+  .c-en{font-family:var(--round);font-weight:600;font-size:16px;color:var(--accent-solid);margin-top:8px;}
+  .c-lead{margin-top:20px;font-size:17px;color:var(--ink-soft);max-width:44ch;}
+  .c-price-row{display:flex;align-items:center;gap:22px;margin-top:30px;flex-wrap:wrap;}
+  .c-price{font-family:var(--round);font-weight:800;font-size:38px;color:var(--indigo);line-height:1;}
+  .c-price small{font-size:15px;font-weight:600;color:var(--ink-soft);display:block;margin-top:4px;}
+  .btn-buy{font-family:var(--round);font-weight:700;font-size:17px;color:#fff;background:var(--accent);padding:16px 34px;border-radius:40px;display:inline-flex;align-items:center;gap:9px;box-shadow:0 12px 30px rgba(255,138,61,.34);transition:transform .2s,box-shadow .2s;}
+  .btn-buy:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(255,138,61,.44);}
+  .c-microtrust{margin-top:18px;font-size:13.5px;color:var(--ink-soft);}
+  /* hero card */
+  .c-visual{border-radius:26px;background:radial-gradient(120% 120% at 20% 0%,#22264f,#151731 60%);box-shadow:var(--shadow-md);padding:34px;color:#fff;position:relative;overflow:hidden;}
+  .c-visual::after{content:"";position:absolute;right:-50px;bottom:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,138,61,.4),transparent 70%);}
+  .c-visual h4{font-family:var(--round);font-weight:700;font-size:15px;color:var(--amber);margin-bottom:16px;position:relative;z-index:1;}
+  .c-visual ul{list-style:none;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1;}
+  .c-visual li{display:flex;gap:12px;font-size:14.5px;line-height:1.5;}
+  .c-visual li .n{flex:none;width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-family:var(--round);font-weight:700;font-size:13px;color:var(--amber);}
+  /* sections */
+  section.blk{padding:clamp(50px,7vw,84px) 0;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:13px;letter-spacing:.05em;color:var(--accent-solid);text-transform:uppercase;margin-bottom:14px;}
+  .eyebrow::before{content:"";width:22px;height:3px;border-radius:3px;background:var(--accent);}
+  h2.sec{font-weight:800;font-size:clamp(25px,3.6vw,38px);color:var(--indigo);line-height:1.2;margin-bottom:18px;}
+  .prose p{font-size:16.5px;color:var(--ink-soft);margin-bottom:16px;}
+  .prose strong{color:var(--indigo);}
+  /* who for */
+  .who{background:var(--paper-2);border-radius:22px;padding:34px 32px;}
+  .who ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;}
+  @media(max-width:640px){.who ul{grid-template-columns:1fr;}}
+  .who li{display:flex;gap:11px;font-size:15.5px;color:var(--ink);}
+  .who li .ck{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent-solid);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:3px;}
+  /* learn cards */
+  .learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:820px){.learn-grid{grid-template-columns:1fr;}}
+  .learn-card{background:#fff;border:1px solid var(--hair);border-radius:20px;padding:28px 24px;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s;}
+  .learn-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);}
+  .learn-ic{width:52px;height:52px;border-radius:15px;background:var(--accent-soft);display:grid;place-items:center;font-size:26px;margin-bottom:16px;}
+  .learn-card h3{font-weight:700;font-size:19px;color:var(--indigo);margin-bottom:8px;}
+  .learn-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.65;}
+  /* curriculum */
+  .cur{max-width:820px;margin:0 auto;}
+  .cur-note{font-size:13.5px;color:var(--ink-soft);background:var(--accent-soft);border-radius:12px;padding:12px 18px;margin-bottom:24px;}
+  .mod{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:24px 0;border-top:1px solid var(--hair);}
+  .mod:last-child{border-bottom:1px solid var(--hair);}
+  .mod-n{font-family:var(--round);font-weight:800;font-size:20px;color:var(--accent-solid);}
+  .mod h3{font-weight:700;font-size:19px;color:var(--indigo);margin-bottom:6px;}
+  .mod p{font-size:14.5px;color:var(--ink-soft);}
+  @media(max-width:520px){.mod{grid-template-columns:44px 1fr;gap:14px;}}
+  /* faq */
+  .faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:13px;}
+  .faq{background:#fff;border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow-sm);overflow:hidden;}
+  .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--round);font-weight:700;font-size:16.5px;color:var(--indigo);}
+  .faq-q .pm{flex:none;width:26px;height:26px;border-radius:50%;background:var(--paper-2);display:grid;place-items:center;font-size:18px;color:var(--accent-solid);transition:transform .3s,background .3s;}
+  .faq.open .faq-q .pm{transform:rotate(45deg);background:var(--accent);color:#fff;}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .faq-a p{padding:0 22px 20px;color:var(--ink-soft);font-size:15px;}
+  /* legal strip */
+  .legal-box{max-width:820px;margin:0 auto;background:var(--paper-2);border-radius:18px;padding:26px 28px;font-size:14px;color:var(--ink-soft);line-height:1.75;}
+  .legal-box strong{color:var(--indigo);}
+  /* buy cta */
+  .buy-cta{background:var(--indigo);border-radius:28px;padding:clamp(40px,6vw,64px);text-align:center;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow-md);}
+  .buy-cta::after{content:"";position:absolute;left:50%;top:-80px;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,138,61,.28),transparent 68%);}
+  .buy-cta h2{font-family:var(--round);font-weight:800;font-size:clamp(26px,4vw,40px);margin-bottom:14px;position:relative;z-index:1;}
+  .buy-cta p{color:rgba(255,255,255,.8);margin-bottom:28px;position:relative;z-index:1;}
+  .buy-cta .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-line-lg{font-family:var(--round);font-weight:700;font-size:16px;color:#fff;background:var(--line-brand);padding:15px 28px;border-radius:40px;display:inline-flex;align-items:center;gap:10px;box-shadow:0 12px 30px rgba(6,199,85,.32);transition:transform .2s,background .2s;}
+  .btn-line-lg:hover{background:var(--line-deep);transform:translateY(-2px);}
+  .btn-line-lg svg{width:22px;height:22px;fill:#fff;}
+  /* footer */
+  footer{background:var(--indigo);color:rgba(250,249,245,.66);padding:44px 0;margin-top:10px;}
+  .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13.5px;}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+  .foot-links a:hover{color:#fff;}
+  /* fab */
+  .line-fab{position:fixed;right:20px;bottom:20px;z-index:50;background:var(--line-brand);color:#fff;display:inline-flex;align-items:center;gap:9px;padding:14px 22px 14px 18px;border-radius:40px;font-family:var(--round);font-weight:700;font-size:15px;box-shadow:0 12px 30px rgba(6,199,85,.42);transition:transform .2s,background .2s;}
+  .line-fab:hover{background:var(--line-deep);transform:translateY(-3px) scale(1.03);}
+  .line-fab svg{width:25px;height:25px;fill:#fff;}
+  @media(max-width:600px){.line-fab .fab-text{display:none;}.line-fab{padding:15px;}}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>
+      強腦力
+    </a>
+    <div class="nav-links">
+      <a href="index.html#why">為什麼有效</a>
+      <a href="index.html#courses">課程</a>
+      <a href="course-thinking.html">10倍聯想力</a>
+      <a href="index.html#faq">常見問題</a>
+    </div>
+    <a class="nav-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>加 LINE
+    </a>
+  </div>
+</nav>
+
+<header class="c-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">首頁</a> ／ <a href="index.html#courses">課程</a> ／ 過目不忘</div>
+    <div class="c-hero-grid">
+      <div>
+        <span class="lv-badge">🧠 記憶力・Level 1・入門首選</span>
+        <h1 class="c-title">過目不忘</h1>
+        <div class="c-en">Super Memory — 超級記憶力</div>
+        <p class="c-lead">孩子不是記性差，只是沒學過記憶的方法。這門課帶孩子從「反覆死背」轉換成「用畫面與聯想記住一切」——單字、課文、公式、歷史年代，用大腦本來就擅長的方式，記得又快又牢。學一次，用一輩子。</p>
+        <div class="c-price-row">
+          <div class="c-price">NT$3,600<small>買斷・永久觀看</small></div>
+          <a href="#buy" class="btn-buy">立即報名 →</a>
+        </div>
+        <div class="c-microtrust">★★★★★ 家長好評・安全金流電子發票・七天鑑賞期揭露</div>
+      </div>
+      <div class="c-visual reveal">
+        <h4>這門課會帶孩子練會</h4>
+        <ul>
+          <li><span class="n">1</span>把抽象文字變成記得住的畫面</li>
+          <li><span class="n">2</span>用記憶宮殿一次記住整份清單</li>
+          <li><span class="n">3</span>把方法接回單字、課文、公式</li>
+          <li><span class="n">4</span>建立「記得住」的信心與習慣</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="blk">
+  <div class="wrap narrow">
+    <div class="eyebrow">課程簡介</div>
+    <h2 class="sec">記憶力不是天生的，是可以教的</h2>
+    <div class="prose">
+      <p>很多孩子花了整晚背單字、背課文，隔天卻忘光——不是因為不夠努力，而是用了跟大腦作對的方法。<strong>死背是硬記，大腦的母語其實是「畫面」與「連結」。</strong></p>
+      <p>《過目不忘》把記憶科學拆成孩子學得會、用得上的步驟：先把要記的東西變成生動的畫面，再用「記憶宮殿」把一長串資訊有條理地收好，最後把方法接回實際的功課，讓複習變得又快又輕鬆。</p>
+      <p>這是一套帶得走的能力。孩子學會之後，不只這學期用得上，往後每一次考試、每一種科目、甚至長大後的工作與生活，都能繼續受用。</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" style="padding-top:0;">
+  <div class="wrap narrow">
+    <div class="who reveal">
+      <div class="eyebrow">適合對象</div>
+      <h2 class="sec" style="font-size:24px;margin-bottom:20px;">這門課特別適合這樣的孩子</h2>
+      <ul>
+        <li><span class="ck">✓</span>國小中年級到國中，正被背誦困擾的孩子</li>
+        <li><span class="ck">✓</span>花很多時間念書，成效卻不成正比</li>
+        <li><span class="ck">✓</span>背英文單字、國語課文特別吃力</li>
+        <li><span class="ck">✓</span>希望孩子有一套帶得走的學習方法</li>
+        <li><span class="ck">✓</span>想在考試複習上更有效率的孩子</li>
+        <li><span class="ck">✓</span>願意陪孩子一起把方法用起來的家長</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="blk" style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="eyebrow">孩子將學會</div>
+    <h2 class="sec">三個核心能力</h2>
+    <div class="learn-grid">
+      <div class="learn-card reveal"><div class="learn-ic">🖼️</div><h3>圖像記憶法</h3><p>把抽象、難記的文字轉成具體又有畫面感的圖像，讓大腦一看就記住、不容易忘。</p></div>
+      <div class="learn-card reveal"><div class="learn-ic">🏛️</div><h3>記憶宮殿</h3><p>用熟悉的空間當「收納櫃」，把一長串資訊照順序放好，一次記住整份清單也不會亂。</p></div>
+      <div class="learn-card reveal"><div class="learn-ic">📚</div><h3>用在功課上</h3><p>把方法接回單字、課文、公式與歷史年代，考試複習更省力，成績有感、也更有信心。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="cur wrap">
+    <div class="eyebrow">課程大綱</div>
+    <h2 class="sec">學習地圖</h2>
+    <div class="cur-note">＊以下為課程單元範例架構，實際單元名稱與數量將依正式課程內容調整。</div>
+    <div class="mod reveal"><div class="mod-n">01</div><div><h3>認識你的大腦：為什麼死背沒用</h3><p>用簡單的實驗讓孩子親身體會「畫面」比「文字」好記，建立學習動機。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">02</div><div><h3>圖像記憶入門：把文字變畫面</h3><p>學會誇張、聯想、感官化三個技巧，把任何抽象詞變成記得住的圖像。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">03</div><div><h3>記憶宮殿：一次記住一長串</h3><p>建立自己的第一座記憶宮殿，練習記住清單、順序與流程。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">04</div><div><h3>實戰應用：英文單字與國語課文</h3><p>把方法套用到最常見的背誦題型，示範一步步怎麼做。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">05</div><div><h3>實戰應用：公式、歷史年代與地理</h3><p>延伸到數理與社會科，讓不同科目都能用同一套方法。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">06</div><div><h3>複習系統：讓記憶留得更久</h3><p>搭配間隔複習的節奏，把短期記得變成長期記牢，養成習慣。</p></div></div>
+  </div>
+</section>
+
+<section class="blk" style="padding-top:0;">
+  <div class="wrap">
+    <div class="legal-box reveal">
+      <strong>購買前請留意：</strong>本課程為線上數位影音內容，屬「一經提供即完成之數位內容」。依規定，於您在結帳頁勾選同意後，將排除七天猶豫期（不適用七日內無條件退費）。付款成功後，我們會自動開立電子發票並寄送至您填寫的 email，結帳時亦可填寫公司抬頭與統一編號。完整內容請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a>。
+    </div>
+  </div>
+</section>
+
+<section class="blk" style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;text-align:center;display:flex;">常見問題</div>
+    <h2 class="sec" style="text-align:center;">關於這門課</h2>
+    <div class="faq-list">
+      <div class="faq"><button class="faq-q">孩子幾歲上比較合適？<span class="pm">＋</span></button><div class="faq-a"><p>建議國小中年級到國中的孩子。年紀較小的孩子，建議家長陪看前幾堂、一起把方法用到日常功課上，效果會更好。</p></div></div>
+      <div class="faq"><button class="faq-q">買斷之後可以看多久？<span class="pm">＋</span></button><div class="faq-a"><p>買斷制、永久觀看，沒有時間限制。孩子忘了隨時回去複習，也不會額外扣款。</p></div></div>
+      <div class="faq"><button class="faq-q">需要另外買教材或工具嗎？<span class="pm">＋</span></button><div class="faq-a"><p>不需要。課程內附可列印的練習與思維模板，孩子有紙筆就能開始練。</p></div></div>
+      <div class="faq"><button class="faq-q">和「10倍聯想力」有什麼不同？<span class="pm">＋</span></button><div class="faq-a"><p>《過目不忘》練的是「記得住」（記憶力，Level 1）；<a href="course-thinking.html" style="color:var(--accent-solid);">《10倍聯想力》</a>練的是「想得廣、用得出來」（思考力，Level 2）。建議先記憶、再思考。</p></div></div>
+      <div class="faq"><button class="faq-q">怎麼付款？有電子發票嗎？<span class="pm">＋</span></button><div class="faq-a"><p>採用綠界 ECPay，支援信用卡、ATM、超商與 LINE Pay。付款成功後自動開立電子發票並寄到您的 email。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="buy">
+  <div class="wrap">
+    <div class="buy-cta reveal">
+      <h2>讓孩子開始「記得住」</h2>
+      <p>買斷永久觀看・NT$3,600・安全金流電子發票・七天鑑賞期揭露</p>
+      <div class="actions">
+        <a href="#" class="btn-buy" style="box-shadow:0 10px 26px rgba(255,138,61,.4);">立即報名 NT$3,600 →</a>
+        <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" class="btn-line-lg">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
+          先免費試看
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 強腦力 SkyBraining・skybraining.com</span>
+    <div class="foot-links">
+      <a href="terms.html">服務條款</a>
+      <a href="privacy.html">隱私權政策</a>
+      <a href="refund.html">退款政策</a>
+      <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 官方帳號</a>
+    </div>
+  </div>
+</footer>
+
+<a class="line-fab" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" aria-label="加入 LINE 領免費資源">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
+  <span class="fab-text">免費領資源</span>
+</a>
+<script>
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const f=q.parentElement,a=f.querySelector('.faq-a'),o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});if(!o){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});});
+</script>
+</body>
+</html>

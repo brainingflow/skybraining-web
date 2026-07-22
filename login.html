@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>會員註冊・登入 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;
+    --line-brand:#06C755;--line-deep:#05A648;--hair:rgba(21,23,49,.1);--err:#d64545;
+    --sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --accent:linear-gradient(120deg,var(--amber),var(--orange));
+    --shadow-md:0 18px 44px rgba(21,23,49,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(120% 60% at 85% -10%,rgba(255,138,61,.14),transparent 55%),radial-gradient(90% 50% at 0% 110%,rgba(22,176,168,.12),transparent 55%);}
+  a{color:var(--teal-deep);text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  .top{display:flex;justify-content:center;padding:34px 20px 6px;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);}
+  .logo-mark{width:40px;height:40px;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--shadow-md);}
+  .logo-mark svg{width:24px;height:24px;}
+  .shell{max-width:440px;margin:20px auto 60px;padding:0 20px;}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:24px;padding:32px 30px;box-shadow:var(--shadow-md);}
+  /* social */
+  .social{display:flex;flex-direction:column;gap:11px;margin-bottom:22px;}
+  .sbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:40px;
+    font-family:var(--round);font-weight:700;font-size:15px;cursor:pointer;border:1.5px solid var(--hair);background:#fff;color:var(--ink);transition:.2s;}
+  .sbtn:hover{border-color:var(--indigo);transform:translateY(-1px);}
+  .sbtn svg{width:20px;height:20px;flex:none;}
+  .sbtn.line{background:var(--line-brand);color:#fff;border-color:var(--line-brand);}
+  .sbtn.line:hover{background:var(--line-deep);border-color:var(--line-deep);}
+  .sbtn.line svg{fill:#fff;}
+  .divider{display:flex;align-items:center;gap:12px;color:var(--ink-soft);font-size:13px;margin-bottom:20px;}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--hair);}
+  .tabs{display:flex;background:var(--paper-2);border-radius:40px;padding:5px;margin-bottom:24px;}
+  .tab{flex:1;text-align:center;font-family:var(--round);font-weight:700;font-size:15px;padding:11px 0;border-radius:40px;cursor:pointer;color:var(--ink-soft);transition:.2s;border:none;background:none;}
+  .tab.active{background:#fff;color:var(--indigo);box-shadow:0 4px 12px rgba(21,23,49,.08);}
+  h1{font-size:22px;color:var(--indigo);margin-bottom:4px;}
+  .lead{font-size:14px;color:var(--ink-soft);margin-bottom:20px;}
+  label{display:block;font-weight:700;font-size:13.5px;color:var(--indigo);margin:14px 0 7px;font-family:var(--round);}
+  input{width:100%;padding:13px 15px;border:1.5px solid var(--hair);border-radius:12px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);transition:border-color .2s;}
+  input:focus{outline:none;border-color:var(--orange);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .btn{width:100%;margin-top:22px;font-family:var(--round);font-weight:700;font-size:16px;color:var(--indigo);background:var(--accent);border:none;padding:15px;border-radius:40px;cursor:pointer;box-shadow:0 12px 28px rgba(255,138,61,.32);transition:transform .2s,box-shadow .2s;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,138,61,.42);}
+  .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .msg{margin-top:18px;padding:12px 15px;border-radius:12px;font-size:14px;display:none;}
+  .msg.show{display:block;}
+  .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
+  .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
+  .back{display:block;text-align:center;margin-top:24px;font-size:13.5px;color:var(--ink-soft);}
+  .form-sec{display:none;}
+  .form-sec.active{display:block;}
+  .tos{margin-top:16px;font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="brand" href="index.html">
+    <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>
+    強腦力
+  </a>
+</div>
+
+<div class="shell">
+  <div class="card">
+    <!-- 社群登入 -->
+    <div class="social">
+      <button class="sbtn" id="btnGoogle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+        使用 Google 繼續
+      </button>
+      <button class="sbtn line" id="btnLine">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
+        使用 LINE 繼續
+      </button>
+    </div>
+    <div class="divider">或用 Email</div>
+
+    <div class="tabs">
+      <button class="tab active" id="tabLogin">登入</button>
+      <button class="tab" id="tabSignup">註冊</button>
+    </div>
+
+    <!-- 登入 -->
+    <div class="form-sec active" id="secLogin">
+      <h1>歡迎回來</h1>
+      <p class="lead">登入後即可觀看已購買的課程。</p>
+      <label for="li-email">Email</label>
+      <input id="li-email" type="email" autocomplete="email" placeholder="you@example.com">
+      <label for="li-pw">密碼</label>
+      <input id="li-pw" type="password" autocomplete="current-password" placeholder="請輸入密碼">
+      <button class="btn" id="btnLogin">登入</button>
+    </div>
+
+    <!-- 註冊 -->
+    <div class="form-sec" id="secSignup">
+      <h1>建立家長帳號</h1>
+      <p class="lead">由家長註冊，孩子的課程開通後可永久觀看。</p>
+      <label for="su-name">家長暱稱</label>
+      <input id="su-name" type="text" autocomplete="name" placeholder="如：陳媽媽">
+      <label for="su-email">Email</label>
+      <input id="su-email" type="email" autocomplete="email" placeholder="you@example.com">
+      <label for="su-pw">設定密碼</label>
+      <input id="su-pw" type="password" autocomplete="new-password" placeholder="至少 6 碼">
+      <div class="row2">
+        <div><label for="su-child">孩子暱稱（選填）</label><input id="su-child" type="text" placeholder="如：小宇"></div>
+        <div><label for="su-grade">孩子年級（選填）</label><input id="su-grade" type="text" placeholder="如：國小五年級"></div>
+      </div>
+      <button class="btn" id="btnSignup">建立帳號</button>
+    </div>
+
+    <div class="msg" id="msg"></div>
+    <div class="tos">繼續即表示你同意 <a href="terms.html">服務條款</a> 與 <a href="privacy.html">隱私權政策</a>。</div>
+  </div>
+  <a class="back" href="index.html">← 回首頁</a>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+  // ===== 設定（公開金鑰，可安全放前端；資料由 RLS 權限控管）=====
+  const SUPABASE_URL  = 'https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const AFTER_LOGIN   = 'member.html';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+  const $ = (id)=>document.getElementById(id);
+  const msg = $('msg');
+  const abs = (p)=> new URL(p, location.href).href;   // 轉成絕對網址供 OAuth 導回
+  function show(text,type){ msg.textContent=text; msg.className='msg show '+type; }
+  function clearMsg(){ msg.className='msg'; }
+
+  // 已登入 → 直接進會員中心
+  supabase.auth.getSession().then(({data})=>{ if(data.session){ location.href = AFTER_LOGIN; } });
+
+  // ===== 社群登入 =====
+  // Google：需先在 Supabase 後台 Authentication → Providers 開啟 Google
+  $('btnGoogle').onclick = async ()=>{
+    clearMsg();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider:'google',
+      options:{ redirectTo: abs(AFTER_LOGIN) }
+    });
+    if(error) show(translate(error.message),'error');
+  };
+  // LINE：Supabase 無內建，走自建 Edge Function 橋接（見 line-login.ts）
+  $('btnLine').onclick = ()=>{
+    location.href = `${SUPABASE_URL}/functions/v1/line-login?redirect_to=${encodeURIComponent(abs(AFTER_LOGIN))}`;
+  };
+
+  // ===== Tab 切換 =====
+  const tabLogin=$('tabLogin'), tabSignup=$('tabSignup'), secLogin=$('secLogin'), secSignup=$('secSignup');
+  function setTab(login){
+    tabLogin.classList.toggle('active',login); tabSignup.classList.toggle('active',!login);
+    secLogin.classList.toggle('active',login); secSignup.classList.toggle('active',!login);
+    clearMsg();
+  }
+  tabLogin.onclick=()=>setTab(true); tabSignup.onclick=()=>setTab(false);
+  if(new URLSearchParams(location.search).get('mode')==='signup') setTab(false);
+
+  // ===== Email 登入 =====
+  $('btnLogin').onclick = async ()=>{
+    const email=$('li-email').value.trim(), password=$('li-pw').value;
+    if(!email||!password){ show('請輸入 Email 與密碼。','error'); return; }
+    $('btnLogin').disabled=true; show('登入中…','ok');
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    $('btnLogin').disabled=false;
+    if(error){ show(translate(error.message),'error'); return; }
+    location.href = AFTER_LOGIN;
+  };
+
+  // ===== Email 註冊 =====
+  $('btnSignup').onclick = async ()=>{
+    const display_name=$('su-name').value.trim(), email=$('su-email').value.trim(), password=$('su-pw').value;
+    const child_nickname=$('su-child').value.trim(), child_grade=$('su-grade').value.trim();
+    if(!email||!password){ show('請輸入 Email 與密碼。','error'); return; }
+    if(password.length<6){ show('密碼至少需要 6 碼。','error'); return; }
+    $('btnSignup').disabled=true; show('建立帳號中…','ok');
+    const { data, error } = await supabase.auth.signUp({
+      email, password,
+      options:{ data:{ display_name, child_nickname, child_grade } }
+    });
+    $('btnSignup').disabled=false;
+    if(error){ show(translate(error.message),'error'); return; }
+    if(data.session){ location.href = AFTER_LOGIN; }
+    else{ show('帳號已建立！我們寄了一封確認信到你的信箱，請點信中連結完成驗證後即可登入。','ok'); setTab(true); }
+  };
+
+  function translate(m){
+    if(/Invalid login credentials/i.test(m)) return 'Email 或密碼錯誤，請再試一次。';
+    if(/already registered|already exists/i.test(m)) return '這個 Email 已經註冊過了，請直接登入。';
+    if(/Email not confirmed/i.test(m)) return '請先到信箱點確認信完成驗證後再登入。';
+    if(/provider is not enabled|Unsupported provider/i.test(m)) return '此登入方式尚未在後台啟用，請先於 Supabase 開啟。';
+    if(/Failed to fetch|NetworkError/i.test(m)) return '連線失敗，請檢查網路後再試。';
+    return m;
+  }
+</script>
+</body>
+</html>
