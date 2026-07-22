@@ -146,8 +146,8 @@
 
   /* ===== courses ===== */
   #courses{background:var(--paper-2);}
-  .course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
-  @media(max-width:820px){.course-grid{grid-template-columns:1fr;}}
+  .course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:980px){.course-grid{grid-template-columns:1fr;}}
   .course{background:var(--card);border:1px solid var(--hair);border-radius:26px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
   .course:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
   .course-top{padding:30px 30px 24px;color:#fff;position:relative;overflow:hidden;}
@@ -165,13 +165,15 @@
   .learn li{display:flex;gap:11px;font-size:14.5px;color:var(--ink);}
   .learn li .ck{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;margin-top:2px;color:#fff;}
   .learn li .ck svg{width:12px;height:12px;stroke-width:2.4;}
-  .ck.mem{background:var(--orange);}.ck.think{background:var(--teal);}
+  .ck.mem{background:var(--orange);}.ck.think{background:var(--teal);}.ck.free{background:var(--violet);}
+  .course-top.free{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .free-tag{display:inline-block;font-family:var(--round);font-weight:700;font-size:11px;color:#4B37D8;background:#fff;padding:3px 9px;border-radius:20px;position:absolute;top:20px;right:22px;z-index:2;}
   .course-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--hair);}
   .price .lbl{font-size:12px;color:var(--ink-soft);}
   .price .val{font-family:var(--round);font-weight:800;font-size:26px;color:var(--indigo);line-height:1.1;}
   .buy{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,filter .2s;}
   .buy:hover{transform:translateY(-2px);filter:brightness(1.05);}
-  .buy.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}.buy.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .buy.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}.buy.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}.buy.free{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
 
   /* ===== free course highlight ===== */
   .free-wrap{background:linear-gradient(135deg,#221c52,#141330);border-radius:30px;padding:clamp(38px,5vw,56px);color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh-3);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
@@ -295,7 +297,6 @@
     <div class="nav-links" id="navLinks">
       <a href="#why">為什麼有效</a>
       <a href="#courses">課程</a>
-      <a href="#free">免費課</a>
       <a href="#line">免費資源</a>
       <a href="#faq">常見問題</a>
       <a href="login.html" class="m-login">會員登入 →</a>
@@ -387,11 +388,32 @@
 <section class="block" id="courses">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">兩門核心課程</div>
-      <div class="sec-title">先練記憶，再練思考</div>
-      <p class="sec-lead">記得住只是起點，能靈活運用才是競爭力。兩門課買斷、永久觀看，孩子可以反覆看到會為止。</p>
+      <div class="eyebrow">先免費體驗，再選完整課程</div>
+      <div class="sec-title">一堂免費，兩門核心</div>
+      <p class="sec-lead">先免費上一堂腦力暖身課，再依需求選購記憶力與思考力兩門完整課程。付費課買斷、永久觀看，孩子可以反覆看到會為止。</p>
     </div>
     <div class="course-grid">
+      <div class="course reveal">
+        <div class="course-top free">
+          <span class="free-tag">免費</span>
+          <span class="cico"><svg class="ico" viewBox="0 0 24 24"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S9 2 6.5 3.5 9 7 12 7zm0 0s3-5 5.5-3.5S15 7 12 7z"/></svg></span>
+          <span class="course-lv">免費・登入就能看</span>
+          <div class="course-name">腦力暖身課</div>
+          <div class="course-en">Free Warm-up — 免費體驗課</div>
+        </div>
+        <div class="course-body">
+          <p class="course-intro">不用先付費。註冊會員登入後立刻就能看，親眼看看強腦力的方法怎麼運作，喜歡再上完整課程。</p>
+          <ul class="learn">
+            <li><span class="ck free"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>登入即可免費觀看一整堂</li>
+            <li><span class="ck free"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>先體驗方法，再決定要不要買</li>
+            <li><span class="ck free"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>適合第一次接觸的孩子與家長</li>
+          </ul>
+          <div class="course-foot">
+            <div class="price"><div class="lbl">登入就能看</div><div class="val">免費</div></div>
+            <a class="buy free" href="login.html">免費上這堂 →</a>
+          </div>
+        </div>
+      </div>
       <div class="course reveal">
         <div class="course-top mem">
           <span class="cico"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></span>
@@ -436,23 +458,6 @@
   </div>
 </section>
 
-<!-- FREE COURSE -->
-<section class="block" id="free" style="padding-top:0;">
-  <div class="wrap">
-    <div class="free-wrap reveal">
-      <div>
-        <span class="free-badge">🎁 免費・登入就能看</span>
-        <h2>先免費上一堂<br><span style="color:#c7bfff;">腦力暖身課</span></h2>
-        <p>不用先付費。註冊會員登入後，立刻就能看這堂免費課，親眼看看強腦力的方法怎麼運作，喜歡再上完整課程。</p>
-        <a href="login.html" class="btn btn-primary">免費上這堂
-          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-      <a href="login.html" class="free-player" aria-label="免費上一堂">
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      </a>
-    </div>
-  </div>
-</section>
 
 <!-- LINE -->
 <section class="block" id="line" style="padding-top:0;">
