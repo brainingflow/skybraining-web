@@ -3,533 +3,576 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>強腦力 SkyBraining — 專業腦力訓練與職涯培訓平台</title>
-<meta name="description" content="強腦力 SkyBraining 提供結構化的線上腦力訓練與職業培訓，結合認知科學與實戰方法。加入 LINE 免費領取腦力測驗、思維模板與示範影片。">
+<title>強腦力 SkyBraining — 讓孩子學會怎麼學</title>
+<meta name="description" content="強腦力 SkyBraining：孩子不是記性差，只是沒學過記憶的方法。用圖像記憶、聯想力與思考模板，讓國小到國中的孩子學一次、用一輩子。先免費上一堂腦力暖身課。">
+<meta property="og:title" content="強腦力 SkyBraining — 讓孩子學會怎麼學">
+<meta property="og:description" content="不是更用功，而是用對方法。圖像記憶 × 聯想力 × 思考模板，讓孩子記得快、想得廣。">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#EEF1F0;
-    --paper-deep:#E4E9E7;
-    --ink:#0F1714;
-    --ink-soft:#3C4A45;
-    --signal:#0E8F86;
-    --signal-deep:#0A625C;
-    --indigo:#3B3486;
-    --amber:#F0A93B;
-    --line-brand:#06C755;
-    --line-deep:#05A648;
-    --line:rgba(15,23,20,0.14);
-    --serif:"Noto Serif TC", serif;
-    --sans:"Noto Sans TC", sans-serif;
-    --mono:"Space Grotesk", monospace;
+    --indigo:#141631; --indigo-2:#20244a; --paper:#FBFAF6; --paper-2:#F1EFE7; --card:#ffffff;
+    --ink:#191b30; --ink-soft:#5a5e79; --ink-mute:#8a8ea6;
+    --amber:#FFB020; --orange:#FF8A3D; --teal:#16B0A8; --teal-deep:#0d8a83; --violet:#7C6CF0; --violet-deep:#4B37D8;
+    --line-brand:#06C755; --line-deep:#05A648; --hair:rgba(20,22,49,0.09);
+    --sans:"Noto Sans TC",sans-serif; --round:"Baloo 2","Noto Sans TC",sans-serif;
+    --spark:linear-gradient(120deg,var(--amber),var(--orange));
+    --sh-1:0 4px 14px rgba(20,22,49,.05); --sh-2:0 12px 30px rgba(20,22,49,.09); --sh-3:0 26px 60px rgba(20,22,49,.14);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.6;
-    overflow-x:hidden;
-  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
   a{color:inherit;text-decoration:none;}
-  /* ===== signature: neural spine ===== */
-  .spine{
-    position:fixed;
-    left:0; top:0;
-    width:2px; height:100%;
-    z-index:5;
-    pointer-events:none;
-  }
-  .spine svg{width:100%;height:100%;}
-  .spine path{
-    fill:none;
-    stroke:var(--signal);
-    stroke-width:2;
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    opacity:0.55;
-  }
-  @media (max-width:800px){ .spine{display:none;} }
+  h1,h2,h3,h4,.round{font-family:var(--round);}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);}
+  svg{display:block;}
+  .ico{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+
   /* ===== nav ===== */
-  nav{
-    position:fixed; top:0; left:0; right:0; z-index:20;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px 48px;
-    background:rgba(238,241,240,0.86);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .brand{
-    font-family:var(--serif); font-weight:900; font-size:22px;
-    letter-spacing:0.02em;
-    display:flex; align-items:center; gap:10px;
-  }
-  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--signal);display:inline-block;}
-  .nav-links{display:flex; gap:36px; font-family:var(--mono); font-size:14px; letter-spacing:0.03em;}
-  .nav-links a{opacity:0.8; transition:opacity .2s;}
-  .nav-links a:hover{opacity:1;}
-  .nav-right{display:flex; align-items:center; gap:14px;}
-  .nav-cta{
-    font-family:var(--mono); font-size:13px;
-    padding:10px 22px; border:1px solid var(--ink); border-radius:2px;
-    transition:background .2s, color .2s;
-  }
-  .nav-cta:hover{background:var(--ink); color:var(--paper);}
-  .nav-line{
-    font-family:var(--sans); font-weight:500; font-size:13px;
-    padding:10px 18px; border-radius:2px;
-    background:var(--line-brand); color:#fff;
-    display:inline-flex; align-items:center; gap:8px;
-    transition:background .2s, transform .2s;
-  }
-  .nav-line:hover{background:var(--line-deep); transform:translateY(-1px);}
-  .nav-line svg{width:16px;height:16px;fill:#fff;}
-  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
-  .menu-toggle span{display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; transition:.3s;}
-  @media (max-width:800px){
-    nav{padding:16px 22px;}
-    .nav-links{
-      position:absolute; top:100%; left:0; right:0;
-      flex-direction:column; gap:0;
-      background:rgba(238,241,240,0.98); backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--line);
-      max-height:0; overflow:hidden; transition:max-height .35s ease;
-    }
-    .nav-links.open{max-height:320px;}
-    .nav-links a{padding:16px 22px; border-top:1px solid var(--line); opacity:1; font-size:15px;}
-    .nav-cta{display:none;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:40;background:rgba(251,250,246,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:13px clamp(20px,5vw,48px);max-width:1160px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:21px;color:var(--indigo);letter-spacing:.01em;}
+  .logo-mark{width:38px;height:38px;flex:none;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--sh-1);}
+  .logo-mark svg{width:23px;height:23px;}
+  .nav-links{display:flex;gap:28px;font-weight:500;font-size:15px;}
+  .nav-links a{color:var(--ink-soft);transition:color .2s;}
+  .nav-links a:hover{color:var(--indigo);}
+  .nav-links .m-login{display:none;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .nav-login{font-weight:600;font-size:14px;font-family:var(--round);color:var(--indigo);padding:9px 18px;border-radius:30px;border:1.5px solid var(--hair);transition:.2s;}
+  .nav-login:hover{border-color:var(--indigo);background:var(--indigo);color:#fff;}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-toggle span{display:block;width:23px;height:2.4px;border-radius:2px;background:var(--indigo);margin:5px 0;transition:.3s;}
+  @media(max-width:880px){
+    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:rgba(251,250,246,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair);max-height:0;overflow:hidden;transition:max-height .35s ease;}
+    .nav-links.open{max-height:460px;}
+    .nav-links a{padding:16px 24px;border-top:1px solid var(--hair);font-size:16px;color:var(--indigo);}
+    .nav-login{display:none;}
+    .nav-links .m-login{display:block;color:var(--indigo);font-weight:700;background:var(--paper-2);}
     .menu-toggle{display:block;}
-    body.menu-open .menu-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    body.menu-open .menu-toggle span:nth-child(1){transform:translateY(7.4px) rotate(45deg);}
     body.menu-open .menu-toggle span:nth-child(2){opacity:0;}
-    body.menu-open .menu-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    body.menu-open .menu-toggle span:nth-child(3){transform:translateY(-7.4px) rotate(-45deg);}
   }
-  section{padding:140px 48px 100px; max-width:1200px; margin:0 auto;}
-  @media (max-width:800px){ section{padding:110px 22px 60px;} }
+
+  /* ===== shared bits ===== */
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:16px;}
+  .eyebrow::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--spark);}
+  .sec-title{font-weight:800;font-size:clamp(27px,4vw,44px);line-height:1.14;color:var(--indigo);letter-spacing:-.01em;}
+  .sec-lead{margin-top:16px;color:var(--ink-soft);font-size:16.5px;max-width:56ch;}
+  .grad{background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .btn{font-family:var(--round);font-weight:700;font-size:16px;border-radius:40px;display:inline-flex;align-items:center;gap:9px;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;border:none;}
+  .btn svg{width:19px;height:19px;}
+  .btn-primary{color:var(--indigo);background:var(--spark);padding:15px 30px;box-shadow:0 12px 30px rgba(255,138,61,.32);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,138,61,.44);}
+  .btn-dark{color:#fff;background:var(--indigo);padding:15px 30px;}
+  .btn-dark:hover{transform:translateY(-2px);background:var(--indigo-2);}
+  .btn-ghost{color:var(--indigo);background:transparent;border:1.5px solid var(--hair);padding:14px 26px;}
+  .btn-ghost:hover{border-color:var(--indigo);}
+  section{position:relative;}
+  .block{padding:clamp(70px,9vw,120px) 0;}
+  .sec-head{max-width:720px;margin:0 auto clamp(44px,6vw,64px);text-align:center;}
+  .sec-head .eyebrow{justify-content:center;}
+  .sec-head .sec-lead{margin-left:auto;margin-right:auto;}
+
   /* ===== hero ===== */
-  .hero{padding-top:180px;}
-  .eyebrow{
-    font-family:var(--mono); font-size:13px; letter-spacing:0.12em;
-    text-transform:uppercase; color:var(--signal-deep);
-    display:flex; align-items:center; gap:10px; margin-bottom:28px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--signal-deep);}
-  h1{
-    font-family:var(--serif); font-weight:900;
-    font-size:clamp(40px, 6vw, 84px);
-    line-height:1.05;
-    letter-spacing:-0.01em;
-    max-width:16ch;
-  }
-  h1 em{font-style:normal; color:var(--signal-deep);}
-  .hero-sub{
-    margin-top:32px; font-size:19px; color:var(--ink-soft);
-    max-width:52ch; font-weight:300;
-  }
-  .hero-actions{display:flex; gap:18px; margin-top:48px; flex-wrap:wrap;}
-  .btn-primary{
-    font-family:var(--mono); font-size:14px; font-weight:500;
-    background:var(--ink); color:var(--paper);
-    padding:16px 32px; border-radius:2px;
-    display:inline-flex; align-items:center; gap:10px;
-    transition:transform .2s, background .2s;
-  }
-  .btn-primary:hover{background:var(--signal-deep); transform:translateY(-2px);}
-  .btn-ghost{
-    font-family:var(--mono); font-size:14px;
-    padding:16px 28px; border:1px solid var(--line);
-    transition:border-color .2s;
-    display:inline-flex; align-items:center;
-  }
-  .btn-ghost:hover{border-color:var(--ink);}
-  .hero-stats{
-    margin-top:96px; display:grid; grid-template-columns:repeat(4,1fr);
-    border-top:1px solid var(--line); padding-top:32px; gap:20px;
-  }
-  @media (max-width:800px){ .hero-stats{grid-template-columns:repeat(2,1fr);} }
-  .stat-num{font-family:var(--mono); font-size:34px; font-weight:600; color:var(--signal-deep);}
-  .stat-label{font-size:13px; color:var(--ink-soft); margin-top:4px;}
-  /* ===== section header pattern ===== */
-  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; gap:24px; flex-wrap:wrap;}
-  .sec-title{font-family:var(--serif); font-weight:700; font-size:clamp(28px,3.4vw,42px);}
-  .sec-desc{max-width:38ch; color:var(--ink-soft); font-size:15px;}
-  /* ===== path (sequential — legit numbering) ===== */
-  .path{position:relative;}
-  .path-item{
-    display:grid; grid-template-columns:90px 1fr; gap:28px;
-    padding:36px 0; border-top:1px solid var(--line);
-  }
-  .path-item:last-child{border-bottom:1px solid var(--line);}
-  .path-num{font-family:var(--mono); font-size:15px; color:var(--signal-deep); padding-top:4px;}
-  .path-title{font-family:var(--serif); font-weight:700; font-size:22px; margin-bottom:8px;}
-  .path-desc{color:var(--ink-soft); font-size:15px; max-width:60ch;}
-  @media (max-width:800px){ .path-item{grid-template-columns:56px 1fr; gap:16px;} }
+  .hero{padding:132px 0 76px;overflow:hidden;background:
+     radial-gradient(60% 50% at 88% 6%,rgba(255,138,61,.12),transparent 60%),
+     radial-gradient(50% 45% at 4% 90%,rgba(22,176,168,.10),transparent 60%);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;}
+  @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:14px;}}
+  .pill{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--teal-deep);background:rgba(22,176,168,.12);padding:7px 16px;border-radius:30px;margin-bottom:26px;}
+  .pill .d{width:8px;height:8px;border-radius:50%;background:var(--spark);}
+  h1{font-weight:800;font-size:clamp(35px,5.8vw,66px);line-height:1.1;letter-spacing:-.015em;color:var(--indigo);}
+  h1 .hl{position:relative;white-space:nowrap;}
+  h1 .hl::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.06em;height:.32em;z-index:-1;background:var(--spark);border-radius:8px;opacity:.92;transform:rotate(-1.2deg);}
+  .hero-sub{margin-top:26px;font-size:clamp(16px,1.9vw,19px);color:var(--ink-soft);max-width:34ch;}
+  .hero-actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
+  .hero-trust{margin-top:32px;display:flex;align-items:center;gap:12px;color:var(--ink-soft);font-size:14px;flex-wrap:wrap;}
+  .stars{display:inline-flex;gap:2px;color:var(--amber);}
+  .stars svg{width:16px;height:16px;fill:currentColor;stroke:none;}
+  /* hero art */
+  .hero-art{position:relative;height:clamp(340px,44vw,480px);}
+  .brain-card{position:absolute;inset:0;border-radius:30px;background:radial-gradient(120% 120% at 22% 4%,#22264f,#111327 62%);box-shadow:var(--sh-3);overflow:hidden;display:grid;place-items:center;}
+  .brain-card .glow{position:absolute;width:70%;height:70%;top:12%;left:15%;background:radial-gradient(circle,rgba(255,138,61,.5),transparent 66%);filter:blur(6px);}
+  .brain-card svg.net{width:88%;height:88%;position:relative;}
+  .node{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;}
+  .node:nth-child(2){animation-delay:.4s}.node:nth-child(3){animation-delay:.8s}.node:nth-child(4){animation-delay:1.2s}.node:nth-child(5){animation-delay:1.6s}.node:nth-child(6){animation-delay:2s}
+  @keyframes pulse{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
+  .chip{position:absolute;background:#fff;border-radius:15px;padding:10px 14px;box-shadow:var(--sh-2);display:flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--indigo);}
+  .chip .ci{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;}
+  .chip .ci svg{width:17px;height:17px;}
+  .chip-a{top:16px;left:-16px;animation:bob 4.6s ease-in-out infinite;}
+  .chip-b{bottom:60px;right:-18px;animation:bob 5.3s ease-in-out infinite .6s;}
+  .chip-c{bottom:-14px;left:38px;animation:bob 4.9s ease-in-out infinite 1.1s;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @media(max-width:920px){.hero-art{height:320px;margin-top:26px;}.chip-a{left:2px}.chip-b{right:0}}
+
+  /* ===== trust strip ===== */
+  .trust-strip{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--card);}
+  .trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:34px 0;}
+  @media(max-width:760px){.trust-in{grid-template-columns:repeat(2,1fr);gap:26px 20px;}}
+  .stat{text-align:center;}
+  .stat .n{font-family:var(--round);font-weight:800;font-size:clamp(26px,3.6vw,36px);color:var(--indigo);line-height:1;}
+  .stat .n em{font-style:normal;background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat .l{margin-top:8px;font-size:13.5px;color:var(--ink-soft);}
+
+  /* ===== insight band ===== */
+  .insight{background:var(--indigo);color:#fff;text-align:center;padding:clamp(56px,7vw,88px) 0;overflow:hidden;}
+  .insight::before,.insight::after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;pointer-events:none;}
+  .insight::before{left:-90px;top:-120px;background:radial-gradient(circle,rgba(255,138,61,.25),transparent 70%);}
+  .insight::after{right:-90px;bottom:-140px;background:radial-gradient(circle,rgba(22,176,168,.22),transparent 70%);}
+  .insight h2{font-weight:800;font-size:clamp(23px,3.6vw,38px);line-height:1.32;position:relative;}
+  .insight .grad{background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+  /* ===== steps ===== */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  @media(max-width:980px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr;}}
+  .step{background:var(--card);border:1px solid var(--hair);border-radius:22px;padding:30px 26px;box-shadow:var(--sh-1);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
+  .step:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .step .num{position:absolute;top:22px;right:24px;font-family:var(--round);font-weight:800;font-size:14px;color:var(--hair);}
+  .ic-chip{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;}
+  .ic-chip svg{width:28px;height:28px;}
+  .ic-amber{background:rgba(255,138,61,.13);color:var(--orange);}
+  .ic-orange{background:rgba(255,176,32,.15);color:#e08a13;}
+  .ic-teal{background:rgba(22,176,168,.14);color:var(--teal-deep);}
+  .ic-violet{background:rgba(124,108,240,.14);color:var(--violet-deep);}
+  .ic-indigo{background:rgba(20,22,49,.07);color:var(--indigo);}
+  .step h3{font-weight:700;font-size:19px;color:var(--indigo);margin-bottom:8px;}
+  .step p{font-size:14.5px;color:var(--ink-soft);line-height:1.65;}
+
   /* ===== courses ===== */
-  .course-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
-  .course-grid.two{grid-template-columns:repeat(2,1fr);}
-  @media (max-width:900px){ .course-grid, .course-grid.two{grid-template-columns:1fr;} }
-  .course-card{
-    background:var(--paper); padding:40px 34px;
-    transition:background .25s;
-    position:relative;
-  }
-  .course-card:hover{background:var(--paper-deep);}
-  .course-tag{
-    font-family:var(--mono); font-size:11px; letter-spacing:0.08em;
-    color:var(--signal-deep); text-transform:uppercase;
-  }
-  .course-name{font-family:var(--serif); font-weight:700; font-size:26px; margin:16px 0 14px;}
-  .course-desc{font-size:14.5px; color:var(--ink-soft); margin-bottom:20px;}
-  .course-points{list-style:none; margin:0 0 26px; padding:0;}
-  .course-points li{
-    position:relative; padding-left:24px; margin-bottom:10px;
-    font-size:14px; color:var(--ink);
-  }
-  .course-points li::before{
-    content:""; position:absolute; left:0; top:9px;
-    width:8px; height:8px; border-radius:50%; background:var(--signal);
-  }
-  .course-foot{display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:15px;
-    border-top:1px solid var(--line); padding-top:20px;}
-  .course-price{font-weight:600; font-size:20px;}
-  .course-sub{font-family:var(--sans); font-size:12px; font-weight:400; color:var(--ink-soft); margin-left:4px;}
-  .course-arrow{opacity:0.4; transition:opacity .2s, transform .2s;}
-  .course-card:hover .course-arrow{opacity:1; transform:translateX(4px);}
-  /* ===== LINE resource band ===== */
-  .line-band{
-    background:linear-gradient(135deg, #073d1c 0%, #05391a 100%);
-    color:#fff; border-radius:4px; margin:0 48px; max-width:1104px;
-    padding:64px 56px; position:relative; overflow:hidden;
-  }
-  .line-band::after{
-    content:""; position:absolute; right:-60px; top:-60px;
-    width:260px; height:260px; border-radius:50%;
-    background:radial-gradient(circle, rgba(6,199,85,0.35), transparent 70%);
-    pointer-events:none;
-  }
-  @media (max-width:900px){ .line-band{margin:0 22px; padding:44px 26px;} }
-  .line-eyebrow{
-    font-family:var(--mono); font-size:13px; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--line-brand); display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
-  }
-  .line-eyebrow svg{width:20px;height:20px;fill:var(--line-brand);}
-  .line-band h2{
-    font-family:var(--serif); font-weight:900; font-size:clamp(28px,4vw,46px);
-    line-height:1.15; max-width:20ch; margin-bottom:18px;
-  }
-  .line-band h2 em{font-style:normal; color:var(--line-brand);}
-  .line-band .line-sub{font-size:16px; color:rgba(255,255,255,0.82); max-width:50ch; font-weight:300;}
-  .line-gifts{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
-    margin:40px 0 44px; position:relative; z-index:1;
-  }
-  @media (max-width:800px){ .line-gifts{grid-template-columns:1fr;} }
-  .gift{
-    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
-    border-radius:4px; padding:24px 22px; transition:background .2s, transform .2s;
-  }
-  .gift:hover{background:rgba(255,255,255,0.11); transform:translateY(-3px);}
-  .gift-ic{font-size:26px; margin-bottom:12px;}
-  .gift h3{font-family:var(--serif); font-weight:700; font-size:19px; margin-bottom:8px;}
-  .gift p{font-size:13.5px; color:rgba(255,255,255,0.72); line-height:1.55;}
-  .btn-line{
-    font-family:var(--sans); font-weight:700; font-size:16px;
-    background:var(--line-brand); color:#fff;
-    padding:18px 38px; border-radius:3px;
-    display:inline-flex; align-items:center; gap:12px;
-    transition:background .2s, transform .2s, box-shadow .2s;
-    box-shadow:0 10px 30px rgba(6,199,85,0.35);
-    position:relative; z-index:1;
-  }
-  .btn-line:hover{background:#fff; color:var(--line-deep); transform:translateY(-2px);}
-  .btn-line svg{width:24px;height:24px;fill:currentColor;}
-  .line-note{margin-top:16px; font-size:13px; color:rgba(255,255,255,0.55);}
+  #courses{background:var(--paper-2);}
+  .course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  @media(max-width:820px){.course-grid{grid-template-columns:1fr;}}
+  .course{background:var(--card);border:1px solid var(--hair);border-radius:26px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
+  .course:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .course-top{padding:30px 30px 24px;color:#fff;position:relative;overflow:hidden;}
+  .course-top.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+  .course-top.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .course-top::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.16);}
+  .course-top .cico{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.2);display:grid;place-items:center;margin-bottom:16px;position:relative;z-index:1;}
+  .course-top .cico svg{width:24px;height:24px;color:#fff;}
+  .course-lv{display:inline-block;font-family:var(--round);font-weight:700;font-size:12.5px;background:rgba(255,255,255,.22);padding:5px 12px;border-radius:20px;position:relative;z-index:1;}
+  .course-name{font-family:var(--round);font-weight:800;font-size:27px;margin-top:12px;position:relative;z-index:1;}
+  .course-en{font-weight:500;font-size:13.5px;opacity:.92;position:relative;z-index:1;}
+  .course-body{padding:26px 30px 30px;display:flex;flex-direction:column;flex:1;}
+  .course-intro{font-size:15px;color:var(--ink-soft);line-height:1.72;margin-bottom:20px;}
+  .learn{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:26px;}
+  .learn li{display:flex;gap:11px;font-size:14.5px;color:var(--ink);}
+  .learn li .ck{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;margin-top:2px;color:#fff;}
+  .learn li .ck svg{width:12px;height:12px;stroke-width:2.4;}
+  .ck.mem{background:var(--orange);}.ck.think{background:var(--teal);}
+  .course-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--hair);}
+  .price .lbl{font-size:12px;color:var(--ink-soft);}
+  .price .val{font-family:var(--round);font-weight:800;font-size:26px;color:var(--indigo);line-height:1.1;}
+  .buy{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,filter .2s;}
+  .buy:hover{transform:translateY(-2px);filter:brightness(1.05);}
+  .buy.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}.buy.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+
+  /* ===== free course highlight ===== */
+  .free-wrap{background:linear-gradient(135deg,#221c52,#141330);border-radius:30px;padding:clamp(38px,5vw,56px);color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh-3);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  @media(max-width:860px){.free-wrap{grid-template-columns:1fr;gap:28px;}}
+  .free-wrap::after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(124,108,240,.5),transparent 68%);}
+  .free-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--round);font-weight:700;font-size:13px;background:rgba(124,108,240,.28);color:#d9d3ff;padding:6px 14px;border-radius:20px;margin-bottom:16px;position:relative;z-index:1;}
+  .free-wrap h2{font-family:var(--round);font-weight:800;font-size:clamp(26px,3.6vw,40px);line-height:1.18;margin-bottom:12px;position:relative;z-index:1;}
+  .free-wrap p{color:rgba(255,255,255,.82);font-size:16px;max-width:42ch;position:relative;z-index:1;margin-bottom:26px;}
+  .free-wrap .btn-primary{position:relative;z-index:1;}
+  .free-player{position:relative;z-index:1;aspect-ratio:16/10;border-radius:18px;background:radial-gradient(120% 120% at 30% 20%,#3a3570,#1c1a3c);display:grid;place-items:center;box-shadow:var(--sh-2);border:1px solid rgba(255,255,255,.12);}
+  .play-btn{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:grid;place-items:center;border:1px solid rgba(255,255,255,.28);transition:transform .2s,background .2s;}
+  .free-player:hover .play-btn{transform:scale(1.08);background:rgba(255,255,255,.22);}
+  .play-btn svg{width:26px;height:26px;fill:#fff;stroke:none;margin-left:3px;}
+
+  /* ===== LINE band ===== */
+  .line-band{background:linear-gradient(140deg,#073d1c,#05391a);color:#fff;border-radius:30px;padding:clamp(40px,6vw,60px);position:relative;overflow:hidden;box-shadow:var(--sh-2);}
+  .line-band::after{content:"";position:absolute;right:-70px;top:-70px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(6,199,85,.35),transparent 70%);}
+  .line-eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#7dffb0;margin-bottom:18px;}
+  .line-eyebrow svg{width:20px;height:20px;fill:var(--line-brand);stroke:none;}
+  .line-band h2{font-family:var(--round);font-weight:800;font-size:clamp(25px,3.6vw,40px);line-height:1.2;max-width:20ch;margin-bottom:14px;position:relative;z-index:1;}
+  .line-band h2 em{font-style:normal;color:#7dffb0;}
+  .line-sub{font-size:16px;color:rgba(255,255,255,.82);max-width:48ch;position:relative;z-index:1;}
+  .gifts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0 40px;position:relative;z-index:1;}
+  @media(max-width:760px){.gifts{grid-template-columns:1fr;}}
+  .gift{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:24px 22px;transition:.2s;}
+  .gift:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);}
+  .gift .gi{width:44px;height:44px;border-radius:12px;background:rgba(125,255,176,.14);color:#7dffb0;display:grid;place-items:center;margin-bottom:14px;}
+  .gift .gi svg{width:23px;height:23px;}
+  .gift h3{font-family:var(--round);font-weight:700;font-size:18px;margin-bottom:7px;}
+  .gift p{font-size:13.5px;color:rgba(255,255,255,.74);line-height:1.6;}
+  .btn-line{font-family:var(--round);font-weight:700;font-size:16px;background:var(--line-brand);color:#fff;padding:16px 34px;border-radius:40px;display:inline-flex;align-items:center;gap:10px;position:relative;z-index:1;box-shadow:0 12px 30px rgba(6,199,85,.4);transition:.2s;}
+  .btn-line:hover{background:#fff;color:var(--line-deep);transform:translateY(-2px);}
+  .btn-line svg{width:22px;height:22px;fill:currentColor;stroke:none;}
+  .line-note{margin-top:15px;font-size:13px;color:rgba(255,255,255,.55);position:relative;z-index:1;}
+
+  /* ===== testimonials ===== */
+  .ig-feature{display:flex;justify-content:center;margin-bottom:44px;}
+  .ig-feature .instagram-media{box-shadow:var(--sh-2)!important;border-radius:16px!important;}
+  .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:860px){.tst-grid{grid-template-columns:1fr;}}
+  .tst{background:var(--card);border:1px solid var(--hair);border-radius:22px;padding:30px 28px;box-shadow:var(--sh-1);position:relative;transition:transform .25s,box-shadow .25s;}
+  .tst:hover{transform:translateY(-5px);box-shadow:var(--sh-2);}
+  .tst .quote{position:absolute;top:22px;right:26px;font-family:var(--round);font-weight:800;font-size:52px;line-height:1;color:var(--paper-2);}
+  .tst .stars{margin-bottom:14px;}
+  .tst p{font-size:15px;color:var(--ink);line-height:1.75;margin-bottom:22px;position:relative;}
+  .tst-who{display:flex;align-items:center;gap:12px;}
+  .tst-av{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-family:var(--round);font-weight:800;color:#fff;font-size:18px;box-shadow:var(--sh-1);}
+  .tst-name{font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .tst-role{font-size:12.5px;color:var(--ink-soft);}
+
   /* ===== founder ===== */
-  .founder{
-    display:grid; grid-template-columns:280px 1fr; gap:56px;
-    background:var(--ink); color:var(--paper);
-    border-radius:2px; padding:56px; margin:0 48px;
-    max-width:1104px;
-  }
-  @media (max-width:900px){ .founder{grid-template-columns:1fr; padding:36px; margin:0 22px;} }
-  .founder-frame{
-    aspect-ratio:3/4; border:1px solid rgba(238,241,240,0.25);
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--mono); font-size:12px; opacity:0.5; text-align:center;
-  }
-  .founder blockquote{
-    font-family:var(--serif); font-size:clamp(20px,2.4vw,28px); font-weight:500;
-    line-height:1.5; margin-bottom:24px;
-  }
-  .founder-name{font-family:var(--mono); font-size:14px; color:var(--amber);}
-  .founder-role{font-size:13px; opacity:0.6; margin-top:2px;}
-  /* ===== faq-ish trust strip ===== */
-  .trust{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:36px;
-    border-top:1px solid var(--line); padding-top:48px;
-  }
-  @media (max-width:800px){ .trust{grid-template-columns:1fr;} }
-  .trust-item h3{font-family:var(--serif); font-size:19px; margin-bottom:10px;}
-  .trust-item p{font-size:14px; color:var(--ink-soft);}
-  /* ===== final cta ===== */
-  .final{
-    text-align:center; padding:140px 24px;
-    background:
-      radial-gradient(ellipse at 50% 0%, rgba(14,143,134,0.12), transparent 60%),
-      var(--paper);
-  }
-  .final h2{font-family:var(--serif); font-weight:900; font-size:clamp(32px,5vw,58px); max-width:18ch; margin:0 auto 32px;}
-  .final-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-  footer{
-    border-top:1px solid var(--line); padding:48px 48px;
-    display:flex; justify-content:space-between; align-items:flex-start;
-    font-family:var(--mono); font-size:13px; color:var(--ink-soft);
-    flex-wrap:wrap; gap:24px;
-  }
-  .foot-links{display:flex; gap:24px; flex-wrap:wrap;}
-  .foot-links a{transition:color .2s;}
-  .foot-links a:hover{color:var(--ink);}
-  @media (max-width:800px){ footer{padding:36px 22px;} }
-  /* ===== floating LINE button ===== */
-  .line-fab{
-    position:fixed; right:22px; bottom:22px; z-index:40;
-    background:var(--line-brand); color:#fff;
-    display:inline-flex; align-items:center; gap:10px;
-    padding:14px 22px 14px 18px; border-radius:40px;
-    font-family:var(--sans); font-weight:700; font-size:15px;
-    box-shadow:0 12px 30px rgba(6,199,85,0.4);
-    transition:transform .2s, background .2s;
-    animation:fabIn .6s ease .8s both;
-  }
-  .line-fab:hover{background:var(--line-deep); transform:translateY(-3px) scale(1.03);}
-  .line-fab svg{width:26px;height:26px;fill:#fff;}
-  .line-fab .fab-text{white-space:nowrap;}
-  @keyframes fabIn{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
-  @media (max-width:800px){ .line-fab{right:16px; bottom:16px; padding:13px 20px 13px 16px; font-size:14px;} }
-  .reveal{opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion: reduce){
-    .reveal{transition:none; opacity:1; transform:none;}
-    .line-fab{animation:none;}
-    html{scroll-behavior:auto;}
-  }
+  .founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center;}
+  @media(max-width:860px){.founder{grid-template-columns:1fr;gap:32px;}}
+  .founder-photo{aspect-ratio:4/5;border-radius:26px;background:linear-gradient(150deg,#22264f,#141330);position:relative;overflow:hidden;box-shadow:var(--sh-2);display:grid;place-items:center;}
+  .founder-photo .ph-tag{font-family:var(--round);font-weight:600;font-size:13px;color:rgba(255,255,255,.5);border:1px dashed rgba(255,255,255,.28);padding:8px 16px;border-radius:30px;}
+  .founder-photo .ring{position:absolute;width:150%;height:150%;border-radius:50%;border:1px solid rgba(255,255,255,.06);top:-25%;left:-25%;}
+  .founder blockquote{font-family:var(--round);font-weight:600;font-size:clamp(21px,2.6vw,30px);line-height:1.5;color:var(--indigo);margin-bottom:22px;}
+  .founder blockquote .grad{background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .founder .who{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .founder .who .nm{font-family:var(--round);font-weight:800;font-size:16px;color:var(--indigo);}
+  .founder .who .rl{font-size:13.5px;color:var(--ink-soft);}
+  .creds{display:flex;gap:26px;flex-wrap:wrap;}
+  .cred .cn{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);}
+  .cred .cl{font-size:12.5px;color:var(--ink-soft);}
+
+  /* ===== faq ===== */
+  #faq{background:var(--paper-2);}
+  .faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:13px;}
+  .faq{background:var(--card);border:1px solid var(--hair);border-radius:18px;box-shadow:var(--sh-1);overflow:hidden;}
+  .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--round);font-weight:700;font-size:17px;color:var(--indigo);}
+  .faq-q .pm{flex:none;width:26px;height:26px;border-radius:50%;background:var(--paper-2);display:grid;place-items:center;transition:transform .3s,background .3s;}
+  .faq-q .pm svg{width:14px;height:14px;color:var(--teal-deep);stroke-width:2.4;}
+  .faq.open .faq-q .pm{transform:rotate(135deg);background:var(--spark);}
+  .faq.open .faq-q .pm svg{color:#fff;}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .faq-a p{padding:0 24px 22px;color:var(--ink-soft);font-size:15px;}
+
+  /* ===== safeguards ===== */
+  .safe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:820px){.safe-grid{grid-template-columns:1fr;}}
+  .safe{display:flex;gap:16px;align-items:flex-start;}
+  .safe .si{flex:none;width:50px;height:50px;border-radius:14px;background:var(--indigo);color:#fff;display:grid;place-items:center;}
+  .safe .si svg{width:24px;height:24px;}
+  .safe h3{font-weight:700;font-size:17px;color:var(--indigo);margin-bottom:6px;}
+  .safe p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ===== final ===== */
+  .final{text-align:center;padding:clamp(72px,10vw,124px) 0;background:radial-gradient(ellipse at 50% 0%,rgba(255,176,32,.14),transparent 62%),var(--paper);}
+  .final h2{font-family:var(--round);font-weight:800;font-size:clamp(29px,5vw,54px);color:var(--indigo);max-width:20ch;margin:0 auto 16px;line-height:1.16;}
+  .final p{color:var(--ink-soft);font-size:17px;max-width:42ch;margin:0 auto 36px;}
+  .final-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  /* ===== footer ===== */
+  footer{background:var(--indigo);color:rgba(251,250,246,.7);padding:60px 0 40px;}
+  .foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:36px;}
+  .foot-brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:20px;color:#fff;margin-bottom:12px;}
+  .foot-brand .logo-mark{background:rgba(255,255,255,.1);}
+  .foot-desc{font-size:14px;max-width:34ch;line-height:1.7;}
+  .foot-links{display:flex;gap:44px;flex-wrap:wrap;}
+  .foot-col h4{font-family:var(--round);font-weight:700;font-size:14px;color:#fff;margin-bottom:14px;}
+  .foot-col a{display:block;font-size:14px;margin-bottom:10px;transition:color .2s;}
+  .foot-col a:hover{color:#fff;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;}
+
+  /* fab */
+  .fab{position:fixed;right:20px;bottom:20px;z-index:50;background:var(--line-brand);color:#fff;display:inline-flex;align-items:center;gap:9px;padding:14px 22px 14px 18px;border-radius:40px;font-family:var(--round);font-weight:700;font-size:15px;box-shadow:0 12px 30px rgba(6,199,85,.42);transition:.2s;animation:fabIn .6s ease .8s both;}
+  .fab:hover{background:var(--line-deep);transform:translateY(-3px) scale(1.03);}
+  .fab svg{width:24px;height:24px;fill:#fff;stroke:none;}
+  @keyframes fabIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @media(max-width:600px){.fab .t{display:none;}.fab{padding:15px;}}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none;}.node,.chip-a,.chip-b,.chip-c,.fab{animation:none;}html{scroll-behavior:auto;}}
 </style>
 </head>
 <body>
-<div class="spine"><svg preserveAspectRatio="none"><path id="spinePath" d="M1,0 L1,3000"/></svg></div>
 <nav>
-  <div class="brand"><span class="dot"></span>強腦力 SkyBraining</div>
-  <div class="nav-links" id="navLinks">
-    <a href="#courses">課程</a>
-    <a href="#path">學習路徑</a>
-    <a href="#line">免費資源</a>
-    <a href="#founder">關於我們</a>
-  </div>
-  <div class="nav-right">
-    <a class="nav-cta" href="#">會員登入</a>
-    <a class="nav-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
-      加 LINE
-    </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="nav-in">
+    <a class="brand" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#why">為什麼有效</a>
+      <a href="#courses">課程</a>
+      <a href="#free">免費課</a>
+      <a href="#line">免費資源</a>
+      <a href="#faq">常見問題</a>
+      <a href="login.html" class="m-login">會員登入 →</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-login" href="login.html">會員登入</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </nav>
-<section class="hero">
-  <div class="eyebrow">給國小・國中的孩子</div>
-  <h1 class="reveal">不是更用功，<br>是<em>用對方法</em></h1>
-  <p class="hero-sub reveal">孩子不是記性差、也不是不夠聰明，只是沒學過方法。強腦力用記憶力與思考力兩套訓練，
-    讓大腦學會怎麼學——記得更快更牢，面對新問題也懂得舉一反三。學一次，用一輩子。</p>
-  <div class="hero-actions reveal">
-    <a href="#courses" class="btn-primary">看兩堂課程 →</a>
-    <a href="#line" class="btn-ghost">領取免費資源</a>
-  </div>
-  <div class="hero-stats reveal">
-    <div><div class="stat-num">永久</div><div class="stat-label">買斷制・永久觀看</div></div>
-    <div><div class="stat-num">2</div><div class="stat-label">記憶力＋思考力課程</div></div>
-    <div><div class="stat-num">隨處</div><div class="stat-label">手機・平板・電腦皆可學</div></div>
-    <div><div class="stat-num">綠界</div><div class="stat-label">安全金流・電子發票</div></div>
-  </div>
-</section>
-<section id="path">
-  <div class="sec-head reveal">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">learning path</div>
-      <div class="sec-title">從記得住<br>到會思考</div>
-    </div>
-    <p class="sec-desc">記憶力是地基，思考力是延伸。我們刻意把課程分成兩個階段，讓孩子先學會記，再學會用。</p>
-  </div>
-  <div class="path reveal">
-    <div class="path-item">
-      <div class="path-num">01</div>
-      <div><div class="path-title">加 LINE・做腦力測驗</div><div class="path-desc">先免費領取腦力測驗與思維模板，了解孩子目前的記憶與思考習慣，找到起點。</div></div>
-    </div>
-    <div class="path-item">
-      <div class="path-num">02</div>
-      <div><div class="path-title">Level 1・超級記憶力</div><div class="path-desc">用圖像記憶與記憶宮殿，把死背換成用畫面記住——單字、課文、公式都記得又快又牢。</div></div>
-    </div>
-    <div class="path-item">
-      <div class="path-num">03</div>
-      <div><div class="path-title">Level 2・超級思考</div><div class="path-desc">用聯想力與思考模板拆解問題、串連知識，從被動接收變成主動思考、舉一反三。</div></div>
-    </div>
-    <div class="path-item">
-      <div class="path-num">04</div>
-      <div><div class="path-title">用到功課上・持續複習</div><div class="path-desc">把方法帶回日常課業，搭配間隔複習持續鞏固，讓能力真正留在孩子身上。</div></div>
-    </div>
-  </div>
-</section>
-<section id="courses">
-  <div class="sec-head reveal">
-    <div>
-      <div class="eyebrow">featured courses</div>
-      <div class="sec-title">兩堂課，兩種能力</div>
-    </div>
-    <p class="sec-desc">皆為買斷制、永久觀看。建議先從 Level 1 記憶力入門，再進階到 Level 2 思考力。</p>
-  </div>
-  <div class="course-grid two reveal">
-    <div class="course-card">
-      <div class="course-tag">記憶力・Level 1・入門首選</div>
-      <div class="course-name">過目不忘 — 超級記憶力</div>
-      <div class="course-desc">孩子不是記性差，只是沒學過記憶的方法。這門課帶孩子從「反覆死背」換成「用畫面與聯想記住一切」——單字、課文、公式、歷史年代，記得又快又牢。學一次，用一輩子。</div>
-      <ul class="course-points">
-        <li>圖像記憶法：把抽象文字變成記得住的畫面</li>
-        <li>記憶宮殿：一次記住整份清單也不亂</li>
-        <li>把方法用到功課上，考試複習更輕鬆</li>
-      </ul>
-      <div class="course-foot"><span class="course-price">NT$ 3,600 <span class="course-sub">買斷・永久觀看</span></span><span class="course-arrow">了解課程 →</span></div>
-    </div>
-    <div class="course-card">
-      <div class="course-tag">思考力・Level 2・進階整合</div>
-      <div class="course-name">10倍聯想力 — 超級思考</div>
-      <div class="course-desc">記得住，只是起點；能靈活運用、舉一反三，才是真正的競爭力。這門進階課帶孩子建立「聯想式思考」的大腦——用一套思考模板拆解問題、串連知識、產生想法。從被動接收，變成主動思考的孩子。</div>
-      <ul class="course-points">
-        <li>聯想力訓練：讓知識彼此連結、越學越快</li>
-        <li>思考模板：面對新問題有框架、不再空白</li>
-        <li>創意與邏輯並進，寫作、解題都用得上</li>
-      </ul>
-      <div class="course-foot"><span class="course-price">NT$ 7,800 <span class="course-sub">買斷・永久觀看</span></span><span class="course-arrow">了解課程 →</span></div>
-    </div>
-  </div>
-</section>
-<section id="line" style="padding-left:0; padding-right:0;">
-  <div class="line-band reveal">
-    <div class="line-eyebrow">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
-      免費資源・加入 LINE 官方帳號
-    </div>
-    <h2>先<em>免費體驗</em>，再決定要不要上課</h2>
-    <p class="line-sub">加入強腦力 LINE 官方帳號，立即領取三份免費資源，並第一時間收到限定 webinar 與優惠通知。</p>
-    <div class="line-gifts">
-      <div class="gift">
-        <div class="gift-ic">🧠</div>
-        <h3>腦力測驗</h3>
-        <p>快速了解目前的專注力與記憶策略，找出你的訓練起點。</p>
+      <span class="pill reveal"><span class="d"></span>國小中年級～國中・家長信賴</span>
+      <h1 class="reveal">孩子不是<span class="hl">記性差</span><br>只是沒學過<br><span class="grad">記憶的方法</span></h1>
+      <p class="hero-sub reveal">從「反覆死背」換成「用畫面與聯想記住一切」。用圖像記憶、聯想力與思考模板，讓孩子記得快、想得廣——學一次，用一輩子。</p>
+      <div class="hero-actions reveal">
+        <a href="#courses" class="btn btn-primary">看看兩門課
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="login.html" class="btn btn-ghost">先免費上一堂 →</a>
       </div>
-      <div class="gift">
-        <div class="gift-ic">📄</div>
-        <h3>思維模板 PDF</h3>
-        <p>可直接套用的思考框架，面對新問題不再一片空白。</p>
-      </div>
-      <div class="gift">
-        <div class="gift-ic">🎬</div>
-        <h3>示範影片</h3>
-        <p>免費試看一段課程，親眼看見方法怎麼運作再決定。</p>
+      <div class="hero-trust reveal">
+        <span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span>
+        家長好評・買斷永久觀看・七天鑑賞期保障
       </div>
     </div>
-    <a class="btn-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
-      加入 LINE 免費領取
-    </a>
-    <div class="line-note">免費加入・不需付費・可隨時封鎖取消追蹤</div>
+    <div class="hero-art reveal">
+      <div class="brain-card">
+        <div class="glow"></div>
+        <svg class="net" viewBox="0 0 300 300">
+          <g stroke="url(#eg)" stroke-width="1.5" opacity="0.65">
+            <line x1="90" y1="86" x2="150" y2="66"/><line x1="150" y1="66" x2="216" y2="104"/>
+            <line x1="90" y1="86" x2="108" y2="162"/><line x1="216" y1="104" x2="198" y2="172"/>
+            <line x1="108" y1="162" x2="150" y2="66"/><line x1="108" y1="162" x2="198" y2="172"/>
+            <line x1="150" y1="66" x2="158" y2="216"/><line x1="198" y1="172" x2="158" y2="216"/>
+            <line x1="108" y1="162" x2="158" y2="216"/>
+          </g>
+          <defs><linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB020"/><stop offset="1" stop-color="#16B0A8"/></linearGradient></defs>
+          <circle class="node" cx="90" cy="86" r="7" fill="#FFB020"/>
+          <circle class="node" cx="150" cy="66" r="9" fill="#FF8A3D"/>
+          <circle class="node" cx="216" cy="104" r="7" fill="#FFB020"/>
+          <circle class="node" cx="108" cy="162" r="8" fill="#16B0A8"/>
+          <circle class="node" cx="198" cy="172" r="7" fill="#16B0A8"/>
+          <circle class="node" cx="158" cy="216" r="9" fill="#FFB020"/>
+        </svg>
+      </div>
+      <div class="chip chip-a"><span class="ci ic-amber"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></span>圖像記憶</div>
+      <div class="chip chip-b"><span class="ci ic-teal"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="9" r="2.3"/><circle cx="9" cy="18" r="2.3"/><path d="M8.1 7.1l7.8 1.1M7.6 8.2l1.1 7.6"/></svg></span>聯想思考</div>
+      <div class="chip chip-c"><span class="ci ic-orange"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M12 16V8M16 16v-7"/></svg></span>成績有感</div>
+    </div>
   </div>
+</header>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="wrap trust-in">
+    <div class="stat reveal"><div class="n"><em>12,000+</em></div><div class="l">累計學員</div></div>
+    <div class="stat reveal"><div class="n"><em>94%</em></div><div class="l">課程完課率</div></div>
+    <div class="stat reveal"><div class="n"><em>4.8</em>/5</div><div class="l">家長滿意度</div></div>
+    <div class="stat reveal"><div class="n"><em>永久</em></div><div class="l">買斷觀看</div></div>
+  </div>
+</div>
+
+<!-- INSIGHT -->
+<section class="insight">
+  <div class="wrap"><h2>不是要孩子<span class="grad">更用功</span>，<br>而是讓大腦<span class="grad">學會怎麼學</span>。</h2></div>
 </section>
-<section id="founder" style="padding-left:0; padding-right:0;">
-  <div class="founder reveal">
-    <div class="founder-frame">創辦人照片<br>預留位置</div>
-    <div>
-      <blockquote>「我們相信腦力跟肌力一樣可以被訓練。強腦力賣的不是一堂課，而是一套讓孩子長期都用得上的思考方法——不是更用功，而是用對方法。」</blockquote>
-      <div class="founder-name">創辦人姓名</div>
-      <div class="founder-role">強腦力 SkyBraining 創辦人</div>
+
+<!-- WHY -->
+<section class="block" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">為什麼有效</div>
+      <div class="sec-title">用大腦本來就擅長的方式<br>去記、去想</div>
+      <p class="sec-lead">死背是跟大腦作對；畫面與聯想才是它的母語。四個步驟，把「記不住、想不出」變成孩子的日常能力。</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="num">01</div><div class="ic-chip ic-amber"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></div><h3>把文字變畫面</h3><p>抽象的單字、課文、年代，轉成看得見、記得住的圖像，大腦一秒就抓住。</p></div>
+      <div class="step reveal"><div class="num">02</div><div class="ic-chip ic-orange"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/></svg></div><h3>記憶宮殿</h3><p>用熟悉的空間收納資訊，一次記住整份清單也不會亂、不會忘。</p></div>
+      <div class="step reveal"><div class="num">03</div><div class="ic-chip ic-teal"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="9" r="2.3"/><circle cx="9" cy="18" r="2.3"/><path d="M8.1 7.1l7.8 1.1M7.6 8.2l1.1 7.6"/></svg></div><h3>聯想式思考</h3><p>讓知識彼此連結、舉一反三，遇到新問題有框架，不再一片空白。</p></div>
+      <div class="step reveal"><div class="num">04</div><div class="ic-chip ic-indigo"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/></svg></div><h3>用回功課上</h3><p>把方法接回考試與複習，成績有感進步，孩子也更有信心。</p></div>
     </div>
   </div>
 </section>
-<section>
-  <div class="trust reveal">
-    <div class="trust-item"><h3>結構化課程設計</h3><p>每門課程皆有明確的學習目標與階段性練習，不是零散的影片合集。</p></div>
-    <div class="trust-item"><h3>會員專屬觀看</h3><p>課程內容僅限已登入會員觀看，搭配進度追蹤與學習紀錄。</p></div>
-    <div class="trust-item"><h3>安全金流・電子發票</h3><p>採用綠界 ECPay 金流（信用卡／ATM／超商／LINE Pay），付款後自動開立電子發票。</p></div>
+
+<!-- COURSES -->
+<section class="block" id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">兩門核心課程</div>
+      <div class="sec-title">先練記憶，再練思考</div>
+      <p class="sec-lead">記得住只是起點，能靈活運用才是競爭力。兩門課買斷、永久觀看，孩子可以反覆看到會為止。</p>
+    </div>
+    <div class="course-grid">
+      <div class="course reveal">
+        <div class="course-top mem">
+          <span class="cico"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></span>
+          <span class="course-lv">記憶力・Level 1・入門首選</span>
+          <div class="course-name">過目不忘</div>
+          <div class="course-en">Super Memory — 超級記憶力</div>
+        </div>
+        <div class="course-body">
+          <p class="course-intro">孩子不是記性差，只是沒學過記憶的方法。從「反覆死背」轉換成「用畫面與聯想記住一切」——單字、課文、公式、歷史年代，記得又快又牢。學一次，用一輩子。</p>
+          <ul class="learn">
+            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>圖像記憶法：把抽象文字變成記得住的畫面</li>
+            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>記憶宮殿：一次記住整份清單也不亂</li>
+            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>把方法用到功課上，考試複習更輕鬆</li>
+          </ul>
+          <div class="course-foot">
+            <div class="price"><div class="lbl">買斷・永久觀看</div><div class="val">NT$3,600</div></div>
+            <a class="buy mem" href="course-memory.html">了解課程 →</a>
+          </div>
+        </div>
+      </div>
+      <div class="course reveal">
+        <div class="course-top think">
+          <span class="cico"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="9" r="2.3"/><circle cx="9" cy="18" r="2.3"/><path d="M8.1 7.1l7.8 1.1M7.6 8.2l1.1 7.6"/></svg></span>
+          <span class="course-lv">思考力・Level 2・進階整合</span>
+          <div class="course-name">10倍聯想力</div>
+          <div class="course-en">Super Thinking — 超級思考</div>
+        </div>
+        <div class="course-body">
+          <p class="course-intro">記得住只是起點；能靈活運用、舉一反三，才是真正的競爭力。用一套思考模板拆解問題、串連知識、產生想法，從被動接收，變成主動思考的孩子。</p>
+          <ul class="learn">
+            <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>聯想力訓練：讓知識彼此連結、越學越快</li>
+            <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>思考模板：面對新問題有框架、不再空白</li>
+            <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>創意與邏輯並進，寫作、解題都用得上</li>
+          </ul>
+          <div class="course-foot">
+            <div class="price"><div class="lbl">買斷・永久觀看</div><div class="val">NT$7,800</div></div>
+            <a class="buy think" href="course-thinking.html">了解課程 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<!-- FREE COURSE -->
+<section class="block" id="free" style="padding-top:0;">
+  <div class="wrap">
+    <div class="free-wrap reveal">
+      <div>
+        <span class="free-badge">🎁 免費・登入就能看</span>
+        <h2>先免費上一堂<br><span style="color:#c7bfff;">腦力暖身課</span></h2>
+        <p>不用先付費。註冊會員登入後，立刻就能看這堂免費課，親眼看看強腦力的方法怎麼運作，喜歡再上完整課程。</p>
+        <a href="login.html" class="btn btn-primary">免費上這堂
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <a href="login.html" class="free-player" aria-label="免費上一堂">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LINE -->
+<section class="block" id="line" style="padding-top:0;">
+  <div class="wrap">
+    <div class="line-band reveal">
+      <div class="line-eyebrow"><svg viewBox="0 0 24 24"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>免費資源・加入 LINE 官方帳號</div>
+      <h2>先<em>免費體驗</em>，再決定要不要上課</h2>
+      <p class="line-sub">加入強腦力 LINE 官方帳號，立即領取三份免費資源，也會第一時間收到限定 webinar 與優惠通知。</p>
+      <div class="gifts">
+        <div class="gift"><span class="gi"><svg class="ico" viewBox="0 0 24 24"><path d="M9 3h6l1 3h2a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2h2z"/><path d="M9 12h6M9 15h4"/></svg></span><h3>腦力測驗</h3><p>快速了解孩子目前的記憶策略與思考習慣，找出最適合的起點。</p></div>
+        <div class="gift"><span class="gi"><svg class="ico" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 16h6"/></svg></span><h3>思維模板 PDF</h3><p>可直接列印套用的思考框架，讓孩子面對新問題不再空白。</p></div>
+        <div class="gift"><span class="gi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span><h3>示範影片</h3><p>免費試看一段課程，親眼看見方法怎麼運作再決定。</p></div>
+      </div>
+      <a class="btn-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>加入 LINE 免費領取</a>
+      <div class="line-note">免費加入・不需付費・可隨時封鎖取消追蹤</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="block" id="voices">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">家長怎麼說</div>
+      <div class="sec-title">真正改變的，是孩子<br>看自己的眼神</div>
+      <p class="sec-lead">來自強腦力 Instagram 的真實分享，還有更多家長回饋。</p>
+    </div>
+    <div class="ig-feature reveal">
+      <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DUx77h0D5bp/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/reel/DUx77h0D5bp/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">在 Instagram 查看這篇貼文</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/reel/DUx77h0D5bp/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Sky強腦力 (@skybraining) 分享的貼文</a></p></div></blockquote>
+    </div>
+    <div class="tst-grid">
+      <div class="tst reveal"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>以前背英文單字要坐一整晚，現在他自己把單字變成畫面，複習時間少一半，還會反過來考我。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#FFB020,#FF8A3D)">陳</div><div><div class="tst-name">陳媽媽</div><div class="tst-role">國小五年級家長</div></div></div></div>
+      <div class="tst reveal"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>最有感的不是分數，是他開始主動想「這題可以怎麼連到上次學的」，思考變得比較有方法。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#16B0A8,#0d8a83)">林</div><div><div class="tst-name">林爸爸</div><div class="tst-role">國中一年級家長</div></div></div></div>
+      <div class="tst reveal"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>買斷可以一直看很划算，孩子忘了就回去複習那一段。方法是他自己的，不是我逼出來的。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#7C6CF0,#4B37D8)">黃</div><div><div class="tst-name">黃媽媽</div><div class="tst-role">國小六年級家長</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="block">
+  <div class="wrap founder">
+    <div class="founder-photo reveal"><div class="ring"></div><div class="ph-tag">創辦人照片預留</div></div>
+    <div class="reveal">
+      <div class="eyebrow">關於強腦力</div>
+      <blockquote>「我們相信腦力跟肌力一樣，<span class="grad">可以被訓練</span>。強腦力不是賣一堂課，而是給孩子一套用一輩子的思考系統。」</blockquote>
+      <div class="who"><div class="tst-av" style="background:linear-gradient(135deg,#FFB020,#FF8A3D);width:52px;height:52px;border-radius:16px;">S</div><div><div class="nm">創辦人姓名</div><div class="rl">強腦力 SkyBraining 創辦人</div></div></div>
+      <div class="creds">
+        <div class="cred"><div class="cn">10＋ 年</div><div class="cl">教學經驗</div></div>
+        <div class="cred"><div class="cn">12,000＋</div><div class="cl">累計學員</div></div>
+        <div class="cred"><div class="cn">2 階段</div><div class="cl">系統化課程</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFEGUARDS -->
+<section class="block" style="padding-top:0;">
+  <div class="wrap">
+    <div class="safe-grid reveal">
+      <div class="safe"><div class="si"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><div><h3>買斷永久觀看</h3><p>一次付費，反覆觀看到會為止，孩子隨時能回去複習。</p></div></div>
+      <div class="safe"><div class="si"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div><h3>安全金流・電子發票</h3><p>綠界 ECPay（信用卡／ATM／超商／LINE Pay），付款後自動開立電子發票。</p></div></div>
+      <div class="safe"><div class="si"><svg class="ico" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9 13h6M9 16h5"/></svg></div><div><h3>透明揭露</h3><p>七天鑑賞期、隱私權與退款政策事前清楚說明，買得安心。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
 <section class="final">
-  <h2 class="reveal">讓孩子用對方法，從現在開始</h2>
-  <div class="final-actions reveal">
-    <a href="#courses" class="btn-primary">看兩堂課程 →</a>
-    <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" class="btn-line" style="box-shadow:0 8px 22px rgba(6,199,85,0.3);">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
-      加 LINE 領免費資源
-    </a>
+  <div class="wrap">
+    <h2 class="reveal">給孩子一套<br>用一輩子的方法</h2>
+    <p class="reveal">先免費上一堂，覺得適合再開始。</p>
+    <div class="final-actions reveal">
+      <a href="#courses" class="btn btn-primary">看看兩門課
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="login.html" class="btn btn-dark">免費上一堂 →</a>
+    </div>
   </div>
 </section>
+
 <footer>
-  <div>
-    <div style="font-family:var(--serif);font-weight:900;font-size:16px;color:var(--ink);margin-bottom:8px;">強腦力 SkyBraining</div>
-    © 2026 強腦力 SkyBraining ・ skybraining.com
-  </div>
-  <div class="foot-links">
-    <a href="terms.html">服務條款</a>
-    <a href="privacy.html">隱私權政策</a>
-    <a href="refund.html">退款政策</a>
-    <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 官方帳號</a>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力 SkyBraining</div>
+        <p class="foot-desc">讓孩子學會怎麼學。用圖像記憶、聯想力與思考模板，把記憶力與思考力變成用一輩子的能力。</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col"><h4>課程</h4><a href="course-memory.html">過目不忘・超級記憶力</a><a href="course-thinking.html">10倍聯想力・超級思考</a><a href="login.html">免費腦力暖身課</a></div>
+        <div class="foot-col"><h4>關於</h4><a href="#why">為什麼有效</a><a href="#faq">常見問題</a><a href="login.html">會員登入</a></div>
+        <div class="foot-col"><h4>條款</h4><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="refund.html">退款政策</a></div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 強腦力 SkyBraining・skybraining.com</span><span>用對方法，讓大腦學會怎麼學。</span></div>
   </div>
 </footer>
-<a class="line-fab" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" aria-label="加入 LINE 領免費資源">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2zM7.8 12.9H5.4c-.2 0-.4-.2-.4-.4V8.6c0-.2.2-.4.4-.4s.4.2.4.4v3.1h2c.2 0 .4.2.4.4s-.2.4-.4.4zm1.5-.4c0 .2-.2.4-.4.4s-.4-.2-.4-.4V8.6c0-.2.2-.4.4-.4s.4.2.4.4v3.9zm4.7 0c0 .2-.1.3-.3.4h-.1c-.1 0-.3-.1-.3-.2l-2-2.7v2.5c0 .2-.2.4-.4.4s-.4-.2-.4-.4V8.6c0-.2.1-.3.3-.4.2 0 .3 0 .4.1l2 2.7V8.6c0-.2.2-.4.4-.4s.4.2.4.4v3.9zm3.2-2.4c.2 0 .4.2.4.4s-.2.4-.4.4h-2v.8h2c.2 0 .4.2.4.4s-.2.4-.4.4h-2.4c-.2 0-.4-.2-.4-.4V8.6c0-.2.2-.4.4-.4h2.4c.2 0 .4.2.4.4s-.2.4-.4.4h-2v.8h2z"/></svg>
-  <span class="fab-text">免費資源</span>
-</a>
+
+<a class="fab" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" aria-label="加入 LINE 領免費資源"><svg viewBox="0 0 24 24"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg><span class="t">加 LINE</span></a>
+
+<!-- FAQ -->
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">常見問題</div><div class="sec-title">爸媽最常問的事</div></div>
+    <div class="faq-list reveal">
+      <div class="faq"><button class="faq-q">課程適合幾歲的孩子？<span class="pm"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><p>主要為國小中年級到國中的孩子設計。年紀較小的孩子，建議家長一起看前幾堂，陪著把方法用到日常功課上，效果會更好。</p></div></div>
+      <div class="faq"><button class="faq-q">是買斷還是訂閱？可以看多久？<span class="pm"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><p>兩門課都是「買斷制、永久觀看」，一次付費之後就能反覆觀看，孩子忘了隨時回去複習，沒有時間限制、也不會額外扣款。</p></div></div>
+      <div class="faq"><button class="faq-q">有免費的可以先看嗎？<span class="pm"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><p>有！我們提供一堂免費的「腦力暖身課」，只要註冊會員登入後就能立刻觀看，先體驗方法再決定要不要上完整課程。</p></div></div>
+      <div class="faq"><button class="faq-q">付款安全嗎？有電子發票嗎？<span class="pm"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><p>採用綠界 ECPay 金流，支援信用卡、ATM、超商與 LINE Pay。付款成功後自動開立電子發票並寄到您的 email，結帳時也可填寫公司抬頭與統編。</p></div></div>
+      <div class="faq"><button class="faq-q">如果孩子看不下去怎麼辦？<span class="pm"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><p>課程用大量畫面、遊戲化的練習設計，盡量讓孩子覺得有趣。建議先看免費的腦力暖身課，確認孩子的接受度後再決定購買。</p></div></div>
+    </div>
+  </div>
+</section>
+
 <script>
-  // reveal on scroll
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:0.15});
-  els.forEach(el=>io.observe(el));
-  // mobile menu
-  const toggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  toggle.addEventListener('click', ()=>{
-    const open = navLinks.classList.toggle('open');
-    document.body.classList.toggle('menu-open', open);
-    toggle.setAttribute('aria-expanded', open);
-  });
-  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
-    navLinks.classList.remove('open');
-    document.body.classList.remove('menu-open');
-    toggle.setAttribute('aria-expanded', false);
-  }));
-  // neural spine draw-in, length matched to page height
-  function sizeSpine(){
-    const h = document.body.scrollHeight;
-    const path = document.getElementById('spinePath');
-    path.setAttribute('d', `M1,0 L1,${h}`);
-    const len = path.getTotalLength();
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-  }
-  window.addEventListener('load', ()=>{
-    sizeSpine();
-    const path = document.getElementById('spinePath');
-    requestAnimationFrame(()=>{ path.style.transition = 'stroke-dashoffset 1.8s ease'; });
-  });
-  window.addEventListener('scroll', ()=>{
-    const path = document.getElementById('spinePath');
-    const len = path.getTotalLength();
-    const scrollFraction = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-    path.style.strokeDashoffset = len - (len * Math.min(Math.max(scrollFraction,0),1));
-  });
-  window.addEventListener('resize', sizeSpine);
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const toggle=document.getElementById('menuToggle'), navLinks=document.getElementById('navLinks');
+  toggle.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');document.body.classList.toggle('menu-open',o);toggle.setAttribute('aria-expanded',o);});
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded',false);}));
+  document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const f=q.parentElement,a=f.querySelector('.faq-a'),o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});if(!o){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});});
 </script>
+<script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
