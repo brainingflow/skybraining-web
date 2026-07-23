@@ -121,6 +121,17 @@
   <a class="back" href="index.html">← 回首頁</a>
 </div>
 
+<script>
+// LINE 內建瀏覽器會讓登入卡住（Google 直接封鎖、LINE 登入 session 也存不進 Safari）
+// → 偵測到 LINE 內建瀏覽器就自動改用外部瀏覽器（Safari/Chrome）開啟本頁
+(function(){
+  if(/ Line\//i.test(navigator.userAgent) && !/[?&]openExternalBrowser=1/.test(location.search)){
+    var u = new URL(location.href);
+    u.searchParams.set('openExternalBrowser','1');
+    location.replace(u.toString());
+  }
+})();
+</script>
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
