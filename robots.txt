@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /member.html
+Disallow: /watch.html
+Disallow: /account.html
+
+Sitemap: https://skybraining.com/sitemap.xml
