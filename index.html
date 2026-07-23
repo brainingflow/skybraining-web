@@ -607,21 +607,25 @@
   <div id="nb-bubble" role="status" aria-live="polite"></div>
   <button id="nb-body" aria-label="和吉祥物腦寶互動">
     <svg viewBox="0 0 120 120" width="74" height="74" aria-hidden="true">
-      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C6CF0"/><stop offset="1" stop-color="#4B37D8"/></linearGradient></defs>
-      <line x1="60" y1="15" x2="60" y2="30" stroke="#FFB020" stroke-width="4" stroke-linecap="round"/>
-      <path d="M60 4l3.5 7-3.5 2.5-3.5-2.5z" fill="#FFB020"/>
-      <rect x="18" y="26" width="84" height="80" rx="35" fill="url(#nbg)"/>
-      <path d="M39 45c6-6 13 4 21 0M43 57c6-5 15 3 23-1" stroke="rgba(255,255,255,.55)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <circle cx="47" cy="73" r="12" fill="#fff"/><circle cx="77" cy="73" r="12" fill="#fff"/>
-      <circle class="nb-eye" cx="49" cy="75" r="5.6" fill="#20234a"/><circle class="nb-eye" cx="79" cy="75" r="5.6" fill="#20234a"/>
-      <circle cx="35" cy="88" r="5.2" fill="#FF8A3D" opacity=".5"/><circle cx="89" cy="88" r="5.2" fill="#FF8A3D" opacity=".5"/>
-      <path d="M54 90c4 5 12 5 16 0" stroke="#20234a" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A3F7A"/><stop offset="1" stop-color="#141631"/></linearGradient></defs>
+      <ellipse cx="60" cy="68" rx="35" ry="37" fill="url(#nbg)"/>
+      <path d="M25 62c-6 10-4 22 4 28M95 62c6 10 4 22-4 28" stroke="#141631" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="60" cy="84" rx="20" ry="15" fill="#F1EFE7"/>
+      <path d="M52 79l4 5 4-5M60 84l4 5 4-5" stroke="#c9ccd8" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="46" cy="54" r="14.5" fill="#FFB020"/><circle cx="74" cy="54" r="14.5" fill="#FFB020"/>
+      <circle cx="46" cy="54" r="11.5" fill="#fff"/><circle cx="74" cy="54" r="11.5" fill="#fff"/>
+      <circle class="nb-eye" cx="48" cy="56" r="5.4" fill="#20234a"/><circle class="nb-eye" cx="76" cy="56" r="5.4" fill="#20234a"/>
+      <path d="M60 62l-5 7h10z" fill="#FF8A3D"/>
+      <polygon points="60,7 96,21 60,35 24,21" fill="#20234a"/>
+      <rect x="48" y="27" width="24" height="7" rx="3" fill="#20234a"/>
+      <line x1="96" y1="21" x2="96" y2="40" stroke="#FFB020" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="96" cy="43" r="3.6" fill="#FFB020"/>
     </svg>
   </button>
 </div>
 <style>
   #naobao{position:fixed;left:20px;bottom:20px;z-index:60;font-family:"Noto Sans TC",sans-serif;}
-  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 20px rgba(75,55,216,.35));animation:nb-float 3.2s ease-in-out infinite;transition:transform .2s;}
+  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 20px rgba(20,22,49,.32));animation:nb-float 3.2s ease-in-out infinite;transition:transform .2s;}
   #nb-body:hover{transform:scale(1.08) rotate(-3deg);}
   #nb-body:active{transform:scale(.95);}
   @keyframes nb-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
