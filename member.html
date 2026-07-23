@@ -64,6 +64,24 @@
   .state .spin{width:34px;height:34px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
   .foot-note{color:var(--ink-soft);font-size:13px;padding:0 0 50px;}
+  .links-card{background:#fff;border:1px solid var(--hair);border-radius:22px;box-shadow:var(--shadow-sm);padding:20px 26px;margin-bottom:44px;}
+  .links-lead{font-size:13.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .link-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--hair);}
+  .link-row:first-of-type{border-top:none;}
+  .link-info{display:flex;align-items:center;gap:11px;}
+  .link-name{font-weight:700;font-family:var(--round);color:var(--indigo);font-size:15px;}
+  .link-badge{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .link-badge.on{color:var(--teal-deep);background:rgba(22,176,168,.12);}
+  .link-badge.off{color:var(--ink-soft);background:var(--paper-2);}
+  .link-btn{font-family:var(--round);font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);border:none;padding:9px 18px;border-radius:24px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none;}
+  .link-btn:hover{filter:brightness(1.03);}
+  .link-btn.line{background:var(--line-brand);}
+  .link-btn:disabled{opacity:.6;cursor:not-allowed;}
+  .link-soon{font-size:12.5px;color:var(--ink-soft);}
+  .link-msg{font-size:13px;padding-top:10px;display:none;}
+  .link-msg.show{display:block;}
+  .link-msg.err{color:#d64545;}
+  .link-msg.ok{color:var(--teal-deep);}
 </style>
 </head>
 <body>
@@ -141,8 +159,53 @@
       html += `<div class="section-t"><span class="bar"></span>探索更多課程</div>`;
       html += '<div class="grid">' + otherCourses.map(c=>card(c,false)).join('') + '</div>';
     }
+    html += `<div id="acctLinks"></div>`;
     $('content').innerHTML = html;
+    renderAccountLinks();
   })();
+
+  // ── 帳號連結：讓 Email／Google／LINE 綁在同一個帳號 ──
+  // LINE 登入 edge function 上線後，把「帶當前登入 token 的綁定網址」填進這裡即可啟用 LINE 綁定按鈕
+  const LINE_LINK_URL = '';
+  async function renderAccountLinks(){
+    const box = $('acctLinks');
+    if(!box) return;
+    let ids = [];
+    try{
+      const { data } = await supabase.auth.getUserIdentities();
+      ids = (data && data.identities) ? data.identities : [];
+    }catch(e){ /* 舊 session 可能不支援，靜默略過 */ }
+    const has = (p)=> ids.some(i=>i.provider===p);
+    const row = (name, connected, actionHtml)=>`
+      <div class="link-row">
+        <div class="link-info"><span class="link-name">${name}</span>
+          <span class="link-badge ${connected?'on':'off'}">${connected?'已連結':'未連結'}</span></div>
+        <div>${actionHtml}</div>
+      </div>`;
+    let rows = '';
+    rows += row('Email ／ 密碼登入', has('email'),
+      has('email') ? '' : `<a class="link-btn" href="account.html">設定密碼 →</a>`);
+    rows += row('Google 登入', has('google'),
+      has('google') ? '' : `<button class="link-btn" id="linkGoogle">連結 Google →</button>`);
+    rows += row('LINE 登入', has('line'),
+      has('line') ? '' : (LINE_LINK_URL
+        ? `<a class="link-btn line" href="${LINE_LINK_URL}">連結 LINE →</a>`
+        : `<span class="link-soon">LINE 登入設定完成後開放</span>`));
+    box.innerHTML = `
+      <div class="section-t"><span class="bar"></span>帳號與登入方式</div>
+      <div class="links-card">
+        <p class="links-lead">同一個人可以綁定多種登入方式。綁定之後，不管用 Email、Google 還是 LINE 登入，看到的都是同一個帳號、同一批課程。</p>
+        ${rows}
+        <div class="link-msg" id="linkMsg"></div>
+      </div>`;
+    const lmsg = (t,type)=>{ const m=$('linkMsg'); if(!m) return; m.className='link-msg show '+type; m.textContent=t; };
+    const g = $('linkGoogle');
+    if(g) g.onclick = async ()=>{
+      g.disabled = true; g.textContent = '前往 Google…';
+      const { error } = await supabase.auth.linkIdentity({ provider:'google' });
+      if(error){ g.disabled=false; g.textContent='連結 Google →'; lmsg('連結失敗：'+error.message,'err'); }
+    };
+  }
 
   function card(c, owned){
     const color = c.accent==='teal' ? 'teal' : 'amber';
