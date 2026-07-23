@@ -135,30 +135,31 @@
     <div class="foot-links"><a href="articles.html">精品文章</a><a href="courses.html">所有課程</a><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 官方帳號</a></div>
   </div>
 </footer>
-<!-- 鷹博士 mascot -->
+<!-- 燈寶 mascot -->
 <div id="naobao">
   <div id="nb-bubble" role="status" aria-live="polite"></div>
-  <button id="nb-body" aria-label="和吉祥物鷹博士互動">
+  <button id="nb-body" aria-label="和吉祥物燈寶互動">
     <svg viewBox="0 0 120 120" width="74" height="74" aria-hidden="true">
-      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A3F7A"/><stop offset="1" stop-color="#141631"/></linearGradient></defs>
-      <ellipse cx="60" cy="68" rx="35" ry="37" fill="url(#nbg)"/>
-      <path d="M25 62c-6 10-4 22 4 28M95 62c6 10 4 22-4 28" stroke="#141631" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <ellipse cx="60" cy="84" rx="20" ry="15" fill="#F1EFE7"/>
-      <path d="M52 79l4 5 4-5M60 84l4 5 4-5" stroke="#c9ccd8" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <circle cx="46" cy="54" r="14.5" fill="#FFB020"/><circle cx="74" cy="54" r="14.5" fill="#FFB020"/>
-      <circle cx="46" cy="54" r="11.5" fill="#fff"/><circle cx="74" cy="54" r="11.5" fill="#fff"/>
-      <circle class="nb-eye" cx="48" cy="56" r="5.4" fill="#20234a"/><circle class="nb-eye" cx="76" cy="56" r="5.4" fill="#20234a"/>
-      <path d="M60 62l-5 7h10z" fill="#FF8A3D"/>
-      <polygon points="60,7 96,21 60,35 24,21" fill="#20234a"/>
-      <rect x="48" y="27" width="24" height="7" rx="3" fill="#20234a"/>
-      <line x1="96" y1="21" x2="96" y2="40" stroke="#FFB020" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="96" cy="43" r="3.6" fill="#FFB020"/>
+      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC94D"/><stop offset="1" stop-color="#FF8A3D"/></linearGradient></defs>
+      <g stroke="#FFB020" stroke-width="3.6" stroke-linecap="round">
+        <line x1="60" y1="6" x2="60" y2="14"/><line x1="26" y1="20" x2="32" y2="26"/><line x1="94" y1="20" x2="88" y2="26"/>
+        <line x1="14" y1="52" x2="22" y2="52"/><line x1="106" y1="52" x2="98" y2="52"/>
+      </g>
+      <circle cx="60" cy="54" r="32" fill="url(#nbg)"/>
+      <path d="M44 36a22 22 0 0 1 12-6" stroke="rgba(255,255,255,.7)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="49" cy="52" r="10.5" fill="#fff"/><circle cx="72" cy="52" r="10.5" fill="#fff"/>
+      <circle class="nb-eye" cx="51" cy="54" r="5" fill="#20234a"/><circle class="nb-eye" cx="74" cy="54" r="5" fill="#20234a"/>
+      <circle cx="38" cy="64" r="4.6" fill="#E23A63" opacity=".4"/><circle cx="83" cy="64" r="4.6" fill="#E23A63" opacity=".4"/>
+      <path d="M54 66c4 4.4 10 4.4 14 0" stroke="#20234a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <rect x="48" y="86" width="24" height="6" rx="3" fill="#8b8fa8"/>
+      <rect x="50" y="93" width="20" height="5" rx="2.5" fill="#a9adc2"/>
+      <rect x="52" y="99" width="16" height="5" rx="2.5" fill="#8b8fa8"/>
     </svg>
   </button>
 </div>
 <style>
   #naobao{position:fixed;left:20px;top:0;z-index:60;font-family:"Noto Sans TC",sans-serif;transition:left 3.4s cubic-bezier(.45,.05,.35,1),top 3.4s cubic-bezier(.45,.05,.35,1);}
-  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 20px rgba(20,22,49,.32));animation:nb-float 3.2s ease-in-out infinite;transition:transform .3s;}
+  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 22px rgba(255,138,61,.4));animation:nb-float 3.2s ease-in-out infinite;transition:transform .3s;}
   #nb-body:hover{transform:scale(1.08) rotate(-3deg);}
   #nb-body:active{transform:scale(.95);}
   #naobao.face-left #nb-body svg{transform:scaleX(-1);}
@@ -179,7 +180,7 @@
 <script>
 (function(){
   var msgs=[
-    '嗨！我是<b>鷹博士</b> 🦉 要不要先上一堂 <a href="login.html">免費課</a>？',
+    '嗨！我是<b>燈寶</b> 💡 要不要先上一堂 <a href="login.html">免費課</a>？',
     '3 分鐘測出孩子的學習力！<a href="quiz.html">馬上免費檢測</a> 📝',
     '記東西用「畫面」記，比死背好記十倍喔！',
     '考試快到了嗎？試試 <a href="article-exam-prep.html">間隔複習</a> 📅',
@@ -192,7 +193,7 @@
   var hovering=false;
   btn.addEventListener('mouseenter',function(){hovering=true;});
   btn.addEventListener('mouseleave',function(){hovering=false;});
-  function say(){ i=(i+1)%msgs.length; b.innerHTML='<span class="nb-name">鷹博士</span>'+msgs[i]; b.classList.add('show'); clearTimeout(t); t=setTimeout(function(){b.classList.remove('show');},7000); }
+  function say(){ i=(i+1)%msgs.length; b.innerHTML='<span class="nb-name">燈寶</span>'+msgs[i]; b.classList.add('show'); clearTimeout(t); t=setTimeout(function(){b.classList.remove('show');},7000); }
   btn.addEventListener('click',say);
   // ── 位置 & 飛行 ──
   var W=function(){return window.innerWidth;}, H=function(){return window.innerHeight;};
