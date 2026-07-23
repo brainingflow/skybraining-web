@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台管理・手動開通 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--err:#d64545;
+    --hair:rgba(21,23,49,.1);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --accent:linear-gradient(120deg,var(--amber),var(--orange));--shadow-md:0 18px 44px rgba(21,23,49,.12);--shadow-sm:0 6px 20px rgba(21,23,49,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;}
+  a{color:var(--teal-deep);text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  nav{background:var(--indigo);color:#fff;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,5vw,40px);max-width:1000px;margin:0 auto;}
+  .brand{font-family:var(--round);font-weight:800;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;}
+  .brand .b{width:9px;height:9px;border-radius:50%;background:var(--amber);}
+  .nav-in a{color:rgba(255,255,255,.85);font-size:14px;}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(30px,5vw,54px) 20px 80px;}
+  .h{margin-bottom:6px;font-family:var(--round);font-weight:800;font-size:clamp(24px,4vw,32px);color:var(--indigo);}
+  .sub{color:var(--ink-soft);margin-bottom:28px;font-size:15px;}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:20px;box-shadow:var(--shadow-sm);padding:28px 26px;margin-bottom:22px;}
+  .card h2{font-size:18px;color:var(--indigo);margin-bottom:16px;display:flex;align-items:center;gap:9px;}
+  .card h2 .bar{width:5px;height:20px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
+  label{display:block;font-weight:700;font-size:13.5px;color:var(--indigo);margin:12px 0 6px;font-family:var(--round);}
+  input,select{width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);}
+  input:focus,select:focus{outline:none;border-color:var(--orange);}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .btn{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s,filter .2s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-grant{color:#fff;background:linear-gradient(135deg,#16B0A8,#0d8a83);box-shadow:0 10px 24px rgba(22,176,168,.3);}
+  .btn-list{color:var(--indigo);background:var(--paper-2);}
+  .btn-revoke{color:var(--err);background:rgba(214,69,69,.08);border:1px solid rgba(214,69,69,.25);}
+  .msg{margin-top:16px;padding:12px 15px;border-radius:12px;font-size:14px;display:none;white-space:pre-wrap;}
+  .msg.show{display:block;}
+  .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
+  .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px;}
+  th,td{border-bottom:1px solid var(--hair);padding:9px 8px;text-align:left;}
+  th{color:var(--ink-soft);font-weight:700;font-size:12.5px;}
+  .gate{max-width:460px;margin:80px auto;text-align:center;color:var(--ink-soft);}
+  .gate h2{font-family:var(--round);font-weight:800;color:var(--indigo);font-size:22px;margin-bottom:10px;}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:8px;}
+  .state{padding:60px 0;text-align:center;color:var(--ink-soft);}
+  .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in"><span class="brand"><span class="b"></span>強腦力 後台</span><a href="member.html">← 會員中心</a></div></nav>
+<div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const ADMIN_EMAILS=['brainingflow@gmail.com'];
+  const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+  const $=(id)=>document.getElementById(id);
+  const esc=(s)=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  (async ()=>{
+    const { data:{ session } } = await supabase.auth.getSession();
+    if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
+    const email=(session.user.email||'').toLowerCase();
+    if(!ADMIN_EMAILS.includes(email)){
+      $('content').innerHTML=`<div class="gate"><h2>非管理員帳號</h2><p>這個頁面僅限管理員（${esc(ADMIN_EMAILS.join('、'))}）使用。<br>你目前登入的是 ${esc(session.user.email)}。</p><p class="note"><a href="member.html">← 回會員中心</a></p></div>`;
+      return;
+    }
+    const { data:courses } = await supabase.from('courses').select('id,name,price').order('sort_order');
+    const opts=(courses||[]).map(c=>`<option value="${esc(c.id)}">${esc(c.name)}（${c.price?('NT$'+c.price):'免費'}・${esc(c.id)}）</option>`).join('');
+    $('content').innerHTML=`
+      <div class="wrap">
+        <div class="h">手動開通課程</div>
+        <div class="sub">給現金付款或其他方式付費的會員手動開通課程。對方需先在網站註冊過（用 Email 或 Google／LINE 登入一次）。</div>
+        <div class="card">
+          <h2><span class="bar"></span>開通 / 取消</h2>
+          <label>會員 Email</label>
+          <input id="email" type="email" placeholder="對方註冊的 email，例如 someone@gmail.com">
+          <label>課程</label>
+          <select id="course">${opts}</select>
+          <div class="btns">
+            <button class="btn btn-grant" id="btnGrant">✓ 開通課程</button>
+            <button class="btn btn-list" id="btnList">查詢此會員已開通</button>
+            <button class="btn btn-revoke" id="btnRevoke">取消開通</button>
+          </div>
+          <div class="msg" id="msg"></div>
+          <div id="listWrap"></div>
+        </div>
+        <div class="sub" style="font-size:13px;">＊金流串接完成後，付款成功會自動開通；這個後台是給現金／臨櫃等手動情況用的。</div>
+      </div>`;
+
+    const msg=(t,type)=>{ const m=$('msg'); m.className='msg show '+type; m.textContent=t; };
+    const emailVal=()=>$('email').value.trim();
+
+    $('btnGrant').onclick=async ()=>{
+      if(!emailVal()){ msg('請先輸入會員 Email。','error'); return; }
+      $('btnGrant').disabled=true; msg('開通中…','ok');
+      const { data, error } = await supabase.rpc('admin_grant_course',{ target_email:emailVal(), p_course_id:$('course').value });
+      $('btnGrant').disabled=false;
+      if(error){ msg('❌ '+error.message,'error'); return; }
+      msg(data||'完成','ok');
+    };
+    $('btnRevoke').onclick=async ()=>{
+      if(!emailVal()){ msg('請先輸入會員 Email。','error'); return; }
+      if(!confirm('確定要取消這位會員的這門課開通嗎？')) return;
+      $('btnRevoke').disabled=true; msg('處理中…','ok');
+      const { data, error } = await supabase.rpc('admin_revoke_course',{ target_email:emailVal(), p_course_id:$('course').value });
+      $('btnRevoke').disabled=false;
+      if(error){ msg('❌ '+error.message,'error'); return; }
+      msg(data||'已取消','ok');
+    };
+    $('btnList').onclick=async ()=>{
+      if(!emailVal()){ msg('請先輸入會員 Email。','error'); return; }
+      msg('查詢中…','ok');
+      const { data, error } = await supabase.rpc('admin_list_enrollments',{ target_email:emailVal() });
+      if(error){ msg('❌ '+error.message,'error'); $('listWrap').innerHTML=''; return; }
+      msg('查詢完成','ok');
+      if(!data || !data.length){ $('listWrap').innerHTML='<div class="sub" style="margin-top:14px;">這位會員目前沒有已開通的課程。</div>'; return; }
+      $('listWrap').innerHTML='<table><tr><th>課程</th><th>代號</th><th>來源</th><th>開通時間</th></tr>'+
+        data.map(r=>`<tr><td>${esc(r.course_name)}</td><td>${esc(r.course_id)}</td><td>${esc(r.source)}</td><td>${esc((r.granted_at||'').slice(0,16).replace('T',' '))}</td></tr>`).join('')+'</table>';
+    };
+  })();
+</script>
+</body>
+</html>

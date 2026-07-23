@@ -75,6 +75,8 @@
     </a>
     <div class="nav-right">
       <a href="index.html" style="color:var(--ink-soft);font-weight:500;">← 回首頁</a>
+      <a href="account.html" style="color:var(--ink-soft);font-weight:500;">修改密碼</a>
+      <span id="adminLink"></span>
       <span class="who" id="who"></span>
       <button class="logout" id="logout">登出</button>
     </div>
@@ -112,6 +114,9 @@
     const { data:prof } = await supabase.from('profiles').select('display_name,child_nickname').eq('id', user.id).maybeSingle();
     if(prof && prof.display_name) name = prof.display_name;
     $('who').textContent = user.email;
+    if((user.email||'').toLowerCase()==='brainingflow@gmail.com'){
+      document.getElementById('adminLink').innerHTML='<a href="admin.html" style="color:var(--orange);font-weight:700;">後台管理</a>';
+    }
     $('hi').textContent = `嗨，${name}！`;
 
     // 讀所有課程 + 本人的購買紀錄

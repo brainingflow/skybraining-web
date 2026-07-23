@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修改密碼 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--err:#d64545;
+    --hair:rgba(21,23,49,.1);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --accent:linear-gradient(120deg,var(--amber),var(--orange));--shadow-md:0 18px 44px rgba(21,23,49,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(120% 60% at 85% -10%,rgba(255,138,61,.14),transparent 55%),radial-gradient(90% 50% at 0% 110%,rgba(22,176,168,.12),transparent 55%);}
+  a{color:var(--teal-deep);text-decoration:none;}
+  h1,.round{font-family:var(--round);}
+  .top{display:flex;justify-content:center;padding:34px 20px 6px;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);}
+  .logo-mark{width:40px;height:40px;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--shadow-md);}
+  .logo-mark svg{width:24px;height:24px;}
+  .shell{max-width:440px;margin:20px auto 60px;padding:0 20px;}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:24px;padding:32px 30px;box-shadow:var(--shadow-md);}
+  h1{font-size:22px;color:var(--indigo);margin-bottom:4px;}
+  .lead{font-size:14px;color:var(--ink-soft);margin-bottom:14px;}
+  .who{font-size:13px;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:10px 13px;margin-bottom:6px;}
+  label{display:block;font-weight:700;font-size:13.5px;color:var(--indigo);margin:14px 0 7px;font-family:var(--round);}
+  input{width:100%;padding:13px 15px;border:1.5px solid var(--hair);border-radius:12px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);}
+  input:focus{outline:none;border-color:var(--orange);}
+  .btn{width:100%;margin-top:22px;font-family:var(--round);font-weight:700;font-size:16px;color:var(--indigo);background:var(--accent);border:none;padding:15px;border-radius:40px;cursor:pointer;box-shadow:0 12px 28px rgba(255,138,61,.32);transition:transform .2s,box-shadow .2s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .msg{margin-top:18px;padding:12px 15px;border-radius:12px;font-size:14px;display:none;}
+  .msg.show{display:block;}
+  .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
+  .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
+  .back{display:block;text-align:center;margin-top:24px;font-size:13.5px;color:var(--ink-soft);}
+  .state{padding:60px 0;text-align:center;color:var(--ink-soft);}
+  .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="brand" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力</a>
+</div>
+<div class="shell">
+  <div class="card" id="card">
+    <div class="state"><div class="spin"></div>載入中…</div>
+  </div>
+  <a class="back" href="member.html">← 回會員中心</a>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+  const $=(id)=>document.getElementById(id);
+  const esc=(s)=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  (async ()=>{
+    const { data:{ session } } = await supabase.auth.getSession();
+    if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
+    $('card').innerHTML=`
+      <h1>設定 / 修改密碼</h1>
+      <p class="lead">設定密碼後，你也可以用「Email ＋ 密碼」登入（原本的 Google／LINE 登入仍然可用）。</p>
+      <div class="who">目前帳號：${esc(session.user.email||'（此帳號無 email）')}</div>
+      <label for="pw">新密碼</label>
+      <input id="pw" type="password" autocomplete="new-password" placeholder="至少 6 碼">
+      <label for="pw2">再輸入一次新密碼</label>
+      <input id="pw2" type="password" autocomplete="new-password" placeholder="再打一次確認">
+      <button class="btn" id="btnSave">儲存新密碼</button>
+      <div class="msg" id="msg"></div>`;
+    const msg=(t,type)=>{ const m=$('msg'); m.className='msg show '+type; m.textContent=t; };
+    $('btnSave').onclick=async ()=>{
+      const pw=$('pw').value, pw2=$('pw2').value;
+      if(pw.length<6){ msg('密碼至少需要 6 碼。','error'); return; }
+      if(pw!==pw2){ msg('兩次輸入的密碼不一樣，請再確認。','error'); return; }
+      $('btnSave').disabled=true; msg('儲存中…','ok');
+      const { error } = await supabase.auth.updateUser({ password: pw });
+      $('btnSave').disabled=false;
+      if(error){ msg('❌ '+error.message,'error'); return; }
+      $('pw').value=''; $('pw2').value='';
+      msg('✅ 密碼已更新！之後可以用這個 Email ＋ 新密碼登入。','ok');
+    };
+  })();
+</script>
+</body>
+</html>
