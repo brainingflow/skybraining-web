@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>群發信 — 強腦力 後台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--err:#d64545;
+    --hair:rgba(21,23,49,.1);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --shadow-sm:0 6px 20px rgba(21,23,49,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;}
+  a{color:var(--teal-deep);text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  nav{background:var(--indigo);color:#fff;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,5vw,40px);max-width:1120px;margin:0 auto;}
+  .brand{font-family:var(--round);font-weight:800;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;}
+  .brand .b{width:9px;height:9px;border-radius:50%;background:var(--amber);}
+  .nav-in a{color:rgba(255,255,255,.85);font-size:14px;}
+  .tabs{background:#fff;border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:20;}
+  .tabs-in{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 clamp(12px,4vw,24px);overflow-x:auto;}
+  .tabs a{font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--ink-soft);padding:14px 16px;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabs a.active{color:var(--indigo);border-bottom-color:var(--orange);}
+  .tabs a:hover{color:var(--indigo);}
+  .wrap{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,34px) 16px 90px;}
+  .h{margin-bottom:4px;font-family:var(--round);font-weight:800;font-size:clamp(22px,4vw,29px);color:var(--indigo);}
+  .sub{color:var(--ink-soft);margin-bottom:22px;font-size:14.5px;}
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start;}
+  @media(max-width:860px){.grid{grid-template-columns:1fr;}}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:20px;box-shadow:var(--shadow-sm);padding:22px;margin-bottom:20px;}
+  .card h2{font-size:17px;color:var(--indigo);margin-bottom:4px;display:flex;align-items:center;gap:9px;}
+  .card h2 .bar{width:5px;height:19px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
+  .card-note{color:var(--ink-soft);font-size:13px;margin:2px 0 14px;}
+  input,select,textarea{width:100%;padding:11px 13px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:14.5px;color:var(--ink);background:var(--paper);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);}
+  textarea{min-height:220px;resize:vertical;line-height:1.7;}
+  label{display:block;font-weight:700;font-size:13px;color:var(--indigo);margin:12px 0 6px;font-family:var(--round);}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+  .btn{font-family:var(--round);font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:28px;border:none;cursor:pointer;transition:transform .2s,filter .2s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .btn-primary{color:#fff;background:linear-gradient(135deg,#FF8A3D,#FFB020);box-shadow:0 10px 24px rgba(255,138,61,.32);}
+  .btn-teal{color:#fff;background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .btn-ghost{color:var(--indigo);background:var(--paper-2);}
+  .seg-count{font-family:var(--round);font-weight:800;font-size:34px;color:var(--indigo);line-height:1.1;}
+  .seg-count small{font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .reclist{max-height:230px;overflow:auto;border:1px solid var(--hair);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ink-soft);background:var(--paper);margin-top:10px;word-break:break-all;line-height:1.9;}
+  .msg{margin-top:14px;padding:11px 14px;border-radius:12px;font-size:13.5px;display:none;white-space:pre-wrap;}
+  .msg.show{display:block;}
+  .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
+  .msg.warn{background:rgba(255,176,32,.14);color:#b7791a;border:1px solid rgba(255,176,32,.35);}
+  .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
+  .hint{background:var(--paper-2);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--ink-soft);margin-top:12px;}
+  .hint b{color:var(--indigo);}
+  .gate{max-width:460px;margin:80px auto;text-align:center;color:var(--ink-soft);}
+  .gate h2{font-family:var(--round);font-weight:800;color:var(--indigo);font-size:22px;margin-bottom:10px;}
+  .state{padding:44px 0;text-align:center;color:var(--ink-soft);}
+  .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in"><span class="brand"><span class="b"></span>強腦力 後台</span><a href="member.html">← 會員中心</a></div></nav>
+<div class="tabs"><div class="tabs-in">
+  <a href="admin.html">總覽・銷售</a>
+  <a href="admin-contacts.html">名單管理</a>
+  <a href="admin-broadcast.html" class="active">群發信</a>
+</div></div>
+<div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const ADMIN_EMAILS=['brainingflow@gmail.com'];
+  const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+  const $=(id)=>document.getElementById(id);
+  const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  (async ()=>{
+    const { data:{ session } } = await supabase.auth.getSession();
+    if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
+    const email=(session.user.email||'').toLowerCase();
+    if(!ADMIN_EMAILS.includes(email)){
+      $('content').innerHTML=`<div class="gate"><h2>非管理員帳號</h2><p>這個頁面僅限管理員使用。你目前登入的是 ${esc(session.user.email)}。</p><p><a href="member.html">← 回會員中心</a></p></div>`;
+      return;
+    }
+
+    $('content').innerHTML=`
+      <div class="wrap">
+        <div class="h">群發信</div>
+        <div class="sub">寫好一封信，挑對象（全部 / 只會員 / 買了某課程 / 某標籤…），系統幫你把收件人整理好。可一鍵複製、匯出、或直接用郵件軟體開好一封 BCC 信。</div>
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2><span class="bar"></span>1. 寫信</h2>
+              <label>主旨</label>
+              <input id="subj" type="text" placeholder="例如：強腦力官網全新改版，歡迎回來看看！">
+              <label>內容（換行會保留；用 {{name}} 會自動帶入對方名字）</label>
+              <textarea id="body" placeholder="Hi {{name}}，&#10;&#10;強腦力的官網改版上線了…"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h2><span class="bar"></span>2. 選對象</h2>
+              <label>身分</label>
+              <select id="segRole">
+                <option value="all">全部聯絡人</option>
+                <option value="member">只寄給會員</option>
+                <option value="lead">只寄給報名名單</option>
+                <option value="contact">只寄給匯入名單</option>
+              </select>
+              <label>買了哪門課</label>
+              <select id="segCourse"><option value="">不限</option><option value="__none__">尚未購課（適合推廣）</option></select>
+              <label>標籤</label>
+              <select id="segTag"><option value="">不限</option></select>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--hair);">
+                <div class="seg-count"><span id="cnt">0</span> <small>位收件人</small></div>
+                <div id="reclist" class="reclist"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2><span class="bar"></span>3. 寄送</h2>
+          <div class="card-note">小量名單（幾十位，例如「買了某課的人」）最快：按「用郵件軟體開信」會開好一封收件人全在密件副本（BCC）的信，你檢查後直接送出。大量名單（像全部 2000 位）建議用「複製 Email」或「匯出 CSV」丟到 systeme.io 這類群發工具，到達率最好。</div>
+          <div class="btns">
+            <button class="btn btn-teal" id="btnCopy">📋 複製所有 Email</button>
+            <button class="btn btn-ghost" id="btnCsv">⬇ 匯出收件人 CSV</button>
+            <button class="btn btn-primary" id="btnMail">✉ 用郵件軟體開信（BCC）</button>
+          </div>
+          <div class="msg" id="msg"></div>
+          <div class="hint">
+            <b>想要「後台直接一鍵群發、不用開郵件軟體」？</b>　這需要接一個寄信服務（推薦 Resend，免費額度夠用）。我已把網域寄信設定（SPF/DKIM）預留好，只要你申請一組免費 API 金鑰、貼進 Supabase，就能升級成真正的一鍵群發。需要時跟我說即可。
+          </div>
+        </div>
+      </div>`;
+
+    let people=[], courses=[], recips=[];
+
+    const compute=()=>{
+      const role=$('segRole').value, course=$('segCourse').value, tag=$('segTag').value;
+      recips=people.filter(p=>{
+        if(!p.email) return false;
+        if(p.subscribed===false) return false;
+        if(role==='member' && !p.is_member) return false;
+        if(role==='lead' && !p.is_lead) return false;
+        if(role==='contact' && !p.is_contact) return false;
+        if(course==='__none__' && (p.courses||[]).length>0) return false;
+        if(course && course!=='__none__' && !(p.courses||[]).includes(course)) return false;
+        if(tag && !(p.tags||[]).includes(tag)) return false;
+        return true;
+      });
+      $('cnt').textContent=recips.length;
+      $('reclist').innerHTML = recips.length ? recips.slice(0,300).map(r=>esc(r.email)).join('、')+(recips.length>300?` …（共 ${recips.length} 位）`:'') : '<span style="color:#c9ccd8;">沒有符合的收件人</span>';
+    };
+    ['segRole','segCourse','segTag'].forEach(id=>$(id).addEventListener('change',compute));
+
+    const msg=(t,type)=>{ const m=$('msg'); m.className='msg show '+type; m.textContent=t; };
+
+    $('btnCopy').onclick=async ()=>{
+      if(!recips.length){ msg('目前沒有收件人。','error'); return; }
+      const emails=recips.map(r=>r.email).join(', ');
+      try{ await navigator.clipboard.writeText(emails); msg('✓ 已複製 '+recips.length+' 個 email 到剪貼簿。貼到 systeme.io / Gmail 的密件副本即可。','ok'); }
+      catch(e){ // fallback
+        const ta=document.createElement('textarea'); ta.value=emails; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+        msg('✓ 已複製 '+recips.length+' 個 email。','ok');
+      }
+    };
+
+    $('btnCsv').onclick=()=>{
+      if(!recips.length){ msg('目前沒有收件人。','error'); return; }
+      const q=(v)=>{ const s=String(v==null?'':v); return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s; };
+      const lines=['email,name'].concat(recips.map(r=>[r.email,r.name||''].map(q).join(',')));
+      const csv='﻿'+lines.join('\r\n');
+      const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+      a.download='強腦力-收件人.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+      msg('✓ 已匯出 '+recips.length+' 位收件人的 CSV。','ok');
+    };
+
+    $('btnMail').onclick=()=>{
+      if(!recips.length){ msg('目前沒有收件人。','error'); return; }
+      const subj=$('subj').value.trim();
+      const body=$('body').value.replace(/\{\{name\}\}/g,'');
+      if(!subj){ msg('先填主旨。','error'); return; }
+      if(recips.length>60){
+        msg('收件人有 '+recips.length+' 位，太多了，郵件軟體可能塞不下網址。建議改用「複製 Email」或「匯出 CSV」，丟到 systeme.io 這類群發工具寄。','warn');
+        return;
+      }
+      const bcc=recips.map(r=>r.email).join(',');
+      const href='mailto:?bcc='+encodeURIComponent(bcc)+'&subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+      window.location.href=href;
+      msg('已開啟郵件軟體，收件人都放在密件副本（BCC）。檢查一下就能送出。','ok');
+    };
+
+    const load=async ()=>{
+      const [audRes, cRes] = await Promise.all([
+        supabase.rpc('admin_audience'),
+        supabase.from('courses').select('id,name').order('sort_order')
+      ]);
+      if(audRes.error){ msg('讀取名單失敗：'+audRes.error.message,'error'); return; }
+      people=audRes.data||[];
+      courses=cRes.data||[];
+      const names=[...new Set(courses.map(c=>c.name))];
+      $('segCourse').innerHTML='<option value="">不限</option><option value="__none__">尚未購課（適合推廣）</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+      const tagset=new Set(); people.forEach(p=>(p.tags||[]).forEach(t=>tagset.add(t)));
+      $('segTag').innerHTML='<option value="">不限</option>'+[...tagset].sort().map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');
+      compute();
+    };
+    load();
+  })();
+</script>
+</body>
+</html>

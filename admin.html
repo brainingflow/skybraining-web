@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
 <title>後台管理・會員與銷售 — 強腦力 SkyBraining</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +24,12 @@
   .brand{font-family:var(--round);font-weight:800;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;}
   .brand .b{width:9px;height:9px;border-radius:50%;background:var(--amber);}
   .nav-in a{color:rgba(255,255,255,.85);font-size:14px;}
-  .wrap{max-width:1080px;margin:0 auto;padding:clamp(26px,5vw,46px) 18px 90px;}
+  .tabs{background:#fff;border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:20;}
+  .tabs-in{max-width:1080px;margin:0 auto;display:flex;gap:4px;padding:0 clamp(12px,4vw,24px);overflow-x:auto;}
+  .tabs a{font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--ink-soft);padding:14px 16px;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabs a.active{color:var(--indigo);border-bottom-color:var(--orange);}
+  .tabs a:hover{color:var(--indigo);}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,5vw,38px) 18px 90px;}
   .h{margin-bottom:4px;font-family:var(--round);font-weight:800;font-size:clamp(23px,4vw,31px);color:var(--indigo);}
   .sub{color:var(--ink-soft);margin-bottom:24px;font-size:15px;}
   .card{background:#fff;border:1px solid var(--hair);border-radius:20px;box-shadow:var(--shadow-sm);padding:24px 24px;margin-bottom:22px;}
@@ -103,6 +109,11 @@
 </head>
 <body>
 <nav><div class="nav-in"><span class="brand"><span class="b"></span>強腦力 後台</span><a href="member.html">← 會員中心</a></div></nav>
+<div class="tabs"><div class="tabs-in">
+  <a href="admin.html" class="active">總覽・銷售</a>
+  <a href="admin-contacts.html">名單管理</a>
+  <a href="admin-broadcast.html">群發信</a>
+</div></div>
 <div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
 
 <script type="module">

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>名單管理 — 強腦力 後台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--err:#d64545;
+    --hair:rgba(21,23,49,.1);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --accent:linear-gradient(120deg,var(--amber),var(--orange));--shadow-md:0 18px 44px rgba(21,23,49,.12);--shadow-sm:0 6px 20px rgba(21,23,49,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;}
+  a{color:var(--teal-deep);text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  nav{background:var(--indigo);color:#fff;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,5vw,40px);max-width:1120px;margin:0 auto;}
+  .brand{font-family:var(--round);font-weight:800;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;}
+  .brand .b{width:9px;height:9px;border-radius:50%;background:var(--amber);}
+  .nav-in a{color:rgba(255,255,255,.85);font-size:14px;}
+  /* tab bar */
+  .tabs{background:#fff;border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:20;}
+  .tabs-in{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 clamp(12px,4vw,24px);overflow-x:auto;}
+  .tabs a{font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--ink-soft);padding:14px 16px;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabs a.active{color:var(--indigo);border-bottom-color:var(--orange);}
+  .tabs a:hover{color:var(--indigo);}
+  .wrap{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,34px) 16px 90px;}
+  .h{margin-bottom:4px;font-family:var(--round);font-weight:800;font-size:clamp(22px,4vw,29px);color:var(--indigo);}
+  .sub{color:var(--ink-soft);margin-bottom:22px;font-size:14.5px;}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:20px;box-shadow:var(--shadow-sm);padding:22px;margin-bottom:20px;}
+  .card h2{font-size:17px;color:var(--indigo);margin-bottom:4px;display:flex;align-items:center;gap:9px;}
+  .card h2 .bar{width:5px;height:19px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
+  .card-note{color:var(--ink-soft);font-size:13px;margin:2px 0 14px;}
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr);}}
+  .tile{background:#fff;border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow-sm);padding:15px;}
+  .tile .k{font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-bottom:5px;}
+  .tile .v{font-family:var(--round);font-weight:800;font-size:24px;color:var(--indigo);line-height:1.1;}
+  input,select,textarea{width:100%;padding:11px 13px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:14.5px;color:var(--ink);background:var(--paper);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);}
+  textarea{min-height:90px;resize:vertical;line-height:1.6;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;}
+  label{display:block;font-weight:700;font-size:13px;color:var(--indigo);margin:10px 0 6px;font-family:var(--round);}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+  .btn{font-family:var(--round);font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:28px;border:none;cursor:pointer;transition:transform .2s,filter .2s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+  .btn-primary{color:#fff;background:linear-gradient(135deg,#16B0A8,#0d8a83);box-shadow:0 10px 24px rgba(22,176,168,.3);}
+  .btn-ghost{color:var(--indigo);background:var(--paper-2);font-size:13.5px;padding:9px 16px;}
+  .btn-violet{color:#fff;background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .drop{border:2px dashed rgba(21,23,49,.18);border-radius:14px;padding:20px;text-align:center;color:var(--ink-soft);font-size:14px;background:var(--paper);cursor:pointer;transition:border-color .2s,background .2s;}
+  .drop:hover,.drop.over{border-color:var(--orange);background:#fff;}
+  .row-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+  .filters input,.filters select{width:auto;min-width:140px;flex:0 1 auto;padding:9px 12px;font-size:13.5px;}
+  .filters input.search{flex:1 1 240px;min-width:180px;}
+  .msg{margin-top:14px;padding:11px 14px;border-radius:12px;font-size:13.5px;display:none;white-space:pre-wrap;}
+  .msg.show{display:block;}
+  .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
+  .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
+  .tbl-scroll{overflow-x:auto;margin-top:4px;max-height:560px;overflow-y:auto;border:1px solid var(--hair);border-radius:12px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px;}
+  thead th{position:sticky;top:0;background:#fff;z-index:1;}
+  th,td{border-bottom:1px solid var(--hair);padding:9px 10px;text-align:left;vertical-align:middle;}
+  th{color:var(--ink-soft);font-weight:700;font-size:12px;white-space:nowrap;}
+  tbody tr:hover{background:var(--paper);}
+  .email-cell{font-weight:500;color:var(--indigo);word-break:break-all;}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin:1px;white-space:nowrap;}
+  .badge.member{background:rgba(22,176,168,.14);color:#0d8a83;}
+  .badge.contact{background:rgba(255,176,32,.16);color:#b7791a;}
+  .badge.lead{background:rgba(124,108,240,.14);color:#4B37D8;}
+  .chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin:1px;background:var(--paper-2);color:var(--ink-soft);white-space:nowrap;}
+  .chip.course{background:rgba(255,138,61,.13);color:#c85f1a;}
+  .tag-add{font-size:11px;color:var(--teal-deep);cursor:pointer;font-weight:700;border:1px dashed rgba(13,138,131,.4);border-radius:12px;padding:1px 7px;background:none;margin:1px;}
+  .gate{max-width:460px;margin:80px auto;text-align:center;color:var(--ink-soft);}
+  .gate h2{font-family:var(--round);font-weight:800;color:var(--indigo);font-size:22px;margin-bottom:10px;}
+  .state{padding:44px 0;text-align:center;color:var(--ink-soft);}
+  .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  .empty{padding:26px 0;text-align:center;color:var(--ink-soft);font-size:14px;}
+  .pill{font-family:var(--round);font-weight:700;font-size:12px;color:#fff;background:linear-gradient(135deg,#7C6CF0,#4B37D8);border:none;padding:6px 12px;border-radius:16px;cursor:pointer;white-space:nowrap;}
+</style>
+</head>
+<body>
+<nav><div class="nav-in"><span class="brand"><span class="b"></span>強腦力 後台</span><a href="member.html">← 會員中心</a></div></nav>
+<div class="tabs"><div class="tabs-in">
+  <a href="admin.html">總覽・銷售</a>
+  <a href="admin-contacts.html" class="active">名單管理</a>
+  <a href="admin-broadcast.html">群發信</a>
+</div></div>
+<div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const ADMIN_EMAILS=['brainingflow@gmail.com'];
+  const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+  const $=(id)=>document.getElementById(id);
+  const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmtDate=(s)=> s ? String(s).slice(0,10) : '';
+
+  (async ()=>{
+    const { data:{ session } } = await supabase.auth.getSession();
+    if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
+    const email=(session.user.email||'').toLowerCase();
+    if(!ADMIN_EMAILS.includes(email)){
+      $('content').innerHTML=`<div class="gate"><h2>非管理員帳號</h2><p>這個頁面僅限管理員使用。你目前登入的是 ${esc(session.user.email)}。</p><p><a href="member.html">← 回會員中心</a></p></div>`;
+      return;
+    }
+
+    $('content').innerHTML=`
+      <div class="wrap">
+        <div class="h">名單管理</div>
+        <div class="sub">會員、報名名單、匯入名單通通合在一起，一個 email 一列。可依「買了哪門課、身分、標籤」篩選，貼標籤分類，整包匯出。</div>
+        <div class="tiles" id="tiles"></div>
+
+        <div class="card">
+          <h2><span class="bar"></span>匯入名單（貼上或上傳 CSV）</h2>
+          <div class="card-note">從 systeme.io 或任何地方匯出的 CSV，直接拖進來或貼上。系統會自動抓 email 和名字欄位，重複的 email 會自動略過，不會重覆。</div>
+          <div class="drop" id="drop">📥 把 CSV 檔拖到這裡，或<b>點一下選檔案</b><input type="file" id="file" accept=".csv,text/csv" style="display:none;"></div>
+          <label style="margin-top:14px;">或直接貼上（每行一筆，可以是「email」或「email,名字」）</label>
+          <textarea id="pasteBox" placeholder="amy@example.com, 小美&#10;ben@example.com&#10;..."></textarea>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-top:8px;">
+            <div style="flex:1;min-width:160px;"><label>這批名單的來源標記（選填）</label><input id="impSource" type="text" placeholder="例如 systeme匯入 / 2025講座"></div>
+          </div>
+          <div class="btns">
+            <button class="btn btn-primary" id="btnImport">匯入這批名單</button>
+            <button class="btn btn-ghost" id="btnClearPaste">清空</button>
+          </div>
+          <div class="msg" id="impMsg"></div>
+          <div id="impPreview" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="card">
+          <h2><span class="bar"></span>所有人（<span id="cnt">0</span>）</h2>
+          <div class="filters">
+            <input class="search" id="fSearch" type="text" placeholder="搜尋 email 或名字…">
+            <select id="fRole"><option value="">全部身分</option><option value="member">會員</option><option value="lead">報名名單</option><option value="contact">匯入名單</option></select>
+            <select id="fCourse"><option value="">全部（不分課程）</option><option value="__none__">尚未購課</option></select>
+            <select id="fTag"><option value="">全部標籤</option></select>
+            <button class="btn btn-ghost" id="btnExport">⬇ 匯出目前名單 CSV</button>
+            <a class="btn btn-violet" id="btnToBroadcast" href="admin-broadcast.html" style="line-height:1.3;">用這批寄信 →</a>
+          </div>
+          <div id="tblWrap"><div class="state"><div class="spin"></div>載入名單中…</div></div>
+        </div>
+      </div>`;
+
+    let people=[], courses=[], view=[];
+
+    const badgeRole=(p)=>{
+      let b='';
+      if(p.is_member) b+='<span class="badge member">會員</span>';
+      if(p.is_lead) b+='<span class="badge lead">報名</span>';
+      if(p.is_contact) b+='<span class="badge contact">名單</span>';
+      return b||'—';
+    };
+    const courseChips=(arr)=> (arr&&arr.length)? arr.map(c=>`<span class="chip course">${esc(c)}</span>`).join('') : '<span style="color:#c9ccd8;">—</span>';
+    const tagChips=(p)=>{
+      const t=(p.tags||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join('');
+      return t + `<button class="tag-add" data-email="${esc(p.email)}">+標籤</button>`;
+    };
+
+    const renderTiles=()=>{
+      const members=people.filter(p=>p.is_member).length;
+      const leads=people.filter(p=>p.is_lead).length;
+      const contacts=people.filter(p=>p.is_contact).length;
+      const buyers=people.filter(p=>(p.courses||[]).length>0).length;
+      $('tiles').innerHTML=`
+        <div class="tile"><div class="k">總聯絡人</div><div class="v">${people.length}</div></div>
+        <div class="tile"><div class="k">註冊會員</div><div class="v">${members}</div></div>
+        <div class="tile"><div class="k">報名名單</div><div class="v">${leads}</div></div>
+        <div class="tile"><div class="k">匯入名單</div><div class="v">${contacts}</div></div>
+        <div class="tile"><div class="k">已購課</div><div class="v">${buyers}</div></div>`;
+    };
+
+    const applyFilters=()=>{
+      const q=$('fSearch').value.trim().toLowerCase();
+      const role=$('fRole').value, course=$('fCourse').value, tag=$('fTag').value;
+      view=people.filter(p=>{
+        if(q && !((p.email||'')+' '+(p.name||'')).toLowerCase().includes(q)) return false;
+        if(role==='member' && !p.is_member) return false;
+        if(role==='lead' && !p.is_lead) return false;
+        if(role==='contact' && !p.is_contact) return false;
+        if(course==='__none__' && (p.courses||[]).length>0) return false;
+        if(course && course!=='__none__' && !(p.courses||[]).includes(course)) return false;
+        if(tag && !(p.tags||[]).includes(tag)) return false;
+        return true;
+      });
+      renderTable();
+    };
+
+    const renderTable=()=>{
+      $('cnt').textContent=view.length;
+      const box=$('tblWrap');
+      if(!view.length){ box.innerHTML='<div class="empty">沒有符合的名單。</div>'; return; }
+      box.innerHTML=`<div class="tbl-scroll"><table>
+        <thead><tr><th>Email</th><th>名字</th><th>身分</th><th>已購課程</th><th>標籤</th><th>加入</th></tr></thead>
+        <tbody>${view.slice(0,1000).map(p=>`<tr>
+          <td class="email-cell">${esc(p.email)}</td>
+          <td>${esc(p.name||'')}</td>
+          <td>${badgeRole(p)}</td>
+          <td>${courseChips(p.courses)}</td>
+          <td>${tagChips(p)}</td>
+          <td style="color:var(--ink-soft);white-space:nowrap;">${esc(fmtDate(p.created_at))}</td>
+        </tr>`).join('')}</tbody></table></div>
+        ${view.length>1000?'<div class="card-note" style="margin-top:8px;">名單很多，先顯示前 1000 筆；用上方篩選縮小範圍或直接匯出 CSV。</div>':''}`;
+      box.querySelectorAll('.tag-add').forEach(b=>b.onclick=()=>editTags(b.getAttribute('data-email')));
+    };
+
+    const editTags=async (em)=>{
+      const p=people.find(x=>x.email===em); if(!p) return;
+      const cur=(p.tags||[]).join(', ');
+      const input=prompt('這位的標籤（用逗號分隔，可留空清除）：\n'+em, cur);
+      if(input===null) return;
+      const tags=input.split(',').map(s=>s.trim()).filter(Boolean);
+      const { error } = await supabase.rpc('admin_contact_upsert',{ p_email:em, p_name:p.name||null, p_tags:tags });
+      if(error){ alert('存標籤失敗：'+error.message); return; }
+      p.tags=tags; if(!p.is_contact) p.is_contact=true;
+      rebuildTagFilter(); applyFilters();
+    };
+
+    const rebuildTagFilter=()=>{
+      const set=new Set(); people.forEach(p=>(p.tags||[]).forEach(t=>set.add(t)));
+      const sel=$('fTag'); const cur=sel.value;
+      sel.innerHTML='<option value="">全部標籤</option>'+[...set].sort().map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');
+      sel.value=cur;
+    };
+
+    // ── CSV / paste parsing ──
+    const parseCSV=(text)=>{
+      // returns array of rows (arrays). handles quoted fields.
+      const rows=[]; let row=[], cur='', inq=false;
+      for(let i=0;i<text.length;i++){
+        const c=text[i];
+        if(inq){
+          if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else inq=false; }
+          else cur+=c;
+        } else {
+          if(c==='"') inq=true;
+          else if(c===','){ row.push(cur); cur=''; }
+          else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
+          else if(c==='\r'){}
+          else cur+=c;
+        }
+      }
+      if(cur.length||row.length){ row.push(cur); rows.push(row); }
+      return rows.filter(r=>r.some(x=>String(x).trim()!==''));
+    };
+    const extractContacts=(text)=>{
+      const rows=parseCSV(text);
+      if(!rows.length) return [];
+      // find header
+      const emailRe=/^[^@\s,]+@[^@\s,]+\.[^@\s,]+$/;
+      let emailCol=-1, nameCol=-1, start=0;
+      const h=rows[0].map(x=>String(x).trim().toLowerCase());
+      const looksHeader=h.some(x=>/mail|信箱|郵件|e-?mail/.test(x)) || !rows[0].some(x=>emailRe.test(String(x).trim()));
+      if(looksHeader){
+        h.forEach((x,i)=>{ if(emailCol<0 && /mail|信箱|郵件/.test(x)) emailCol=i; if(nameCol<0 && /name|名字|姓名|名稱|暱稱|first/.test(x)) nameCol=i; });
+        start=1;
+      }
+      const out=[];
+      for(let i=start;i<rows.length;i++){
+        const r=rows[i].map(x=>String(x).trim());
+        let em='', nm='';
+        if(emailCol>=0){ em=r[emailCol]||''; }
+        if(!em || !emailRe.test(em)){ em=(r.find(x=>emailRe.test(x))||''); }
+        if(nameCol>=0) nm=r[nameCol]||'';
+        if(!nm){ nm=r.find((x,idx)=>x && !emailRe.test(x) && idx!==emailCol) || ''; }
+        if(em && emailRe.test(em)) out.push({email:em.toLowerCase(), name:nm});
+      }
+      // dedupe within batch
+      const seen=new Set(); return out.filter(o=>{ if(seen.has(o.email)) return false; seen.add(o.email); return true; });
+    };
+
+    const showPreview=(list)=>{
+      const box=$('impPreview');
+      if(!list.length){ box.innerHTML='<div class="card-note" style="color:var(--err);margin:0;">沒有讀到有效的 email。檢查一下檔案格式。</div>'; return; }
+      box.innerHTML=`<div class="card-note" style="margin:0;">讀到 <b>${list.length}</b> 筆有效 email。前 5 筆：${list.slice(0,5).map(o=>esc(o.email)).join('、')}${list.length>5?' …':''}</div>`;
+    };
+    let pending=[];
+    const ingest=(text)=>{ pending=extractContacts(text); showPreview(pending); };
+    $('file').onchange=(e)=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ $('pasteBox').value=''; ingest(String(rd.result)); }; rd.readAsText(f,'utf-8'); };
+    const drop=$('drop');
+    drop.onclick=()=>$('file').click();
+    drop.ondragover=(e)=>{e.preventDefault();drop.classList.add('over');};
+    drop.ondragleave=()=>drop.classList.remove('over');
+    drop.ondrop=(e)=>{ e.preventDefault(); drop.classList.remove('over'); const f=e.dataTransfer.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>ingest(String(rd.result)); rd.readAsText(f,'utf-8'); };
+    $('pasteBox').oninput=(e)=>ingest(e.target.value);
+    $('btnClearPaste').onclick=()=>{ $('pasteBox').value=''; pending=[]; $('impPreview').innerHTML=''; };
+
+    const impMsg=(t,type)=>{ const m=$('impMsg'); m.className='msg show '+type; m.textContent=t; };
+    $('btnImport').onclick=async ()=>{
+      if(!pending.length){ impMsg('先貼上或選一個 CSV 檔，讓系統讀到 email。','error'); return; }
+      $('btnImport').disabled=true; impMsg('匯入中…（'+pending.length+' 筆）','ok');
+      const src=$('impSource').value.trim()||'import';
+      // chunk to keep payload small
+      let ins=0,upd=0,skip=0;
+      try{
+        for(let i=0;i<pending.length;i+=500){
+          const chunk=pending.slice(i,i+500);
+          const { data, error } = await supabase.rpc('admin_contacts_import',{ p_rows:chunk, p_source:src });
+          if(error) throw error;
+          ins+=data.inserted||0; upd+=data.updated||0; skip+=data.skipped||0;
+          impMsg(`匯入中… 已處理 ${Math.min(i+500,pending.length)}/${pending.length}`,'ok');
+        }
+        impMsg(`✓ 完成！新增 ${ins} 筆，已存在略過/更新 ${upd} 筆，無效 ${skip} 筆。`,'ok');
+        pending=[]; $('pasteBox').value=''; $('impPreview').innerHTML='';
+        await load();
+      }catch(e){ impMsg('❌ 匯入失敗：'+(e.message||e),'error'); }
+      $('btnImport').disabled=false;
+    };
+
+    // ── export current view ──
+    $('btnExport').onclick=()=>{
+      const head=['email','name','身分','已購課程','標籤','加入時間'];
+      const roleTxt=(p)=>[p.is_member?'會員':'',p.is_lead?'報名':'',p.is_contact?'名單':''].filter(Boolean).join('/');
+      const q=(v)=>{ const s=String(v==null?'':v); return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s; };
+      const lines=[head.join(',')].concat(view.map(p=>[p.email,p.name||'',roleTxt(p),(p.courses||[]).join(' / '),(p.tags||[]).join(' / '),fmtDate(p.created_at)].map(q).join(',')));
+      const csv='﻿'+lines.join('\r\n');
+      const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+      a.download='強腦力-名單.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+    };
+
+    ['fSearch','fRole','fCourse','fTag'].forEach(id=>$(id).addEventListener('input',applyFilters));
+
+    const load=async ()=>{
+      $('tblWrap').innerHTML='<div class="state"><div class="spin"></div>載入名單中…</div>';
+      const [audRes, cRes] = await Promise.all([
+        supabase.rpc('admin_audience'),
+        supabase.from('courses').select('id,name').order('sort_order')
+      ]);
+      if(audRes.error){ $('tblWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(audRes.error.message)+'</div>'; return; }
+      people=(audRes.data||[]).sort((a,b)=> (b.created_at||'').localeCompare(a.created_at||''));
+      courses=cRes.data||[];
+      // course filter options
+      const fc=$('fCourse'); const names=[...new Set(courses.map(c=>c.name))];
+      fc.innerHTML='<option value="">全部（不分課程）</option><option value="__none__">尚未購課</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+      rebuildTagFilter(); renderTiles(); applyFilters();
+    };
+    load();
+  })();
+</script>
+</body>
+</html>
