@@ -52,13 +52,20 @@
   .sec{padding:clamp(30px,5vw,50px) 0 10px;}
   .sec-lead{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:clamp(19px,3vw,24px);color:var(--indigo);margin-bottom:20px;}
   .sec-lead .bar{width:6px;height:24px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
-  .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  @media(max-width:760px){.vgrid{grid-template-columns:1fr;gap:20px;}}
-  .vgrid.three{grid-template-columns:repeat(3,1fr);}
-  @media(max-width:860px){.vgrid.three{grid-template-columns:1fr 1fr;}}
-  @media(max-width:560px){.vgrid.three{grid-template-columns:1fr;}}
   .vcard{background:var(--card);border:1px solid var(--hair);border-radius:20px;overflow:hidden;box-shadow:var(--sh-2);}
-  .vframe{position:relative;width:100%;aspect-ratio:16/9;background:#141631;}
+  .vframe{position:relative;width:100%;background:#141631;}
+  /* 直式（封面見證）：置中，兩支並排 */
+  .vgrid.portrait{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;}
+  .vgrid.portrait .vcard{width:320px;max-width:100%;}
+  .vgrid.portrait .vframe{aspect-ratio:9/16;}
+  /* 橫式（線下課）：兩欄 */
+  .vgrid.land{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media(max-width:760px){.vgrid.land{grid-template-columns:1fr;gap:20px;}}
+  .vgrid.land .vframe{aspect-ratio:16/9;}
+  /* IG 按鈕 */
+  .ig-btn{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-family:var(--round);font-weight:700;font-size:14.5px;color:#fff;background:linear-gradient(120deg,#F58529,#DD2A7B,#8134AF);padding:11px 22px;border-radius:30px;box-shadow:0 10px 24px rgba(221,42,123,.3);transition:transform .2s,filter .2s;}
+  .ig-btn:hover{transform:translateY(-2px);filter:brightness(1.05);}
+  .ig-btn svg{width:20px;height:20px;fill:#fff;}
   .vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
   .vcap{display:flex;align-items:center;gap:9px;padding:14px 18px;font-family:var(--round);font-weight:700;font-size:15px;color:var(--indigo);}
   .vcap .vc-dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(120deg,var(--amber),var(--orange));flex:none;}
@@ -95,11 +102,15 @@
     <div class="eyebrow">Real Stories</div>
     <h1>實戰見證：<span class="hl">看得見</span>的改變</h1>
     <p>不是話術，是家長、學員與線下實體課的真實影片。用對方法之後，孩子看自己的眼神，真的不一樣。</p>
+    <a class="ig-btn" href="https://www.instagram.com/skybraining/" target="_blank" rel="noopener" aria-label="追蹤強腦力 Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.4-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+      追蹤我們的 Instagram
+    </a>
   </div>
 
   <div class="sec">
     <div class="sec-lead"><span class="bar"></span>家長 &amp; 學員怎麼說</div>
-    <div class="vgrid">
+    <div class="vgrid portrait">
       <div class="vcard">
         <div class="vframe"><iframe src="https://player.vimeo.com/video/1212403025?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="媽媽都說讚"></iframe></div>
         <div class="vcap"><span class="vc-dot"></span>媽媽都說讚</div>
@@ -113,18 +124,22 @@
 
   <div class="sec">
     <div class="sec-lead"><span class="bar"></span>線下實體課・現場實況</div>
-    <div class="vgrid three">
+    <div class="vgrid land">
       <div class="vcard">
         <div class="vframe"><iframe src="https://player.vimeo.com/video/1212381644?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證01"></iframe></div>
         <div class="vcap"><span class="vc-dot"></span>現場回饋 ①</div>
       </div>
       <div class="vcard">
-        <div class="vframe"><iframe src="https://player.vimeo.com/video/1212381607?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證02"></iframe></div>
+        <div class="vframe"><iframe src="https://player.vimeo.com/video/1212411002?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證02"></iframe></div>
         <div class="vcap"><span class="vc-dot"></span>現場回饋 ②</div>
       </div>
       <div class="vcard">
         <div class="vframe"><iframe src="https://player.vimeo.com/video/1212381592?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證03"></iframe></div>
         <div class="vcap"><span class="vc-dot"></span>現場回饋 ③</div>
+      </div>
+      <div class="vcard">
+        <div class="vframe"><iframe src="https://player.vimeo.com/video/1212410495?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證04"></iframe></div>
+        <div class="vcap"><span class="vc-dot"></span>現場回饋 ④</div>
       </div>
     </div>
   </div>
