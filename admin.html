@@ -137,7 +137,10 @@
 
     // ── 會員總覽 ──
     let allMembers=[];
-    const providerChip=(p)=>{
+    const isLineAccount=(em)=> /^line_/i.test(em||'') || /@line\./i.test(em||'');
+    const loginMethod=(m)=>{
+      if(isLineAccount(m.email)) return '<span class="prov line">LINE</span>';
+      const p=m.provider;
       if(!p) return '<span class="prov">—</span>';
       return p.split(',').map(x=>{
         const k=x.trim().toLowerCase();
@@ -145,14 +148,15 @@
         return `<span class="prov ${k}">${esc(label)}</span>`;
       }).join('');
     };
+    const showEmail=(m)=> isLineAccount(m.email) ? `LINE 會員<span style="color:var(--ink-soft);font-weight:400;">（${esc(m.display_name||'未命名')}）</span>` : esc(m.email||'（無 email）');
     const renderMembers=(list)=>{
       if(!list.length){ $('membersWrap').innerHTML='<div class="state">沒有符合的會員。</div>'; return; }
       $('membersWrap').innerHTML=`<div class="tbl-scroll"><table>
         <thead><tr><th>#</th><th>Email</th><th>登入方式</th><th>暱稱</th><th>註冊時間</th><th>已開通</th><th></th></tr></thead>
         <tbody>${list.map(m=>`<tr>
           <td class="seq">${m.seq}</td>
-          <td class="email-cell">${esc(m.email||'（無 email）')}</td>
-          <td>${providerChip(m.provider)}</td>
+          <td class="email-cell">${showEmail(m)}</td>
+          <td>${loginMethod(m)}</td>
           <td>${esc(m.display_name||'')}</td>
           <td class="seq">${esc(fmtDate(m.created_at))}</td>
           <td class="cc ${(m.course_count||0)===0?'zero':''}">${m.course_count||0}</td>
