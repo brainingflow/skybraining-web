@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>所有課程 — 強腦力 SkyBraining</title>
+<meta name="description" content="強腦力 SkyBraining 所有課程一覽：免費體驗課與完整付費課程，買斷永久觀看。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#141631;--indigo-2:#20244a;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;
+    --ink:#191b30;--ink-soft:#5a5e79;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--violet-deep:#4B37D8;
+    --line-brand:#06C755;--line-deep:#05A648;--hair:rgba(20,22,49,.09);
+    --sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --sh-1:0 4px 14px rgba(20,22,49,.05);--sh-2:0 12px 30px rgba(20,22,49,.09);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);}
+  nav{position:sticky;top:0;z-index:20;background:rgba(251,250,246,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:13px clamp(20px,5vw,48px);max-width:1160px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:21px;color:var(--indigo);}
+  .logo-mark{width:38px;height:38px;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--sh-1);}
+  .logo-mark svg{width:23px;height:23px;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .nav-right a{font-weight:500;font-size:14px;color:var(--ink-soft);}
+  .nav-right a:hover{color:var(--indigo);}
+  .nav-login{font-family:var(--round);font-weight:600;color:var(--indigo);padding:9px 18px;border-radius:30px;border:1.5px solid var(--hair);}
+  .nav-login:hover{border-color:var(--indigo);background:var(--indigo);color:#fff;}
+  .head{padding:clamp(48px,7vw,80px) 0 10px;text-align:center;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:16px;}
+  .eyebrow::before,.eyebrow::after{content:"";width:22px;height:2px;border-radius:2px;background:linear-gradient(120deg,var(--amber),var(--orange));}
+  .head h1{font-weight:800;font-size:clamp(30px,5vw,50px);color:var(--indigo);line-height:1.12;}
+  .head p{margin:14px auto 0;color:var(--ink-soft);font-size:16.5px;max-width:48ch;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:clamp(36px,5vw,56px) 0 80px;}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:620px){.grid{grid-template-columns:1fr;}}
+  .course{background:var(--card);border:1px solid var(--hair);border-radius:24px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
+  .course:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .ctop{padding:28px 26px 22px;color:#fff;position:relative;overflow:hidden;}
+  .ctop.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+  .ctop.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .ctop.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .ctop.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+  .ctop::after{content:"";position:absolute;right:-34px;top:-34px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.15);}
+  .clv{display:inline-block;font-family:var(--round);font-weight:700;font-size:12px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:20px;position:relative;z-index:1;}
+  .cname{font-family:var(--round);font-weight:800;font-size:25px;margin-top:12px;position:relative;z-index:1;}
+  .csub{font-size:13px;opacity:.92;position:relative;z-index:1;}
+  .cbody{padding:24px 26px 26px;display:flex;flex-direction:column;flex:1;}
+  .cdesc{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:20px;flex:1;}
+  .cfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;border-top:1px solid var(--hair);flex-wrap:wrap;}
+  .price{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);}
+  .price small{display:block;font-family:var(--sans);font-size:11.5px;font-weight:400;color:var(--ink-soft);}
+  .price.free{color:var(--violet-deep);}
+  .buy{font-family:var(--round);font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:30px;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,filter .2s;}
+  .buy:hover{transform:translateY(-2px);filter:brightness(1.05);}
+  .buy.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+  .buy.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .buy.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .buy.indigo{background:var(--indigo);}
+  .state{padding:80px 0;text-align:center;color:var(--ink-soft);grid-column:1/-1;}
+  .state .spin{width:34px;height:34px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  footer{background:var(--indigo);color:rgba(251,250,246,.7);padding:40px 0;font-size:13.5px;}
+  .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .foot-in a:hover{color:#fff;}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力</a>
+    <div class="nav-right">
+      <a href="index.html">← 回首頁</a>
+      <a class="nav-login" href="login.html">會員登入</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">All Courses</div>
+    <h1>所有課程</h1>
+    <p>從免費體驗到完整課程，買斷、永久觀看。選一門開始，讓大腦學會怎麼學。</p>
+  </div>
+  <div class="grid" id="grid">
+    <div class="state"><div class="spin"></div>載入課程中…</div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 強腦力 SkyBraining・skybraining.com</span>
+    <div class="foot-links">
+      <a href="terms.html">服務條款</a>
+      <a href="privacy.html">隱私權政策</a>
+      <a href="refund.html">退款政策</a>
+      <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 官方帳號</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL  = 'https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+  const grid = document.getElementById('grid');
+
+  const introHref = (c)=> c.id==='super-memory' ? 'course-memory.html'
+                        : c.id==='super-thinking' ? 'course-thinking.html'
+                        : 'login.html';
+
+  (async ()=>{
+    const { data:courses, error } = await supabase.from('courses')
+      .select('*').eq('is_published',true).order('sort_order');
+    if(error){ grid.innerHTML = `<div class="state" style="color:#d64545;">讀取課程失敗：${error.message}</div>`; return; }
+    if(!courses || !courses.length){ grid.innerHTML = `<div class="state">目前尚無上架課程。</div>`; return; }
+    grid.innerHTML = courses.map(card).join('');
+  })();
+
+  function card(c){
+    const color = ['amber','teal','violet','indigo','free'].includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
+    const isFree = (c.price||0)===0;
+    const priceHtml = isFree
+      ? `<div class="price free">免費<small>登入就能看</small></div>`
+      : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>買斷・永久觀看</small></div>`;
+    const btn = isFree
+      ? `<a class="buy ${color}" href="login.html">免費開通 →</a>`
+      : `<a class="buy ${color}" href="${introHref(c)}">了解課程 →</a>`;
+    return `<div class="course">
+      <div class="ctop ${color}">
+        <span class="clv">${isFree?'免費體驗':('Level '+(c.level||1))}</span>
+        <div class="cname">${c.name||''}</div>
+        <div class="csub">${c.subtitle||''}</div>
+      </div>
+      <div class="cbody">
+        <div class="cdesc">${c.description||''}</div>
+        <div class="cfoot">${priceHtml}${btn}</div>
+      </div>
+    </div>`;
+  }
+</script>
+</body>
+</html>
