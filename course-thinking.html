@@ -289,5 +289,62 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const f=q.parentElement,a=f.querySelector('.faq-a'),o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});if(!o){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});});
 </script>
+<!-- 腦寶 mascot -->
+<div id="naobao">
+  <div id="nb-bubble" role="status" aria-live="polite"></div>
+  <button id="nb-body" aria-label="和吉祥物腦寶互動">
+    <svg viewBox="0 0 120 120" width="74" height="74" aria-hidden="true">
+      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C6CF0"/><stop offset="1" stop-color="#4B37D8"/></linearGradient></defs>
+      <line x1="60" y1="15" x2="60" y2="30" stroke="#FFB020" stroke-width="4" stroke-linecap="round"/>
+      <path d="M60 4l3.5 7-3.5 2.5-3.5-2.5z" fill="#FFB020"/>
+      <rect x="18" y="26" width="84" height="80" rx="35" fill="url(#nbg)"/>
+      <path d="M39 45c6-6 13 4 21 0M43 57c6-5 15 3 23-1" stroke="rgba(255,255,255,.55)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="47" cy="73" r="12" fill="#fff"/><circle cx="77" cy="73" r="12" fill="#fff"/>
+      <circle class="nb-eye" cx="49" cy="75" r="5.6" fill="#20234a"/><circle class="nb-eye" cx="79" cy="75" r="5.6" fill="#20234a"/>
+      <circle cx="35" cy="88" r="5.2" fill="#FF8A3D" opacity=".5"/><circle cx="89" cy="88" r="5.2" fill="#FF8A3D" opacity=".5"/>
+      <path d="M54 90c4 5 12 5 16 0" stroke="#20234a" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+<style>
+  #naobao{position:fixed;left:20px;bottom:20px;z-index:60;font-family:"Noto Sans TC",sans-serif;}
+  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 20px rgba(75,55,216,.35));animation:nb-float 3.2s ease-in-out infinite;transition:transform .2s;}
+  #nb-body:hover{transform:scale(1.08) rotate(-3deg);}
+  #nb-body:active{transform:scale(.95);}
+  @keyframes nb-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  .nb-eye{animation:nb-blink 4.5s infinite ease-in-out;transform-origin:center;transform-box:fill-box;}
+  @keyframes nb-blink{0%,93%,100%{transform:scaleY(1);}96%{transform:scaleY(.12);}}
+  #nb-bubble{position:absolute;left:80px;bottom:36px;min-width:158px;max-width:238px;background:#fff;color:#20234a;font-size:14px;line-height:1.6;font-weight:500;padding:12px 15px;border-radius:16px 16px 16px 4px;box-shadow:0 14px 34px rgba(20,22,49,.2);border:1px solid rgba(20,22,49,.08);opacity:0;transform:translateY(8px) scale(.9);transform-origin:left bottom;transition:opacity .25s,transform .25s;pointer-events:none;}
+  #nb-bubble.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+  #nb-bubble b{color:#4B37D8;}
+  #nb-bubble a{color:#4B37D8;font-weight:700;text-decoration:none;}
+  #nb-bubble a:hover{text-decoration:underline;}
+  #nb-bubble .nb-name{display:block;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;color:#7C6CF0;font-size:12.5px;margin-bottom:2px;}
+  @media(max-width:520px){#nb-body svg{width:60px;height:60px;}#nb-bubble{max-width:180px;left:66px;}}
+</style>
+<script>
+(function(){
+  var msgs=[
+    '嗨！我是<b>腦寶</b> 🧠 要不要先上一堂 <a href="login.html">免費課</a>？',
+    '3 分鐘測出孩子的學習力！<a href="quiz.html">馬上免費檢測</a> 📝',
+    '記東西用「畫面」記，比死背好記十倍喔！',
+    '考試快到了嗎？試試 <a href="article-exam-prep.html">間隔複習</a> 📅',
+    '孩子讀書坐不住？<a href="article-focus.html">6 個方法幫他專注</a> ✨',
+    '記憶宮殿超神奇～<a href="article-memory-palace.html">教你蓋一座</a> 🏰',
+    '今天也要動動腦，你超棒的！💪',
+    '有問題想問？點右下角 <b>加 LINE</b> 找我們 💬'
+  ];
+  var i=-1,b=document.getElementById('nb-bubble'),btn=document.getElementById('nb-body'),t;
+  function say(){ i=(i+1)%msgs.length; b.innerHTML='<span class="nb-name">腦寶</span>'+msgs[i]; b.classList.add('show'); clearTimeout(t); t=setTimeout(function(){b.classList.remove('show');},7000); }
+  btn.addEventListener('click',say);
+  // 第一次進站不擋主按鈕：等使用者往下捲一點，腦寶才主動打招呼一次
+  var greeted=false;
+  function firstGreet(){ if(greeted)return; greeted=true; say(); window.removeEventListener('scroll',onScroll); }
+  function onScroll(){ if(window.scrollY>240) firstGreet(); }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  // 若使用者 12 秒都沒捲動（例如在看 hero），也輕輕打個招呼
+  setTimeout(firstGreet,12000);
+})();
+</script>
 </body>
 </html>

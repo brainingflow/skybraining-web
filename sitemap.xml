@@ -14,4 +14,6 @@
   <url><loc>https://skybraining.com/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://skybraining.com/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://skybraining.com/refund.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://skybraining.com/quiz.html</loc></url>
+  <url><loc>https://skybraining.com/blog.html</loc></url>
 </urlset>
