@@ -71,7 +71,7 @@
       <p class="lead">設定密碼後，你也可以用「Email ＋ 密碼」登入（原本的 Google／LINE 登入仍然可用）。</p>
       <div class="who">目前帳號：${esc(session.user.email||'（此帳號無 email）')}</div>
       <label for="pw">新密碼</label>
-      <input id="pw" type="password" autocomplete="new-password" placeholder="至少 6 碼">
+      <input id="pw" type="password" autocomplete="new-password" placeholder="至少 8 碼">
       <label for="pw2">再輸入一次新密碼</label>
       <input id="pw2" type="password" autocomplete="new-password" placeholder="再打一次確認">
       <button class="btn" id="btnSave">儲存新密碼</button>
@@ -79,7 +79,7 @@
     const msg=(t,type)=>{ const m=$('msg'); m.className='msg show '+type; m.textContent=t; };
     $('btnSave').onclick=async ()=>{
       const pw=$('pw').value, pw2=$('pw2').value;
-      if(pw.length<6){ msg('密碼至少需要 6 碼。','error'); return; }
+      if(pw.length<8){ msg('密碼至少需要 8 碼。','error'); return; }
       if(pw!==pw2){ msg('兩次輸入的密碼不一樣，請再確認。','error'); return; }
       $('btnSave').disabled=true; msg('儲存中…','ok');
       const { error } = await supabase.auth.updateUser({ password: pw });

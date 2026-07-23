@@ -108,7 +108,7 @@
       <label for="su-email">Email</label>
       <input id="su-email" type="email" autocomplete="email" placeholder="you@example.com">
       <label for="su-pw">設定密碼</label>
-      <input id="su-pw" type="password" autocomplete="new-password" placeholder="至少 6 碼">
+      <input id="su-pw" type="password" autocomplete="new-password" placeholder="至少 8 碼">
       <div class="row2">
         <div><label for="su-child">孩子暱稱（選填）</label><input id="su-child" type="text" placeholder="如：小宇"></div>
         <div><label for="su-grade">孩子年級（選填）</label><input id="su-grade" type="text" placeholder="如：國小五年級"></div>
@@ -181,7 +181,7 @@
     const display_name=$('su-name').value.trim(), email=$('su-email').value.trim(), password=$('su-pw').value;
     const child_nickname=$('su-child').value.trim(), child_grade=$('su-grade').value.trim();
     if(!email||!password){ show('請輸入 Email 與密碼。','error'); return; }
-    if(password.length<6){ show('密碼至少需要 6 碼。','error'); return; }
+    if(password.length<8){ show('密碼至少需要 8 碼。','error'); return; }
     $('btnSignup').disabled=true; show('建立帳號中…','ok');
     const { data, error } = await supabase.auth.signUp({
       email, password,
