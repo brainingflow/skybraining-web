@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>為什麼「用畫面記」比「用文字背」強？圖像記憶的腦科學 — 強腦力 SkyBraining</title>
+<meta name="description" content="同樣的內容，為什麼有人記得快又牢？從雙重編碼理論、圖像優勢效應到記憶宮殿，用腦科學解釋為什麼把知識變成畫面，記憶力會跳一個等級。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#141631;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;--ink:#191b30;--ink-soft:#5a5e79;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--violet-deep:#4B37D8;
+    --line-brand:#06C755;--hair:rgba(20,22,49,.09);
+    --sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --sh-1:0 4px 14px rgba(20,22,49,.05);--sh-2:0 12px 30px rgba(20,22,49,.09);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.9;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,.round{font-family:var(--round);}
+  nav{position:sticky;top:0;z-index:20;background:rgba(251,250,246,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:13px clamp(20px,5vw,48px);max-width:1160px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:21px;color:var(--indigo);}
+  .logo-mark{width:38px;height:38px;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--sh-1);}
+  .logo-mark svg{width:23px;height:23px;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-right a{font-weight:500;font-size:14px;color:var(--ink-soft);}
+  .nav-right a:hover{color:var(--indigo);}
+  .nav-login{font-family:var(--round);font-weight:600;color:var(--indigo);padding:9px 18px;border-radius:30px;border:1.5px solid var(--hair);}
+  .nav-login:hover{border-color:var(--indigo);background:var(--indigo);color:#fff;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,32px);}
+  .hero{padding:clamp(40px,6vw,64px) 0 6px;}
+  .crumb{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .crumb a:hover{color:var(--teal-deep);}
+  .tag{display:inline-block;font-family:var(--round);font-weight:700;font-size:12.5px;color:var(--violet-deep);background:rgba(124,108,240,.14);padding:5px 13px;border-radius:20px;margin-bottom:16px;}
+  h1{font-weight:800;font-size:clamp(27px,4.6vw,40px);color:var(--indigo);line-height:1.25;}
+  .meta{margin-top:14px;color:var(--ink-soft);font-size:14px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .lede{font-size:18px;color:var(--ink);margin:26px 0 10px;font-weight:500;}
+  .cover{margin:26px 0 8px;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#7C6CF0,#4B37D8);color:#fff;padding:36px 30px;position:relative;}
+  .cover::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.14);}
+  .cover .big{font-family:var(--round);font-weight:800;font-size:clamp(22px,4vw,30px);line-height:1.35;position:relative;z-index:1;}
+  article{padding:6px 0 20px;font-size:16.5px;}
+  article h2{font-weight:800;font-size:clamp(20px,3.4vw,25px);color:var(--indigo);margin:38px 0 12px;line-height:1.4;}
+  article h2 .n{color:var(--violet-deep);margin-right:8px;}
+  article p{margin:15px 0;}
+  article strong{color:var(--indigo);font-weight:700;}
+  .callout{background:var(--card);border:1px solid var(--hair);border-left:5px solid var(--violet);border-radius:14px;padding:18px 22px;margin:24px 0;box-shadow:var(--sh-1);}
+  .callout .k{font-family:var(--round);font-weight:800;color:var(--indigo);display:block;margin-bottom:4px;}
+  .steps{background:var(--paper-2);border-radius:18px;padding:22px 24px;margin:26px 0;}
+  .steps h3{font-family:var(--round);font-weight:800;color:var(--indigo);font-size:18px;margin-bottom:10px;}
+  .steps li{margin:9px 0 9px 4px;padding-left:8px;list-style:none;position:relative;}
+  .steps li::before{content:"→";color:var(--violet-deep);font-weight:800;position:absolute;left:-14px;}
+  .cta{margin:40px 0 8px;background:var(--indigo);border-radius:22px;padding:30px 28px;color:#fff;text-align:center;}
+  .cta h3{font-family:var(--round);font-weight:800;font-size:21px;margin-bottom:8px;}
+  .cta p{color:rgba(251,250,246,.75);font-size:15px;margin-bottom:18px;}
+  .cta a{display:inline-block;font-family:var(--round);font-weight:700;font-size:15.5px;color:#fff;background:linear-gradient(135deg,#7C6CF0,#4B37D8);padding:13px 26px;border-radius:30px;}
+  .cta a:hover{filter:brightness(1.06);}
+  .more{padding:10px 0 20px;}
+  .more a{color:var(--teal-deep);font-weight:700;font-family:var(--round);}
+  .refs{font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--hair);margin-top:30px;padding-top:16px;line-height:1.7;}
+  .refs a{color:var(--ink-soft);text-decoration:underline;}
+  footer{background:var(--indigo);color:rgba(251,250,246,.7);padding:36px 0;font-size:13.5px;margin-top:30px;}
+  .foot-in{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .foot-in a:hover{color:#fff;}
+  .foot-links{display:flex;gap:18px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力</a>
+    <div class="nav-right">
+      <a href="articles.html">精品文章</a>
+      <a class="nav-login" href="login.html">會員登入</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="crumb"><a href="index.html">首頁</a> ／ <a href="articles.html">精品文章</a> ／ 圖像記憶</div>
+    <span class="tag">腦科學・圖像記憶</span>
+    <h1>為什麼「用畫面記」<br>比「用文字背」強？</h1>
+    <div class="meta"><span>強腦力編輯部</span><span>・</span><span>閱讀約 6 分鐘</span></div>
+    <p class="lede">同樣一份單字表、同樣一段歷史年代，有人看兩眼就記住，有人抄十遍還是忘。差別常常不在天分，而在——他們把「文字」偷偷換成了「畫面」。</p>
+  </div>
+
+  <div class="cover"><div class="big">大腦記文字很吃力，<br>記畫面卻幾乎不費力。</div></div>
+
+  <article>
+    <p>先做個小實驗。請你記住這兩組：一組是「蘋果、腳踏車、大象」；另一組是「正義、可能性、效率」。過三十秒再回想——幾乎所有人都會發現，<strong>前面那組具體、能想成畫面的詞，記得清楚得多</strong>。這不是巧合，而是大腦記憶的一個基本特性。</p>
+
+    <h2><span class="n">01</span>大腦有兩條記憶通道：文字與畫面</h2>
+    <p>心理學家<strong>佩維奧（Allan Paivio）</strong>提出了著名的<strong>雙重編碼理論（Dual Coding Theory）</strong>：人的大腦處理資訊有兩套系統，一套處理<strong>語言文字</strong>，一套處理<strong>影像畫面</strong>。當一個東西同時被這兩套系統編碼，就等於在大腦裡建立了<strong>兩條回去找它的路</strong>，只記得住一條也還有另一條——自然記得更牢、更好提取。</p>
+    <p>純文字（例如死背一串定義）只用到一條通道；一旦把它轉成畫面，就同時點亮了兩條。這也是為什麼「有畫面」的東西總是特別好記。</p>
+
+    <h2><span class="n">02</span>圖像優勢效應：圖，就是比字好記</h2>
+    <p>大量實驗都得到同一個結果：在記憶測驗裡，<strong>圖片被記住的比例，明顯高於同樣意思的文字</strong>。這個現象有個名字，叫<strong>圖像優勢效應（Picture Superiority Effect）</strong>。</p>
+    <p>原因不難理解——人類的大腦在漫長的演化裡，本來就是靠辨認場景、臉孔、方位在生存，處理影像的能力遠遠早於文字。文字是幾千年前才發明的，對大腦來說是「後來才學的技能」；畫面，則是它的母語。</p>
+    <div class="callout"><span class="k">關鍵洞察</span>與其要求大腦用它不擅長的方式（純文字）硬記，不如把知識翻譯成它的母語（畫面）。這不是偷懶，是順著大腦的設計走。</div>
+
+    <h2><span class="n">03</span>聯想：把新東西，掛在已知的畫面上</h2>
+    <p>畫面之所以強，還有一個原因：它容易<strong>連到你已經知道的東西</strong>。記憶不是一格一格孤立的抽屜，而是一張互相牽連的網。當你把一個陌生的新知識，用聯想「掛」到一個熟悉又鮮明的畫面上，它就有了抓手，不會飄走。</p>
+    <p>越是<strong>誇張、有動作、有情緒</strong>的畫面，抓得越牢。把「要背的清單」想成一場荒謬的小劇場，往往比正經抄寫更難忘記。</p>
+
+    <h2><span class="n">04</span>記憶宮殿：記憶冠軍都在用的老方法</h2>
+    <p>如果把「畫面」再加上「空間」，威力會再升一級。這就是流傳兩千多年的<strong>記憶宮殿（method of loci，位置記憶法）</strong>：把要記的東西，一件一件放進一個你熟悉的空間裡——例如你家的玄關、客廳、廚房——之後只要在腦中「走一遍」，東西就依序被取出來。</p>
+    <p>這不是江湖把戲。<strong>世界記憶錦標賽</strong>裡能背下整副撲克牌順序、幾百位數字的選手，用的核心技術正是圖像加上記憶宮殿。他們的大腦跟一般人沒有兩樣，差別只在——他們把要記的，全部翻譯成了生動的畫面與路線。</p>
+
+    <div class="steps">
+      <h3>給家長的四個實作</h3>
+      <ul>
+        <li><strong>先問「這長什麼樣子」</strong>：背東西前，先讓孩子替它想一個畫面。</li>
+        <li><strong>越誇張越好</strong>：加大、加動作、加顏色、加聲音，畫面越荒謬越好記。</li>
+        <li><strong>串成故事</strong>：把要記的一串東西，用畫面串成一個連續的小情節。</li>
+        <li><strong>用熟悉的空間</strong>：把它們放進「回家的路線」或「自己的房間」裡，走一遍就想起來。</li>
+      </ul>
+    </div>
+
+    <p>當孩子學會把文字翻譯成畫面，記憶這件事會從「痛苦地硬塞」，變成「有趣地建構」。這一個轉變，往往就是「記性差」和「記得又快又牢」之間，真正的分水嶺。</p>
+
+    <div class="cta">
+      <h3>讓孩子學會把知識變成畫面</h3>
+      <p>強腦力的圖像記憶與記憶宮殿課程，把記憶冠軍的方法拆成孩子學得會的步驟。</p>
+      <a href="courses.html">看看課程 →</a>
+    </div>
+
+    <div class="refs">
+      延伸參考：雙重編碼理論（<a href="https://en.wikipedia.org/wiki/Dual-coding_theory" target="_blank" rel="noopener">Dual-coding theory, Wikipedia</a>）、圖像優勢效應（<a href="https://en.wikipedia.org/wiki/Picture_superiority_effect" target="_blank" rel="noopener">Picture superiority effect, Wikipedia</a>）、位置記憶法（<a href="https://en.wikipedia.org/wiki/Method_of_loci" target="_blank" rel="noopener">Method of loci, Wikipedia</a>）。本文為科普整理。
+    </div>
+  </article>
+
+  <div class="more"><a href="articles.html">← 回精品文章</a></div>
+</div>
+
+<footer>
+  <div class="foot-in">
+    <span>© 2026 強腦力 SkyBraining・skybraining.com</span>
+    <div class="foot-links">
+      <a href="articles.html">精品文章</a>
+      <a href="courses.html">所有課程</a>
+      <a href="terms.html">服務條款</a>
+      <a href="privacy.html">隱私權政策</a>
+      <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 官方帳號</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
