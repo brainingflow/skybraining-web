@@ -44,8 +44,17 @@
   .tile.money .x{color:rgba(255,255,255,.6);}
   .row-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
   .tools{display:flex;gap:8px;flex-wrap:wrap;}
-  input,select{width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);}
-  input:focus,select:focus{outline:none;border-color:var(--orange);}
+  input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);}
+  textarea{min-height:150px;resize:vertical;line-height:1.7;}
+  .btn-post{color:#fff;background:linear-gradient(135deg,#7C6CF0,#4B37D8);box-shadow:0 10px 24px rgba(124,108,240,.3);}
+  .post-st{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:14px;white-space:nowrap;}
+  .post-st.published{background:rgba(22,176,168,.14);color:#0d8a83;}
+  .post-st.draft{background:var(--paper-2);color:var(--ink-soft);}
+  .mini{font-family:var(--round);font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:18px;cursor:pointer;border:none;white-space:nowrap;margin:1px;}
+  .mini.pub{color:#fff;background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .mini.draft{color:var(--indigo);background:var(--paper-2);}
+  .mini.del{color:var(--err);background:rgba(214,69,69,.08);border:1px solid rgba(214,69,69,.22);}
   label{display:block;font-weight:700;font-size:13.5px;color:var(--indigo);margin:12px 0 6px;font-family:var(--round);}
   .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
   .btn{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;border:none;cursor:pointer;transition:transform .2s,filter .2s;}
@@ -124,6 +133,26 @@
         <div class="sub">課程開通、銷售金額、購買紀錄一次看。金流串接完成前，現金／臨櫃付費也能在這裡手動開通。</div>
 
         <div class="tiles" id="tiles"></div>
+
+        <div class="card">
+          <h2><span class="bar"></span>發一篇文（最新消息・每日腦力）</h2>
+          <div class="card-note">在這裡發文，會即時出現在網站的「最新消息」頁（blog.html），<b>不用部署、不用改程式</b>。適合每天發腦力小知識、近況、活動。</div>
+          <label>標題</label>
+          <input id="pTitle" type="text" placeholder="例如：今天的記憶小技巧：把數字變成畫面">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:180px;"><label>標籤（可空）</label><input id="pTag" type="text" placeholder="記憶 / 專注 / 近況…"></div>
+            <div style="flex:2;min-width:220px;"><label>封面圖網址（可空）</label><input id="pCover" type="text" placeholder="https://…（貼圖片連結，沒有就留白）"></div>
+          </div>
+          <label>內容</label>
+          <textarea id="pBody" placeholder="直接打字，換行會保留。可以寫一段小故事、一個方法、一句鼓勵…"></textarea>
+          <div class="btns">
+            <button class="btn btn-post" id="btnPublish">📣 發布（馬上上線）</button>
+            <button class="btn btn-list" id="btnDraft">存成草稿</button>
+            <a class="btn btn-ghost" href="blog.html" target="_blank" style="line-height:1.2;">看最新消息頁 ↗</a>
+          </div>
+          <div class="msg" id="pMsg"></div>
+          <div id="postsWrap" style="margin-top:18px;"></div>
+        </div>
 
         <div class="card">
           <h2><span class="bar"></span>銷售 / 開通紀錄</h2>
@@ -343,6 +372,53 @@
       $('listWrap').innerHTML='<div class="tbl-scroll" style="margin-top:14px;max-height:none;"><table><thead><tr><th>課程</th><th>代號</th><th>來源</th><th>開通時間</th></tr></thead><tbody>'+
         data.map(r=>`<tr><td>${esc(r.course_name)}</td><td>${esc(r.course_id)}</td><td>${srcLabel(r.source)}</td><td class="seq">${esc(fmtDate(r.granted_at))}</td></tr>`).join('')+'</tbody></table></div>';
     };
+
+    // ── 發文 CMS ──
+    const pMsg=(t,type)=>{ const m=$('pMsg'); m.className='msg show '+type; m.textContent=t; };
+    const doPublish=async (status)=>{
+      const title=$('pTitle').value.trim(), body=$('pBody').value.trim();
+      if(!title || !body){ pMsg('請填標題和內容。','error'); return; }
+      $('btnPublish').disabled=true; $('btnDraft').disabled=true; pMsg(status==='draft'?'儲存草稿中…':'發布中…','ok');
+      const { error } = await supabase.rpc('admin_create_post',{
+        p_title:title, p_body:body,
+        p_excerpt:null, p_cover:$('pCover').value.trim()||null,
+        p_tag:$('pTag').value.trim()||null, p_status:status
+      });
+      $('btnPublish').disabled=false; $('btnDraft').disabled=false;
+      if(error){ pMsg('❌ '+error.message,'error'); return; }
+      pMsg(status==='draft'?'已存成草稿。':'✓ 已發布！已經出現在「最新消息」頁了。','ok');
+      $('pTitle').value=''; $('pBody').value=''; $('pTag').value=''; $('pCover').value='';
+      loadPosts();
+    };
+    $('btnPublish').onclick=()=>doPublish('published');
+    $('btnDraft').onclick=()=>doPublish('draft');
+
+    const loadPosts=async ()=>{
+      const { data, error } = await supabase.rpc('admin_list_posts');
+      const box=$('postsWrap');
+      if(error){ box.innerHTML='<div class="card-note" style="margin:0;color:var(--err);">讀取貼文失敗：'+esc(error.message)+'（若還沒建 posts 表，先在 Supabase 跑 posts_schema.sql）</div>'; return; }
+      if(!data || !data.length){ box.innerHTML='<div class="card-note" style="margin:0;">還沒有任何貼文。發一篇試試！</div>'; return; }
+      box.innerHTML='<div class="tbl-scroll" style="max-height:320px;"><table style="min-width:520px;"><thead><tr><th>時間</th><th>標題</th><th>標籤</th><th>狀態</th><th></th></tr></thead><tbody>'+
+        data.map(r=>`<tr>
+          <td class="seq">${esc(fmtDate(r.published_at))}</td>
+          <td>${esc(r.title)}</td>
+          <td>${r.tag?esc(r.tag):'—'}</td>
+          <td><span class="post-st ${r.status}">${r.status==='published'?'已發布':'草稿'}</span></td>
+          <td>${r.status==='published'
+              ? `<button class="mini draft" data-id="${r.id}" data-act="draft">收回</button>`
+              : `<button class="mini pub" data-id="${r.id}" data-act="published">發布</button>`}
+            <button class="mini del" data-id="${r.id}" data-act="deleted">刪除</button></td>
+        </tr>`).join('')+'</tbody></table></div>';
+      box.querySelectorAll('.mini').forEach(b=>b.onclick=async ()=>{
+        const act=b.getAttribute('data-act'), id=Number(b.getAttribute('data-id'));
+        if(act==='deleted' && b.getAttribute('data-armed')!=='1'){ b.setAttribute('data-armed','1'); b.textContent='確認刪除'; setTimeout(()=>{ if(b.isConnected){b.setAttribute('data-armed','0'); b.textContent='刪除';} },3500); return; }
+        b.disabled=true;
+        const { error } = await supabase.rpc('admin_set_post_status',{ p_id:id, p_status:act });
+        if(error){ pMsg('❌ '+error.message,'error'); b.disabled=false; return; }
+        loadPosts();
+      });
+    };
+    loadPosts();
 
     loadAll();
   })();

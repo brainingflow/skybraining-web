@@ -27,6 +27,8 @@
   .brand{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:21px;color:var(--indigo);}
   .logo-mark{width:38px;height:38px;border-radius:12px;background:var(--indigo);display:grid;place-items:center;box-shadow:var(--sh-1);}
   .logo-mark svg{width:23px;height:23px;}
+  .wordmark{letter-spacing:1px;font-weight:800;}
+  .wm-accent{background:linear-gradient(120deg,#FFB020,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .nav-right{display:flex;align-items:center;gap:12px;}
   .nav-right a{font-weight:500;font-size:14px;color:var(--ink-soft);}
   .nav-right a:hover{color:var(--indigo);}
@@ -47,6 +49,10 @@
   .ctop.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
   .ctop.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
   .ctop.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+  .ctop.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+  .ctop.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+  .ctop.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+  .note-line{display:inline-block;margin-top:10px;font-family:var(--round);font-weight:700;font-size:12px;color:#fff;background:rgba(255,255,255,.22);padding:3px 11px;border-radius:20px;position:relative;z-index:1;}
   .ctop::after{content:"";position:absolute;right:-34px;top:-34px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.15);}
   .clv{display:inline-block;font-family:var(--round);font-weight:700;font-size:12px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:20px;position:relative;z-index:1;}
   .cname{font-family:var(--round);font-weight:800;font-size:25px;margin-top:12px;position:relative;z-index:1;}
@@ -63,6 +69,10 @@
   .buy.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
   .buy.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
   .buy.indigo{background:var(--indigo);}
+  .buy.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+  .buy.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+  .buy.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+  .buy.line{background:linear-gradient(135deg,#06C755,#05A648);}
   .state{padding:80px 0;text-align:center;color:var(--ink-soft);grid-column:1/-1;}
   .state .spin{width:34px;height:34px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
@@ -89,7 +99,7 @@
 <body>
 <nav>
   <div class="nav-in">
-    <a class="brand" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2.2c-2.6 0-4.6 1.7-5 4C5 6.6 3.6 8.2 3.6 10.2c0 1.2.5 2.2 1.3 2.9-.2.5-.3 1-.3 1.6 0 2.1 1.7 3.7 3.9 3.7.5 1.3 1.8 2.2 3.5 2.2s3-.9 3.5-2.2c2.2 0 3.9-1.6 3.9-3.7 0-.6-.1-1.1-.3-1.6.8-.7 1.3-1.7 1.3-2.9 0-2-1.4-3.6-3.4-4-.4-2.3-2.4-4-5-4z" fill="#FFB020"/></svg></span>強腦力</a>
+    <a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
     <div class="nav-right">
       <a href="index.html">← 回首頁</a>
       <a class="nav-login" href="login.html">會員登入</a>
@@ -127,9 +137,10 @@
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const grid = document.getElementById('grid');
 
-  const introHref = (c)=> c.id==='super-memory' ? 'course-memory.html'
-                        : c.id==='super-thinking' ? 'course-thinking.html'
-                        : 'login.html';
+  const LINE_URL = 'https://lin.ee/9EGO8IT';
+  const INTRO = { 'super-memory':'course-memory.html', 'super-thinking':'course-thinking.html' };
+  const ONSITE = ['onsite-basic','onsite-advanced'];
+  const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape'];
 
   (async ()=>{
     const { data:courses, error } = await supabase.from('courses')
@@ -140,19 +151,31 @@
   })();
 
   function card(c){
-    const color = ['amber','teal','violet','indigo','free'].includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
+    const color = ACCENTS.includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
     const isFree = (c.price||0)===0;
+    const id = c.id;
+    const isOnsite = ONSITE.includes(id);
+    const isBundle = id==='bundle-all';
+    const badge = isFree ? '免費體驗' : isOnsite ? '實體課' : isBundle ? '超值全套' : '線上課';
+    const priceSub = isFree ? '登入就能看' : (isOnsite||isBundle) ? '報名・名額有限' : '買斷・永久觀看';
+    const noteHtml = c.note ? `<span class="note-line">${c.note}</span>` : '';
     const priceHtml = isFree
-      ? `<div class="price free">免費<small>登入就能看</small></div>`
-      : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>買斷・永久觀看</small></div>`;
-    const btn = isFree
-      ? `<a class="buy ${color}" href="login.html">免費開通 →</a>`
-      : `<a class="buy ${color}" href="${introHref(c)}">了解課程 →</a>`;
+      ? `<div class="price free">免費<small>${priceSub}</small></div>`
+      : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>${priceSub}</small></div>`;
+    let btn;
+    if(isFree){
+      btn = `<a class="buy ${color}" href="login.html">免費開通 →</a>`;
+    } else if(INTRO[id]){
+      btn = `<a class="buy ${color}" href="${INTRO[id]}">了解課程 →</a>`;
+    } else {
+      btn = `<a class="buy line" href="${LINE_URL}" target="_blank" rel="noopener">我要報名 →</a>`;
+    }
     return `<div class="course">
       <div class="ctop ${color}">
-        <span class="clv">${isFree?'免費體驗':('Level '+(c.level||1))}</span>
+        <span class="clv">${badge}</span>
         <div class="cname">${c.name||''}</div>
         <div class="csub">${c.subtitle||''}</div>
+        ${noteHtml}
       </div>
       <div class="cbody">
         <div class="cdesc">${c.description||''}</div>
