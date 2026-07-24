@@ -221,7 +221,7 @@
 
     $('btnNew').onclick=()=>openEditor(null);
     $('btnCancel').onclick=()=>{ $('editorCard').classList.remove('show'); };
-    $('btnReload').onclick=load;
+    $('btnReload').onclick=()=>load();
     $('btnCopyHtml').onclick=()=>copy($('edHtml').value, '已複製整頁 HTML。');
     $('btnPreview').onclick=()=>{ const s=$('edSlug').value.trim(); if(!s){ msg('先填網址代號並儲存，才能預覽。','error'); return; } window.open(lpUrl(s),'_blank'); };
 
