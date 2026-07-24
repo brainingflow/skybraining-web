@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-22EQNGV8C4');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記憶翻牌小遊戲 — 測測你的記憶力有多快 | 強腦力</title>
+<meta name="description" content="免費記憶翻牌配對小遊戲：翻開卡片、配對相同圖案、比誰用最少秒數破關。強腦力 SkyBraining 出品——記憶力不是天生的，是可以練的。">
+<meta name="keywords" content="記憶遊戲,翻牌遊戲,記憶力訓練,配對遊戲,記憶力測試,強腦力,腦力遊戲,親子遊戲">
+<link rel="canonical" href="https://skybraining.com/game.html">
+<meta property="og:title" content="記憶翻牌小遊戲 — 測測你的記憶力有多快">
+<meta property="og:description" content="翻牌配對、計時破關。看看你（和孩子）的記憶力有多快！強腦力出品。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://skybraining.com/game.html">
+<meta property="og:image" content="https://skybraining.com/og.png">
+<meta property="og:site_name" content="強腦力 SkyBraining">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Game","name":"強腦力 記憶翻牌小遊戲","url":"https://skybraining.com/game.html","description":"免費記憶翻牌配對計時遊戲，訓練記憶力與專注力。","publisher":{"@type":"EducationalOrganization","name":"強腦力 SkyBraining","url":"https://skybraining.com/"},"genre":"Educational","gamePlatform":"Web browser","applicationCategory":"Game"}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#141631;--indigo2:#22264f;--paper:#FBFAF6;--paper2:#F1EFE7;--card:#fff;
+    --ink:#191b30;--soft:#5a5e79;--mute:#8a8ea6;
+    --amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal2:#0d8a83;--violet:#7C6CF0;--violet2:#4B37D8;
+    --hair:rgba(20,22,49,.09);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;
+    --spark:linear-gradient(120deg,var(--amber),var(--orange));
+    --sh1:0 4px 14px rgba(20,22,49,.05);--sh2:0 12px 30px rgba(20,22,49,.1);--sh3:0 22px 50px rgba(20,22,49,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  a{color:var(--teal2);text-decoration:none;}
+  .round{font-family:var(--round);}
+  /* nav */
+  nav{background:rgba(251,250,246,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:30;}
+  .nav-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px clamp(16px,4vw,28px);}
+  .brand{font-family:var(--round);font-weight:800;font-size:20px;color:var(--indigo);letter-spacing:.5px;}
+  .brand .wm-accent{background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .nav-in a.back{font-size:14px;color:var(--soft);font-weight:500;}
+  .nav-cta{font-family:var(--round);font-weight:700;font-size:13.5px;color:#fff;background:var(--spark);padding:8px 15px;border-radius:20px;box-shadow:0 8px 18px rgba(255,138,61,.28);}
+  /* header */
+  .top{max-width:1000px;margin:0 auto;padding:clamp(22px,4vw,38px) clamp(16px,4vw,28px) 6px;text-align:center;}
+  .kick{display:inline-block;font-family:var(--round);font-weight:700;font-size:12.5px;letter-spacing:2px;color:var(--orange);background:rgba(255,138,61,.1);padding:5px 14px;border-radius:20px;margin-bottom:14px;}
+  h1{font-family:var(--round);font-weight:800;font-size:clamp(26px,5vw,38px);color:var(--indigo);letter-spacing:-.5px;line-height:1.25;}
+  h1 em{font-style:normal;background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{color:var(--soft);font-size:15.5px;margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;}
+  /* controls */
+  .controls{max-width:1000px;margin:20px auto 0;padding:0 clamp(16px,4vw,28px);display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .levels{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .lv{font-family:var(--round);font-weight:700;font-size:14px;padding:9px 16px;border-radius:22px;border:1.5px solid var(--hair);background:#fff;color:var(--soft);cursor:pointer;transition:all .2s;}
+  .lv:hover{border-color:var(--orange);color:var(--indigo);}
+  .lv.on{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .stat{background:#fff;border:1px solid var(--hair);border-radius:16px;box-shadow:var(--sh1);padding:10px 18px;text-align:center;min-width:96px;}
+  .stat .k{font-size:12px;color:var(--mute);font-weight:500;}
+  .stat .v{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);line-height:1.15;font-variant-numeric:tabular-nums;}
+  .stat.time .v{color:var(--orange);}
+  .stat.best .v{color:var(--teal2);}
+  .btn-restart{font-family:var(--round);font-weight:700;font-size:14px;padding:9px 20px;border-radius:22px;border:none;cursor:pointer;color:var(--indigo);background:var(--paper2);transition:transform .15s;}
+  .btn-restart:hover{transform:translateY(-2px);}
+  /* board */
+  .board-wrap{max-width:1000px;margin:24px auto 0;padding:0 clamp(12px,4vw,28px);}
+  .board{display:grid;gap:clamp(7px,1.6vw,13px);justify-content:center;margin:0 auto;}
+  .cell{perspective:800px;aspect-ratio:3/4;cursor:pointer;}
+  .inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.8,.3,1.2);}
+  .cell.flip .inner{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:clamp(9px,1.6vw,15px);backface-visibility:hidden;-webkit-backface-visibility:hidden;font-size:clamp(20px,5.5vw,34px);user-select:none;}
+  .back{background:linear-gradient(150deg,#22264f,#141631);box-shadow:var(--sh1);border:1px solid rgba(255,255,255,.06);}
+  .back::after{content:"";position:absolute;width:36%;height:36%;border-radius:50%;background:radial-gradient(circle,rgba(255,176,32,.9),rgba(255,138,61,.5) 60%,transparent 72%);filter:blur(.3px);}
+  .front{background:#fff;box-shadow:var(--sh1);border:1.5px solid var(--hair);transform:rotateY(180deg);}
+  .cell.matched .inner{transform:rotateY(180deg);}
+  .cell.matched .front{background:linear-gradient(150deg,#eafaf7,#d6f3ee);border-color:rgba(22,176,168,.4);animation:pop .4s ease;}
+  .cell.matched{cursor:default;}
+  @keyframes pop{0%{transform:scale(1);}45%{transform:scale(1.09);}100%{transform:scale(1);}}
+  .cell.shake .front{animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:rotateY(180deg) translateX(0);}25%{transform:rotateY(180deg) translateX(-5px);}75%{transform:rotateY(180deg) translateX(5px);}}
+  /* win modal */
+  .overlay{position:fixed;inset:0;background:rgba(20,22,49,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:60;padding:18px;}
+  .overlay.show{display:flex;animation:fade .3s;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+  .modal{background:#fff;border-radius:26px;box-shadow:var(--sh3);max-width:440px;width:100%;padding:34px 28px 28px;text-align:center;animation:rise .4s cubic-bezier(.2,.8,.3,1.1);}
+  @keyframes rise{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal .emoji{font-size:52px;line-height:1;}
+  .modal h2{font-family:var(--round);font-weight:800;font-size:26px;color:var(--indigo);margin:8px 0 4px;}
+  .modal .res{display:flex;gap:10px;justify-content:center;margin:18px 0;}
+  .res .box{background:var(--paper);border:1px solid var(--hair);border-radius:14px;padding:12px 16px;min-width:88px;}
+  .res .box .k{font-size:12px;color:var(--mute);}
+  .res .box .v{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);font-variant-numeric:tabular-nums;}
+  .newbest{display:inline-block;font-family:var(--round);font-weight:700;font-size:12.5px;color:#fff;background:var(--teal);padding:3px 12px;border-radius:20px;margin-bottom:6px;}
+  .pitch{background:linear-gradient(135deg,#fff8ec,#fdeede);border:1px solid rgba(255,176,32,.3);border-radius:16px;padding:16px 18px;margin:14px 0 18px;font-size:14.5px;color:var(--ink);}
+  .pitch b{color:var(--indigo);}
+  .m-btns{display:flex;flex-direction:column;gap:10px;}
+  .m-btn{font-family:var(--round);font-weight:700;font-size:15.5px;padding:13px;border-radius:26px;border:none;cursor:pointer;transition:transform .15s,filter .15s;}
+  .m-btn:hover{transform:translateY(-2px);}
+  .m-primary{color:#fff;background:var(--spark);box-shadow:0 12px 26px rgba(255,138,61,.32);}
+  .m-ghost{color:var(--indigo);background:var(--paper2);}
+  /* footer */
+  footer{max-width:1000px;margin:40px auto 0;padding:24px clamp(16px,4vw,28px) 40px;text-align:center;color:var(--mute);font-size:13px;border-top:1px solid var(--hair);}
+  footer a{color:var(--soft);}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <a class="brand" href="index.html">強<span class="wm-accent">腦</span>力</a>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a class="back" href="index.html">← 回首頁</a>
+    <a class="nav-cta" href="quiz.html">免費學習力檢測</a>
+  </div>
+</div></nav>
+
+<div class="top">
+  <span class="kick">🧠 記憶小遊戲</span>
+  <h1>記憶翻牌：<em>看你幾秒能全部配對</em></h1>
+  <p class="sub">翻開兩張卡片，配對相同的圖案。全部配對完成就破關——計時開始，挑戰你和孩子的最快紀錄！</p>
+</div>
+
+<div class="controls">
+  <div class="levels" id="levels">
+    <button class="lv" data-lv="easy">簡單 · 6 對</button>
+    <button class="lv on" data-lv="normal">普通 · 8 對</button>
+    <button class="lv" data-lv="hard">挑戰 · 10 對</button>
+    <button class="lv" data-lv="master">高手 · 18 對</button>
+  </div>
+  <div class="stats">
+    <div class="stat time"><div class="k">時間</div><div class="v" id="timeV">0.0<span style="font-size:13px;">秒</span></div></div>
+    <div class="stat"><div class="k">翻牌次數</div><div class="v" id="moveV">0</div></div>
+    <div class="stat best"><div class="k">最佳紀錄</div><div class="v" id="bestV">—</div></div>
+    <button class="btn-restart" id="restart">↻ 重新開始</button>
+  </div>
+</div>
+
+<div class="board-wrap"><div class="board" id="board"></div></div>
+
+<footer>
+  記憶力不是天生的，是可以練的。想讓孩子把整本課本也記得這麼快？
+  <a href="quiz.html">先免費檢測 →</a> ・
+  <a href="courses.html">看課程</a><br><br>
+  強腦力 SkyBraining ・ <a href="index.html">skybraining.com</a>
+</footer>
+
+<div class="overlay" id="overlay"><div class="modal">
+  <div class="emoji" id="winEmoji">🎉</div>
+  <div id="bestTag"></div>
+  <h2 id="winTitle">全部配對完成！</h2>
+  <div class="res">
+    <div class="box"><div class="k">用時</div><div class="v" id="rTime">—</div></div>
+    <div class="box"><div class="k">翻牌次數</div><div class="v" id="rMove">—</div></div>
+  </div>
+  <div class="pitch" id="pitch"></div>
+  <div class="m-btns">
+    <a class="m-btn m-primary" href="quiz.html">免費測孩子的學習力 →</a>
+    <button class="m-btn m-ghost" id="again">再玩一次</button>
+  </div>
+</div></div>
+
+<script>
+(function(){
+  var LEVELS={
+    easy:{pairs:6,cols:4},
+    normal:{pairs:8,cols:4},
+    hard:{pairs:10,cols:5},
+    master:{pairs:18,cols:6}
+  };
+  var SYMBOLS=['🧠','💡','🦉','🐘','📚','✏️','🎯','🔑','🧩','🏆','🔬','🚀','⭐','🎨','🎵','🍀','🌈','🔥','🎈','🌟'];
+  var board=document.getElementById('board');
+  var timeV=document.getElementById('timeV'), moveV=document.getElementById('moveV'), bestV=document.getElementById('bestV');
+  var overlay=document.getElementById('overlay');
+  var level='normal', first=null, lock=false, moves=0, matched=0, total=0;
+  var startT=0, timer=null, running=false;
+
+  function bestKey(l){return 'sky_mem_best_'+l;}
+  function getBest(l){ try{var v=localStorage.getItem(bestKey(l)); return v?parseFloat(v):null;}catch(e){return null;} }
+  function setBest(l,v){ try{localStorage.setItem(bestKey(l),String(v));}catch(e){} }
+  function fmt(s){return s.toFixed(1);}
+
+  function showBest(){ var b=getBest(level); bestV.textContent = b!=null ? (fmt(b)+'秒') : '—'; }
+
+  function stopTimer(){ if(timer){clearInterval(timer);timer=null;} running=false; }
+  function tick(){ var s=(Date.now()-startT)/1000; timeV.innerHTML=fmt(s)+'<span style="font-size:13px;">秒</span>'; }
+  function startTimer(){ if(running)return; running=true; startT=Date.now(); timer=setInterval(tick,100); }
+
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+  function build(){
+    stopTimer(); running=false; first=null; lock=false; moves=0; matched=0;
+    var cfg=LEVELS[level]; total=cfg.pairs;
+    moveV.textContent='0'; timeV.innerHTML='0.0<span style="font-size:13px;">秒</span>'; showBest();
+    var syms=SYMBOLS.slice(0,cfg.pairs);
+    var deck=shuffle(syms.concat(syms.slice()));
+    board.style.gridTemplateColumns='repeat('+cfg.cols+',minmax(0,1fr))';
+    board.style.maxWidth=(cfg.cols*84)+'px';
+    board.innerHTML='';
+    deck.forEach(function(sym){
+      var cell=document.createElement('div'); cell.className='cell'; cell.dataset.sym=sym;
+      cell.innerHTML='<div class="inner"><div class="face back"></div><div class="face front">'+sym+'</div></div>';
+      cell.addEventListener('click',function(){onFlip(cell);});
+      board.appendChild(cell);
+    });
+  }
+
+  function onFlip(cell){
+    if(lock||cell.classList.contains('flip')||cell.classList.contains('matched'))return;
+    startTimer();
+    cell.classList.add('flip');
+    if(!first){ first=cell; return; }
+    // second card
+    moves++; moveV.textContent=moves;
+    var a=first, b=cell; first=null;
+    if(a.dataset.sym===b.dataset.sym){
+      lock=true;
+      setTimeout(function(){
+        a.classList.add('matched'); b.classList.add('matched');
+        a.classList.remove('flip'); b.classList.remove('flip');
+        matched++; lock=false;
+        if(matched===total) win();
+      },320);
+    } else {
+      lock=true;
+      a.classList.add('shake'); b.classList.add('shake');
+      setTimeout(function(){
+        a.classList.remove('flip','shake'); b.classList.remove('flip','shake'); lock=false;
+      },780);
+    }
+  }
+
+  function win(){
+    stopTimer();
+    var s=(Date.now()-startT)/1000;
+    var prev=getBest(level); var isBest = (prev==null || s<prev);
+    if(isBest) setBest(level,s);
+    showBest();
+    document.getElementById('rTime').textContent=fmt(s)+'秒';
+    document.getElementById('rMove').textContent=moves;
+    document.getElementById('bestTag').innerHTML = isBest ? '<span class="newbest">🏅 新紀錄！</span>' : '';
+    document.getElementById('winEmoji').textContent = isBest ? '🏆' : '🎉';
+    var lvName={easy:'簡單',normal:'普通',hard:'挑戰',master:'高手'}[level];
+    document.getElementById('winTitle').textContent = lvName+'關破關！';
+    var msg;
+    if(s<15) msg='<b>驚人的速度！</b>你的大腦天生就會「把畫面記起來」。這正是強腦力教孩子的方法——把課本變成畫面，記一次就忘不掉。';
+    else if(s<40) msg='<b>很不錯！</b>記憶力就像肌肉，越練越強。想知道孩子的記憶力練到哪了嗎？花 3 分鐘免費檢測看看。';
+    else msg='<b>配對成功！</b>記不住其實不是笨，是還沒用對方法。強腦力用圖像記憶，讓孩子背東西也能這麼快。';
+    document.getElementById('pitch').innerHTML=msg;
+    try{ if(window.gtag) gtag('event','memory_game_win',{level:level,seconds:Math.round(s),moves:moves}); }catch(e){}
+    overlay.classList.add('show');
+  }
+
+  // level buttons
+  document.getElementById('levels').addEventListener('click',function(e){
+    var b=e.target.closest('.lv'); if(!b)return;
+    document.querySelectorAll('.lv').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); level=b.dataset.lv; overlay.classList.remove('show'); build();
+  });
+  document.getElementById('restart').addEventListener('click',build);
+  document.getElementById('again').addEventListener('click',function(){overlay.classList.remove('show');build();});
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) overlay.classList.remove('show'); });
+
+  build();
+})();
+</script>
+</body>
+</html>
