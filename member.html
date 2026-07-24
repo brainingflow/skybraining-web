@@ -35,10 +35,22 @@
   .logo-mark svg{width:22px;height:22px;}
   .wordmark{letter-spacing:1px;font-weight:800;}
   .wm-accent{background:linear-gradient(120deg,#FFB020,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .nav-right{display:flex;align-items:center;gap:16px;font-size:14px;}
-  .nav-right .who{color:var(--ink-soft);}
-  .logout{font-family:var(--round);font-weight:700;font-size:13.5px;color:var(--indigo);border:1.5px solid var(--hair);background:none;padding:8px 15px;border-radius:30px;cursor:pointer;transition:border-color .2s;}
-  .logout:hover{border-color:var(--indigo);}
+  .nav-right{display:flex;align-items:center;gap:14px;font-size:14px;}
+  .user-menu{position:relative;}
+  .user-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--round);font-weight:700;font-size:14px;color:var(--indigo);border:1.5px solid var(--hair);background:#fff;padding:7px 14px;border-radius:30px;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
+  .user-btn:hover,.user-menu.open .user-btn{border-color:var(--indigo);}
+  .user-btn .uico{width:17px;height:17px;color:var(--ink-soft);flex:none;}
+  .user-btn .caret{font-size:11px;color:var(--ink-soft);transition:transform .2s;}
+  .user-menu.open .user-btn .caret{transform:rotate(180deg);}
+  .user-dd{position:absolute;top:calc(100% + 8px);right:0;min-width:184px;background:#fff;border:1px solid var(--hair);border-radius:14px;box-shadow:var(--shadow-md);padding:6px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .16s,transform .16s,visibility .16s;z-index:40;}
+  .user-menu.open .user-dd{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink);background:none;border:none;padding:11px 13px;border-radius:9px;cursor:pointer;transition:background .15s;text-decoration:none;}
+  .dd-item:hover{background:var(--paper-2);}
+  .dd-item.admin{color:var(--orange);font-weight:700;}
+  .dd-item.danger{color:#d64545;}
+  .dd-sep{height:1px;background:var(--hair);margin:5px 8px;border:none;}
+  .acct-email{font-size:14px;color:var(--ink);background:var(--paper-2);border-radius:12px;padding:12px 15px;margin-bottom:12px;}
+  .acct-email b{font-family:var(--round);color:var(--indigo);word-break:break-all;}
   .head{padding:48px 0 10px;}
   .hi{font-family:var(--round);font-weight:800;font-size:clamp(26px,4vw,38px);color:var(--indigo);}
   .sub{color:var(--ink-soft);margin-top:6px;}
@@ -100,10 +112,19 @@
     <a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
     <div class="nav-right">
       <a href="index.html" style="color:var(--ink-soft);font-weight:500;">← 回首頁</a>
-      <a href="account.html" style="color:var(--ink-soft);font-weight:500;">修改密碼</a>
-      <span id="adminLink"></span>
-      <span class="who" id="who"></span>
-      <button class="logout" id="logout">登出</button>
+      <div class="user-menu" id="userMenu">
+        <button class="user-btn" id="userBtn" aria-haspopup="true" aria-expanded="false">
+          <svg class="uico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 20.5c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5" fill="currentColor"/></svg>
+          使用者 <span class="caret">▾</span>
+        </button>
+        <div class="user-dd" id="userDd" role="menu">
+          <a class="dd-item" href="#account" id="ddAccount" role="menuitem">使用者帳號</a>
+          <a class="dd-item" href="account.html" role="menuitem">修改密碼</a>
+          <span id="ddAdmin"></span>
+          <hr class="dd-sep">
+          <button class="dd-item danger" id="logout" role="menuitem">登出</button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -128,6 +149,19 @@
   const $ = (id)=>document.getElementById(id);
 
   $('logout').onclick = async ()=>{ await supabase.auth.signOut(); location.href = LOGIN_PAGE; };
+  const esc = (s)=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  // 使用者下拉選單：點按鈕才展開，點外面或按 Esc 收起
+  (function(){
+    const menu=$('userMenu'), btn=$('userBtn');
+    if(!menu||!btn) return;
+    const close=()=>{ menu.classList.remove('open'); btn.setAttribute('aria-expanded','false'); };
+    btn.onclick=(e)=>{ e.stopPropagation(); const o=menu.classList.toggle('open'); btn.setAttribute('aria-expanded',o?'true':'false'); };
+    document.addEventListener('click',(e)=>{ if(!menu.contains(e.target)) close(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') close(); });
+    const acc=$('ddAccount');
+    if(acc) acc.onclick=(e)=>{ e.preventDefault(); close(); const t=$('account'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); };
+  })();
 
   (async ()=>{
     const { data:{ session } } = await supabase.auth.getSession();
@@ -138,9 +172,8 @@
     let name = user.email;
     const { data:prof } = await supabase.from('profiles').select('display_name,child_nickname').eq('id', user.id).maybeSingle();
     if(prof && prof.display_name) name = prof.display_name;
-    $('who').textContent = user.email;
     if((user.email||'').toLowerCase()==='brainingflow@gmail.com'){
-      document.getElementById('adminLink').innerHTML='<a href="admin.html" style="color:var(--orange);font-weight:700;">後台管理</a>';
+      document.getElementById('ddAdmin').innerHTML='<a class="dd-item admin" href="admin.html" role="menuitem">後台管理</a>';
     }
     $('hi').textContent = `嗨，${name}！`;
 
@@ -168,13 +201,13 @@
     }
     html += `<div id="acctLinks"></div>`;
     $('content').innerHTML = html;
-    renderAccountLinks();
+    renderAccountLinks(user.email);
   })();
 
   // ── 帳號連結：讓 Email／Google／LINE 綁在同一個帳號 ──
   // LINE 登入 edge function 上線後，把「帶當前登入 token 的綁定網址」填進這裡即可啟用 LINE 綁定按鈕
   const LINE_LINK_URL = '';
-  async function renderAccountLinks(){
+  async function renderAccountLinks(email){
     const box = $('acctLinks');
     if(!box) return;
     let ids = [];
@@ -199,8 +232,9 @@
         ? `<a class="link-btn line" href="${LINE_LINK_URL}">連結 LINE →</a>`
         : `<span class="link-soon">LINE 登入設定完成後開放</span>`));
     box.innerHTML = `
-      <div class="section-t"><span class="bar"></span>帳號與登入方式</div>
+      <div class="section-t" id="account"><span class="bar"></span>使用者帳號</div>
       <div class="links-card">
+        <div class="acct-email">目前登入帳號：<b>${esc(email||'（此帳號無 Email）')}</b></div>
         <p class="links-lead">同一個人可以綁定多種登入方式。綁定之後，不管用 Email、Google 還是 LINE 登入，看到的都是同一個帳號、同一批課程。</p>
         ${rows}
         <div class="link-msg" id="linkMsg"></div>
