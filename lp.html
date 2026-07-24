@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-22EQNGV8C4');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>強腦力 SkyBraining</title>
+<meta property="og:title" content="強腦力 SkyBraining — 免費體驗課">
+<meta property="og:description" content="孩子不是記性差，是沒學過方法。先免費上一堂看看。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://skybraining.com/og.png">
+<meta property="og:site_name" content="強腦力 SkyBraining">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;}
+  body{background:#FBFAF6;font-family:"Noto Sans TC",sans-serif;color:#191b30;-webkit-font-smoothing:antialiased;}
+  #lp-loading,#lp-error{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#8a8ea6;padding:24px;}
+  #lp-error{display:none;}
+  #lp-error h1{font-family:"Baloo 2","Noto Sans TC",sans-serif;font-size:24px;color:#151731;margin-bottom:8px;}
+  #lp-error a{color:#0d8a83;font-weight:700;}
+  .lp-spin{width:34px;height:34px;border:3px solid rgba(20,22,49,.12);border-top-color:#FF8A3D;border-radius:50%;animation:lpsp 1s linear infinite;margin-bottom:14px;}
+  @keyframes lpsp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div id="lp-root"></div>
+<div id="lp-loading"><div class="lp-spin"></div>載入中…</div>
+<div id="lp-error"><h1>找不到這個頁面</h1><p>這個廣告頁可能已被移除或尚未發布。<br><a href="/free.html">看看我們的免費體驗課 →</a></p></div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+  const params=new URLSearchParams(location.search);
+  const slug=(params.get('p')||params.get('slug')||'').trim();
+  const $=(id)=>document.getElementById(id);
+  const fail=()=>{ $('lp-loading').style.display='none'; $('lp-error').style.display='flex'; };
+
+  (async ()=>{
+    if(!slug){ fail(); return; }
+    const { data, error } = await supabase
+      .from('landing_pages').select('name,html')
+      .eq('slug', slug).eq('status','published').maybeSingle();
+    if(error || !data || !data.html){ fail(); return; }
+    document.title = (data.name || '強腦力 SkyBraining');
+    $('lp-loading').style.display='none';
+    // inject stored <style> + body markup (scripts are stripped at save time)
+    $('lp-root').innerHTML = data.html;
+    // generic CTA click tracking (replaces the per-page script)
+    document.querySelectorAll('#lp-root [data-cta]').forEach(function(a){
+      a.addEventListener('click',function(){
+        try{ if(window.gtag) gtag('event','free_course_cta',{location:a.getAttribute('data-cta'),lp:slug}); }catch(e){}
+      });
+    });
+    try{ if(window.gtag) gtag('event','lp_view',{lp:slug}); }catch(e){}
+  })().catch(fail);
+</script>
+</body>
+</html>
