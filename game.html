@@ -71,6 +71,8 @@
   .cell.filled{border-style:solid;border-color:var(--amber);}
   .cell.ok{border-color:var(--teal);background:#e7f7f5;}
   .cell.no{border-color:#e88;background:#fdeaea;}
+  .cell.timing{border-color:var(--orange);animation:tk 1s linear;}
+  @keyframes tk{from{box-shadow:0 0 0 0 rgba(255,138,61,.55);}to{box-shadow:0 0 0 7px rgba(255,138,61,0);}}
   /* ---- board ---- */
   .board{display:grid;gap:clamp(8px,1.6vw,14px);padding:clamp(12px,2vw,20px);}
   .card{aspect-ratio:3/4;perspective:800px;cursor:pointer;}
@@ -107,6 +109,14 @@
   .lb .empty{color:var(--ink-soft);font-size:13px;padding:14px 0;text-align:center;}
   .lb .lastwk{margin-top:14px;font-size:12px;color:var(--ink-soft);border-top:1px solid var(--hair);padding-top:12px;}
   .lb .lastwk b{color:var(--indigo);}
+  /* ---- 登入狀態列 ---- */
+  .loginbar{margin-bottom:18px;padding:14px 20px;}
+  .loginbar .lb-in{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  .loginbar .lb-in span{font-size:14.5px;color:var(--ink-soft);}
+  .loginbar .lb-in b{color:var(--ink);}
+  .loginbar.guest{border-left:5px solid var(--orange);background:linear-gradient(90deg,#fff7ee,#fff);}
+  .loginbar.member{border-left:5px solid var(--teal);background:linear-gradient(90deg,#e9f8f6,#fff);}
+  .loginbar .btn{white-space:nowrap;text-decoration:none;}
   /* ---- 備註提醒 ---- */
   .notecard{padding:18px 20px;margin-top:18px;border-left:5px solid var(--teal);}
   .notecard h4{font-family:var(--round);font-weight:800;font-size:15px;color:var(--indigo);display:flex;align-items:center;gap:7px;margin-bottom:9px;}
@@ -147,15 +157,17 @@
   <div class="head">
     <span class="kicker">🧠 腦力小遊戲</span>
     <h1>記憶配對挑戰</h1>
-    <p>翻開卡片、記住位置、依順序配對。訓練<b>工作記憶</b>與<b>專注力</b>，每周和全站好手一較高下。</p>
+    <p>兩張一組，翻開第二張後<b>一秒自動蓋牌</b>——考驗你的瞬間記憶與專注力，最多同時開三組。每周和全站好手一較高下！</p>
   </div>
+
+  <div class="panel loginbar" id="loginBar" hidden></div>
 
   <div class="layout">
     <!-- 左：遊戲 -->
     <div>
       <div class="panel toolbar">
         <div class="stat"><b id="stTime">0:00</b><span>時間</span></div>
-        <div class="stat"><b id="stMoves">0</b><span>結算次數</span></div>
+        <div class="stat"><b id="stMoves">0</b><span>配對次數</span></div>
         <div class="stat"><b id="stPairs">0/12</b><span>已配對</span></div>
         <div class="spacer"></div>
         <div class="seg" id="diff">
@@ -163,7 +175,6 @@
           <button data-d="normal" class="on">標準·12對</button>
           <button data-d="hard">困難·18對</button>
         </div>
-        <button class="btn btn-ghost" id="checkBtn" disabled>結算配對</button>
         <button class="btn btn-primary" id="newBtn">重新開始</button>
       </div>
 
@@ -208,7 +219,7 @@
     <h2 id="mkTitle">全部配對完成！</h2>
     <div class="res">
       <div><b id="mkTime">0:00</b><span>時間</span></div>
-      <div><b id="mkMoves">0</b><span>結算次數</span></div>
+      <div><b id="mkMoves">0</b><span>配對次數</span></div>
       <div><b id="mkScore">0</b><span>分數</span></div>
     </div>
     <div class="note" id="mkNote"></div>
@@ -251,8 +262,10 @@ const DIFF = { easy:{pairs:10,cols:5,base:3000}, normal:{pairs:12,cols:6,base:40
 /* ---------- 狀態 ---------- */
 let difficulty = 'normal';
 let deck = [];            // {icon, state:'down'|'up'|'matched'}
-let selection = [];       // 目前翻開的卡片 index（依順序，最多 6）
-let matchedPairs = 0, moves = 0, seconds = 0, timer = null, started = false, busy = false;
+let openOrder = [];       // 目前翻開未結算的卡片 index（依翻牌順序，最多 6）
+let waiting = null;       // 每組「第一張」（等待第二張中），或 null
+let matchedPairs = 0, moves = 0, seconds = 0, timer = null, started = false;
+const FLIP_MS = 1000;     // 翻開第二張後幾毫秒自動蓋牌
 
 const $ = id => document.getElementById(id);
 const boardEl = $('board'), slotsEl = $('slots');
@@ -275,21 +288,21 @@ async function loadUser(){
 
 /* ---------- 建立新局 ---------- */
 function newGame(){
-  clearInterval(timer); timer=null; started=false; busy=false;
-  seconds=0; moves=0; matchedPairs=0; selection=[];
+  clearInterval(timer); timer=null; started=false;
+  seconds=0; moves=0; matchedPairs=0; openOrder=[]; waiting=null;
   const cfg = DIFF[difficulty];
   const chosen = ICONS.slice(0, cfg.pairs);
   deck = shuffle([...chosen, ...chosen].map((icon,i)=>({icon, id:i, state:'down'})));
   $('stTime').textContent='0:00'; $('stMoves').textContent='0';
   $('stPairs').textContent=`0/${cfg.pairs}`;
   boardEl.style.gridTemplateColumns=`repeat(${cfg.cols}, 1fr)`;
-  renderBoard(); renderSlots(); updateCheckBtn();
+  renderBoard(); renderSlots();
 }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 function renderBoard(){
   boardEl.innerHTML = deck.map((c,i)=>{
-    const pos = selection.indexOf(i);
+    const pos = openOrder.indexOf(i);
     const cls = c.state==='matched' ? 'card matched' : (c.state==='up' ? 'card up' : 'card');
     const num = pos>=0 ? `<div class="num">${pos+1}</div>` : '';
     return `<div class="${cls}" data-i="${i}">
@@ -305,65 +318,56 @@ function renderBoard(){
 }
 
 function renderSlots(){
-  const labels=['第 1 · 2 張','第 3 · 4 張','第 5 · 6 張'];
-  let html='<span class="lab">翻牌順序：</span>';
+  const labels=['第一組','第二組','第三組'];
+  let html='<span class="lab">配對組（第二張後 1 秒自動蓋牌）：</span>';
   for(let s=0;s<3;s++){
+    const full = openOrder[s*2]!==undefined && openOrder[s*2+1]!==undefined; // 已滿兩張＝讀秒中
     let cells='';
     for(let k=0;k<2;k++){
-      const idx=s*2+k, deckIdx=selection[idx];
+      const deckIdx=openOrder[s*2+k];
       let cc='cell', content='';
-      if(deckIdx!==undefined){ cc+=' filled'; content=deck[deckIdx].icon; }
-      cells+=`<div class="${cc}" data-cell="${idx}">${content}</div>`;
+      if(deckIdx!==undefined){ cc+= full ? ' filled timing' : ' filled'; content=deck[deckIdx].icon; }
+      cells+=`<div class="${cc}">${content}</div>`;
     }
     html+=`<div class="slot"><span class="tag">${labels[s]}</span>${cells}</div>`;
   }
   slotsEl.innerHTML=html;
 }
 
-function updateCheckBtn(){ $('checkBtn').disabled = busy || selection.length<2; }
-
-/* ---------- 點牌 ---------- */
+/* ---------- 點牌：兩張一組，翻開第二張後 1 秒自動結算 ---------- */
 boardEl.addEventListener('click', e=>{
   const card = e.target.closest('.card'); if(!card) return;
   const i = +card.dataset.i;
-  if(busy) return;
   const c = deck[i];
-  if(c.state!=='down') return;            // 已翻開或已配對
-  if(selection.length>=6) return;         // 已達 6 張上限
+  if(c.state!=='down') return;            // 已翻開或已配對，忽略
+  if(openOrder.length>=6) return;         // 最多同時 3 組（6 張）
   if(!started){ started=true; timer=setInterval(tick,1000); }
-  c.state='up'; selection.push(i);
-  renderBoard(); renderSlots(); updateCheckBtn();
-  if(selection.length===6) resolve();
+  c.state='up'; openOrder.push(i);
+  if(waiting===null){
+    waiting=i;                            // 這組第一張 → 保持開啟，不讀秒
+  }else{
+    const a=waiting, b=i; waiting=null;   // 這組第二張 → 開始讀秒
+    scheduleResolve(a,b);
+  }
+  renderBoard(); renderSlots();
 });
 
-$('checkBtn').addEventListener('click', ()=>{ if(selection.length>=2) resolve(); });
-
-/* ---------- 結算：依 (1,2)(3,4)(5,6) 配對 ---------- */
-function resolve(){
-  if(busy || selection.length<2) return;
-  busy=true; moves++; $('stMoves').textContent=moves;
-  const keep=[], drop=[];
-  // 標示三組配對結果
-  for(let s=0;s<3;s++){
-    const a=selection[s*2], b=selection[s*2+1];
-    if(a===undefined) break;
-    if(b===undefined){ drop.push(a); continue; }          // 落單的單張 → 蓋回
-    if(deck[a].icon===deck[b].icon){ keep.push(a,b); markCells(s,true); }
-    else { drop.push(a,b); markCells(s,false); }
-  }
-  keep.forEach(i=>deck[i].state='matched');
-  matchedPairs += keep.length/2;
-  $('stPairs').textContent=`${matchedPairs}/${DIFF[difficulty].pairs}`;
-  renderBoard();
+/* 翻開第二張 FLIP_MS 毫秒後：相同保留、不同蓋回（各組獨立計時）*/
+function scheduleResolve(a,b){
   setTimeout(()=>{
-    drop.forEach(i=>{ if(deck[i].state==='up') deck[i].state='down'; });
-    selection=[]; busy=false;
-    renderBoard(); renderSlots(); updateCheckBtn();
+    moves++; $('stMoves').textContent=moves;
+    if(deck[a].icon===deck[b].icon){
+      deck[a].state='matched'; deck[b].state='matched';
+      matchedPairs++;
+      $('stPairs').textContent=`${matchedPairs}/${DIFF[difficulty].pairs}`;
+    }else{
+      if(deck[a].state==='up') deck[a].state='down';
+      if(deck[b].state==='up') deck[b].state='down';
+    }
+    openOrder = openOrder.filter(x=>x!==a && x!==b);
+    renderBoard(); renderSlots();
     if(matchedPairs===DIFF[difficulty].pairs) win();
-  }, keep.length && !drop.length ? 420 : 780);
-}
-function markCells(slot, ok){
-  [0,1].forEach(k=>{ const el=slotsEl.querySelector(`[data-cell="${slot*2+k}"]`); if(el) el.classList.add(ok?'ok':'no'); });
+  }, FLIP_MS);
 }
 
 /* ---------- 計時 / 過關 ---------- */
@@ -488,13 +492,25 @@ $('mask').addEventListener('click', e=>{ if(e.target===$('mask')) $('mask').clas
 
 /* ---------- 測試掛勾（唯讀；供自動化驗證用）---------- */
 window.__game = {
-  get deck(){return deck;}, get selection(){return selection;},
+  get deck(){return deck;}, get openOrder(){return openOrder;}, get waiting(){return waiting;},
   get matchedPairs(){return matchedPairs;}, get difficulty(){return difficulty;},
-  DIFF, resolve, renderList
+  DIFF, renderList
 };
 
+/* ---------- 登入狀態列（登入才有排行）---------- */
+function renderLoginBar(){
+  const el=$('loginBar'); if(!el) return; el.hidden=false;
+  if(user){
+    el.className='panel loginbar member';
+    el.innerHTML=`<div class="lb-in"><span>✓ 已登入：<b>${esc(playerName)}</b>　完成遊戲後，成績會自動登上本周排行榜 🏆</span></div>`;
+  }else{
+    el.className='panel loginbar guest';
+    el.innerHTML=`<div class="lb-in"><span>🔒 想<b>登上排行榜</b>嗎？先登入會員再遊玩，成績才會列入每周排名。</span><a class="btn btn-primary" href="login.html">會員登入 / 註冊 →</a></div>`;
+  }
+}
+
 /* ---------- 啟動 ---------- */
-(async ()=>{ await initSupa(); await loadUser(); newGame(); await loadLeaderboard(); })();
+(async ()=>{ await initSupa(); await loadUser(); renderLoginBar(); newGame(); await loadLeaderboard(); })();
 </script>
 </body>
 </html>
