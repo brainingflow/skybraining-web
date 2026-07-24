@@ -223,7 +223,8 @@
       <div><b id="mkScore">0</b><span>分數</span></div>
     </div>
     <div class="note" id="mkNote"></div>
-    <button class="btn btn-primary" id="mkAgain" style="width:100%;justify-content:center;">再玩一局</button>
+    <button class="btn btn-primary" id="mkRecord" style="width:100%;justify-content:center;">🏆 成績登錄</button>
+    <button class="btn btn-ghost" id="mkAgain" style="width:100%;justify-content:center;margin-top:10px;">再玩一局</button>
   </div>
 </div>
 
@@ -266,6 +267,7 @@ let openOrder = [];       // 目前翻開未結算的卡片 index（依翻牌順
 let waiting = null;       // 每組「第一張」（等待第二張中），或 null
 let matchedPairs = 0, moves = 0, seconds = 0, timer = null, started = false;
 const FLIP_MS = 1000;     // 翻開第二張後幾毫秒自動蓋牌
+let lastScore = 0, lastRecorded = false;   // 本局分數／是否已登錄排行榜
 
 const $ = id => document.getElementById(id);
 const boardEl = $('board'), slotsEl = $('slots');
@@ -377,21 +379,41 @@ function fmt(s){ return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
 async function win(){
   clearInterval(timer);
   const cfg=DIFF[difficulty];
-  const score=Math.max(50, cfg.base - moves*30 - seconds*6);
+  lastScore=Math.max(50, cfg.base - moves*30 - seconds*6);
+  lastRecorded=false;
   $('mkTime').textContent=fmt(seconds);
   $('mkMoves').textContent=moves;
-  $('mkScore').textContent=score;
-  const note=$('mkNote');
+  $('mkScore').textContent=lastScore;
+  const rec=$('mkRecord'), note=$('mkNote');
   if(user){
-    note.className='note ok'; note.textContent='成績上傳中…';
-    const ok=await submitScore(score);
-    note.className = ok ? 'note ok' : 'note';
-    note.textContent = ok ? '✓ 已列入本周排名！' : '成績暫時無法上傳，請稍後再試';
+    rec.style.display=''; rec.disabled=false; rec.textContent='🏆 成績登錄';
+    note.className='note'; note.textContent='按「成績登錄」把這次成績記上本周排行榜。';
   }else{
-    note.className='note'; note.innerHTML='登入會員後遊玩，成績才會列入排名 👉 <a href="login.html" style="color:var(--teal-deep);font-weight:700;">會員登入</a>';
+    rec.style.display='none';
+    note.className='note'; note.innerHTML='登入會員後才能登錄成績 👉 <a href="login.html" style="color:var(--teal-deep);font-weight:700;">會員登入 / 註冊</a>';
   }
   await loadLeaderboard();
   $('mask').classList.add('show');
+}
+
+/* 成績登錄（明確按鈕；未按也會在關閉/再玩時自動補登）*/
+async function recordScore(){
+  if(!user || lastRecorded) return;
+  const rec=$('mkRecord'), note=$('mkNote');
+  rec.disabled=true; rec.textContent='登錄中…';
+  const ok=await submitScore(lastScore);
+  if(ok){
+    lastRecorded=true;
+    rec.textContent='✓ 已登錄排行榜';
+    note.className='note ok'; note.textContent='✓ 成績已登上本周排行榜！';
+    await loadLeaderboard();
+  }else{
+    rec.disabled=false; rec.textContent='🏆 成績登錄（重試）';
+    note.className='note'; note.textContent='登錄失敗，請再試一次。';
+  }
+}
+async function ensureRecorded(){   // 保險：離開過關視窗前，若還沒登錄就自動補登
+  if(user && !lastRecorded && lastScore>0){ await submitScore(lastScore); lastRecorded=true; }
 }
 
 /* ---------- 分數：寫入 Supabase（僅限已登入會員）---------- */
@@ -487,8 +509,9 @@ $('diff').addEventListener('click', e=>{
   difficulty=b.dataset.d; newGame();
 });
 $('newBtn').addEventListener('click', newGame);
-$('mkAgain').addEventListener('click', ()=>{ $('mask').classList.remove('show'); newGame(); });
-$('mask').addEventListener('click', e=>{ if(e.target===$('mask')) $('mask').classList.remove('show'); });
+$('mkRecord').addEventListener('click', recordScore);
+$('mkAgain').addEventListener('click', async ()=>{ await ensureRecorded(); $('mask').classList.remove('show'); newGame(); });
+$('mask').addEventListener('click', async e=>{ if(e.target!==$('mask')) return; await ensureRecorded(); $('mask').classList.remove('show'); });
 
 /* ---------- 測試掛勾（唯讀；供自動化驗證用）---------- */
 window.__game = {
