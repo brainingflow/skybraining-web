@@ -62,6 +62,11 @@
   .c-price small{font-size:15px;font-weight:600;color:var(--ink-soft);display:block;margin-top:4px;}
   .btn-buy{font-family:var(--round);font-weight:700;font-size:17px;color:#fff;background:var(--accent);padding:16px 34px;border-radius:40px;display:inline-flex;align-items:center;gap:9px;box-shadow:0 12px 30px rgba(22,176,168,.34);transition:transform .2s,box-shadow .2s;}
   .btn-buy:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(22,176,168,.44);}
+  @keyframes ctaBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .btn-buy.bounce{animation:ctaBounce 1.8s ease-in-out infinite;}
+  .btn-buy.bounce:hover{animation:none;}
+  @media(prefers-reduced-motion:reduce){.btn-buy.bounce{animation:none;}}
+  .mid-cta{text-align:center;margin-top:44px;}
   .c-microtrust{margin-top:18px;font-size:13.5px;color:var(--ink-soft);}
   .c-visual{border-radius:26px;background:radial-gradient(120% 120% at 20% 0%,#22264f,#151731 60%);box-shadow:var(--shadow-md);padding:34px;color:#fff;position:relative;overflow:hidden;}
   .c-visual::after{content:"";position:absolute;right:-50px;bottom:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(22,176,168,.45),transparent 70%);}
@@ -166,7 +171,7 @@
         <p class="c-lead">記得住，只是起點；能靈活運用、舉一反三，才是真正的競爭力。這門進階課帶孩子建立「聯想式思考」的大腦——用一套思考模板拆解問題、串連知識、產生想法。從被動接收，變成主動思考的孩子。</p>
         <div class="c-price-row">
           <div class="c-price">NT$7,800<small>買斷・永久觀看</small></div>
-          <a href="#buy" class="btn-buy">立即報名 →</a>
+          <a href="#buy" class="btn-buy bounce">立即報名 →</a>
         </div>
         <div class="c-microtrust">★★★★★ 家長好評・安全金流電子發票・七天鑑賞期揭露</div>
       </div>
@@ -235,6 +240,7 @@
     <div class="mod reveal"><div class="mod-n">04</div><div><h3>思考模板二：串連與整合</h3><p>把拆開的線索重新組織，串起已學的知識，形成完整的答案。</p></div></div>
     <div class="mod reveal"><div class="mod-n">05</div><div><h3>實戰應用：寫作與表達</h3><p>把聯想與模板用到作文、報告與口語表達，讓孩子言之有物。</p></div></div>
     <div class="mod reveal"><div class="mod-n">06</div><div><h3>實戰應用：解題與創意發想</h3><p>延伸到數理解題與開放式思考，訓練邏輯與創意並進。</p></div></div>
+    <div class="mid-cta"><a href="#buy" class="btn-buy bounce">立即報名 NT$7,800 →</a></div>
   </div>
 </section>
 
@@ -266,7 +272,7 @@
       <h2>讓孩子從「會背」到「會想」</h2>
       <p>買斷永久觀看・NT$7,800・安全金流電子發票・七天鑑賞期揭露</p>
       <div class="actions">
-        <a href="#" class="btn-buy" style="box-shadow:0 10px 26px rgba(22,176,168,.4);">立即報名 NT$7,800 →</a>
+        <a href="#" class="btn-buy bounce" style="box-shadow:0 10px 26px rgba(22,176,168,.4);">立即報名 NT$7,800 →</a>
         <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" class="btn-line-lg">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>
           先免費試看
