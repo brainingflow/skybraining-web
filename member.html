@@ -63,6 +63,11 @@
   .course-top{padding:24px 26px;color:#fff;position:relative;overflow:hidden;}
   .course-top.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .course-top.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .course-top.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .course-top.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+  .course-top.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+  .course-top.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+  .course-top.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
   .course-top::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.15);}
   .course-lv{font-family:var(--round);font-weight:700;font-size:12px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:20px;position:relative;z-index:1;}
   .course-name{font-family:var(--round);font-weight:800;font-size:23px;margin-top:12px;position:relative;z-index:1;}
@@ -80,6 +85,11 @@
   .btn-watch{color:#fff;}
   .btn-watch.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .btn-watch.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+  .btn-watch.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+  .btn-watch.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+  .btn-watch.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+  .btn-watch.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+  .btn-watch.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
   .btn-buy{color:var(--indigo);background:var(--paper-2);}
   .btn-buy:hover{background:#e8e5da;}
   .state{padding:70px 0;text-align:center;color:var(--ink-soft);}
@@ -249,14 +259,15 @@
   }
 
   function card(c, owned){
-    const color = c.accent==='teal' ? 'teal' : 'amber';
+    const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape'];
+    const color = ACCENTS.includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
     const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-10倍聯想力' : '');
     const introHref = c.id==='super-memory' ? 'course-memory.html' : (c.id==='super-thinking' ? 'course-thinking.html' : 'index.html#courses');
     const isFree = (c.price||0)===0;
     const action = owned
       ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">▶ 開始觀看</a>`
       : (isFree
-          ? `<a class="btn btn-watch teal" href="watch.html?course=${encodeURIComponent(c.id)}">免費開通・立即觀看 →</a>`
+          ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">免費開通・立即觀看 →</a>`
           : `<a class="btn btn-buy" href="${introHref}">了解課程 · NT$${c.price.toLocaleString()} →</a>`);
     const status = owned
       ? `<span class="status owned"><span class="dot"></span>已開通・永久觀看</span>`
