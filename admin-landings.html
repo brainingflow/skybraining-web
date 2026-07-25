@@ -85,6 +85,7 @@
   <a href="admin-contacts.html">名單管理</a>
   <a href="admin-broadcast.html">群發信</a>
   <a href="admin-landings.html" class="active">廣告頁</a>
+  <a href="admin-admins.html">管理員</a>
 </div></div>
 <div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
 
@@ -92,7 +93,6 @@
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
   const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
   const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
-  const ADMIN_EMAILS=['brainingflow@gmail.com'];
   const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
   const $=(id)=>document.getElementById(id);
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -103,7 +103,8 @@
     const { data:{ session } } = await supabase.auth.getSession();
     if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
     const email=(session.user.email||'').toLowerCase();
-    if(!ADMIN_EMAILS.includes(email)){
+    const { data:isAdm } = await supabase.rpc('is_admin');
+    if(isAdm!==true){
       $('content').innerHTML=`<div class="gate"><h2>非管理員帳號</h2><p>這個頁面僅限管理員使用。你目前登入的是 ${esc(session.user.email)}。</p><p><a href="member.html">← 回會員中心</a></p></div>`;
       return;
     }

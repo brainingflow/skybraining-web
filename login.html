@@ -60,7 +60,7 @@
   .btn{width:100%;margin-top:22px;font-family:var(--round);font-weight:700;font-size:16px;color:var(--indigo);background:var(--accent);border:none;padding:15px;border-radius:40px;cursor:pointer;box-shadow:0 12px 28px rgba(255,138,61,.32);transition:transform .2s,box-shadow .2s;}
   .btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,138,61,.42);}
   .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-  .msg{margin-top:18px;padding:12px 15px;border-radius:12px;font-size:14px;display:none;}
+  .msg{margin-top:18px;padding:12px 15px;border-radius:12px;font-size:14px;display:none;white-space:pre-line;}
   .msg.show{display:block;}
   .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
   .msg.ok{background:rgba(22,176,168,.12);color:var(--teal-deep);border:1px solid rgba(22,176,168,.28);}
@@ -169,7 +169,15 @@
     if(error) show(translate(error.message),'error');
   };
   // LINE：Supabase 無內建，走自建 Edge Function 橋接（見 line-login.ts）
+  // ⚠️ LINE Login channel + line-login Edge Function 都佈署完成後，
+  //    把下面這行改成 true，LINE 登入按鈕就會啟用。
+  const LINE_LOGIN_READY = false;
+  if(!LINE_LOGIN_READY){ $('btnLine').style.opacity = '.55'; }
   $('btnLine').onclick = ()=>{
+    if(!LINE_LOGIN_READY){
+      show('LINE 登入還在設定中，目前請先用 Google 或 Email 登入。（同一個 Email 之後會自動合併成同一個帳號）','error');
+      return;
+    }
     location.href = `${SUPABASE_URL}/functions/v1/line-login?redirect_to=${encodeURIComponent(abs(AFTER_LOGIN))}`;
   };
 
@@ -212,8 +220,8 @@
   };
 
   function translate(m){
-    if(/Invalid login credentials/i.test(m)) return 'Email 或密碼錯誤，請再試一次。';
-    if(/already registered|already exists/i.test(m)) return '這個 Email 已經註冊過了，請直接登入。';
+    if(/Invalid login credentials/i.test(m)) return 'Email 或密碼錯誤，請再試一次。\n如果你之前是用「Google 繼續」註冊的，這個帳號還沒有設定密碼——請改按上面的 Google 登入（同一個 Email 就是同一個帳號、課程都在），登入後可在會員中心設定密碼。';
+    if(/already registered|already exists/i.test(m)) return '這個 Email 已經註冊過了，請直接登入。\n如果當初是用 Google 註冊的，請按上面的「使用 Google 繼續」——同一個 Email 就是同一個帳號。';
     if(/Email not confirmed/i.test(m)) return '請先到信箱點確認信完成驗證後再登入。';
     if(/provider is not enabled|Unsupported provider/i.test(m)) return '此登入方式尚未在後台啟用，請先於 Supabase 開啟。';
     if(/Failed to fetch|NetworkError/i.test(m)) return '連線失敗，請檢查網路後再試。';
