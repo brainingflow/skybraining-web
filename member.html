@@ -117,6 +117,16 @@
   .link-msg.err{color:#d64545;}
   .link-msg.ok{color:var(--teal-deep);}
   .merge-note{margin-top:26px;background:rgba(22,176,168,.1);border:1px solid rgba(22,176,168,.28);color:var(--teal-deep);border-radius:14px;padding:13px 17px;font-size:14px;}
+  .mno{display:inline-flex;align-items:center;gap:8px;margin-top:10px;background:var(--indigo);color:#fff;font-family:var(--round);font-weight:700;font-size:14px;padding:6px 15px;border-radius:24px;letter-spacing:.5px;}
+  .mno .lb{font-size:11.5px;opacity:.7;font-weight:600;letter-spacing:0;}
+  .id-card{background:linear-gradient(135deg,#22264f,#141330);color:#fff;border-radius:20px;padding:20px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .id-card .k{font-size:12.5px;opacity:.65;letter-spacing:.5px;}
+  .id-card .v{font-family:var(--round);font-weight:800;font-size:26px;letter-spacing:1.5px;}
+  .id-card .r{text-align:right;font-size:13px;opacity:.8;line-height:1.6;}
+  .link-avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--paper-2);}
+  .link-sub{font-size:12.5px;color:var(--ink-soft);}
+  .link-btn.ghost{background:var(--paper-2);color:var(--ink-soft);}
+  .link-actions{display:flex;align-items:center;gap:8px;}
 </style>
 </head>
 <body>
@@ -201,6 +211,18 @@
       if(mg && mg.merged) mergedNow = mg.merged;
     }catch(e){ /* account_merge.sql 尚未部署時靜默略過 */ }
 
+    // 會員編號：同一個人不管用 Email／Google／LINE 登入都是同一個編號
+    let me = null;
+    try{
+      const { data:m } = await supabase.rpc('member_me');
+      if(m && m.ok) me = m;
+    }catch(e){ /* member_ids.sql 尚未部署時靜默略過 */ }
+    if(me && me.member_no){
+      const s = document.querySelector('.head .sub');
+      if(s) s.insertAdjacentHTML('afterend',
+        `<div class="mno"><span class="lb">會員編號</span>${esc(me.member_no)}</div>`);
+    }
+
     // 讀所有課程 + 本人的購買紀錄
     const [{ data:courses, error:cErr }, { data:enroll }] = await Promise.all([
       supabase.from('courses').select('*').eq('is_published',true).order('sort_order'),
@@ -228,50 +250,108 @@
     }
     html += `<div id="acctLinks"></div>`;
     $('content').innerHTML = html;
-    renderAccountLinks(user.email);
+    renderAccountLinks(user.email, me);
   })();
 
-  // ── 帳號連結：讓 Email／Google／LINE 綁在同一個帳號 ──
-  // LINE 登入 edge function 上線後，把「帶當前登入 token 的綁定網址」填進這裡即可啟用 LINE 綁定按鈕
-  const LINE_LINK_URL = '';
-  async function renderAccountLinks(email){
+  // ── 帳號綁定：Email／Google／LINE 綁在同一個會員編號 ──
+  const LINE_FN = SUPABASE_URL + '/functions/v1/line-auth';
+
+  async function renderAccountLinks(email, me){
     const box = $('acctLinks');
     if(!box) return;
+
+    // 這個 auth 帳號自己的登入方式
     let ids = [];
     try{
       const { data } = await supabase.auth.getUserIdentities();
       ids = (data && data.identities) ? data.identities : [];
     }catch(e){ /* 舊 session 可能不支援，靜默略過 */ }
-    const has = (p)=> ids.some(i=>i.provider===p);
-    const row = (name, connected, actionHtml)=>`
+    // 加上同一個會員編號底下、其他帳號的登入方式
+    const provs = new Set(ids.map(i=>i.provider));
+    if(me && Array.isArray(me.providers)) me.providers.forEach(p=>provs.add(p));
+    const has = (p)=> provs.has(p);
+    const line = me && me.line ? me.line : null;
+
+    const row = (name, connected, sub, actionHtml)=>`
       <div class="link-row">
-        <div class="link-info"><span class="link-name">${name}</span>
-          <span class="link-badge ${connected?'on':'off'}">${connected?'已連結':'未連結'}</span></div>
-        <div>${actionHtml}</div>
+        <div class="link-info">
+          <span class="link-name">${name}</span>
+          <span class="link-badge ${connected?'on':'off'}">${connected?'已綁定':'未綁定'}</span>
+          ${sub?`<span class="link-sub">${sub}</span>`:''}
+        </div>
+        <div class="link-actions">${actionHtml}</div>
       </div>`;
+
     let rows = '';
-    rows += row('Email ／ 密碼登入', has('email'),
-      has('email') ? '' : `<a class="link-btn" href="account.html">設定密碼 →</a>`);
-    rows += row('Google 登入', has('google'),
+    rows += row('Email ／ 密碼登入', has('email'), has('email')? esc(email||'') : '',
+      has('email') ? `<a class="link-btn ghost" href="account.html">改密碼</a>`
+                   : `<a class="link-btn" href="account.html">設定密碼 →</a>`);
+    rows += row('Google 登入', has('google'), '',
       has('google') ? '' : `<button class="link-btn" id="linkGoogle">連結 Google →</button>`);
-    rows += row('LINE 登入', has('line'),
-      has('line') ? '' : (LINE_LINK_URL
-        ? `<a class="link-btn line" href="${LINE_LINK_URL}">連結 LINE →</a>`
-        : `<span class="link-soon">LINE 登入設定完成後開放</span>`));
+    rows += row('LINE 登入', !!line,
+      line ? `${line.picture_url?`<img class="link-avatar" src="${esc(line.picture_url)}" alt="">`:''}${esc(line.display_name||'')}` : '',
+      line ? `<button class="link-btn ghost" id="unlinkLine">解除綁定</button>`
+           : `<button class="link-btn line" id="linkLine">連結 LINE →</button>`);
+
+    const idCard = (me && me.member_no) ? `
+      <div class="id-card">
+        <div><div class="k">會員編號 MEMBER NO.</div><div class="v">${esc(me.member_no)}</div></div>
+        <div class="r">已綁定 ${provs.size + (line?1:0)} 種登入方式<br>已開通 ${me.courses||0} 門課程</div>
+      </div>` : '';
+
     box.innerHTML = `
       <div class="section-t" id="account"><span class="bar"></span>使用者帳號</div>
       <div class="links-card">
+        ${idCard}
         <div class="acct-email">目前登入帳號：<b>${esc(email||'（此帳號無 Email）')}</b></div>
-        <p class="links-lead">同一個人可以綁定多種登入方式。<b>只要 Email 相同，Google 登入與 Email 密碼登入會自動視為同一個帳號</b>——課程權限系統會自動幫你補齊，不會有「買的課不見了」的情況。</p>
+        <p class="links-lead">下面三種登入方式，<b>綁定之後都會對應到上面同一個會員編號</b>——不管你今天用哪一個登入，看到的課程、紀錄都完全一樣。</p>
         ${rows}
         <div class="link-msg" id="linkMsg"></div>
       </div>`;
-    const lmsg = (t,type)=>{ const m=$('linkMsg'); if(!m) return; m.className='link-msg show '+type; m.textContent=t; };
+
+    const lmsg = (t,type)=>{ const m=$('linkMsg'); if(!m) return; m.className='link-msg show '+type; m.innerHTML=t; };
+
+    // 剛從 LINE 綁定回來
+    if(new URLSearchParams(location.search).get('line')==='ok'){
+      lmsg('✓ LINE 已經綁到你的會員編號了，以後可以直接用 LINE 登入。','ok');
+    }
+
+    // Google：Supabase 原生 linkIdentity，會直接掛到同一個 auth 帳號
     const g = $('linkGoogle');
     if(g) g.onclick = async ()=>{
       g.disabled = true; g.textContent = '前往 Google…';
       const { error } = await supabase.auth.linkIdentity({ provider:'google' });
-      if(error){ g.disabled=false; g.textContent='連結 Google →'; lmsg('連結失敗：'+error.message,'err'); }
+      if(error){ g.disabled=false; g.textContent='連結 Google →'; lmsg('連結失敗：'+esc(error.message),'err'); }
+    };
+
+    // LINE：走自己的 Edge Function（LINE 不是 Supabase 原生登入方式）
+    const l = $('linkLine');
+    if(l) l.onclick = async ()=>{
+      l.disabled = true; l.textContent = '前往 LINE…';
+      try{
+        const redirect = location.origin + '/line-callback.html';
+        const res = await fetch(`${LINE_FN}?action=start&mode=bind&redirect_uri=${encodeURIComponent(redirect)}`,
+                                { headers:{ apikey: SUPABASE_ANON } });
+        const j = await res.json();
+        if(j && j.ok && j.url){ location.href = j.url; return; }
+        l.disabled=false; l.textContent='連結 LINE →';
+        lmsg(j && j.reason==='not_configured'
+          ? 'LINE 登入還在設定中（頻道資訊尚未填入），目前請先用 Email 或 Google 登入。'
+          : 'LINE 連結暫時無法使用，請稍後再試。','err');
+      }catch(e){
+        l.disabled=false; l.textContent='連結 LINE →';
+        lmsg('LINE 登入還在設定中，目前請先用 Email 或 Google 登入。','err');
+      }
+    };
+
+    const ul = $('unlinkLine');
+    if(ul) ul.onclick = async ()=>{
+      if(ul.dataset.sure!=='1'){ ul.dataset.sure='1'; ul.textContent='再按一次確認'; setTimeout(()=>{ if(ul.dataset.sure==='1'){ ul.dataset.sure=''; ul.textContent='解除綁定'; } },4000); return; }
+      ul.disabled=true; ul.textContent='處理中…';
+      const { error } = await supabase.rpc('member_unbind_line');
+      if(error){ ul.disabled=false; ul.textContent='解除綁定'; lmsg('解除失敗：'+esc(error.message),'err'); return; }
+      lmsg('已解除 LINE 綁定。','ok');
+      setTimeout(()=>location.reload(), 800);
     };
   }
 

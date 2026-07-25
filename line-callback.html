@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>LINE 連結處理中 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--indigo:#151731;--paper:#FAF9F5;--paper-2:#F2F0E8;--ink:#1B1D33;--ink-soft:#5b5f7a;
+        --amber:#FFB020;--orange:#FF8A3D;--teal-deep:#0d8a83;--line-brand:#06C755;
+        --hair:rgba(21,23,49,.1);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       min-height:100vh;display:grid;place-items:center;padding:24px;}
+  .card{background:#fff;border:1px solid var(--hair);border-radius:24px;box-shadow:0 18px 44px rgba(21,23,49,.12);
+        padding:40px 34px;max-width:440px;width:100%;text-align:center;}
+  .mark{width:56px;height:56px;border-radius:16px;background:var(--line-brand);display:grid;place-items:center;
+        margin:0 auto 18px;color:#fff;font-family:var(--round);font-weight:800;font-size:20px;}
+  h1{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);margin-bottom:8px;}
+  p{color:var(--ink-soft);font-size:14.5px;}
+  .spin{width:34px;height:34px;border:3px solid var(--hair);border-top-color:var(--line-brand);
+        border-radius:50%;margin:20px auto 0;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  .btn{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;
+       display:inline-flex;align-items:center;gap:7px;cursor:pointer;border:none;margin-top:20px;
+       color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);text-decoration:none;}
+  .btn.ghost{color:var(--indigo);background:var(--paper-2);}
+  .err{color:#d64545;}
+  .ok{color:var(--teal-deep);}
+  .small{font-size:13px;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="mark">LINE</div>
+  <h1 id="t">處理中…</h1>
+  <p id="m">正在跟 LINE 確認你的身分，請稍等幾秒。</p>
+  <div class="spin" id="sp"></div>
+  <div id="act"></div>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPABASE_URL  = 'https://gfuqizxzihgydzyqywun.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  const FN = SUPABASE_URL + '/functions/v1/line-auth';
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+  const $ = (id)=>document.getElementById(id);
+
+  const show = (title, msg, cls, actionsHtml)=>{
+    $('sp').style.display='none';
+    $('t').textContent = title;
+    $('m').className = cls || '';
+    $('m').innerHTML = msg;
+    $('act').innerHTML = actionsHtml || '';
+  };
+
+  (async ()=>{
+    const q = new URLSearchParams(location.search);
+    const code  = q.get('code');
+    const state = q.get('state') || '';
+    const mode  = state.split('.')[0] === 'login' ? 'login' : 'bind';
+    const err   = q.get('error');
+
+    if(err || !code){
+      show('沒有完成 LINE 授權',
+           err === 'access_denied' ? '你在 LINE 那邊按了取消，沒有任何資料被更動。' : '沒有收到 LINE 的授權碼，請再試一次。',
+           'err',
+           `<a class="btn" href="member.html#account">回會員中心</a>`);
+      return;
+    }
+
+    // 綁定模式要帶目前登入的 token
+    let headers = { 'Content-Type':'application/json', 'apikey': SUPABASE_ANON };
+    if(mode === 'bind'){
+      const { data:{ session } } = await supabase.auth.getSession();
+      if(!session){
+        show('請先登入', '綁定 LINE 之前要先用 Email 或 Google 登入，這樣系統才知道要把 LINE 綁到誰身上。', 'err',
+             `<a class="btn" href="login.html">前往登入</a>`);
+        return;
+      }
+      headers['Authorization'] = 'Bearer ' + session.access_token;
+    }
+
+    let r;
+    try{
+      const res = await fetch(FN + '?action=callback', {
+        method:'POST', headers,
+        body: JSON.stringify({ code, mode, redirect_uri: location.origin + location.pathname })
+      });
+      r = await res.json();
+    }catch(e){
+      show('連線失敗', '沒辦法連到 LINE 登入服務，請稍後再試一次。', 'err',
+           `<a class="btn" href="member.html#account">回會員中心</a>`);
+      return;
+    }
+
+    if(r && r.ok && r.mode === 'bind'){
+      show('LINE 綁定完成 ✓',
+           `以後你用 LINE 登入，看到的會是同一個會員編號、同一批課程。`,
+           'ok', `<a class="btn" href="member.html?line=ok#account">回會員中心</a>`);
+      setTimeout(()=>{ location.href='member.html?line=ok#account'; }, 1600);
+      return;
+    }
+
+    if(r && r.ok && r.mode === 'login'){
+      const { error } = await supabase.auth.verifyOtp({ token_hash: r.token_hash, type:'magiclink' });
+      if(error){
+        show('登入沒有成功', '請改用 Email 或 Google 登入：'+error.message, 'err',
+             `<a class="btn" href="login.html">前往登入</a>`);
+        return;
+      }
+      show('登入成功 ✓', `會員編號 <b>${r.member_no||''}</b>，正在帶你進會員中心…`, 'ok', '');
+      setTimeout(()=>{ location.href='member.html'; }, 900);
+      return;
+    }
+
+    const reason = (r && r.reason) || 'unknown';
+    if(reason === 'not_bound'){
+      show('這個 LINE 還沒有綁定會員',
+           '請先用 <b>Email 或 Google</b> 登入，到會員中心的「使用者帳號」按一次「連結 LINE」。綁定過之後，以後就能直接用 LINE 登入了。',
+           'err', `<a class="btn" href="login.html">用 Email／Google 登入</a>`);
+    }else if(reason === 'not_configured'){
+      show('LINE 登入還在設定中', 'LINE 的頻道資訊還沒設定完成，目前請先用 Email 或 Google 登入。', 'err',
+           `<a class="btn" href="login.html">前往登入</a>`);
+    }else if(reason === 'no_email'){
+      show('這個帳號沒有 Email', '請改用 Email 或 Google 登入後，再到會員中心重新綁定一次 LINE。', 'err',
+           `<a class="btn" href="login.html">前往登入</a>`);
+    }else{
+      show('處理失敗', '代碼：'+reason+'<div class="small">再試一次通常就好了；一直失敗請用 Email 或 Google 登入。</div>', 'err',
+           `<a class="btn" href="login.html">前往登入</a><a class="btn ghost" href="member.html#account">回會員中心</a>`);
+    }
+  })();
+</script>
+</body>
+</html>

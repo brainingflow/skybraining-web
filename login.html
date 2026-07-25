@@ -168,17 +168,32 @@
     });
     if(error) show(translate(error.message),'error');
   };
-  // LINE：Supabase 無內建，走自建 Edge Function 橋接（見 line-login.ts）
-  // ⚠️ LINE Login channel + line-login Edge Function 都佈署完成後，
-  //    把下面這行改成 true，LINE 登入按鈕就會啟用。
-  const LINE_LOGIN_READY = false;
-  if(!LINE_LOGIN_READY){ $('btnLine').style.opacity = '.55'; }
-  $('btnLine').onclick = ()=>{
-    if(!LINE_LOGIN_READY){
-      show('LINE 登入還在設定中，目前請先用 Google 或 Email 登入。（同一個 Email 之後會自動合併成同一個帳號）','error');
+  // LINE：Supabase 無內建，走自建 Edge Function 橋接（見 line-auth.ts）
+  // 按鈕會自己去問 Edge Function「LINE 設定好了沒」，設定好就自動啟用，不用改程式碼。
+  const LINE_FN = SUPABASE_URL + '/functions/v1/line-auth';
+  let LINE_READY = false;
+  $('btnLine').style.opacity = '.55';
+  fetch(`${LINE_FN}?action=config`, { headers:{ apikey: SUPABASE_ANON } })
+    .then(r=>r.json())
+    .then(j=>{ if(j && j.ready){ LINE_READY = true; $('btnLine').style.opacity = '1'; } })
+    .catch(()=>{});
+  $('btnLine').onclick = async ()=>{
+    clearMsg();
+    if(!LINE_READY){
+      show('LINE 登入還在設定中，目前請先用 Google 或 Email 登入。（同一個 Email 會自動視為同一個會員編號）','error');
       return;
     }
-    location.href = `${SUPABASE_URL}/functions/v1/line-login?redirect_to=${encodeURIComponent(abs(AFTER_LOGIN))}`;
+    show('前往 LINE…','ok');
+    try{
+      const redirect = location.origin + '/line-callback.html';
+      const res = await fetch(`${LINE_FN}?action=start&mode=login&redirect_uri=${encodeURIComponent(redirect)}`,
+                              { headers:{ apikey: SUPABASE_ANON } });
+      const j = await res.json();
+      if(j && j.ok && j.url){ location.href = j.url; return; }
+      show('LINE 登入暫時無法使用，請先用 Google 或 Email 登入。','error');
+    }catch(e){
+      show('LINE 登入暫時無法使用，請先用 Google 或 Email 登入。','error');
+    }
   };
 
   // ===== Tab 切換 =====
