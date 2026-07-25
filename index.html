@@ -133,7 +133,7 @@
   .brain-card svg.net{width:88%;height:88%;position:relative;}
   .node{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;}
   /* ===== 宇宙星系 hero ===== */
-  #cosmoCard{--rot:0deg;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);}
+  #cosmoCard{--rot:0deg;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);box-shadow:none;-webkit-mask-image:radial-gradient(ellipse 94% 94% at 50% 50%,#000 56%,transparent 95%);mask-image:radial-gradient(ellipse 94% 94% at 50% 50%,#000 56%,transparent 95%);user-select:none;-webkit-user-select:none;pointer-events:none;cursor:default;}
   .stars{position:absolute;inset:0;}
   .stars::before,.stars::after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;
     box-shadow:30px 40px 0 0 rgba(255,255,255,.9),120px 90px 0 .4px rgba(255,255,255,.55),210px 30px 0 0 rgba(255,255,255,.75),300px 120px 0 .6px rgba(255,255,255,.5),80px 200px 0 0 rgba(255,255,255,.6),260px 230px 0 .5px rgba(255,255,255,.85),350px 300px 0 0 rgba(255,255,255,.5),40px 320px 0 .5px rgba(255,255,255,.7),180px 350px 0 0 rgba(255,255,255,.6),330px 60px 0 0 rgba(255,255,255,.65),150px 150px 0 .4px rgba(255,255,255,.45),380px 190px 0 0 rgba(255,255,255,.7),100px 420px 0 .5px rgba(255,255,255,.6),290px 400px 0 0 rgba(255,255,255,.8),400px 340px 0 .4px rgba(255,255,255,.5);
@@ -142,7 +142,9 @@
   @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
   .cosmo-sweep{position:absolute;inset:-25%;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,176,32,.10) 46deg,rgba(255,255,255,.05) 78deg,transparent 120deg);transform:rotate(calc(var(--rot) * -1.6));will-change:transform;}
   .sun-glow{position:absolute;left:50%;top:50%;width:46%;height:46%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,138,61,.45),transparent 70%);filter:blur(8px);}
-  .sun{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(58px,7.5vw,80px);height:clamp(58px,7.5vw,80px);border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 58%,#E0761B);display:grid;place-items:center;font-size:clamp(26px,3.4vw,36px);box-shadow:0 0 34px rgba(255,158,61,.75),0 0 90px rgba(255,138,61,.35);z-index:3;}
+  .sun{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(58px,7.5vw,80px);height:clamp(58px,7.5vw,80px);border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 58%,#E0761B);display:grid;place-items:center;box-shadow:0 0 34px rgba(255,158,61,.75),0 0 90px rgba(255,138,61,.35);z-index:3;}
+  .sun{width:clamp(68px,9vw,96px);height:clamp(68px,9vw,96px);}
+  .sun-txt{font-family:var(--round);font-weight:800;font-size:clamp(14px,1.8vw,18px);color:#fff;letter-spacing:2px;text-shadow:0 1px 8px rgba(160,70,0,.55);}
   .orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(255,255,255,.22);border-radius:50%;}
   .or1{width:calc(var(--r1)*2);height:calc(var(--r1)*2);}
   .or2{width:calc(var(--r2)*2);height:calc(var(--r2)*2);border-style:solid;border-color:rgba(255,255,255,.13);}
@@ -157,6 +159,7 @@
   .planet.pd{width:15px;height:15px;background:radial-gradient(circle at 32% 30%,#ff9db2,#FF6B8B 62%,#E23A63);box-shadow:0 0 12px rgba(255,107,139,.6);}
   .planet.pe{width:21px;height:21px;background:radial-gradient(circle at 32% 30%,#ffe08a,#F5A623 62%,#E0761B);box-shadow:0 0 14px rgba(245,166,35,.65);}
   .planet.pe::after{content:"";position:absolute;left:50%;top:50%;width:34px;height:12px;border:1.6px solid rgba(255,224,138,.8);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg);}
+  .planet.pf{width:18px;height:18px;background:radial-gradient(circle at 32% 30%,#8fd0ff,#2BA8F0 62%,#1d55c9);box-shadow:0 0 13px rgba(43,168,240,.65);}
   .pl-lbl{background:rgba(255,255,255,.94);color:var(--indigo);font-weight:700;font-size:12.5px;padding:4px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.35);}
   @media (prefers-reduced-motion:reduce){.stars::before,.stars::after{animation:none;}}
   .node:nth-child(2){animation-delay:.4s}.node:nth-child(3){animation-delay:.8s}.node:nth-child(4){animation-delay:1.2s}.node:nth-child(5){animation-delay:1.6s}.node:nth-child(6){animation-delay:2s}
@@ -405,12 +408,13 @@
         <div class="orbit-ring or3"></div>
         <div class="orbit-sys">
           <div class="pl-wrap" style="--ang:-20deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pa"></span><span class="pl-lbl">圖像記憶</span></div></div>
-          <div class="pl-wrap" style="--ang:52deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pb"></span><span class="pl-lbl">聯想思考</span></div></div>
-          <div class="pl-wrap" style="--ang:124deg;--rad:var(--r1)"><div class="pl-cnt"><span class="planet pc"></span><span class="pl-lbl">成績有感</span></div></div>
-          <div class="pl-wrap" style="--ang:196deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pd"></span><span class="pl-lbl">科學方法</span></div></div>
-          <div class="pl-wrap" style="--ang:268deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
+          <div class="pl-wrap" style="--ang:40deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pb"></span><span class="pl-lbl">聯想思考</span></div></div>
+          <div class="pl-wrap" style="--ang:100deg;--rad:var(--r1)"><div class="pl-cnt"><span class="planet pc"></span><span class="pl-lbl">成績有感</span></div></div>
+          <div class="pl-wrap" style="--ang:160deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pd"></span><span class="pl-lbl">科學方法</span></div></div>
+          <div class="pl-wrap" style="--ang:220deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
+          <div class="pl-wrap" style="--ang:280deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pf"></span><span class="pl-lbl">見證無數</span></div></div>
         </div>
-        <div class="sun">🧠</div>
+        <div class="sun"></div>
       </div>
     </div>
   </div>
@@ -769,7 +773,7 @@
   var raf=null;
   function upd(){
     raf=null;
-    card.style.setProperty('--rot', ((window.scrollY||0)*0.12)%360 + 'deg');
+    card.style.setProperty('--rot', ((window.scrollY||0)*0.36)%360 + 'deg');
   }
   window.addEventListener('scroll',function(){ if(!raf) raf=requestAnimationFrame(upd); },{passive:true});
   upd();
