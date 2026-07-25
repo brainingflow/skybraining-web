@@ -61,7 +61,7 @@
   @media(max-width:680px){.grid{grid-template-columns:1fr;}}
   .course{background:#fff;border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
   .course:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
-  .course-top{padding:22px 22px;color:#fff;position:relative;overflow:hidden;}
+  .course-top{padding:22px 22px;color:#fff;position:relative;overflow:hidden;min-height:150px;box-sizing:border-box;}
   .course-top.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .course-top.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
   .course-top.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
@@ -73,6 +73,7 @@
   .course-lv{font-family:var(--round);font-weight:700;font-size:12px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:20px;position:relative;z-index:1;}
   .course-name{font-family:var(--round);font-weight:800;font-size:21px;line-height:1.35;margin-top:10px;position:relative;z-index:1;}
   .course-sub{font-size:13px;opacity:.9;position:relative;z-index:1;}
+  .course-name.sm{font-size:17px;}
   .course-body{padding:20px 22px;display:flex;flex-direction:column;gap:13px;flex:1;}
   .status{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13.5px;}
   .status.owned{color:var(--teal-deep);}
@@ -385,7 +386,7 @@
     return `<div class="course">
       <div class="course-top ${color}">
         <span class="course-lv">Level ${c.level}</span>
-        <div class="course-name">${c.name}</div>
+        <div class="course-name ${(c.name||'').length>=9?'sm':''}">${c.name}</div>
         <div class="course-sub">${c.subtitle||''}</div>
       </div>
       <div class="course-body">
