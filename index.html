@@ -132,6 +132,33 @@
   .brain-card .glow{position:absolute;width:70%;height:70%;top:12%;left:15%;background:radial-gradient(circle,rgba(255,138,61,.5),transparent 66%);filter:blur(6px);}
   .brain-card svg.net{width:88%;height:88%;position:relative;}
   .node{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;}
+  /* ===== 宇宙星系 hero ===== */
+  #cosmoCard{--rot:0deg;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);}
+  .stars{position:absolute;inset:0;}
+  .stars::before,.stars::after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;
+    box-shadow:30px 40px 0 0 rgba(255,255,255,.9),120px 90px 0 .4px rgba(255,255,255,.55),210px 30px 0 0 rgba(255,255,255,.75),300px 120px 0 .6px rgba(255,255,255,.5),80px 200px 0 0 rgba(255,255,255,.6),260px 230px 0 .5px rgba(255,255,255,.85),350px 300px 0 0 rgba(255,255,255,.5),40px 320px 0 .5px rgba(255,255,255,.7),180px 350px 0 0 rgba(255,255,255,.6),330px 60px 0 0 rgba(255,255,255,.65),150px 150px 0 .4px rgba(255,255,255,.45),380px 190px 0 0 rgba(255,255,255,.7),100px 420px 0 .5px rgba(255,255,255,.6),290px 400px 0 0 rgba(255,255,255,.8),400px 340px 0 .4px rgba(255,255,255,.5);
+    animation:twinkle 3.6s ease-in-out infinite;}
+  .stars::after{transform:translate(14px,8px) scale(.8);animation-delay:1.8s;opacity:.7;}
+  @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
+  .cosmo-sweep{position:absolute;inset:-25%;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,176,32,.10) 46deg,rgba(255,255,255,.05) 78deg,transparent 120deg);transform:rotate(calc(var(--rot) * -1.6));will-change:transform;}
+  .sun-glow{position:absolute;left:50%;top:50%;width:46%;height:46%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,138,61,.45),transparent 70%);filter:blur(8px);}
+  .sun{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(58px,7.5vw,80px);height:clamp(58px,7.5vw,80px);border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 58%,#E0761B);display:grid;place-items:center;font-size:clamp(26px,3.4vw,36px);box-shadow:0 0 34px rgba(255,158,61,.75),0 0 90px rgba(255,138,61,.35);z-index:3;}
+  .orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(255,255,255,.22);border-radius:50%;}
+  .or1{width:calc(var(--r1)*2);height:calc(var(--r1)*2);}
+  .or2{width:calc(var(--r2)*2);height:calc(var(--r2)*2);border-style:solid;border-color:rgba(255,255,255,.13);}
+  .or3{width:calc(var(--r3)*2);height:calc(var(--r3)*2);}
+  .orbit-sys{position:absolute;inset:0;transform:rotate(var(--rot));will-change:transform;z-index:2;}
+  .pl-wrap{position:absolute;left:50%;top:50%;transform:rotate(var(--ang)) translateX(var(--rad));}
+  .pl-cnt{display:flex;align-items:center;gap:7px;transform:translate(-50%,-50%) rotate(calc((var(--ang) + var(--rot)) * -1));}
+  .planet{border-radius:50%;flex:none;position:relative;}
+  .planet.pa{width:20px;height:20px;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 62%,#c9611e);box-shadow:0 0 14px rgba(255,158,61,.6);}
+  .planet.pb{width:17px;height:17px;background:radial-gradient(circle at 32% 30%,#5fe0d8,#16B0A8 62%,#0a6b65);box-shadow:0 0 12px rgba(22,176,168,.6);}
+  .planet.pc{width:14px;height:14px;background:radial-gradient(circle at 32% 30%,#b3a7ff,#7C6CF0 62%,#4B37D8);box-shadow:0 0 12px rgba(124,108,240,.65);}
+  .planet.pd{width:15px;height:15px;background:radial-gradient(circle at 32% 30%,#ff9db2,#FF6B8B 62%,#E23A63);box-shadow:0 0 12px rgba(255,107,139,.6);}
+  .planet.pe{width:21px;height:21px;background:radial-gradient(circle at 32% 30%,#ffe08a,#F5A623 62%,#E0761B);box-shadow:0 0 14px rgba(245,166,35,.65);}
+  .planet.pe::after{content:"";position:absolute;left:50%;top:50%;width:34px;height:12px;border:1.6px solid rgba(255,224,138,.8);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg);}
+  .pl-lbl{background:rgba(255,255,255,.94);color:var(--indigo);font-weight:700;font-size:12.5px;padding:4px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.35);}
+  @media (prefers-reduced-motion:reduce){.stars::before,.stars::after{animation:none;}}
   .node:nth-child(2){animation-delay:.4s}.node:nth-child(3){animation-delay:.8s}.node:nth-child(4){animation-delay:1.2s}.node:nth-child(5){animation-delay:1.6s}.node:nth-child(6){animation-delay:2s}
   @keyframes pulse{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
   .chip{position:absolute;background:#fff;border-radius:15px;padding:10px 14px;box-shadow:var(--sh-2);display:flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--indigo);}
@@ -369,28 +396,22 @@
       </div>
     </div>
     <div class="hero-art reveal">
-      <div class="brain-card">
-        <div class="glow"></div>
-        <svg class="net" viewBox="0 0 300 300">
-          <g stroke="url(#eg)" stroke-width="1.5" opacity="0.65">
-            <line x1="90" y1="86" x2="150" y2="66"/><line x1="150" y1="66" x2="216" y2="104"/>
-            <line x1="90" y1="86" x2="108" y2="162"/><line x1="216" y1="104" x2="198" y2="172"/>
-            <line x1="108" y1="162" x2="150" y2="66"/><line x1="108" y1="162" x2="198" y2="172"/>
-            <line x1="150" y1="66" x2="158" y2="216"/><line x1="198" y1="172" x2="158" y2="216"/>
-            <line x1="108" y1="162" x2="158" y2="216"/>
-          </g>
-          <defs><linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB020"/><stop offset="1" stop-color="#16B0A8"/></linearGradient></defs>
-          <circle class="node" cx="90" cy="86" r="7" fill="#FFB020"/>
-          <circle class="node" cx="150" cy="66" r="9" fill="#FF8A3D"/>
-          <circle class="node" cx="216" cy="104" r="7" fill="#FFB020"/>
-          <circle class="node" cx="108" cy="162" r="8" fill="#16B0A8"/>
-          <circle class="node" cx="198" cy="172" r="7" fill="#16B0A8"/>
-          <circle class="node" cx="158" cy="216" r="9" fill="#FFB020"/>
-        </svg>
+      <div class="brain-card" id="cosmoCard">
+        <div class="stars"></div>
+        <div class="cosmo-sweep"></div>
+        <div class="sun-glow"></div>
+        <div class="orbit-ring or1"></div>
+        <div class="orbit-ring or2"></div>
+        <div class="orbit-ring or3"></div>
+        <div class="orbit-sys">
+          <div class="pl-wrap" style="--ang:-20deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pa"></span><span class="pl-lbl">圖像記憶</span></div></div>
+          <div class="pl-wrap" style="--ang:52deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pb"></span><span class="pl-lbl">聯想思考</span></div></div>
+          <div class="pl-wrap" style="--ang:124deg;--rad:var(--r1)"><div class="pl-cnt"><span class="planet pc"></span><span class="pl-lbl">成績有感</span></div></div>
+          <div class="pl-wrap" style="--ang:196deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pd"></span><span class="pl-lbl">科學方法</span></div></div>
+          <div class="pl-wrap" style="--ang:268deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
+        </div>
+        <div class="sun">🧠</div>
       </div>
-      <div class="chip chip-a"><span class="ci ic-amber"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></span>圖像記憶</div>
-      <div class="chip chip-b"><span class="ci ic-teal"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="9" r="2.3"/><circle cx="9" cy="18" r="2.3"/><path d="M8.1 7.1l7.8 1.1M7.6 8.2l1.1 7.6"/></svg></span>聯想思考</div>
-      <div class="chip chip-c"><span class="ci ic-orange"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M12 16V8M16 16v-7"/></svg></span>成績有感</div>
     </div>
   </div>
 </header>
@@ -739,6 +760,19 @@
   function onScroll(){ if(window.scrollY>240) firstGreet(); }
   window.addEventListener('scroll',onScroll,{passive:true});
   setTimeout(firstGreet,12000);
+})();
+</script>
+<script>
+(function(){
+  var card=document.getElementById('cosmoCard');
+  if(!card) return;
+  var raf=null;
+  function upd(){
+    raf=null;
+    card.style.setProperty('--rot', ((window.scrollY||0)*0.12)%360 + 'deg');
+  }
+  window.addEventListener('scroll',function(){ if(!raf) raf=requestAnimationFrame(upd); },{passive:true});
+  upd();
 })();
 </script>
 </body>
