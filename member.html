@@ -368,7 +368,7 @@
   function card(c, owned){
     const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape'];
     const color = ACCENTS.includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
-    const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-10倍聯想力' : '');
+    const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-瘋狂心智圖' : '');
     const INTRO_MAP = {'super-memory':'course-memory.html','super-thinking':'course-thinking.html','strong-thinking-basic':'course-strong-thinking.html','onsite-basic':'course-onsite-basic.html','onsite-advanced':'course-onsite-advanced.html','bundle-all':'course-bundle.html'};
     const introHref = INTRO_MAP[c.id] || 'courses.html';
     const isFree = (c.price||0)===0;
