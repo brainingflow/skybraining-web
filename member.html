@@ -223,13 +223,23 @@
         `<div class="mno"><span class="lb">會員編號</span>${esc(me.member_no)}</div>`);
     }
 
-    // 讀所有課程 + 本人的購買紀錄
-    const [{ data:courses, error:cErr }, { data:enroll }] = await Promise.all([
+    // 讀所有課程 + 這個「會員編號」底下所有帳號的購買紀錄
+    // （用 member_course_ids()，範圍跟上面的會員編號一致；
+    //   直接查 enrollments 會受 RLS 影響，管理員會看到別人的課）
+    const [{ data:courses, error:cErr }, { data:ownedIds }] = await Promise.all([
       supabase.from('courses').select('*').eq('is_published',true).order('sort_order'),
-      supabase.from('enrollments').select('course_id')
+      supabase.rpc('member_course_ids')
     ]);
     if(cErr){ $('content').innerHTML = errBox('讀取課程時發生問題：'+cErr.message); return; }
-    const owned = new Set((enroll||[]).map(e=>e.course_id));
+    let owned;
+    if(Array.isArray(ownedIds)){
+      owned = new Set(ownedIds.map(x => (x && typeof x === 'object') ? x.member_course_ids : x));
+    }else{
+      // member_scope.sql 尚未部署時的退路：至少不要當掉
+      const { data:enroll } = await supabase.from('enrollments').select('course_id,user_id');
+      const uid = user.id;
+      owned = new Set((enroll||[]).filter(e=>e.user_id===uid).map(e=>e.course_id));
+    }
 
     const ownedCourses = (courses||[]).filter(c=>owned.has(c.id));
     const otherCourses = (courses||[]).filter(c=>!owned.has(c.id));

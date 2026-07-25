@@ -137,9 +137,17 @@
     if(cErr || !course){ $('content').innerHTML = msg('找不到這門課程', cErr?cErr.message:'請確認課程是否存在。'); return; }
     $('crumbName').textContent = course.name;
 
-    // === 購買比對：查本人是否已開通此課（RLS 只會回本人資料）===
-    const { data:enroll } = await supabase.from('enrollments').select('id').eq('course_id',courseId).maybeSingle();
-    const owned = !!enroll;
+    // === 購買比對：以「會員編號」為單位，同一個人的 Email／Google／LINE 帳號共用課程 ===
+    let owned = false;
+    const { data:ownRes, error:ownErr } = await supabase.rpc('member_owns_course', { p_course_id: courseId });
+    if(ownErr){
+      // member_scope.sql 尚未部署時的退路
+      const { data:enroll } = await supabase.from('enrollments')
+        .select('id').eq('course_id',courseId).eq('user_id',session.user.id).maybeSingle();
+      owned = !!enroll;
+    }else{
+      owned = ownRes === true;
+    }
 
     const color = course.accent==='teal' ? 'teal' : 'amber';
 
