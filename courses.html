@@ -106,6 +106,61 @@
   .state{padding:80px 0;text-align:center;color:var(--ink-soft);grid-column:1/-1;}
   .state .spin{width:34px;height:34px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
+  /* ===== 左右分屏入口 ===== */
+  html{scroll-behavior:smooth;}
+  .duo{display:flex;min-height:calc(100vh - 64px);}
+  .side{position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(44px,6vw,84px) clamp(24px,4.5vw,64px);overflow:hidden;cursor:pointer;}
+  .side-in{position:relative;z-index:2;max-width:520px;transition:transform .45s;}
+  .side:hover .side-in{transform:translateY(-4px);}
+  .side-brain{background:radial-gradient(60% 50% at 85% 12%,rgba(255,176,32,.16),transparent 60%),radial-gradient(55% 45% at 8% 90%,rgba(22,176,168,.13),transparent 60%),var(--paper);}
+  .side-career{background:radial-gradient(60% 50% at 14% 10%,rgba(124,108,240,.30),transparent 60%),radial-gradient(55% 45% at 88% 92%,rgba(255,176,32,.14),transparent 55%),linear-gradient(160deg,#1c2044,#141631 62%);}
+  /* 流光：緩慢掃過的光帶＋明暗呼吸 */
+  .side::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,var(--beam) 48%,transparent 66%);background-size:260% 260%;animation:beam 9.5s ease-in-out infinite;pointer-events:none;z-index:1;}
+  .side-brain::before{--beam:rgba(255,176,32,.18);}
+  .side-career::before{--beam:rgba(150,136,255,.22);animation-delay:-4.7s;}
+  @keyframes beam{0%{background-position:130% 0;opacity:.3;}50%{opacity:.95;}100%{background-position:-40% 0;opacity:.3;}}
+  /* 滑鼠觸碰：這一邊輕微發亮 */
+  .side::after{content:"";position:absolute;inset:0;background:var(--glow);opacity:0;transition:opacity .45s;pointer-events:none;z-index:1;}
+  .side:hover::after{opacity:1;}
+  .side-brain::after{--glow:radial-gradient(85% 75% at 50% 50%,rgba(255,255,255,.42),rgba(255,176,32,.10) 68%,transparent 100%);}
+  .side-career::after{--glow:radial-gradient(85% 75% at 50% 50%,rgba(124,108,240,.20),rgba(255,255,255,.05) 68%,transparent 100%);}
+  @media(min-width:821px){
+    .side{transition:flex .55s cubic-bezier(.4,0,.2,1);}
+    .side:hover{flex:1.12;}
+  }
+  .s-eyebrow{font-family:var(--round);font-weight:800;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:14px;}
+  .side-career .s-eyebrow{color:#FFC98A;}
+  .s-title{font-family:var(--round);font-weight:800;font-size:clamp(26px,3.3vw,40px);line-height:1.22;color:var(--indigo);}
+  .side-career .s-title{color:#fff;}
+  .s-bar{background:linear-gradient(120deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 2px;}
+  .side-career .s-bar{background:linear-gradient(120deg,#9C8CFF,#7C6CF0);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .s-intro{margin:14px 0 20px;font-size:15.5px;color:var(--ink-soft);line-height:1.85;}
+  .side-career .s-intro{color:rgba(255,255,255,.78);}
+  .s-points{list-style:none;display:grid;gap:10px;margin:0 0 28px;padding:0;}
+  .s-points li{position:relative;padding-left:26px;font-size:14.5px;line-height:1.7;color:var(--ink);}
+  .side-career .s-points li{color:rgba(255,255,255,.88);}
+  .s-points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--orange);animation:tw 2.8s ease-in-out infinite;}
+  .s-points li:nth-child(2)::before{animation-delay:.6s;}
+  .s-points li:nth-child(3)::before{animation-delay:1.2s;}
+  .s-points li:nth-child(4)::before{animation-delay:1.8s;}
+  .side-career .s-points li::before{color:#9C8CFF;}
+  @keyframes tw{0%,100%{opacity:.4;transform:scale(.9);}50%{opacity:1;transform:scale(1.15);}}
+  .s-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--round);font-weight:700;font-size:15px;padding:12px 26px;border-radius:30px;background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;box-shadow:0 10px 26px rgba(255,138,61,.35);transition:transform .25s,box-shadow .25s;}
+  .side:hover .s-cta{transform:translateY(-2px);box-shadow:0 14px 32px rgba(255,138,61,.45);}
+  .side-career .s-cta{background:linear-gradient(135deg,#7C6CF0,#4B37D8);box-shadow:0 10px 26px rgba(75,55,216,.42);}
+  .side-career:hover .s-cta{box-shadow:0 14px 32px rgba(75,55,216,.55);}
+  @media(max-width:820px){.duo{flex-direction:column;min-height:0;}.side{min-height:56vh;}}
+  #brain{scroll-margin-top:72px;}
+  .pro-section{scroll-margin-top:60px;}
+  /* ===== 入口模式:點進去才顯示課程卡片 ===== */
+  #brain,#pro{display:none;}
+  body.view-brain #brain{display:block;}
+  body.view-career #pro{display:block;}
+  body.view-brain .duo,body.view-career .duo{display:none;}
+  .back-choice{display:inline-flex;align-items:center;gap:6px;font-family:var(--round);font-weight:700;font-size:14px;color:var(--ink-soft);padding:8px 18px;border:1.5px solid var(--hair);border-radius:30px;transition:color .25s,border-color .25s;}
+  .back-choice:hover{color:var(--indigo);border-color:var(--indigo);}
+  .pro-section .back-choice{color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.28);}
+  .pro-section .back-choice:hover{color:#fff;border-color:#fff;}
   footer{background:var(--indigo);color:rgba(251,250,246,.7);padding:40px 0;font-size:13.5px;}
   .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .foot-in a:hover{color:#fff;}
@@ -132,16 +187,50 @@
     <a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
     <div class="nav-right">
       <a href="index.html">← 回首頁</a>
-      <a href="#pro">專業課程</a>
+      <a href="#brain">強腦力課程</a>
+      <a href="#pro">就業力課程</a>
       <a class="nav-login" href="login.html">會員登入</a>
     </div>
   </div>
 </nav>
 
-<div class="wrap">
+<!-- ===== 左右分屏：強腦力 vs 就業力 ===== -->
+<section class="duo">
+  <a class="side side-brain" href="#brain" aria-label="探索強腦力課程">
+    <div class="side-in">
+      <div class="s-eyebrow">Brain Power</div>
+      <h2 class="s-title">強腦力<span class="s-bar">｜</span>最強大腦學習力</h2>
+      <p class="s-intro">世界腦力冠軍記憶大師的學習力系統——用大腦本來就擅長的方式，把「怎麼學」一次教會你。</p>
+      <ul class="s-points">
+        <li>世界記憶大賽冠軍教練親授，方法經國際賽事驗證</li>
+        <li>圖像記憶 × 聯想思考 × 思維模板，記得快、想得廣</li>
+        <li>適合 10 歲以上到 35 歲——學生提分、大人提效</li>
+        <li>從吊車尾到前三名、平均 85 進步到 98，見證無數</li>
+      </ul>
+      <span class="s-cta">進入強腦力課程 →</span>
+    </div>
+  </a>
+  <a class="side side-career" href="#pro" aria-label="探索就業力課程">
+    <div class="side-in">
+      <div class="s-eyebrow">Career Skills</div>
+      <h2 class="s-title">就業力<span class="s-bar">｜</span>實戰技能精品課</h2>
+      <p class="s-intro">全球五百強企業＆年淨利數千萬的實戰課程——把業界最會賺錢的真本事，變成你能複製的技能。</p>
+      <ul class="s-points">
+        <li>講師實戰背景：與全球五百強企業合作、年淨利數千萬</li>
+        <li>百億成交技術——把「成交」變成可複製的流程</li>
+        <li>整體造型設計——打造走到哪都被記住的個人形象</li>
+        <li>AI 短影音實戰——用 AI 把流量變成實際收入</li>
+      </ul>
+      <span class="s-cta">進入就業力課程 →</span>
+    </div>
+  </a>
+</section>
+
+<div class="wrap" id="brain">
+  <div style="padding-top:26px;"><a class="back-choice" href="#">← 回到課程選擇</a></div>
   <div class="head">
-    <div class="eyebrow">All Courses</div>
-    <h1>所有課程</h1>
+    <div class="eyebrow">Brain Power</div>
+    <h1>強腦力課程</h1>
     <p>從免費體驗到完整課程，買斷、永久觀看。選一門開始，讓大腦學會怎麼學。</p>
   </div>
   <div class="grid" id="grid">
@@ -152,6 +241,7 @@
 <!-- ===== 專業課程 ===== -->
 <section class="pro-section" id="pro">
   <div class="wrap">
+    <div style="margin-bottom:30px;"><a class="back-choice" href="#">← 回到課程選擇</a></div>
     <!-- 講師海報：sky 上傳圖片後，把整個 .pro-poster 內容換成 <img src="..."> 即可 -->
     <div class="pro-poster" id="proPoster">
       <div class="pro-poster-ph">
@@ -162,15 +252,15 @@
     </div>
 
     <div class="pro-head">
-      <div class="eyebrow">Professional</div>
-      <h2>專業課程</h2>
-      <p>除了給孩子的腦力課，我們也為大人開設「專業變現」課程——由業界講師親自帶，從核心技術到實戰應用，一次學到能用在工作與生意上的真本事。</p>
+      <div class="eyebrow">Career Skills</div>
+      <h2>就業力・實戰技能精品課</h2>
+      <p>由與全球五百強企業合作、年淨利數千萬的業界講師親自帶——從核心技術到實戰應用，一次學到能用在工作與生意上的真本事。</p>
     </div>
 
     <div class="grid">
       <div class="course">
         <div class="ctop crimson">
-          <span class="clv">專業課程</span>
+          <span class="clv">就業力課程</span>
           <div class="cname">百億成交技術</div>
           <div class="csub">把「成交」變成可複製的技術</div>
         </div>
@@ -181,7 +271,7 @@
       </div>
       <div class="course">
         <div class="ctop plum">
-          <span class="clv">專業課程</span>
+          <span class="clv">就業力課程</span>
           <div class="cname">整體造型設計</div>
           <div class="csub">從個人形象到整體造型的系統方法</div>
         </div>
@@ -192,7 +282,7 @@
       </div>
       <div class="course">
         <div class="ctop techblue">
-          <span class="clv">專業課程</span>
+          <span class="clv">就業力課程</span>
           <div class="cname">AI短影音實戰</div>
           <div class="csub">用 AI 工具快速產出吸睛短影音</div>
         </div>
@@ -204,6 +294,20 @@
     </div>
   </div>
 </section>
+
+<script>
+(function(){
+  function applyView(){
+    var h=location.hash, b=document.body;
+    b.classList.remove('view-brain','view-career');
+    if(h==='#brain'){ b.classList.add('view-brain'); }
+    else if(h==='#pro'){ b.classList.add('view-career'); }
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',applyView);
+  applyView();
+})();
+</script>
 
 <footer>
   <div class="wrap foot-in">
