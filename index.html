@@ -133,48 +133,19 @@
   .brain-card .glow{position:absolute;width:70%;height:70%;top:12%;left:15%;background:radial-gradient(circle,rgba(255,138,61,.5),transparent 66%);filter:blur(6px);}
   .brain-card svg.net{width:88%;height:88%;position:relative;}
   .node{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;}
-  /* ===== 宇宙星系 hero ===== */
-  #cosmoCard{--rot:0deg;--halo:.6;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);background:radial-gradient(ellipse 62% 62% at 50% 50%,#10122b 0%,#171a38 32%,rgba(23,26,56,.85) 50%,rgba(23,26,56,.38) 66%,transparent 82%);box-shadow:none;user-select:none;-webkit-user-select:none;pointer-events:none;cursor:default;}
-  .cosmo-stars{position:absolute;inset:0;}
-  .cosmo-stars::before,.cosmo-stars::after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;
-    box-shadow:30px 40px 0 0 rgba(255,255,255,.9),120px 90px 0 .4px rgba(255,255,255,.55),210px 30px 0 0 rgba(255,255,255,.75),300px 120px 0 .6px rgba(255,255,255,.5),80px 200px 0 0 rgba(255,255,255,.6),260px 230px 0 .5px rgba(255,255,255,.85),350px 300px 0 0 rgba(255,255,255,.5),40px 320px 0 .5px rgba(255,255,255,.7),180px 350px 0 0 rgba(255,255,255,.6),330px 60px 0 0 rgba(255,255,255,.65),150px 150px 0 .4px rgba(255,255,255,.45),380px 190px 0 0 rgba(255,255,255,.7),100px 420px 0 .5px rgba(255,255,255,.6),290px 400px 0 0 rgba(255,255,255,.8),400px 340px 0 .4px rgba(255,255,255,.5);
-    animation:twinkle 3.6s ease-in-out infinite;}
-  .cosmo-stars::after{transform:translate(14px,8px) scale(.8);animation-delay:1.8s;opacity:.7;}
-  @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
-  .cosmo-sweep{position:absolute;inset:-12%;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,176,32,.24) 46deg,rgba(255,255,255,.08) 78deg,transparent 120deg);transform:rotate(calc(var(--rot) * -1.6));will-change:transform,opacity;opacity:var(--halo,.6);-webkit-mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000 28%,transparent 68%);mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000 28%,transparent 68%);}
-  .sun-glow{position:absolute;left:50%;top:50%;width:58%;height:58%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,138,61,.6),rgba(255,176,32,.18) 55%,transparent 72%);filter:blur(10px);opacity:calc(.3 + .8*var(--halo,.6));animation:haloflicker 4.5s ease-in-out infinite;}
-  @keyframes haloflicker{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
-  .sun{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(58px,7.5vw,80px);height:clamp(58px,7.5vw,80px);border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 58%,#E0761B);display:grid;place-items:center;box-shadow:0 0 34px rgba(255,158,61,.75),0 0 90px rgba(255,138,61,.35);z-index:3;}
-  .sun{width:clamp(68px,9vw,96px);height:clamp(68px,9vw,96px);}
-  .sun-txt{font-family:var(--round);font-weight:800;font-size:clamp(14px,1.8vw,18px);color:#fff;letter-spacing:2px;text-shadow:0 1px 8px rgba(160,70,0,.55);}
-  .orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(150,150,195,.5);border-radius:50%;}
-  .or1{width:calc(var(--r1)*2);height:calc(var(--r1)*2);}
-  .or2{width:calc(var(--r2)*2);height:calc(var(--r2)*2);border-style:solid;border-color:rgba(150,150,195,.3);}
-  .or3{width:calc(var(--r3)*2);height:calc(var(--r3)*2);}
-  .orbit-sys{position:absolute;inset:0;transform:rotate(var(--rot));will-change:transform;z-index:2;}
-  .pl-wrap{position:absolute;left:50%;top:50%;transform:rotate(var(--ang)) translateX(var(--rad));}
-  .pl-cnt{display:flex;align-items:center;gap:7px;transform:translate(-50%,-50%) rotate(calc((var(--ang) + var(--rot)) * -1));}
-  .planet{border-radius:50%;flex:none;position:relative;}
-  .planet.pa{width:20px;height:20px;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 62%,#c9611e);box-shadow:0 0 14px rgba(255,158,61,.6);}
-  .planet.pb{width:17px;height:17px;background:radial-gradient(circle at 32% 30%,#5fe0d8,#16B0A8 62%,#0a6b65);box-shadow:0 0 12px rgba(22,176,168,.6);}
-  .planet.pc{width:14px;height:14px;background:radial-gradient(circle at 32% 30%,#b3a7ff,#7C6CF0 62%,#4B37D8);box-shadow:0 0 12px rgba(124,108,240,.65);}
-  .planet.pd{width:15px;height:15px;background:radial-gradient(circle at 32% 30%,#ff9db2,#FF6B8B 62%,#E23A63);box-shadow:0 0 12px rgba(255,107,139,.6);}
-  .planet.pe{width:21px;height:21px;background:radial-gradient(circle at 32% 30%,#ffe08a,#F5A623 62%,#E0761B);box-shadow:0 0 14px rgba(245,166,35,.65);}
-  .planet.pe::after{content:"";position:absolute;left:50%;top:50%;width:34px;height:12px;border:1.6px solid rgba(255,224,138,.8);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg);}
-  .planet.pf{width:18px;height:18px;background:radial-gradient(circle at 32% 30%,#8fd0ff,#2BA8F0 62%,#1d55c9);box-shadow:0 0 13px rgba(43,168,240,.65);}
-  .pl-lbl{background:rgba(255,255,255,.94);color:var(--indigo);font-weight:700;font-size:12.5px;padding:4px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.35);}
-  @media (prefers-reduced-motion:reduce){.cosmo-stars::before,.cosmo-stars::after{animation:none;}}
-  .node:nth-child(2){animation-delay:.4s}.node:nth-child(3){animation-delay:.8s}.node:nth-child(4){animation-delay:1.2s}.node:nth-child(5){animation-delay:1.6s}.node:nth-child(6){animation-delay:2s}
-  @keyframes pulse{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
-  .chip{position:absolute;background:#fff;border-radius:15px;padding:10px 14px;box-shadow:var(--sh-2);display:flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--indigo);}
-  .chip .ci{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;}
-  .chip .ci svg{width:17px;height:17px;}
-  .chip-a{top:16px;left:-16px;animation:bob 4.6s ease-in-out infinite;}
-  .chip-b{bottom:60px;right:-18px;animation:bob 5.3s ease-in-out infinite .6s;}
-  .chip-c{bottom:-14px;left:38px;animation:bob 4.9s ease-in-out infinite 1.1s;}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  @media(max-width:920px){.hero-art{height:320px;margin-top:26px;}.chip-a{left:2px}.chip-b{right:0}}
-
+  /* ===== 能力蜂巢 hero ===== */
+  #hexCard{--sc:0;background:none;box-shadow:none;overflow:visible;user-select:none;-webkit-user-select:none;pointer-events:none;cursor:default;}
+  .hx-blobs{position:absolute;inset:-8%;background:radial-gradient(50% 45% at 68% 26%,rgba(255,176,32,.22),transparent 65%),radial-gradient(46% 42% at 24% 76%,rgba(124,108,240,.17),transparent 65%),radial-gradient(34% 30% at 86% 86%,rgba(22,176,168,.14),transparent 60%);}
+  .hxw{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%) translateY(calc(var(--sc) * var(--p,0) * 1px));will-change:transform;}
+  .hx{width:clamp(92px,12vw,130px);aspect-ratio:8/7;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:#fff;display:grid;place-items:center;text-align:center;filter:drop-shadow(0 10px 20px rgba(20,22,49,.13));opacity:0;animation:hxfade .7s ease calc(var(--i,0) * .13s) both,hxfloat 5.4s ease-in-out calc(var(--i,0) * -.9s) infinite;}
+  .hx i{font-style:normal;font-size:clamp(17px,2.2vw,23px);display:block;line-height:1.2;}
+  .hx b{display:block;font-family:var(--round);font-weight:800;font-size:clamp(11.5px,1.5vw,14px);color:var(--indigo);margin-top:2px;}
+  .hx-core .hx{background:linear-gradient(135deg,#FFB020,#FF8A3D);width:clamp(104px,13.5vw,146px);filter:drop-shadow(0 14px 30px rgba(255,138,61,.45));animation:hxfade .7s ease both,hxfloat 6s ease-in-out infinite,hxglow 3.6s ease-in-out infinite;}
+  .hx-core .hx b{color:#fff;font-size:clamp(15px,2vw,19px);letter-spacing:1px;margin-top:0;}
+  @keyframes hxfade{from{opacity:0;}to{opacity:1;}}
+  @keyframes hxfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  @keyframes hxglow{0%,100%{filter:drop-shadow(0 14px 30px rgba(255,138,61,.38));}50%{filter:drop-shadow(0 16px 40px rgba(255,138,61,.62));}}
+  @media (prefers-reduced-motion:reduce){.hx,.hx-core .hx{animation:hxfade .3s ease both;}}
   /* ===== trust strip ===== */
   .trust-strip{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--card);}
   .trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:34px 0;}
@@ -402,22 +373,15 @@
       </div>
     </div>
     <div class="hero-art reveal">
-      <div class="brain-card" id="cosmoCard">
-        <div class="cosmo-stars"></div>
-        <div class="cosmo-sweep"></div>
-        <div class="sun-glow"></div>
-        <div class="orbit-ring or1"></div>
-        <div class="orbit-ring or2"></div>
-        <div class="orbit-ring or3"></div>
-        <div class="orbit-sys">
-          <div class="pl-wrap" style="--ang:-20deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pa"></span><span class="pl-lbl">圖像記憶</span></div></div>
-          <div class="pl-wrap" style="--ang:40deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pb"></span><span class="pl-lbl">聯想思考</span></div></div>
-          <div class="pl-wrap" style="--ang:100deg;--rad:var(--r1)"><div class="pl-cnt"><span class="planet pc"></span><span class="pl-lbl">成績有感</span></div></div>
-          <div class="pl-wrap" style="--ang:160deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pd"></span><span class="pl-lbl">科學方法</span></div></div>
-          <div class="pl-wrap" style="--ang:220deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
-          <div class="pl-wrap" style="--ang:280deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pf"></span><span class="pl-lbl">見證無數</span></div></div>
-        </div>
-        <div class="sun"></div>
+      <div class="brain-card" id="hexCard">
+        <div class="hx-blobs"></div>
+        <div class="hxw hx-core" style="--x:50%;--y:50%;--p:0"><div class="hx"><b>強腦力</b></div></div>
+        <div class="hxw" style="--x:50%;--y:15%;--p:-.10;--i:1"><div class="hx"><div><i>🖼</i><b>圖像記憶</b></div></div></div>
+        <div class="hxw" style="--x:77.5%;--y:32.5%;--p:.08;--i:2"><div class="hx"><div><i>🔗</i><b>聯想思考</b></div></div></div>
+        <div class="hxw" style="--x:77.5%;--y:67.5%;--p:-.07;--i:3"><div class="hx"><div><i>📈</i><b>成績有感</b></div></div></div>
+        <div class="hxw" style="--x:50%;--y:85%;--p:.10;--i:4"><div class="hx"><div><i>🔬</i><b>科學方法</b></div></div></div>
+        <div class="hxw" style="--x:22.5%;--y:67.5%;--p:-.09;--i:5"><div class="hx"><div><i>🏆</i><b>世界冠軍</b></div></div></div>
+        <div class="hxw" style="--x:22.5%;--y:32.5%;--p:.07;--i:6"><div class="hx"><div><i>💬</i><b>見證無數</b></div></div></div>
       </div>
     </div>
   </div>
@@ -771,12 +735,13 @@
 </script>
 <script>
 (function(){
-  var card=document.getElementById('cosmoCard');
+  var card=document.getElementById('hexCard');
   if(!card) return;
   var raf=null;
   function upd(){
     raf=null;
-    var y=window.scrollY||0;card.style.setProperty('--rot', (y*0.36)%360 + 'deg');card.style.setProperty('--halo', (0.55 + 0.45*Math.sin(y*0.008)).toFixed(3));
+    var y=window.scrollY||0;
+    card.style.setProperty('--sc', Math.min(y,700)*0.16);
   }
   window.addEventListener('scroll',function(){ if(!raf) raf=requestAnimationFrame(upd); },{passive:true});
   upd();
