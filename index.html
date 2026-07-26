@@ -133,21 +133,22 @@
   .brain-card svg.net{width:88%;height:88%;position:relative;}
   .node{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;}
   /* ===== 宇宙星系 hero ===== */
-  #cosmoCard{--rot:0deg;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);box-shadow:none;-webkit-mask-image:radial-gradient(ellipse 94% 94% at 50% 50%,#000 56%,transparent 95%);mask-image:radial-gradient(ellipse 94% 94% at 50% 50%,#000 56%,transparent 95%);user-select:none;-webkit-user-select:none;pointer-events:none;cursor:default;}
+  #cosmoCard{--rot:0deg;--halo:.6;--r1:clamp(56px,7vw,86px);--r2:clamp(90px,11.5vw,136px);--r3:clamp(122px,15.5vw,178px);background:radial-gradient(ellipse 62% 62% at 50% 50%,#10122b 0%,#171a38 32%,rgba(23,26,56,.85) 50%,rgba(23,26,56,.38) 66%,transparent 82%);box-shadow:none;user-select:none;-webkit-user-select:none;pointer-events:none;cursor:default;}
   .stars{position:absolute;inset:0;}
   .stars::before,.stars::after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;
     box-shadow:30px 40px 0 0 rgba(255,255,255,.9),120px 90px 0 .4px rgba(255,255,255,.55),210px 30px 0 0 rgba(255,255,255,.75),300px 120px 0 .6px rgba(255,255,255,.5),80px 200px 0 0 rgba(255,255,255,.6),260px 230px 0 .5px rgba(255,255,255,.85),350px 300px 0 0 rgba(255,255,255,.5),40px 320px 0 .5px rgba(255,255,255,.7),180px 350px 0 0 rgba(255,255,255,.6),330px 60px 0 0 rgba(255,255,255,.65),150px 150px 0 .4px rgba(255,255,255,.45),380px 190px 0 0 rgba(255,255,255,.7),100px 420px 0 .5px rgba(255,255,255,.6),290px 400px 0 0 rgba(255,255,255,.8),400px 340px 0 .4px rgba(255,255,255,.5);
     animation:twinkle 3.6s ease-in-out infinite;}
   .stars::after{transform:translate(14px,8px) scale(.8);animation-delay:1.8s;opacity:.7;}
   @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
-  .cosmo-sweep{position:absolute;inset:-25%;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,176,32,.10) 46deg,rgba(255,255,255,.05) 78deg,transparent 120deg);transform:rotate(calc(var(--rot) * -1.6));will-change:transform;}
-  .sun-glow{position:absolute;left:50%;top:50%;width:46%;height:46%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,138,61,.45),transparent 70%);filter:blur(8px);}
+  .cosmo-sweep{position:absolute;inset:-12%;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,176,32,.24) 46deg,rgba(255,255,255,.08) 78deg,transparent 120deg);transform:rotate(calc(var(--rot) * -1.6));will-change:transform,opacity;opacity:var(--halo,.6);-webkit-mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000 28%,transparent 68%);mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000 28%,transparent 68%);}
+  .sun-glow{position:absolute;left:50%;top:50%;width:58%;height:58%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,138,61,.6),rgba(255,176,32,.18) 55%,transparent 72%);filter:blur(10px);opacity:calc(.3 + .8*var(--halo,.6));animation:haloflicker 4.5s ease-in-out infinite;}
+  @keyframes haloflicker{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
   .sun{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(58px,7.5vw,80px);height:clamp(58px,7.5vw,80px);border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFD27A,#FF8A3D 58%,#E0761B);display:grid;place-items:center;box-shadow:0 0 34px rgba(255,158,61,.75),0 0 90px rgba(255,138,61,.35);z-index:3;}
   .sun{width:clamp(68px,9vw,96px);height:clamp(68px,9vw,96px);}
   .sun-txt{font-family:var(--round);font-weight:800;font-size:clamp(14px,1.8vw,18px);color:#fff;letter-spacing:2px;text-shadow:0 1px 8px rgba(160,70,0,.55);}
-  .orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(255,255,255,.22);border-radius:50%;}
+  .orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(150,150,195,.5);border-radius:50%;}
   .or1{width:calc(var(--r1)*2);height:calc(var(--r1)*2);}
-  .or2{width:calc(var(--r2)*2);height:calc(var(--r2)*2);border-style:solid;border-color:rgba(255,255,255,.13);}
+  .or2{width:calc(var(--r2)*2);height:calc(var(--r2)*2);border-style:solid;border-color:rgba(150,150,195,.3);}
   .or3{width:calc(var(--r3)*2);height:calc(var(--r3)*2);}
   .orbit-sys{position:absolute;inset:0;transform:rotate(var(--rot));will-change:transform;z-index:2;}
   .pl-wrap{position:absolute;left:50%;top:50%;transform:rotate(var(--ang)) translateX(var(--rad));}
@@ -411,7 +412,7 @@
           <div class="pl-wrap" style="--ang:40deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pb"></span><span class="pl-lbl">聯想思考</span></div></div>
           <div class="pl-wrap" style="--ang:100deg;--rad:var(--r1)"><div class="pl-cnt"><span class="planet pc"></span><span class="pl-lbl">成績有感</span></div></div>
           <div class="pl-wrap" style="--ang:160deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pd"></span><span class="pl-lbl">科學方法</span></div></div>
-          <div class="pl-wrap" style="--ang:220deg;--rad:var(--r2)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
+          <div class="pl-wrap" style="--ang:220deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pe"></span><span class="pl-lbl">世界冠軍</span></div></div>
           <div class="pl-wrap" style="--ang:280deg;--rad:var(--r3)"><div class="pl-cnt"><span class="planet pf"></span><span class="pl-lbl">見證無數</span></div></div>
         </div>
         <div class="sun"></div>
@@ -773,7 +774,7 @@
   var raf=null;
   function upd(){
     raf=null;
-    card.style.setProperty('--rot', ((window.scrollY||0)*0.36)%360 + 'deg');
+    var y=window.scrollY||0;card.style.setProperty('--rot', (y*0.36)%360 + 'deg');card.style.setProperty('--halo', (0.55 + 0.45*Math.sin(y*0.008)).toFixed(3));
   }
   window.addEventListener('scroll',function(){ if(!raf) raf=requestAnimationFrame(upd); },{passive:true});
   upd();
