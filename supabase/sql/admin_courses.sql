@@ -85,3 +85,8 @@ update public.courses set intro_url='course-bundle.html'          where id='bund
 
 -- 驗證
 select id, name, category, price, accent, is_published, sort_order, intro_url from public.courses order by sort_order;
+
+-- 7) 管理員可讀全部課程（含草稿）——讓草稿能先在觀看頁測試
+do $$ begin
+  create policy admin_read_all_courses on public.courses for select using ( public.is_admin() );
+exception when duplicate_object then null; end $$;
