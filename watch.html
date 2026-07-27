@@ -51,6 +51,13 @@
   .h-sub{color:var(--ink-soft);margin-top:6px;font-size:15px;}
   .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#0d0f22;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);}
   .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-frame.v916{aspect-ratio:9/16;max-width:min(400px,86vw);margin:0 auto;}
+  .ep .dur{margin-left:auto;font-size:11px;color:var(--ink-soft);flex:none;}
+  .ep.locked{color:var(--ink-soft);cursor:default;}
+  .ep.locked:hover{background:none;}
+  .ep.locked .no{background:#e5e3da;color:var(--ink-soft);}
+  .try-note{margin-top:18px;padding:14px 18px;background:rgba(255,176,32,.12);border:1px solid rgba(255,176,32,.3);border-radius:14px;color:#8a5c00;font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .try-note a{font-family:var(--round);font-weight:700;color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);padding:8px 18px;border-radius:24px;margin-left:auto;white-space:nowrap;}
   .video-ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:rgba(255,255,255,.8);padding:24px;}
   .video-ph .ic{font-size:40px;margin-bottom:12px;}
   .video-ph .big{font-family:var(--round);font-weight:700;font-size:20px;color:#fff;margin-bottom:8px;}
@@ -151,19 +158,94 @@
 
     const color = course.accent==='teal' ? 'teal' : 'amber';
 
+    // 就業力／洽詢制課程：不在這裡看，導去介紹與 LINE
+    if(course.category==='career'){
+      $('content').innerHTML = `
+        <div class="lock">
+          <div class="lk-ic">🎓</div>
+          <h2>${course.name}</h2>
+          <p>這是實體／洽詢制課程，採 LINE 報名。先看課程介紹，或直接加 LINE 詢問最近梯次。</p>
+          <div class="btns">
+            <a class="btn btn-buy amber" href="${course.intro_url||'courses.html#pro'}">看課程介紹 →</a>
+            <a class="btn btn-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
+          </div>
+        </div>`;
+      return;
+    }
+
+    const headHtml = `
+      <div class="player-head">
+        <span class="lv ${color}">Level ${course.level}・${course.subtitle||''}</span>
+        <h1>${course.name}</h1>
+        <div class="h-sub">${course.description||''}</div>
+      </div>`;
+    const phHtml = (txt)=>`<div class="video-ph"><div><div class="ic">🎬</div><div class="big">影片即將上線</div><div class="small">${txt}</div></div></div>`;
+    const iframeHtml = (vid)=>`<iframe src="https://player.vimeo.com/video/${encodeURIComponent(vid)}?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    const buyHref = course.intro_url
+      || (courseId==='super-memory' ? 'course-memory.html'
+        : courseId==='super-thinking' ? 'course-thinking.html'
+        : 'courses.html#brain');
+
+    // v2 章節格式：episodes = { v:2, chapters:[{title,lessons:[{title,vimeo_id,ratio,preview,duration}]}] }
+    const chapters = (course.episodes && !Array.isArray(course.episodes)
+      && course.episodes.v===2 && Array.isArray(course.episodes.chapters))
+      ? course.episodes.chapters : null;
+
+    const renderChapters = (mode)=>{   // mode: 'full'（已購）| 'preview'（免費試看）
+      const items=[];
+      let listHtml = '<div class="ep-list-h">課程單元</div>';
+      chapters.forEach((ch,ci)=>{
+        listHtml += `<div class="ep-group">${ch.title||('第'+(ci+1)+'章')}</div>`;
+        (ch.lessons||[]).forEach((ls,li)=>{
+          const no=(ci+1)+'-'+(li+1);
+          const t=ls.title||('單元 '+no);
+          const vid=(ls.vimeo_id||'').trim();
+          const dur=ls.duration?`<span class="dur">${ls.duration}</span>`:'';
+          if(!vid){ listHtml+=`<div class="ep soon"><span class="no">${no}</span><span class="et">${t}</span><span class="tag">即將上線</span></div>`; return; }
+          if(mode==='preview' && !ls.preview){ listHtml+=`<div class="ep locked"><span class="no">${no}</span><span class="et">${t}</span><span class="tag">🔒 購買解鎖</span></div>`; return; }
+          const idx=items.length;
+          items.push({vid, label:no+'・'+t, ratio:(ls.ratio==='9:16'?'9:16':'16:9')});
+          const right = mode==='preview'
+            ? '<span class="tag" style="background:rgba(22,176,168,.14);color:var(--teal-deep);">免費試看</span>' : dur;
+          listHtml+=`<div class="ep" data-idx="${idx}"><span class="no">${no}</span><span class="et">${t}</span>${right}</div>`;
+        });
+      });
+      const note = mode==='full'
+        ? '<div class="owned-note">✅ 你已開通本課程，買斷永久觀看，隨時都能回來複習。</div>'
+        : `<div class="try-note">🎬 你正在免費試看本課程的開放單元。喜歡的話，解鎖之後一次看到底<a href="${buyHref}">解鎖完整課程 →</a></div>`;
+      $('content').innerHTML = `
+        ${headHtml}
+        <div class="course-layout">
+          <div class="player-col">
+            <div class="video-frame" id="player"></div>
+            <div class="now-playing" id="nowPlaying"></div>
+            ${note}
+          </div>
+          <aside class="ep-list">${listHtml}</aside>
+        </div>
+        <a class="back-dash" href="member.html">← 回我的課程</a>`;
+      const setPlayer=(it,el)=>{
+        const p=$('player');
+        p.classList.toggle('v916', it.ratio==='9:16');
+        p.innerHTML = iframeHtml(it.vid);
+        $('nowPlaying').textContent='▶ 正在播放：'+it.label;
+        document.querySelectorAll('.ep').forEach(x=>x.classList.remove('active'));
+        if(el) el.classList.add('active');
+      };
+      document.querySelectorAll('.ep[data-idx]').forEach(el=>{
+        el.onclick=()=>{ setPlayer(items[+el.dataset.idx],el); window.scrollTo({top:0,behavior:'smooth'}); };
+      });
+      if(items.length){ setPlayer(items[0], document.querySelector('.ep[data-idx]')); }
+      else { $('player').innerHTML = phHtml('單元都排好了，影片上線就會自動出現。'); }
+    };
+
     if(owned){
       const eps = Array.isArray(course.episodes) ? course.episodes : [];
-      const headHtml = `
-        <div class="player-head">
-          <span class="lv ${color}">Level ${course.level}・${course.subtitle||''}</span>
-          <h1>${course.name}</h1>
-          <div class="h-sub">${course.description||''}</div>
-        </div>`;
-      const phHtml = (txt)=>`<div class="video-ph"><div><div class="ic">🎬</div><div class="big">影片即將上線</div><div class="small">${txt}</div></div></div>`;
-      const iframeHtml = (vid)=>`<iframe src="https://player.vimeo.com/video/${encodeURIComponent(vid)}?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
 
-      if(eps.length){
-        // ===== 分集播放器 =====
+      if(chapters){
+        renderChapters('full');
+      } else if(eps.length){
+        // ===== 分集播放器（v1 舊格式，維持原樣）=====
         const items = [];
         let listHtml = '<div class="ep-list-h">課程單元</div>';
         eps.forEach(ep=>{
@@ -211,9 +293,10 @@
       } else {
         // ===== 單一影片（沒有分集）=====
         const vimeo = (course.vimeo_id||'').trim();
+        const v916 = course.default_ratio==='9:16' ? ' v916' : '';
         $('content').innerHTML = `
           ${headHtml}
-          <div class="video-frame">${vimeo ? iframeHtml(vimeo) : phHtml('此課程尚未設定影片。之後把 Vimeo 連結補上就會自動播放。')}</div>
+          <div class="video-frame${v916}">${vimeo ? iframeHtml(vimeo) : phHtml('此課程尚未設定影片。之後把 Vimeo 連結補上就會自動播放。')}</div>
           <div class="owned-note">✅ 你已開通本課程，買斷永久觀看，隨時都能回來複習。</div>
           <a class="back-dash" href="member.html">← 回我的課程</a>`;
       }
@@ -242,22 +325,24 @@
         location.reload();
       };
     }else{
-      // 付費課・未購買 → 鎖定 + 購買 CTA
-      const introHref = courseId==='super-memory' ? 'course-memory.html'
-                      : courseId==='super-thinking' ? 'course-thinking.html'
-                      : 'index.html#courses';
-      $('content').innerHTML = `
-        <div class="lock">
-          <div class="lk-ic">🔒</div>
-          <h2>這門課還沒開通</h2>
-          <p>「${course.name}」目前不在你的已購買清單中。完成購買後即可永久觀看。</p>
-          <div class="price">NT$${(course.price||0).toLocaleString()}<small> ・買斷永久觀看</small></div>
-          <div class="btns">
-            <a class="btn btn-buy ${color}" href="${introHref}">前往購買 →</a>
-            <a class="btn btn-line" href="login.html">先免費試看</a>
-          </div>
-          <div style="margin-top:22px;"><a class="btn btn-ghost" href="member.html">← 回我的課程</a></div>
-        </div>`;
+      // 付費課・未購買：有開放試看單元 → 試看模式；否則鎖定畫面
+      const canPreview = chapters && chapters.some(ch=>(ch.lessons||[]).some(l=>l.preview && (l.vimeo_id||'').trim()));
+      if(canPreview){
+        renderChapters('preview');
+      }else{
+        $('content').innerHTML = `
+          <div class="lock">
+            <div class="lk-ic">🔒</div>
+            <h2>這門課還沒開通</h2>
+            <p>「${course.name}」目前不在你的已購買清單中。完成購買後即可永久觀看。</p>
+            <div class="price">NT$${(course.price||0).toLocaleString()}<small> ・買斷永久觀看</small></div>
+            <div class="btns">
+              <a class="btn btn-buy ${color}" href="${buyHref}">前往購買 →</a>
+              <a class="btn btn-line" href="login.html">先免費試看</a>
+            </div>
+            <div style="margin-top:22px;"><a class="btn btn-ghost" href="member.html">← 回我的課程</a></div>
+          </div>`;
+      }
     }
   })();
 

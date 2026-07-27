@@ -257,7 +257,7 @@
       <p>由與全球五百強企業合作、年淨利數千萬的業界講師親自帶——從核心技術到實戰應用，一次學到能用在工作與生意上的真本事。</p>
     </div>
 
-    <div class="grid">
+    <div class="grid" id="proGrid">
       <div class="course">
         <div class="ctop crimson">
           <span class="clv">就業力課程</span>
@@ -331,14 +331,18 @@
   const LINE_URL = 'https://lin.ee/9EGO8IT';
   const INTRO = { 'super-memory':'course-memory.html', 'super-thinking':'course-thinking.html', 'strong-thinking-basic':'course-strong-thinking.html', 'onsite-basic':'course-onsite-basic.html', 'onsite-advanced':'course-onsite-advanced.html', 'bundle-all':'course-bundle.html' };
   const ONSITE = ['onsite-basic','onsite-advanced'];
-  const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape'];
+  const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape','crimson','plum','techblue'];
 
   (async ()=>{
     const { data:courses, error } = await supabase.from('courses')
       .select('*').eq('is_published',true).order('sort_order');
     if(error){ grid.innerHTML = `<div class="state" style="color:#d64545;">讀取課程失敗：${error.message}</div>`; return; }
     if(!courses || !courses.length){ grid.innerHTML = `<div class="state">目前尚無上架課程。</div>`; return; }
-    grid.innerHTML = courses.map(card).join('');
+    const brainList  = courses.filter(x=>x.category!=='career');
+    const careerList = courses.filter(x=>x.category==='career');
+    grid.innerHTML = brainList.map(card).join('');
+    const pg = document.getElementById('proGrid');
+    if(pg && careerList.length) pg.innerHTML = careerList.map(careerCard).join('');
   })();
 
   function card(c){
@@ -354,10 +358,11 @@
       ? `<div class="price free">免費<small>${priceSub}</small></div>`
       : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>${priceSub}</small></div>`;
     let btn;
+    const intro = c.intro_url || INTRO[id];
     if(isFree){
       btn = `<a class="buy ${color}" href="login.html">免費開通 →</a>`;
-    } else if(INTRO[id]){
-      btn = `<a class="buy ${color}" href="${INTRO[id]}">了解課程 →</a>`;
+    } else if(intro){
+      btn = `<a class="buy ${color}" href="${intro}">了解課程 →</a>`;
     } else {
       btn = `<a class="buy line" href="${LINE_URL}" target="_blank" rel="noopener">我要報名 →</a>`;
     }
@@ -371,6 +376,27 @@
       <div class="cbody">
         <div class="cdesc">${c.description||''}</div>
         <div class="cfoot">${priceHtml}${btn}</div>
+      </div>
+    </div>`;
+  }
+
+  function careerCard(c){
+    const color = ACCENTS.includes(c.accent) ? c.accent : 'crimson';
+    const href = c.intro_url || LINE_URL;
+    const ext  = c.intro_url ? '' : ' target="_blank" rel="noopener"';
+    const priceHtml = (c.price==null || c.price==='')
+      ? `<div class="price">開課洽詢<small>報名・名額有限</small></div>`
+      : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>報名・名額有限</small></div>`;
+    return `<div class="course">
+      <div class="ctop ${color}">
+        <span class="clv">就業力課程</span>
+        <div class="cname ${(c.name||'').length>=16?'xs':(c.name||'').length>=9?'sm':''}">${c.name||''}</div>
+        <div class="csub">${c.subtitle||''}</div>
+        ${c.note?`<span class="note-line">${c.note}</span>`:''}
+      </div>
+      <div class="cbody">
+        <div class="cdesc">${c.description||''}</div>
+        <div class="cfoot">${priceHtml}<a class="buy ${color}" href="${href}"${ext}>了解課程 →</a></div>
       </div>
     </div>`;
   }
