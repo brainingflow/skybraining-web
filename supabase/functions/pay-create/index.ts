@@ -93,26 +93,31 @@ Deno.serve(async (req) => {
     // ── 統一金流 PAYUNi（UPP 幕前支付）──
     if (provider === "payuni") {
       if (!(PAYUNI_MER && PAYUNI_KEY && PAYUNI_IV)) return J({ ok: false, error: "統一金流尚未開通（商店代號申請中）" }, 503);
-      const tradeNo = ("SB" + order.id.replace(/-/g, "").slice(0, 18)).toUpperCase();
+      const tradeNo = ("SB" + order.id.replace(/-/g, "").slice(0, 18)).toUpperCase(); // ≤25 碼、[A-Za-z0-9_-]
       const ts = Math.floor(Date.now() / 1000);
-      const p = new URLSearchParams({
+      // PAYUNi 明文用 querystring 格式；空白必須是 %20（不是 +），所以不能用 URLSearchParams.toString()
+      const fields: Record<string, string> = {
         MerID: PAYUNI_MER,
         MerTradeNo: tradeNo,
         TradeAmt: String(price),
         Timestamp: String(ts),
-        ProdDesc: course.name,
+        ProdDesc: String(course.name || "").slice(0, 550),
         UsrMail: user.email || "",
         ReturnURL: `${SITE}/success.html?order=${order.id}`,
-        NotifyURL: `${SB_URL}/functions/v1/pay-webhook?provider=payuni`,
-      });
-      const enc = await aesGcmEncryptHex(p.toString(), PAYUNI_KEY, PAYUNI_IV);
+        NotifyURL: `${SB_URL}/functions/v1/pay-webhook?provider=payuni`, // 僅限 80 / 443 port
+        BackURL: `${SITE}/checkout.html?course=${course_id}&canceled=1`,
+        Lang: "zh-tw",
+      };
+      const plain = Object.entries(fields).filter(([, v]) => v !== "")
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
+      const enc = await aesGcmEncryptHex(plain, PAYUNI_KEY, PAYUNI_IV);
       const hash = (await sha256Hex(PAYUNI_KEY + enc + PAYUNI_IV)).toUpperCase();
       await admin.from("orders").update({ provider_order_id: tradeNo }).eq("id", order.id);
       const endpoint = PAYUNI_ENV === "prod"
         ? "https://api.payuni.com.tw/api/upp"
         : "https://sandbox-api.payuni.com.tw/api/upp";
-      // ⚠️ 欄位格式以 PAYUNi 文件為準；商店代號下來後用 sandbox 實測校準一次
-      return J({ ok: true, form: { action: endpoint, fields: { MerID: PAYUNI_MER, Version: "1.0", EncryptInfo: enc, HashInfo: hash } } });
+      // UPP Ver 2.0：外層只送 MerID / Version / EncryptInfo / HashInfo，Version 固定 "2.0"
+      return J({ ok: true, form: { action: endpoint, fields: { MerID: PAYUNI_MER, Version: "2.0", EncryptInfo: enc, HashInfo: hash } } });
     }
 
     return J({ ok: false, error: "未知付款方式" }, 400);
@@ -125,12 +130,16 @@ async function sha256Hex(s: string): Promise<string> {
   const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
-// PAYUNi：AES-256-GCM，回傳 cipherHex:::tagHex
+// PAYUNi：AES-256-GCM
+// ⚠️ 官方格式 = hex( base64(密文) + ":::" + base64(tag) )
+//    也就是「整串 ASCII 字串再做一次 hex」，不是 hex(密文):::hex(tag)。
+//    對照官方 Node 範例：Buffer.from(`${cipherText}:::${tag}`).toString("hex")
 async function aesGcmEncryptHex(plain: string, key: string, iv: string): Promise<string> {
   const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(key), "AES-GCM", false, ["encrypt"]);
-  const ct = new Uint8Array(await crypto.subtle.encrypt(
+  const out = new Uint8Array(await crypto.subtle.encrypt(
     { name: "AES-GCM", iv: new TextEncoder().encode(iv), tagLength: 128 }, k, new TextEncoder().encode(plain)));
-  const tag = ct.slice(ct.length - 16), body = ct.slice(0, ct.length - 16);
-  const hex = (a: Uint8Array) => [...a].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return hex(body) + ":::" + hex(tag);
+  const body = out.slice(0, out.length - 16), tag = out.slice(out.length - 16);
+  const b64 = (a: Uint8Array) => { let s = ""; for (const b of a) s += String.fromCharCode(b); return btoa(s); };
+  const joined = `${b64(body)}:::${b64(tag)}`;
+  return [...new TextEncoder().encode(joined)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
