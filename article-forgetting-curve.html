@@ -75,8 +75,27 @@
   .foot-in{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .foot-in a:hover{color:#fff;}
   .foot-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .faq{margin:38px 0 6px;}
+  .faq h2{margin-bottom:14px;}
+  .faq details{background:var(--card);border:1px solid var(--hair);border-radius:15px;padding:15px 18px;margin-bottom:10px;box-shadow:var(--sh-1);}
+  .faq details[open]{border-color:rgba(22,176,168,.4);}
+  .faq summary{font-family:var(--round);font-weight:700;font-size:16px;color:var(--indigo);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:'+';font-size:21px;line-height:1;color:var(--teal);flex:none;transition:transform .25s;}
+  .faq details[open] summary::after{transform:rotate(45deg);}
+  .faq .ans{margin-top:11px;font-size:15.5px;color:var(--ink-soft);}
+  .rel{margin:34px 0 6px;padding:22px 22px 8px;background:var(--paper-2);border-radius:18px;}
+  .rel h2{font-size:19px;margin-bottom:12px;}
+  .rel a{display:block;padding:11px 0;border-top:1px solid var(--hair);font-weight:600;font-size:15.5px;color:var(--indigo);}
+  .rel a:first-of-type{border-top:none;}
+  .rel a small{display:block;font-weight:400;font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .rel a:hover{color:var(--teal-deep);}
 </style>
 <meta name="keywords" content="遺忘曲線,艾賓浩斯,間隔複習,記憶力,大腦記憶,海馬迴,背了就忘,學習力,強腦力,強化腦力,腦力,高雄,高雄第一學習系統">
+<meta name="author" content="強腦力 SkyBraining">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta property="article:published_time" content="2026-07-25T09:00:00+08:00">
+<meta property="article:modified_time" content="2026-07-28T09:00:00+08:00">
 <link rel="canonical" href="https://skybraining.com/article-forgetting-curve.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="強腦力 SkyBraining">
@@ -88,7 +107,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://skybraining.com/og.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","headline":"為什麼背了就忘？大腦記憶的科學","description":"從艾賓浩斯遺忘曲線、海馬迴到間隔複習，看懂記憶怎麼形成，以及怎麼把它留住。","inLanguage":"zh-Hant","image":"https://skybraining.com/og.png","mainEntityOfPage":"https://skybraining.com/article-forgetting-curve.html","author":{"@type":"Organization","name":"強腦力 SkyBraining"},"publisher":{"@type":"Organization","name":"強腦力 SkyBraining","logo":{"@type":"ImageObject","url":"https://skybraining.com/og.png"}},"keywords":"遺忘曲線,間隔複習,記憶力,海馬迴,學習力,高雄第一學習系統"}
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"為什麼背了就忘？大腦記憶的科學","description":"從艾賓浩斯遺忘曲線、海馬迴到間隔複習，看懂記憶怎麼形成，以及怎麼把它留住。","inLanguage":"zh-Hant","image":"https://skybraining.com/og.png","mainEntityOfPage":"https://skybraining.com/article-forgetting-curve.html","author":{"@type":"Organization","name":"強腦力 SkyBraining","url":"https://skybraining.com/"},"publisher":{"@type":"Organization","name":"強腦力 SkyBraining","logo":{"@type":"ImageObject","url":"https://skybraining.com/og.png"}},"keywords":"遺忘曲線,間隔複習,記憶力,海馬迴,學習力,高雄第一學習系統","datePublished":"2026-07-25T09:00:00+08:00","dateModified":"2026-07-28T09:00:00+08:00","articleSection":"腦科學","timeRequired":"PT6M","about":[{"@type":"Thing","name":"遺忘曲線"},{"@type":"Thing","name":"間隔複習"},{"@type":"Thing","name":"記憶力訓練"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://skybraining.com/"},{"@type":"ListItem","position":2,"name":"腦力好文","item":"https://skybraining.com/articles.html"},{"@type":"ListItem","position":3,"name":"遺忘曲線","item":"https://skybraining.com/article-forgetting-curve.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"遺忘曲線是什麼？","acceptedAnswer":{"@type":"Answer","text":"十九世紀心理學家艾賓浩斯做的實驗結果：新學到的東西在最初幾小時掉得最快，之後速度趨緩。它描述的是「不複習會怎樣」，而不是宣判你記性不好。"}},{"@type":"Question","name":"複習要間隔多久才有效？","acceptedAnswer":{"@type":"Answer","text":"常用的節奏是學完當天複習一次，接著隔天、第 3 天、第 7 天、第 15 天各一次。重點不在天數背得多精準，而在每次都趕在快要忘記之前複習，每一次都會把曲線壓平一點。"}},{"@type":"Question","name":"為什麼一直重看課本卻沒有用？","acceptedAnswer":{"@type":"Answer","text":"因為重看做的是「再認」——看到就覺得眼熟，於是誤以為自己會了。但考試要的是「提取」，是在沒有課本的情況下把答案想出來。要練提取，就得闔上書自己回想。"}},{"@type":"Question","name":"睡眠真的會影響記憶嗎？","acceptedAnswer":{"@type":"Answer","text":"會，而且影響很大。記憶的固化大量發生在睡眠期間，熬夜等於把當天剛學的東西擋在存檔之前。長期看，用睡眠換念書時間通常是虧的。"}},{"@type":"Question","name":"「背了就忘」是記性不好嗎？","acceptedAnswer":{"@type":"Answer","text":"不是。遺忘是大腦的正常設計，用來丟掉沒有再被用到的資訊。你要做的不是責怪記性，而是用複習告訴大腦「這件事還會用到」。"}}]}
 </script>
 </head>
 <body>
@@ -107,7 +132,7 @@
     <div class="crumb"><a href="index.html">首頁</a> ／ <a href="articles.html">腦力好文</a> ／ 記憶的科學</div>
     <span class="tag">腦科學・記憶</span>
     <h1>為什麼背了就忘？<br>大腦記憶的科學，與對付遺忘曲線的方法</h1>
-    <div class="meta"><span>強腦力編輯部</span><span>・</span><span>閱讀約 6 分鐘</span></div>
+    <div class="meta"><span>強腦力編輯部</span><span>・</span><time datetime="2026-07-25">2026/07/25</time><span>・</span><span>閱讀約 6 分鐘</span></div>
     <p class="lede">孩子昨晚明明把課文、單字都背過了，隔天一早卻忘得七零八落。不是他不認真，也不是記性差——這其實是每一顆正常大腦都會發生的事。看懂它，就有辦法對付它。</p>
   </div>
 
@@ -145,6 +170,26 @@
     </div>
 
     <p>看懂遺忘曲線之後你會發現：記不住，往往不是孩子的問題，而是<strong>複習的方法沒有順著大腦的規則走</strong>。順著它，記憶就會站在你這邊。</p>
+
+    <div class="faq">
+      <h2>常見問題</h2>
+      <details open><summary>遺忘曲線是什麼？</summary><div class="ans">十九世紀心理學家艾賓浩斯做的實驗結果：新學到的東西在最初幾小時掉得最快，之後速度趨緩。它描述的是「不複習會怎樣」，而不是宣判你記性不好。</div></details>
+      <details><summary>複習要間隔多久才有效？</summary><div class="ans">常用的節奏是學完當天複習一次，接著隔天、第 3 天、第 7 天、第 15 天各一次。重點不在天數背得多精準，而在每次都趕在快要忘記之前複習，每一次都會把曲線壓平一點。</div></details>
+      <details><summary>為什麼一直重看課本卻沒有用？</summary><div class="ans">因為重看做的是「再認」——看到就覺得眼熟，於是誤以為自己會了。但考試要的是「提取」，是在沒有課本的情況下把答案想出來。要練提取，就得闔上書自己回想。</div></details>
+      <details><summary>睡眠真的會影響記憶嗎？</summary><div class="ans">會，而且影響很大。記憶的固化大量發生在睡眠期間，熬夜等於把當天剛學的東西擋在存檔之前。長期看，用睡眠換念書時間通常是虧的。</div></details>
+      <details><summary>「背了就忘」是記性不好嗎？</summary><div class="ans">不是。遺忘是大腦的正常設計，用來丟掉沒有再被用到的資訊。你要做的不是責怪記性，而是用複習告訴大腦「這件事還會用到」。</div></details>
+    </div>
+
+    <div class="rel">
+      <h2>延伸閱讀</h2>
+      <a href="article-mindmap.html">心智圖怎麼畫？5 步驟完整教學<small>把讀過的東西畫成一張圖，複習時一眼看到整體架構</small></a>
+      <a href="article-image-memory.html">圖像記憶：為什麼用畫面記比較強<small>雙重編碼與圖像優勢效應，把文字翻譯成畫面</small></a>
+      <a href="article-memory-palace.html">記憶宮殿完整教學（5 步驟）<small>用熟悉的空間放資訊，長篇內容也背得住</small></a>
+      <a href="article-exam-prep.html">考前一週複習計畫（附複習表）<small>把方法排進真正的考試進度裡</small></a>
+      <a href="article-focus.html">孩子讀書坐不住？6 個科學方法<small>方法對了還是讀不下去，問題常常在專注力</small></a>
+      <a href="quiz.html">孩子學習力檢測（免費 3 分鐘）<small>16 題找出記憶、專注、策略、動機哪一項在拖後腿</small></a>
+      <a href="articles.html">回腦力好文總覽<small>所有記憶、專注與學習方法的文章都在這裡</small></a>
+    </div>
 
     <div class="cta">
       <h3>把「記憶的科學」變成孩子的日常能力</h3>
