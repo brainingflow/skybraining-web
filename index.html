@@ -73,6 +73,18 @@
   .nav-links a{color:var(--ink-soft);transition:color .2s;}
   .nav-links a:hover{color:var(--indigo);}
   .nav-links .m-login{display:none;}
+  .nav-dd{position:relative;display:flex;align-items:center;}
+  .nav-dd-t{display:inline-flex;align-items:center;gap:5px;cursor:pointer;}
+  .nav-dd-t svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s;}
+  .nav-dd:hover .nav-dd-t{color:var(--indigo);}
+  .nav-dd:hover .nav-dd-t svg{transform:rotate(180deg);}
+  .nav-dd-m{position:absolute;top:100%;left:50%;margin-top:14px;transform:translateX(-50%) translateY(-7px);min-width:262px;background:#fff;border:1px solid var(--hair);border-radius:17px;box-shadow:0 20px 46px rgba(20,22,49,.15);padding:8px;opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease;z-index:40;}
+  .nav-dd-m::before{content:'';position:absolute;left:0;right:0;top:-16px;height:16px;}
+  .nav-dd:hover .nav-dd-m,.nav-dd:focus-within .nav-dd-m{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+  .nav-dd-m a{display:block;padding:11px 14px;border-radius:12px;font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .nav-dd-m a small{display:block;font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--ink-soft);margin-top:2px;line-height:1.5;}
+  .nav-dd-m a:hover{background:var(--paper-2);color:var(--indigo);}
+  .nav-dd-m .nb{display:inline-block;vertical-align:2px;margin-left:6px;font-family:var(--round);font-weight:800;font-size:10px;letter-spacing:.5px;color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);padding:1px 7px;border-radius:20px;}
   .nav-right{display:flex;align-items:center;gap:12px;}
   .nav-login{font-weight:600;font-size:14px;font-family:var(--round);color:var(--indigo);padding:9px 18px;border-radius:30px;border:1.5px solid var(--hair);transition:.2s;}
   .nav-login:hover{border-color:var(--indigo);background:var(--indigo);color:#fff;}
@@ -84,6 +96,11 @@
     .nav-links a{padding:16px 24px;border-top:1px solid var(--hair);font-size:16px;color:var(--indigo);}
     .nav-login{display:none;}
     .nav-links .m-login{display:block;color:var(--indigo);font-weight:700;background:var(--paper-2);}
+    .nav-dd{display:block;}
+    .nav-dd-t{display:none;}
+    .nav-dd-m{position:static;opacity:1;visibility:visible;transform:none;margin:0;min-width:0;background:none;border:none;box-shadow:none;padding:0;border-radius:0;}
+    .nav-dd-m a{border-radius:0;font-family:var(--sans);font-weight:500;}
+    .nav-dd-m a small{display:none;}
     .menu-toggle{display:block;}
     body.menu-open .menu-toggle span:nth-child(1){transform:translateY(7.4px) rotate(45deg);}
     body.menu-open .menu-toggle span:nth-child(2){opacity:0;}
@@ -342,7 +359,13 @@
       <a href="testimonials.html">實戰見證</a>
       <a href="courses.html">精品課程</a>
       <a href="articles.html">腦力好文</a>
-      <a href="quiz.html">學習檢測</a>
+      <div class="nav-dd">
+        <a class="nav-dd-t" href="quiz.html">學習檢測<svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
+        <div class="nav-dd-m">
+          <a href="quiz.html">孩子學習力檢測<small>3 分鐘測出目前的記憶策略與思考習慣</small></a>
+          <a href="quiz-ai.html">AI 時代適應力測驗<span class="nb">NEW</span><small>16 題測出你會被 AI 淘汰，還是起飛</small></a>
+        </div>
+      </div>
       <a href="game.html">記憶遊戲</a>
       <a href="login.html" class="m-login">會員登入 →</a>
     </div>
