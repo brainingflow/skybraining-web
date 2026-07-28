@@ -129,16 +129,27 @@
       : isBundle
       ? '本方案含線上數位影音內容，屬「一經提供即完成之數位內容」，開通後不適用七日無條件退費；實體梯次與輔導若無法配合可免費改期。付款成功後自動開立電子發票寄至你的 email。'
       : '本課程為線上數位影音內容，屬「一經提供即完成之數位內容」，結帳即表示同意排除七天猶豫期。付款成功後自動開立電子發票寄至你的 email。';
+    const tagTxt = isOnsite
+      ? '高雄實體小班・線上報名保留名額'
+      : isBundle
+      ? '四合一全套・實體＋線上＋一對一輔導'
+      : '線上課程・買斷永久觀看';
+    const termLabel = isOnsite ? '上課方式' : isBundle ? '方案內容' : '觀看期限';
+    const termTxt = isOnsite
+      ? '高雄實體授課・專人約梯次'
+      : isBundle
+      ? '線上永久觀看＋實體梯次'
+      : '永久・不限次數';
     $('content').innerHTML=`
       <div class="card">
         <div class="ctop ${color}">
-          <span class="tag">線上課程・買斷永久觀看</span>
+          <span class="tag">${tagTxt}</span>
           <h1>${esc(course.name)}</h1>
           <div class="sub">${esc(course.subtitle||'')}</div>
         </div>
         <div class="cbody">
           <div class="prow"><span>課程費用</span><span>${priceTxt}</span></div>
-          <div class="prow"><span>觀看期限</span><span>永久・不限次數</span></div>
+          <div class="prow"><span>${termLabel}</span><span>${termTxt}</span></div>
           <div class="prow total"><span>應付金額</span><span class="amt">${priceTxt}</span></div>
 
           <div class="h2">選擇付款方式</div>
