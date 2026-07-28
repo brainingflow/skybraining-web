@@ -57,6 +57,14 @@
   .pay-btn small{font-size:12.5px;color:var(--ink-soft);}
   .pay-btn .soon{margin-left:auto;flex:none;font-family:var(--round);font-weight:700;font-size:11.5px;color:var(--ink-soft);background:var(--paper-2);padding:4px 11px;border-radius:14px;}
   .pay-btn .go{margin-left:auto;flex:none;font-family:var(--round);font-weight:800;color:var(--teal-deep);}
+  .brief{background:var(--paper);border:1px solid var(--hair);border-radius:16px;padding:15px 17px;font-size:13.5px;color:var(--ink-soft);line-height:1.85;}
+  .brief .bt{font-family:var(--round);font-weight:800;font-size:15px;color:var(--indigo);line-height:1.5;}
+  .brief .bd{margin-top:2px;}
+  .brief .pt{display:flex;gap:8px;align-items:flex-start;margin-top:9px;}
+  .brief .pt i{flex:none;font-style:normal;font-weight:800;color:var(--teal-deep);}
+  .trust{display:flex;gap:13px;align-items:flex-start;background:linear-gradient(135deg,rgba(99,91,255,.09),rgba(22,176,168,.09));border:1px solid rgba(99,91,255,.22);border-radius:16px;padding:14px 16px;margin-top:14px;font-size:12.5px;color:var(--ink-soft);line-height:1.8;}
+  .trust .badge{flex:none;font-family:var(--round);font-weight:800;font-size:14px;color:#fff;background:#635BFF;padding:7px 13px;border-radius:11px;letter-spacing:.4px;box-shadow:0 6px 16px rgba(99,91,255,.28);}
+  .trust b{color:var(--indigo);}
   .safe{display:flex;gap:10px;align-items:flex-start;background:rgba(22,176,168,.08);border:1px solid rgba(22,176,168,.22);border-radius:14px;padding:13px 16px;font-size:12.5px;color:var(--teal-deep);line-height:1.7;margin-top:6px;}
   .legal{font-size:11.5px;color:var(--ink-soft);line-height:1.8;margin-top:16px;}
   .legal a{color:var(--teal-deep);}
@@ -140,6 +148,24 @@
       : isBundle
       ? '線上永久觀看＋實體梯次'
       : '永久・不限次數';
+
+    // ── 課程簡介：DB 的 subtitle／description ＋ 這門課怎麼交付 ──
+    const perks = isOnsite
+      ? ['小班面授，講師當場看你操作、當場修正，不是看影片自己猜',
+         '線上報名先卡位，1 個工作天內專人用官方 LINE 跟你確認梯次與上課地點',
+         '梯次無法配合可免費改期，或全額退費']
+      : isBundle
+      ? ['線上課付款後立即開通，永久觀看不限次數',
+         '含高雄實體梯次名額，專人 1 個工作天內用官方 LINE 與你約定',
+         '含一對一輔導，卡住的地方有人陪你走完']
+      : ['付款後系統自動開通，回到網站馬上就能開始上課',
+         '買斷永久觀看，不限次數、不限裝置，手機平板電腦都能看',
+         '課程日後更新免費看，不用再加價'];
+    const briefHtml = `<div class="bt">${esc(course.subtitle||course.name)}</div>`
+      + (course.description ? `<div class="bd">${esc(course.description)}</div>` : '')
+      + perks.map(p=>`<div class="pt"><i>✓</i><span>${esc(p)}</span></div>`).join('');
+    const stripeTrust = '國際信用卡由 <b>Stripe</b> 收款——<b>全球最大的線上刷卡平台之一</b>，2025 年為全球商家處理 <b>1.9 兆美元</b>交易，Amazon、Google、Shopify 都用它收錢。通過 <b>PCI DSS Level 1</b>（信用卡產業最高等級）認證，卡號全程加密直接送到 Stripe，強腦力的網站不會、也拿不到你的卡號。';
+
     $('content').innerHTML=`
       <div class="card">
         <div class="ctop ${color}">
@@ -152,6 +178,9 @@
           <div class="prow"><span>${termLabel}</span><span>${termTxt}</span></div>
           <div class="prow total"><span>應付金額</span><span class="amt">${priceTxt}</span></div>
 
+          <div class="h2">你買到的是什麼</div>
+          <div class="brief">${briefHtml}</div>
+
           <div class="h2">選擇付款方式</div>
           <button class="pay-btn" id="btnPayuni" ${cfg.payuni?'':'disabled'}>
             <span class="ic tw">💳</span>
@@ -160,10 +189,11 @@
           </button>
           <button class="pay-btn" id="btnStripe" ${cfg.stripe?'':'disabled'}>
             <span class="ic gl">🌍</span>
-            <span><b>國際信用卡（Stripe）</b><small>Visa・Mastercard・AmEx・Apple Pay/Google Pay</small></span>
+            <span><b>國際信用卡（Stripe）</b><small>全球最大線上刷卡平台・Visa・Mastercard・AmEx・Apple Pay</small></span>
             ${cfg.stripe?'<span class="go">→</span>':'<span class="soon">即將開放</span>'}
           </button>
 
+          <div class="trust"><span class="badge">Stripe</span><span>${stripeTrust}</span></div>
           <div class="safe">🔒 <span>${safeTxt}</span></div>
           <div class="msg" id="payMsg"></div>
           <div class="legal">${legalTxt}詳見 <a href="refund.html">退款政策</a>・<a href="terms.html">服務條款</a>。遇到問題？<a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">加 LINE 由真人協助</a></div>
