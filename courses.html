@@ -11,7 +11,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>記憶力・心智圖・全腦開發課程｜強腦力 SkyBraining</title>
+<title>精品課程 — 強腦力 SkyBraining</title>
 <meta name="description" content="強腦力 SkyBraining 精品課程一覽：免費體驗課與完整付費課程，買斷永久觀看。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,6 +75,9 @@
   .price.free{color:var(--violet-deep);}
   .buy{font-family:var(--round);font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:30px;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,filter .2s;}
   .buy:hover{transform:translateY(-2px);filter:brightness(1.05);}
+  .btns{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end;}
+  .buy-more{font-family:var(--round);font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:30px;color:var(--indigo);border:1.5px solid var(--hair);transition:border-color .2s,background .2s,transform .2s;}
+  .buy-more:hover{border-color:var(--indigo);background:#fff;transform:translateY(-2px);}
   .buy.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .buy.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
   .buy.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
@@ -361,10 +364,9 @@
     const intro = c.intro_url || INTRO[id];
     if(isFree){
       btn = `<a class="buy ${color}" href="login.html">免費開通 →</a>`;
-    } else if(intro){
-      btn = `<a class="buy ${color}" href="${intro}">了解課程 →</a>`;
     } else {
-      btn = `<a class="buy line" href="${LINE_URL}" target="_blank" rel="noopener">我要報名 →</a>`;
+      const more = intro ? `<a class="buy-more" href="${intro}">了解課程</a>` : '';
+      btn = `<div class="btns"><a class="buy ${color}" href="checkout.html?course=${id}">立即報名 →</a>${more}</div>`;
     }
     return `<div class="course">
       <div class="ctop ${color}">

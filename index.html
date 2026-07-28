@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>記憶力・思考力線上課程｜強腦力 SkyBraining</title>
+<title>強腦力 | 10倍學習力</title>
 <meta name="description" content="強腦力 SkyBraining：孩子不是記性差，只是沒學過記憶的方法。用圖像記憶、聯想力與思考模板，適合 10 歲以上到 35 歲——從國小、國高中到上班族，學一次、用一輩子。先免費上一堂無限聯想力。">
 <meta property="og:title" content="強腦力 | 10倍學習力">
 <meta property="og:description" content="不是更用功，而是用對方法。圖像記憶 × 聯想力 × 思考模板，讓孩子記得快、想得廣。">
@@ -221,10 +221,16 @@
   .ck.mem{background:var(--orange);}.ck.think{background:var(--teal);}.ck.free{background:var(--violet);}
   .course-top.free{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
   .free-tag{display:inline-block;font-family:var(--round);font-weight:700;font-size:11px;color:#4B37D8;background:#fff;padding:3px 9px;border-radius:20px;position:absolute;top:20px;right:22px;z-index:2;}
-  .course-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--hair);}
+  .course-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--hair);}
   .price .lbl{font-size:12px;color:var(--ink-soft);}
   .price .val{font-family:var(--round);font-weight:800;font-size:26px;color:var(--indigo);line-height:1.1;}
   .buy{font-family:var(--round);font-weight:700;font-size:15px;padding:12px 22px;border-radius:30px;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,filter .2s;}
+  .btns{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end;}
+  .buy-more{font-family:var(--round);font-weight:700;font-size:13.5px;padding:11px 17px;border-radius:30px;color:var(--indigo);border:1.5px solid var(--hair);transition:border-color .2s,background .2s,transform .2s;}
+  .buy-more:hover{border-color:var(--indigo);background:#fff;transform:translateY(-2px);}
+  .all-courses{text-align:center;margin-top:34px;}
+  .btn-allc{font-family:var(--round);font-weight:800;font-size:16px;color:var(--indigo);border:2px solid var(--hair);background:#fff;padding:15px 30px;border-radius:40px;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,transform .2s,box-shadow .2s;}
+  .btn-allc:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 10px 26px rgba(20,22,49,.12);}
   .buy:hover{transform:translateY(-2px);filter:brightness(1.05);}
   .buy.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}.buy.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}.buy.free{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
 
@@ -486,7 +492,7 @@
           </ul>
           <div class="course-foot">
             <div class="price"><div class="lbl">買斷・永久觀看</div><div class="val">NT$4,200</div></div>
-            <a class="buy mem" href="course-memory.html">了解課程 →</a>
+            <div class="btns"><a class="buy mem" href="checkout.html?course=super-memory">立即報名 →</a><a class="buy-more" href="course-memory.html">了解課程</a></div>
           </div>
         </div>
       </div>
@@ -506,11 +512,12 @@
           </ul>
           <div class="course-foot">
             <div class="price"><div class="lbl">買斷・永久觀看</div><div class="val">NT$7,800</div></div>
-            <a class="buy think" href="course-thinking.html">了解課程 →</a>
+            <div class="btns"><a class="buy think" href="checkout.html?course=super-thinking">立即報名 →</a><a class="buy-more" href="course-thinking.html">了解課程</a></div>
           </div>
         </div>
       </div>
     </div>
+    <div class="all-courses reveal"><a class="btn-allc" href="courses.html">看全部課程・實體班與全套大補包 →</a></div>
   </div>
 </section>
 

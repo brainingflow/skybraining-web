@@ -117,6 +117,18 @@
 
     const color=['amber','teal','violet','indigo','rose','gold','grape','free'].includes(course.accent)?course.accent:'amber';
     const priceTxt='NT$'+Number(course.price).toLocaleString();
+    const ONSITE=['onsite-basic','onsite-advanced'];
+    const isOnsite=ONSITE.includes(courseId), isBundle=courseId==='bundle-all';
+    const safeTxt = isOnsite
+      ? '付款在 <b>Stripe／統一集團</b> 的加密頁面完成，卡號不會經過本網站。付款成功即為<b>保留名額</b>，我們會在 1 個工作天內用 LINE 與你聯繫，確認最近梯次與上課地點'
+      : isBundle
+      ? '付款在 <b>Stripe／統一集團</b> 的加密頁面完成，卡號不會經過本網站。付款成功後<b>線上課立即開通</b>，實體梯次與一對一輔導由專人在 1 個工作天內用 LINE 與你約定'
+      : '付款在 <b>Stripe／統一集團</b> 的加密頁面完成，卡號不會經過本網站。付款成功後系統<b>自動開通課程</b>，馬上就能上課';
+    const legalTxt = isOnsite
+      ? '本課程為高雄實體小班課，線上付款即為保留名額；若梯次無法配合可免費改期或全額退費。付款成功後自動開立電子發票寄至你的 email。'
+      : isBundle
+      ? '本方案含線上數位影音內容，屬「一經提供即完成之數位內容」，開通後不適用七日無條件退費；實體梯次與輔導若無法配合可免費改期。付款成功後自動開立電子發票寄至你的 email。'
+      : '本課程為線上數位影音內容，屬「一經提供即完成之數位內容」，結帳即表示同意排除七天猶豫期。付款成功後自動開立電子發票寄至你的 email。';
     $('content').innerHTML=`
       <div class="card">
         <div class="ctop ${color}">
@@ -141,9 +153,9 @@
             ${cfg.stripe?'<span class="go">→</span>':'<span class="soon">即將開放</span>'}
           </button>
 
-          <div class="safe">🔒 <span>付款在 <b>Stripe／統一集團</b> 的加密頁面完成，卡號不會經過本網站。付款成功後系統<b>自動開通課程</b>，馬上就能上課</span></div>
+          <div class="safe">🔒 <span>${safeTxt}</span></div>
           <div class="msg" id="payMsg"></div>
-          <div class="legal">本課程為線上數位影音內容，屬「一經提供即完成之數位內容」，結帳即表示同意排除七天猶豫期。付款成功後自動開立電子發票寄至你的 email。詳見 <a href="refund.html">退款政策</a>・<a href="terms.html">服務條款</a>。遇到問題？<a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">加 LINE 由真人協助</a></div>
+          <div class="legal">${legalTxt}詳見 <a href="refund.html">退款政策</a>・<a href="terms.html">服務條款</a>。遇到問題？<a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">加 LINE 由真人協助</a></div>
         </div>
       </div>`;
 
