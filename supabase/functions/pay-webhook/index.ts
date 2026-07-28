@@ -57,9 +57,12 @@ Deno.serve(async (req) => {
       const plain = await aesGcmDecryptHex(enc, PAYUNI_KEY, PAYUNI_IV);
       const q = new URLSearchParams(plain);
       const status  = (q.get("Status") || "").toUpperCase();
+      const trade   = q.get("TradeStatus") || "";   // 0=取號成功(未付款) 1=已付款 2=失敗 3=取消 8=待確認
       const tradeNo = q.get("MerTradeNo") || "";
       const uniNo   = q.get("TradeNo") || "";
-      if (status === "SUCCESS" && tradeNo) {
+      // ⚠️ 只有 TradeStatus=1 才是真的收到錢。ATM/超商取號會回 Status=SUCCESS + TradeStatus=0，
+      //    若只看 Status 會在「還沒付款」時就開課。
+      if (status === "SUCCESS" && trade === "1" && tradeNo) {
         const { data: order } = await admin.from("orders").select("*").eq("provider_order_id", tradeNo).maybeSingle();
         if (order) await settle(admin, order.id, uniNo || tradeNo, "payuni");
       }
@@ -107,10 +110,14 @@ async function verifyStripeSig(payload: string, sigHeader: string, secret: strin
   const hex = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, "0")).join("");
   return v1s.includes(hex);
 }
+// PAYUNi：AES-256-GCM
+// ⚠️ 官方格式 = hex( base64(密文) + ":::" + base64(tag) )
+//    先整串 hex 解回 ASCII，再用 ":::" 切、各自 base64 解碼。
 async function aesGcmDecryptHex(encStr: string, key: string, iv: string): Promise<string> {
-  const [bodyHex, tagHex] = encStr.split(":::");
-  const un = (h: string) => new Uint8Array((h.match(/../g) || []).map((x) => parseInt(x, 16)));
-  const body = un(bodyHex), tag = un(tagHex || "");
+  const raw = new Uint8Array((encStr.trim().match(/../g) || []).map((x) => parseInt(x, 16)));
+  const [ctB64, tagB64] = new TextDecoder().decode(raw).split(":::");
+  const un = (b: string) => Uint8Array.from(atob(b || ""), (c) => c.charCodeAt(0));
+  const body = un(ctB64), tag = un(tagB64);
   const buf = new Uint8Array(body.length + tag.length); buf.set(body); buf.set(tag, body.length);
   const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(key), "AES-GCM", false, ["decrypt"]);
   const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: new TextEncoder().encode(iv), tagLength: 128 }, k, buf);
