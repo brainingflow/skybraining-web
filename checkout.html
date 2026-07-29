@@ -46,6 +46,10 @@
   .prow{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;font-size:14.5px;color:var(--ink-soft);}
   .prow.total{border-top:1.5px dashed var(--hair);margin-top:6px;padding-top:14px;color:var(--indigo);font-weight:700;}
   .prow.total .amt{font-family:var(--round);font-weight:800;font-size:28px;color:var(--indigo);}
+  .prow.total .amtwrap{text-align:right;}
+  .usd{display:block;font-family:var(--round);font-weight:700;font-size:14px;color:var(--ink-soft);margin-top:1px;letter-spacing:.2px;}
+  .fxnote{font-size:11.5px;color:var(--ink-soft);line-height:1.8;margin-top:10px;padding:10px 13px;background:rgba(140,140,155,.07);border:1px solid rgba(140,140,155,.16);border-radius:11px;}
+  .fxnote b{color:var(--indigo);}
   .h2{font-family:var(--round);font-weight:800;font-size:16.5px;color:var(--indigo);margin:22px 0 12px;}
   .pay-btn{width:100%;display:flex;align-items:center;gap:14px;background:#fff;border:2px solid var(--hair);border-radius:18px;padding:16px 18px;cursor:pointer;text-align:left;font-family:var(--sans);transition:border-color .2s,transform .2s,box-shadow .2s;margin-bottom:12px;}
   .pay-btn:hover:not(:disabled){border-color:var(--teal);transform:translateY(-2px);box-shadow:var(--sh-md);}
@@ -125,6 +129,17 @@
 
     const color=['amber','teal','violet','indigo','rose','gold','grape','free'].includes(course.accent)?course.accent:'amber';
     const priceTxt='NT$'+Number(course.price).toLocaleString();
+
+    // ── 約當美元（純參考顯示；實際一律以新台幣計價與扣款）──
+    // 匯率由 pay-create?action=config 從伺服器端帶回（每 6 小時更新一次）。
+    // 拿不到就用保底值，畫面不會開天窗，也絕不會顯示 NaN。
+    const FX_FALLBACK=32.3;                       // 2026-07 參考值，僅供保底
+    const fxRate=(Number(cfg.usd_rate)>0 ? Number(cfg.usd_rate) : FX_FALLBACK);
+    const usdAmt=Math.round(Number(course.price)/fxRate);
+    const usdHtml = usdAmt>0 ? `<span class="usd">≈ US$${usdAmt.toLocaleString()}</span>` : '';
+    const fxNote = usdAmt>0
+      ? `<div class="fxnote">💱 本站一律以<b>新台幣計價與扣款</b>，你的信用卡帳單金額會是 <b>${priceTxt}</b>。上方美元為<b>參考換算</b>（參考匯率 1 USD ≈ NT$${fxRate.toFixed(2)}），實際入帳金額以<b>發卡銀行當日匯率</b>及該行可能收取的跨境手續費為準。</div>`
+      : '';
     const ONSITE=['onsite-basic','onsite-advanced'];
     const isOnsite=ONSITE.includes(courseId), isBundle=courseId==='bundle-all';
     const safeTxt = isOnsite
@@ -176,7 +191,8 @@
         <div class="cbody">
           <div class="prow"><span>課程費用</span><span>${priceTxt}</span></div>
           <div class="prow"><span>${termLabel}</span><span>${termTxt}</span></div>
-          <div class="prow total"><span>應付金額</span><span class="amt">${priceTxt}</span></div>
+          <div class="prow total"><span>應付金額</span><span class="amtwrap"><span class="amt">${priceTxt}</span>${usdHtml}</span></div>
+          ${fxNote}
 
           <div class="h2">你買到的是什麼</div>
           <div class="brief">${briefHtml}</div>
