@@ -82,7 +82,21 @@
   footer{background:var(--indigo);color:rgba(251,250,246,.7);padding:36px 0;font-size:13.5px;margin-top:30px;}
   .foot-in{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .foot-links{display:flex;gap:18px;flex-wrap:wrap;}
+
+.faq{margin:34px 0 6px;}
+.faq details{background:var(--card);border:1px solid var(--hair);border-radius:15px;padding:15px 18px;margin-bottom:10px;box-shadow:var(--sh-1);}
+.faq details[open]{border-color:rgba(22,176,168,.4);}
+.faq summary{font-family:var(--round);font-weight:700;font-size:16px;color:var(--indigo);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:'+';font-size:21px;line-height:1;color:var(--teal);flex:none;transition:transform .25s;}
+.faq details[open] summary::after{transform:rotate(45deg);}
+.faq .ans{margin-top:11px;font-size:15.5px;color:var(--ink-soft);line-height:1.9;}
+.faq .ans a{color:#0d8a83;font-weight:700;}
+.guar{margin:18px 0 6px;padding:16px 18px;border-radius:16px;background:rgba(22,176,168,.09);border:1px dashed rgba(22,176,168,.42);font-size:clamp(14px,1.75vw,15.5px);line-height:1.9;color:var(--ink);}
+.guar .gk{display:inline-block;font-family:var(--round);font-weight:800;color:#0d8a83;margin-right:8px;}
+.guar a{color:#0d8a83;font-weight:700;text-decoration:underline;text-underline-offset:2px;}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"心智圖幾歲開始學比較好？","acceptedAnswer":{"@type":"Answer","text":"小學三年級以上最順，因為孩子這時候開始有分類和上下位的概念。中低年級也可以畫，但重點要放在「用圖把東西記住」，而不是「結構要畫得漂亮」。太早要求分層，孩子只會覺得這是一份很難的作業。"}},{"@type":"Question","name":"孩子不會畫圖，也能學心智圖嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。心智圖上的圖不是美術作業，是記憶的掛鉤，火柴人加三個色塊就夠用了。真正在幫助記憶的是「你為了畫它而想了一下」這個動作，不是畫得像不像。畫得太精緻反而會吃掉本來要拿來理解的時間。"}},{"@type":"Question","name":"心智圖跟一般筆記、康乃爾筆記差在哪？","acceptedAnswer":{"@type":"Answer","text":"一般筆記是把老師講的抄下來，資訊順序跟著講課走；心智圖是把資訊重新分類之後才放上去，順序跟著「你怎麼理解」走。差別在於前者可以不動腦完成，後者不行——而讓記憶留下來的，正是那個非動腦不可的過程。"}},{"@type":"Question","name":"畫了心智圖，成績就會進步嗎？","acceptedAnswer":{"@type":"Answer","text":"不會自動進步。心智圖幫的是「整理」跟「回想」，如果畫完就收起來、不再闔上課本重畫一次，效果會非常有限。第五步才是真正產生記憶的地方，前四步都只是準備。"}},{"@type":"Question","name":"線上課和高雄實體班怎麼選？","acceptedAnswer":{"@type":"Answer","text":"如果孩子已經有自學習慣、你也有時間陪他練，線上課買斷永久觀看最划算。如果孩子屬於「知道方法但做不到」的類型，需要有人當面盯著改，就選高雄實體班。真的分不出來，先看〈線上 vs 實體：心智圖課程怎麼選〉那一篇。"}}]}</script>
 </head>
 <body>
 <nav>
@@ -134,11 +148,22 @@
 
     <p>當心智圖從「作業」變成「大腦的預設思考方式」，你會發現不只背書變快——寫作文有骨架、報告有邏輯、連想事情都變清楚。這就是<strong>強腦力 SkyBraining</strong>在《瘋狂心智圖》裡帶學員練的：從畫一張圖，到擁有一顆會自己長出想法的大腦。</p>
 
+    <div class="faq">
+      <h2>常見問題</h2>
+      <details><summary>心智圖幾歲開始學比較好？</summary><div class="ans">小學三年級以上最順，因為孩子這時候開始有分類和上下位的概念。中低年級也可以畫，但重點要放在「用圖把東西記住」，而不是「結構要畫得漂亮」。太早要求分層，孩子只會覺得這是一份很難的作業。</div></details>
+      <details><summary>孩子不會畫圖，也能學心智圖嗎？</summary><div class="ans">可以。心智圖上的圖不是美術作業，是記憶的掛鉤，火柴人加三個色塊就夠用了。真正在幫助記憶的是「你為了畫它而想了一下」這個動作，不是畫得像不像。畫得太精緻反而會吃掉本來要拿來理解的時間。</div></details>
+      <details><summary>心智圖跟一般筆記、康乃爾筆記差在哪？</summary><div class="ans">一般筆記是把老師講的抄下來，資訊順序跟著講課走；心智圖是把資訊重新分類之後才放上去，順序跟著「你怎麼理解」走。差別在於前者可以不動腦完成，後者不行——而讓記憶留下來的，正是那個非動腦不可的過程。</div></details>
+      <details><summary>畫了心智圖，成績就會進步嗎？</summary><div class="ans">不會自動進步。心智圖幫的是「整理」跟「回想」，如果畫完就收起來、不再闔上課本重畫一次，效果會非常有限。第五步才是真正產生記憶的地方，前四步都只是準備。</div></details>
+      <details><summary>線上課和高雄實體班怎麼選？</summary><div class="ans">如果孩子已經有自學習慣、你也有時間陪他練，線上課買斷永久觀看最划算。如果孩子屬於「知道方法但做不到」的類型，需要有人當面盯著改，就選高雄實體班。真的分不出來，先看<a href="article-mindmap-online-vs-offline.html">線上 vs 實體：心智圖課程怎麼選</a>那一篇。</div></details>
+    </div>
+
     <div class="cta">
       <h3>想把心智圖練成大腦的預設模式？</h3>
       <p>《瘋狂心智圖・超級思考》：聯想力訓練＋思考模板＋寫作解題實戰，讓孩子從「會背」進化到「會想」。買斷永久觀看。</p>
       <a href="course-thinking.html">了解瘋狂心智圖 →</a>
     </div>
+
+    <div class="guar"><span class="gk">零風險嘗試</span>高雄的<a href="course-onsite-basic.html">實體初階班</a>與<a href="course-onsite-advanced.html">實體進階班</a>提供<strong>無效退費</strong>：上完第一堂課後 7 天內，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期，開課前可申請取消——所以我們更建議先免費上一堂體驗課再決定。</div>
 
     <div class="refs">延伸參考：放射性思考與心智圖法（Tony Buzan）、提取練習（Retrieval Practice）、雙重編碼理論（Dual-coding Theory）。本文為科普整理與教學經驗分享。</div>
   </article>
