@@ -97,6 +97,21 @@
   .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px);}
   .foot-in a:hover{color:#fff;}
   .foot-links{display:flex;gap:20px;flex-wrap:wrap;}
+  /* ===== 學員文字見證（沿用首頁樣式） ===== */
+  .stars{display:inline-flex;gap:4px;color:var(--amber);filter:drop-shadow(0 2px 4px rgba(255,138,61,.35));}
+  .stars svg{width:16px;height:16px;fill:url(#stargrad);stroke:none;}
+  .tst .stars svg{width:21px;height:21px;}
+  .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:860px){.tst-grid{grid-template-columns:1fr;}}
+  .tst{background:var(--card);border:1px solid var(--hair);border-radius:22px;padding:30px 28px;box-shadow:var(--sh-1);position:relative;transition:transform .25s,box-shadow .25s;}
+  .tst:hover{transform:translateY(-5px);box-shadow:var(--sh-2);}
+  .tst .quote{position:absolute;top:22px;right:26px;font-family:var(--round);font-weight:800;font-size:52px;line-height:1;color:var(--paper-2);}
+  .tst .stars{margin-bottom:14px;}
+  .tst p{font-size:15px;color:var(--ink);line-height:1.75;margin-bottom:22px;position:relative;}
+  .tst-who{display:flex;align-items:center;gap:12px;}
+  .tst-av{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-family:var(--round);font-weight:800;color:#fff;font-size:18px;box-shadow:var(--sh-1);}
+  .tst-name{font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .tst-role{font-size:12.5px;color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -168,6 +183,19 @@
         <div class="vframe"><iframe src="https://player.vimeo.com/video/1212410495?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="線下課見證04"></iframe></div>
         <div class="vcap"><span class="vc-dot"></span>現場回饋 ④</div>
       </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lead"><span class="bar"></span>學員與家長的真實回饋</div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="stargrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC24D"/><stop offset="1" stop-color="#FF8A3D"/></linearGradient></defs></svg>
+    <div class="tst-grid">
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>數學公式用圖像串起來之後，考試時腦中直接浮出畫面，粗心錯少了很多。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#FFB020,#FF8A3D)">許</div><div><div class="tst-name">許芯瑜</div><div class="tst-role">16歲・高一學生</div></div></div></div>
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>每天通勤 40 分鐘用來在腦中走一遍記憶宮殿，零碎時間全變成複習時間。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#16B0A8,#0d8a83)">楊</div><div><div class="tst-name">楊子霆</div><div class="tst-role">17歲・高三學生</div></div></div></div>
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>單字量從 2000 卡了一年，三個月拉到 5000，英文段考第一次上 90。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#7C6CF0,#4B37D8)">K</div><div><div class="tst-name">Kevin Liu</div><div class="tst-role">17歲・高二學生</div></div></div></div>
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>以前是考前熬夜狂背型，現在提前兩週排間隔複習，睡飽去考反而穩定前十。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#FF6B8B,#E23A63)">蘇</div><div><div class="tst-name">蘇郁婷</div><div class="tst-role">18歲・高三學生</div></div></div></div>
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>最有感的是上課變得敢舉手，因為知識在腦中有畫面、有結構，講得出來。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#F5A623,#E0761B)">洪</div><div><div class="tst-name">洪偉傑</div><div class="tst-role">16歲・高一學生</div></div></div></div>
+      <div class="tst"><div class="quote">”</div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 21.4l1.4-6.8L2.2 9.9l6.9-.8z"/></svg></span><p>我陪兒子一起上課，兩個人晚上輪流考對方，他段考進步、我連簡報都變得有邏輯。</p><div class="tst-who"><div class="tst-av" style="background:linear-gradient(135deg,#8E5BEE,#5B2AC6)">吳</div><div><div class="tst-name">吳建霖</div><div class="tst-role">47歲・高一家長</div></div></div></div>
     </div>
   </div>
 

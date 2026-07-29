@@ -291,11 +291,11 @@
   .tst-role{font-size:12.5px;color:var(--ink-soft);}
 
   /* ===== founder ===== */
-  .founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center;}
+  .founder{display:grid;grid-template-columns:1fr;gap:clamp(26px,3.4vw,38px);align-items:start;}
   @media(max-width:860px){.founder{grid-template-columns:1fr;gap:32px;}}
-  .founder-photo{aspect-ratio:4/5;border-radius:26px;background:linear-gradient(150deg,#22264f,#141330);position:relative;overflow:hidden;box-shadow:var(--sh-2);display:grid;place-items:center;}
-  .founder-photo .ph-tag{font-family:var(--round);font-weight:600;font-size:13px;color:rgba(255,255,255,.5);border:1px dashed rgba(255,255,255,.28);padding:8px 16px;border-radius:30px;}
-  .founder-photo .ring{position:absolute;width:150%;height:150%;border-radius:50%;border:1px solid rgba(255,255,255,.06);top:-25%;left:-25%;}
+  .founder-photo{margin:0;border-radius:26px;background:linear-gradient(150deg,#22264f,#141330);overflow:hidden;box-shadow:var(--sh-2);line-height:0;}
+  .founder-photo img{display:block;width:100%;height:auto;}
+  @media(max-width:640px){.founder-photo{border-radius:18px;}}
   .founder blockquote{font-family:var(--round);font-weight:600;font-size:clamp(21px,2.6vw,30px);line-height:1.5;color:var(--indigo);margin-bottom:22px;}
   .founder blockquote .grad{background:var(--spark);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .founder .who{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
@@ -593,7 +593,12 @@
 <!-- FOUNDER -->
 <section class="block">
   <div class="wrap founder">
-    <div class="founder-photo reveal"><div class="ring"></div><div class="ph-tag">創辦人照片預留</div></div>
+    <figure class="founder-photo reveal">
+      <picture>
+        <source type="image/webp" srcset="img-founder-853.webp 853w, img-founder-1706.webp 1706w" sizes="(max-width:1256px) 100vw, 1064px">
+        <img src="img-founder-1706.jpg" srcset="img-founder-853.jpg 853w, img-founder-1706.jpg 1706w" sizes="(max-width:1256px) 100vw, 1064px" width="1706" height="960" loading="lazy" decoding="async" alt="強腦力 SkyBraining 創辦人在高雄實體課現場授課，學員圍坐長桌專注聽講">
+      </picture>
+    </figure>
     <div class="reveal">
       <div class="eyebrow">關於強腦力</div>
       <blockquote>「我們相信腦力跟肌力一樣，<span class="grad">可以被訓練</span>。強腦力不是賣一堂課，而是給孩子一套用一輩子的思考系統。」</blockquote>
