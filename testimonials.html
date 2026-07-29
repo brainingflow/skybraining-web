@@ -23,10 +23,10 @@
 <meta property="og:title" content="實戰見證|家長與學員的真實影片分享 — 強腦力 SkyBraining">
 <meta property="og:description" content="家長、學員與線下實體課的真實影片分享。看看用對方法後，孩子的學習如何改變。">
 <meta property="og:url" content="https://skybraining.com/testimonials.html">
-<meta property="og:image" content="https://skybraining.com/og.png">
+<meta property="og:image" content="https://skybraining.com/og-testimonials.jpg">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://skybraining.com/og.png">
+<meta name="twitter:image" content="https://skybraining.com/og-testimonials.jpg">
 <style>
   :root{
     --indigo:#141631;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;
@@ -57,6 +57,13 @@
   .head h1{font-weight:800;font-size:clamp(30px,5vw,50px);color:var(--indigo);line-height:1.12;}
   .head h1 .hl{background:linear-gradient(120deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;}
   .head p{margin:14px auto 0;color:var(--ink-soft);font-size:16.5px;max-width:46ch;}
+  /* 現場照片 hero */
+  .hero-shot{margin:clamp(26px,4vw,40px) 0 0;background:var(--card);border:1px solid var(--hair);border-radius:24px;overflow:hidden;box-shadow:var(--sh-2);}
+  .hero-shot img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--paper-2);}
+  .hero-cap{display:flex;align-items:flex-start;gap:10px;padding:13px 18px;font-size:13.5px;color:var(--ink-soft);text-align:left;line-height:1.6;}
+  .hero-cap b{font-family:var(--round);font-weight:800;color:var(--indigo);}
+  .hero-cap .vc-dot{width:9px;height:9px;margin-top:7px;border-radius:50%;background:linear-gradient(120deg,var(--amber),var(--orange));flex:none;}
+  @media(max-width:520px){.hero-cap{font-size:12.5px;padding:12px 15px;gap:8px;}}
   .sec{padding:clamp(30px,5vw,50px) 0 10px;}
   .sec-lead{display:flex;align-items:center;gap:11px;font-family:var(--round);font-weight:800;font-size:clamp(19px,3vw,24px);color:var(--indigo);margin-bottom:20px;}
   .sec-lead .bar{width:6px;height:24px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
@@ -115,6 +122,14 @@
       追蹤我們的 Instagram
     </a>
   </div>
+
+  <figure class="hero-shot">
+    <picture>
+      <source type="image/webp" srcset="img-onsite-class-900.webp 900w, img-onsite-class-1600.webp 1600w" sizes="(max-width:1080px) 100vw, 1000px">
+      <img src="img-onsite-class-1600.jpg" srcset="img-onsite-class-900.jpg 900w, img-onsite-class-1600.jpg 1600w" sizes="(max-width:1080px) 100vw, 1000px" width="1600" height="900" fetchpriority="high" decoding="async" alt="強腦力高雄實體課現場：講師帶著家長與孩子圍著長桌上課，螢幕上寫著「學這麼多 為了什麼」">
+    </picture>
+    <figcaption class="hero-cap"><span class="vc-dot"></span><span><b>高雄實體課現場</b>　家長和孩子一起坐下來，從「學這麼多，為了什麼」開始談起。</span></figcaption>
+  </figure>
 
   <div class="sec">
     <div class="sec-lead"><span class="bar"></span>家長 &amp; 學員怎麼說</div>
