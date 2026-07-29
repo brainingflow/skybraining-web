@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://skybraining.com/</loc><lastmod>2026-07-28</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://skybraining.com/courses.html</loc><lastmod>2026-07-28</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://skybraining.com/articles.html</loc><lastmod>2026-07-28</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://skybraining.com/articles.html</loc><lastmod>2026-07-29</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://skybraining.com/testimonials.html</loc><lastmod>2026-07-28</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://skybraining.com/free.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://skybraining.com/quiz.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -17,12 +17,17 @@
   <url><loc>https://skybraining.com/course-pro-sales.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://skybraining.com/course-pro-style.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://skybraining.com/course-pro-aivideo.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://skybraining.com/article-mindmap.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://skybraining.com/article-forgetting-curve.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://skybraining.com/article-image-memory.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://skybraining.com/article-focus.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://skybraining.com/article-memory-palace.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://skybraining.com/article-exam-prep.html</loc><lastmod>2026-07-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-mindmap-writing.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-exam-prep.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-focus.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-memorize-english-vocabulary.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-image-memory.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-improve-child-memory.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-memory-palace.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-mindmap-online-vs-offline.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-forgetting-curve.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-what-is-mindmap.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://skybraining.com/article-mindmap.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://skybraining.com/login.html</loc><lastmod>2026-07-28</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
   <url><loc>https://skybraining.com/terms.html</loc><lastmod>2026-07-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://skybraining.com/privacy.html</loc><lastmod>2026-07-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
