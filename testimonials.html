@@ -69,10 +69,11 @@
   .sec-lead .bar{width:6px;height:24px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
   .vcard{background:var(--card);border:1px solid var(--hair);border-radius:20px;overflow:hidden;box-shadow:var(--sh-2);}
   .vframe{position:relative;width:100%;background:#141631;}
-  /* 直式（封面見證）：置中，兩支並排 */
-  .vgrid.portrait{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;}
-  .vgrid.portrait .vcard{width:320px;max-width:100%;}
+  /* 直式（封面見證）：三支並排一列 */
+  .vgrid.portrait{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;max-width:1020px;margin-left:auto;margin-right:auto;align-items:start;}
+  .vgrid.portrait .vcard{width:auto;max-width:none;}
   .vgrid.portrait .vframe{aspect-ratio:9/16;}
+  @media(max-width:640px){.vgrid.portrait{grid-template-columns:1fr;max-width:340px;gap:20px;}}
   /* 橫式（線下課）：兩欄 */
   .vgrid.land{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
   @media(max-width:760px){.vgrid.land{grid-template-columns:1fr;gap:20px;}}
