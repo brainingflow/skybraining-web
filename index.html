@@ -354,6 +354,15 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.in{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none;}.node,.chip-a,.chip-b,.chip-c,.fab{animation:none;}html{scroll-behavior:auto;}}
+
+/* 首頁・洞見區實體課現場照 2026-07-30 */
+.ins-shot{margin:34px auto 0;max-width:940px}
+.ins-shot picture{display:block}
+.ins-shot img{width:100%;height:auto;display:block;border-radius:22px;box-shadow:0 18px 44px rgba(8,10,30,.38)}
+.ins-shot figcaption{display:flex;align-items:flex-start;gap:10px;margin-top:14px;font-size:14.5px;line-height:1.75;color:rgba(255,255,255,.82);text-align:left}
+.ins-shot .ins-dot{flex:0 0 auto;width:8px;height:8px;margin-top:9px;border-radius:50%;background:var(--teal)}
+.ins-shot figcaption b{color:#fff;font-weight:700}
+@media(max-width:640px){.ins-shot{margin-top:24px}.ins-shot img{border-radius:16px}.ins-shot figcaption{font-size:13.5px;gap:8px}}
 </style>
 </head>
 <body>
@@ -426,7 +435,15 @@
 
 <!-- INSIGHT -->
 <section class="insight">
-  <div class="wrap"><h2>不是要孩子<span class="grad">更用功</span>，<br>而是讓大腦<span class="grad">學會怎麼學</span>。</h2></div>
+  <div class="wrap"><h2>不是要孩子<span class="grad">更用功</span>，<br>而是讓大腦<span class="grad">學會怎麼學</span>。</h2>
+      <figure class="ins-shot">
+        <picture>
+          <source type="image/webp" srcset="img-onsite-class-900.webp 900w, img-onsite-class-1600.webp 1600w" sizes="(max-width:1080px) 100vw, 940px">
+          <img src="img-onsite-class-1600.jpg" srcset="img-onsite-class-900.jpg 900w, img-onsite-class-1600.jpg 1600w" sizes="(max-width:1080px) 100vw, 940px" width="1600" height="900" loading="lazy" decoding="async" alt="強腦力高雄實體課現場：講師帶著家長與孩子圍著長桌上課，螢幕上寫著「學這麼多 為了什麼」">
+        </picture>
+        <figcaption><span class="ins-dot"></span><span><b>高雄實體課現場</b>　家長和孩子一起坐下來，從「學這麼多，為了什麼」開始談起。</span></figcaption>
+      </figure>
+    </div>
 </section>
 
 <!-- WHY -->
@@ -534,7 +551,6 @@
         <a class="gift" href="lp.html?p=free-course" style="display:block;color:inherit;text-decoration:none;"><span class="gi"><svg class="ico" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 16h6"/></svg></span><h3>思維模板 PDF</h3><p>可直接列印套用的思考框架，讓孩子面對新問題不再空白。</p></a>
         <a class="gift" href="free.html" style="display:block;color:inherit;text-decoration:none;"><span class="gi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span><h3>免費課程介紹</h3><p>免費完整看一堂「無限聯想力」，親眼看見方法怎麼運作再決定。</p></a>
       </div>
-      <a class="btn-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>加入 LINE 免費領取</a>
     </div>
   </div>
 </section>
