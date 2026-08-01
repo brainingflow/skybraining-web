@@ -531,5 +531,98 @@ function renderLoginBar(){
 (async ()=>{ await initSupa(); await loadUser(); renderLoginBar(); newGame(); await loadLeaderboard(); })();
 </script>
 <div style="text-align:center;padding:26px 14px 30px;font-size:12.5px;color:#8b90a5;">© 2021 強腦力 SkyBraining LLC・skybraining.com・Sky強腦力media</div>
-</body>
+<style>
+  #naobao{position:fixed;left:20px;top:0;z-index:60;font-family:"Noto Sans TC",sans-serif;transition:left 3.4s cubic-bezier(.45,.05,.35,1),top 3.4s cubic-bezier(.45,.05,.35,1);}
+  #nb-body{border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 10px 22px rgba(255,138,61,.4));animation:nb-float 3.2s ease-in-out infinite;transition:transform .3s;}
+  #nb-body:hover{transform:scale(1.08) rotate(-3deg);}
+  #nb-body:active{transform:scale(.95);}
+  #naobao.face-left #nb-body svg{transform:scaleX(-1);}
+  #naobao.flying #nb-body{animation:nb-fly .55s ease-in-out infinite;}
+#nb-body{touch-action:none;-webkit-user-select:none;user-select:none;}
+#naobao.nb-drag{transition:none!important;}
+#naobao.nb-drag #nb-body{animation:none!important;cursor:grabbing;transform:scale(1.12);filter:drop-shadow(0 16px 30px rgba(255,138,61,.55));}
+#naobao.nb-drag #nb-bubble{opacity:0!important;transform:translateY(8px) scale(.9)!important;pointer-events:none!important;}
+  @keyframes nb-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  @keyframes nb-fly{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-7px) rotate(3deg);}}
+  .nb-eye{animation:nb-blink 4.5s infinite ease-in-out;transform-origin:center;transform-box:fill-box;}
+  @keyframes nb-blink{0%,93%,100%{transform:scaleY(1);}96%{transform:scaleY(.12);}}
+  #nb-bubble{position:absolute;left:80px;bottom:36px;min-width:158px;max-width:238px;background:#fff;color:#20234a;font-size:14px;line-height:1.6;font-weight:500;padding:12px 15px;border-radius:16px 16px 16px 4px;box-shadow:0 14px 34px rgba(20,22,49,.2);border:1px solid rgba(20,22,49,.08);opacity:0;transform:translateY(8px) scale(.9);transform-origin:left bottom;transition:opacity .25s,transform .25s;pointer-events:none;}
+  #nb-bubble.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+  #nb-bubble.side-left{left:auto;right:80px;border-radius:16px 16px 4px 16px;transform-origin:right bottom;}
+  #nb-bubble b{color:#4B37D8;}
+  #nb-bubble a{color:#4B37D8;font-weight:700;text-decoration:none;}
+  #nb-bubble a:hover{text-decoration:underline;}
+  #nb-bubble .nb-name{display:block;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;color:#7C6CF0;font-size:12.5px;margin-bottom:2px;}
+  @media(max-width:520px){#nb-body svg{width:60px;height:60px;}#nb-bubble{max-width:180px;left:66px;}#nb-bubble.side-left{left:auto;right:66px;}}
+
+  </style><div id="naobao">
+  <div id="nb-bubble" role="status" aria-live="polite"></div>
+  <button id="nb-body" aria-label="和吉祥物燈寶互動">
+    <svg viewBox="0 0 120 120" width="74" height="74" aria-hidden="true">
+      <defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC94D"/><stop offset="1" stop-color="#FF8A3D"/></linearGradient></defs>
+      <g stroke="#FFB020" stroke-width="3.6" stroke-linecap="round">
+        <line x1="60" y1="6" x2="60" y2="14"/><line x1="26" y1="20" x2="32" y2="26"/><line x1="94" y1="20" x2="88" y2="26"/>
+        <line x1="14" y1="52" x2="22" y2="52"/><line x1="106" y1="52" x2="98" y2="52"/>
+      </g>
+      <circle cx="60" cy="54" r="32" fill="url(#nbg)"/>
+      <path d="M44 36a22 22 0 0 1 12-6" stroke="rgba(255,255,255,.7)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="49" cy="52" r="10.5" fill="#fff"/><circle cx="72" cy="52" r="10.5" fill="#fff"/>
+      <circle class="nb-eye" cx="51" cy="54" r="5" fill="#20234a"/><circle class="nb-eye" cx="74" cy="54" r="5" fill="#20234a"/>
+      <circle cx="38" cy="64" r="4.6" fill="#E23A63" opacity=".4"/><circle cx="83" cy="64" r="4.6" fill="#E23A63" opacity=".4"/>
+      <path d="M54 66c4 4.4 10 4.4 14 0" stroke="#20234a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <rect x="48" y="86" width="24" height="6" rx="3" fill="#8b8fa8"/>
+      <rect x="50" y="93" width="20" height="5" rx="2.5" fill="#a9adc2"/>
+      <rect x="52" y="99" width="16" height="5" rx="2.5" fill="#8b8fa8"/>
+    </svg>
+  </button>
+</div>
+<script>
+(function(){
+  var msgs=["嗨！我是<b>燈寶</b> 💡 來比比看誰記得比較快 🎮","翻不到配對？先看整排的位置，別急著點 👀","訣竅是把位置想成一個畫面，不要背數字 🖼️","這招叫圖像記憶，<a href=\"article-image-memory.html\">原理在這</a> 🧠","想更誇張的？<a href=\"article-memory-palace.html\">記憶宮殿</a>能記幾百樣東西 🏰","玩得不錯耶！要不要<a href=\"login.html\">免費上一堂真的課</a>？😊","換孩子來玩玩看，他可能贏你喔 👦","想看完整課程？<a href=\"index.html\">回首頁逛逛</a> 🏠"];
+  var i=-1,box=document.getElementById('naobao'),b=document.getElementById('nb-bubble'),btn=document.getElementById('nb-body'),t;
+  var hovering=false;
+  btn.addEventListener('mouseenter',function(){hovering=true;});
+  btn.addEventListener('mouseleave',function(){hovering=false;});
+  function say(){ i=(i+1)%msgs.length; b.innerHTML='<span class="nb-name">燈寶</span>'+msgs[i]; b.classList.add('show'); clearTimeout(t); t=setTimeout(function(){b.classList.remove('show');},7000); }
+  btn.addEventListener('click',say);
+  // ── 位置 & 飛行 ──
+  var W=function(){return window.innerWidth;}, H=function(){return window.innerHeight;};
+  var curX=20, curY=H()-110;
+  function place(x,y){ var w=W(), h=H(), bw=box.offsetWidth||90, bh=box.offsetHeight||110, half=w/2; var lo=8, hiL=Math.max(lo, w*0.15-bw), loR=Math.min(w-bw-8, w*0.85), hiR=Math.max(loR, w-bw-8); if(x+bw/2 < half){ var t=Math.max(0,Math.min(1,x/half)); x=lo+t*(hiL-lo); } else { var t2=Math.max(0,Math.min(1,(x-half)/half)); x=loR+t2*(hiR-loR); } y=Math.max(78, Math.min(y, h-bh-12)); curX=x; curY=y; box.style.left=x+'px'; box.style.top=y+'px'; b.classList.toggle('side-left', x > w*0.55); }
+     /* ── 長按拖曳燈寶 ── */
+     var nbHold=null, nbDrag=false, nbMoved=false, nbOffX=0, nbOffY=0, nbSX=0, nbSY=0;
+     window.__nbDrag=false;
+     function nbBegin(){ nbDrag=true; nbMoved=true; window.__nbDrag=true; b.classList.remove('show'); box.classList.remove('flying'); box.classList.add('nb-drag'); box.style.transition='none'; }
+     function nbEnd(){ if(nbHold){ clearTimeout(nbHold); nbHold=null; } if(!nbDrag) return; nbDrag=false; box.classList.remove('nb-drag'); box.style.transition=''; void box.offsetWidth; place(curX, curY); setTimeout(function(){ window.__nbDrag=false; }, 80); }
+     btn.addEventListener('pointerdown', function(e){ if(e.button && e.button!==0) return; var rc=box.getBoundingClientRect(); nbOffX=e.clientX-rc.left; nbOffY=e.clientY-rc.top; nbSX=e.clientX; nbSY=e.clientY; nbMoved=false; if(nbHold) clearTimeout(nbHold); nbHold=setTimeout(function(){ nbHold=null; nbBegin(); }, 260); });
+     window.addEventListener('pointermove', function(e){ if(nbHold && (Math.abs(e.clientX-nbSX)>12 || Math.abs(e.clientY-nbSY)>12)){ clearTimeout(nbHold); nbHold=null; nbBegin(); } if(!nbDrag) return; if(e.cancelable) e.preventDefault(); var bw=box.offsetWidth||90, bh=box.offsetHeight||110; var x=Math.max(4, Math.min(e.clientX-nbOffX, W()-bw-4)); var y=Math.max(4, Math.min(e.clientY-nbOffY, H()-bh-4)); curX=x; curY=y; box.style.left=x+'px'; box.style.top=y+'px'; }, {passive:false});
+     window.addEventListener('pointerup', nbEnd);
+     window.addEventListener('pointercancel', nbEnd);
+     box.addEventListener('click', function(e){ if(nbMoved){ nbMoved=false; e.stopPropagation(); e.preventDefault(); } }, true);
+
+  box.style.transition='none'; place(20, H()-110);
+  setTimeout(function(){ box.style.transition=''; }, 60);
+  function fly(){
+    if(window.__nbDrag || hovering || b.classList.contains('show')) return;   // 說話或被摸摸時不飛
+    if(document.hidden) return;
+    var m=16, bw=90, bh=110;
+    var x = m + Math.random()*Math.max(1, W()-bw-m*2);
+    var y = 150 + Math.random()*Math.max(1, H()-bh-150-m);
+    box.classList.toggle('face-left', x < curX);
+    box.classList.add('flying');
+    place(x,y);
+    setTimeout(function(){ box.classList.remove('flying'); box.classList.remove('face-left'); }, 3500);
+  }
+  setInterval(fly, 8000);
+  window.addEventListener('resize', function(){
+    if(curX > W()-100 || curY > H()-90) { box.style.transition='none'; place(Math.min(curX,W()-100), Math.min(curY,H()-100)); setTimeout(function(){box.style.transition='';},60); }
+  });
+  // ── 第一次打招呼:等使用者往下捲,或 12 秒後 ──
+  var greeted=false;
+  function firstGreet(){ if(greeted)return; greeted=true; say(); window.removeEventListener('scroll',onScroll); }
+  function onScroll(){ if(window.scrollY>240) firstGreet(); }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  setTimeout(firstGreet,12000);
+})();
+</script></body>
 </html>
