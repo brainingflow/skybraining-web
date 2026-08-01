@@ -304,6 +304,11 @@
   #nb-body:active{transform:scale(.95);}
   #naobao.face-left #nb-body svg{transform:scaleX(-1);}
   #naobao.flying #nb-body{animation:nb-fly .55s ease-in-out infinite;}
+#nb-body{touch-action:none;-webkit-user-select:none;user-select:none;}
+#naobao.nb-drag{transition:none!important;}
+#naobao.nb-drag #nb-body{animation:none!important;cursor:grabbing;transform:scale(1.12);filter:drop-shadow(0 16px 30px rgba(255,138,61,.55));}
+#naobao.nb-drag #nb-bubble{opacity:0!important;transform:translateY(8px) scale(.9)!important;pointer-events:none!important;}
+  
   @keyframes nb-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
   @keyframes nb-fly{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-7px) rotate(3deg);}}
   .nb-eye{animation:nb-blink 4.5s infinite ease-in-out;transform-origin:center;transform-box:fill-box;}
@@ -357,11 +362,22 @@
   // ── 位置 & 飛行 ──
   var W=function(){return window.innerWidth;}, H=function(){return window.innerHeight;};
   var curX=20, curY=H()-110;
-  function place(x,y){ curX=x; curY=y; box.style.left=x+'px'; box.style.top=y+'px'; b.classList.toggle('side-left', x > W()*0.55); }
+  function place(x,y){ var w=W(), h=H(), bw=box.offsetWidth||90, bh=box.offsetHeight||110, half=w/2; var lo=8, hiL=Math.max(lo, w*0.15-bw), loR=Math.min(w-bw-8, w*0.85), hiR=Math.max(loR, w-bw-8); if(x+bw/2 < half){ var t=Math.max(0,Math.min(1,x/half)); x=lo+t*(hiL-lo); } else { var t2=Math.max(0,Math.min(1,(x-half)/half)); x=loR+t2*(hiR-loR); } y=Math.max(78, Math.min(y, h-bh-12)); curX=x; curY=y; box.style.left=x+'px'; box.style.top=y+'px'; b.classList.toggle('side-left', x > w*0.55); }
+     /* ── 長按拖曳燈寶 ── */
+     var nbHold=null, nbDrag=false, nbMoved=false, nbOffX=0, nbOffY=0, nbSX=0, nbSY=0;
+     window.__nbDrag=false;
+     function nbBegin(){ nbDrag=true; nbMoved=true; window.__nbDrag=true; b.classList.remove('show'); box.classList.remove('flying'); box.classList.add('nb-drag'); box.style.transition='none'; }
+     function nbEnd(){ if(nbHold){ clearTimeout(nbHold); nbHold=null; } if(!nbDrag) return; nbDrag=false; box.classList.remove('nb-drag'); box.style.transition=''; void box.offsetWidth; place(curX, curY); setTimeout(function(){ window.__nbDrag=false; }, 80); }
+     btn.addEventListener('pointerdown', function(e){ if(e.button && e.button!==0) return; var rc=box.getBoundingClientRect(); nbOffX=e.clientX-rc.left; nbOffY=e.clientY-rc.top; nbSX=e.clientX; nbSY=e.clientY; nbMoved=false; if(nbHold) clearTimeout(nbHold); nbHold=setTimeout(function(){ nbHold=null; nbBegin(); }, 260); });
+     window.addEventListener('pointermove', function(e){ if(nbHold && (Math.abs(e.clientX-nbSX)>12 || Math.abs(e.clientY-nbSY)>12)){ clearTimeout(nbHold); nbHold=null; nbBegin(); } if(!nbDrag) return; if(e.cancelable) e.preventDefault(); var bw=box.offsetWidth||90, bh=box.offsetHeight||110; var x=Math.max(4, Math.min(e.clientX-nbOffX, W()-bw-4)); var y=Math.max(4, Math.min(e.clientY-nbOffY, H()-bh-4)); curX=x; curY=y; box.style.left=x+'px'; box.style.top=y+'px'; }, {passive:false});
+     window.addEventListener('pointerup', nbEnd);
+     window.addEventListener('pointercancel', nbEnd);
+     box.addEventListener('click', function(e){ if(nbMoved){ nbMoved=false; e.stopPropagation(); e.preventDefault(); } }, true);
+
   box.style.transition='none'; place(20, H()-110);
   setTimeout(function(){ box.style.transition=''; }, 60);
   function fly(){
-    if(hovering || b.classList.contains('show')) return;   // 說話或被摸摸時不飛
+    if(window.__nbDrag || hovering || b.classList.contains('show')) return;   // 說話或被摸摸時不飛
     if(document.hidden) return;
     var m=16, bw=90, bh=110;
     var x = m + Math.random()*Math.max(1, W()-bw-m*2);
