@@ -47,6 +47,15 @@
   .lv{display:inline-block;font-family:var(--round);font-weight:700;font-size:12.5px;color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:12px;}
   .lv.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .lv.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+.lv.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+.lv.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+.lv.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+.lv.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+.lv.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+.lv.crimson{background:linear-gradient(135deg,#A6763A,#6B471B);}
+.lv.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);}
+.lv.techblue{background:linear-gradient(135deg,#347585,#184851);}
+.lv.jade{background:linear-gradient(135deg,#437E64,#244B39);}
   h1{font-weight:800;font-size:clamp(24px,3.6vw,34px);color:var(--indigo);}
   .h-sub{color:var(--ink-soft);margin-top:6px;font-size:15px;}
   .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#0d0f22;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);}
@@ -97,6 +106,15 @@
   .btn-buy{color:#fff;}
   .btn-buy.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);box-shadow:0 12px 28px rgba(255,138,61,.32);}
   .btn-buy.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);box-shadow:0 12px 28px rgba(22,176,168,.32);}
+.btn-buy.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);box-shadow:0 12px 28px rgba(75,55,216,.32);}
+.btn-buy.indigo{background:linear-gradient(135deg,#22264f,#141330);box-shadow:0 12px 28px rgba(20,19,48,.32);}
+.btn-buy.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);box-shadow:0 12px 28px rgba(226,58,99,.32);}
+.btn-buy.gold{background:linear-gradient(135deg,#F5A623,#E0761B);box-shadow:0 12px 28px rgba(224,118,27,.32);}
+.btn-buy.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);box-shadow:0 12px 28px rgba(91,42,198,.32);}
+.btn-buy.crimson{background:linear-gradient(135deg,#A6763A,#6B471B);box-shadow:0 12px 28px rgba(107,71,27,.32);}
+.btn-buy.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);box-shadow:0 12px 28px rgba(138,62,92,.32);}
+.btn-buy.techblue{background:linear-gradient(135deg,#347585,#184851);box-shadow:0 12px 28px rgba(24,72,81,.32);}
+.btn-buy.jade{background:linear-gradient(135deg,#437E64,#244B39);box-shadow:0 12px 28px rgba(36,75,57,.32);}
   .btn-ghost{background:var(--paper-2);color:var(--indigo);}
   .btn-line{background:var(--line-brand);color:#fff;}
   .back-dash{display:inline-block;margin-top:8px;padding-bottom:60px;font-size:14px;color:var(--ink-soft);}
@@ -171,7 +189,7 @@
       owned = ownRes === true;
     }
 
-    const color = course.accent==='teal' ? 'teal' : 'amber';
+    const color = ['amber','teal','violet','indigo','rose','gold','grape','crimson','plum','techblue','jade'].includes(course.accent) ? course.accent : (course.accent==='free' ? 'violet' : 'amber');
 
     // 就業力／洽詢制課程：不在這裡看，導去介紹與 LINE
     if(course.category==='career'){
