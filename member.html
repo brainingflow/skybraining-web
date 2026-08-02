@@ -93,6 +93,10 @@
   .btn-watch.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
   .btn-watch.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
   .btn-watch.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+.btn-watch.crimson{background:linear-gradient(135deg,#A6763A,#6B471B);}
+.btn-watch.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);}
+.btn-watch.techblue{background:linear-gradient(135deg,#347585,#184851);}
+.btn-watch.jade{background:linear-gradient(135deg,#437E64,#244B39);}
   .btn-buy{color:var(--indigo);background:var(--paper-2);}
   .btn-buy:hover{background:#e8e5da;}
   .state{padding:70px 0;text-align:center;color:var(--ink-soft);}
@@ -145,16 +149,30 @@
   @media(max-width:520px){.sb-so{padding:10px 14px;font-size:13.5px;}.sb-so svg{width:17px;height:17px;}.sb-social{padding:0 14px 20px;}}
 
 /* 未購買（鎖定）課程卡：精品課質感處理 */
-.course.is-locked .course-top{background:linear-gradient(135deg,#2E325C,#171933);}
-.course.is-locked .course-top::after{display:none;}
+.course-top.crimson{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#A6763A,#6B471B);}
+.course-top.plum{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#C2668A,#8A3E5C);}
+.course-top.techblue{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#347585,#184851);}
+.course-top.jade{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#437E64,#244B39);}
+.course-top.crimson::after,.course-top.plum::after,.course-top.techblue::after,.course-top.jade::after{display:none;}
 .course.is-locked .course-top>*{position:relative;z-index:1;}
 .course.is-locked .course-name,.course.is-locked .course-sub{text-shadow:0 1px 2px rgba(0,0,0,.22);}
 .course.is-locked .course-top::before{content:"";position:absolute;top:-20%;left:-75%;width:55%;height:150%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.26),rgba(255,255,255,0));transform:skewX(-16deg);z-index:0;pointer-events:none;transition:left .8s cubic-bezier(.22,.61,.36,1);}
 .course.is-locked:hover .course-top::before{left:130%;}
 .course.is-locked{box-shadow:0 10px 26px rgba(20,22,49,.10);}
 .course.is-locked:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(20,22,49,.24);}
-.course.is-locked .btn-buy{background:linear-gradient(135deg,#B98A4B,#8A5E28);color:#fff;box-shadow:0 8px 20px rgba(138,94,40,.30);}
-.course.is-locked .btn-buy:hover{filter:brightness(1.05);box-shadow:0 12px 26px rgba(138,94,40,.40);}
+.course.is-locked .btn-buy{color:#fff;box-shadow:0 8px 20px rgba(20,22,49,.22);}
+.btn-buy.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+.btn-buy.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+.btn-buy.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+.btn-buy.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+.btn-buy.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+.btn-buy.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+.btn-buy.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+.btn-buy.crimson{background:linear-gradient(135deg,#A6763A,#6B471B);}
+.btn-buy.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);}
+.btn-buy.techblue{background:linear-gradient(135deg,#347585,#184851);}
+.btn-buy.jade{background:linear-gradient(135deg,#437E64,#244B39);}
+.course.is-locked .btn-buy:hover{filter:brightness(1.06);box-shadow:0 12px 26px rgba(20,22,49,.30);}
 </style>
 </head>
 <body>
@@ -394,7 +412,7 @@
   }
 
   function card(c, owned){
-    const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape'];
+    const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape','crimson','plum','techblue','jade'];
     const color = ACCENTS.includes(c.accent) ? (c.accent==='free'?'violet':c.accent) : 'amber';
     const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-瘋狂心智圖' : '');
     const INTRO_MAP = {'super-memory':'course-memory.html','super-thinking':'course-thinking.html','strong-thinking-basic':'course-strong-thinking.html','onsite-basic':'course-onsite-basic.html','onsite-advanced':'course-onsite-advanced.html','bundle-all':'course-bundle.html'};
@@ -404,7 +422,7 @@
       ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">▶ 開始觀看</a>`
       : (isFree
           ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">免費開通・立即觀看 →</a>`
-          : `<a class="btn btn-buy" href="${introHref}">了解課程 · NT$${c.price.toLocaleString()} →</a>`);
+          : `<a class="btn btn-buy ${color}" href="${introHref}">了解課程 · NT$${c.price.toLocaleString()} →</a>`);
     const status = owned
       ? `<span class="status owned"><span class="dot"></span>已開通・永久觀看</span>`
       : (isFree
