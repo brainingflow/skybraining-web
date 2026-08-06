@@ -177,12 +177,17 @@
 .cfoot{padding-top:0;border-top:0;flex-wrap:nowrap}
 }
 /* 就業力課程橫幅跑馬燈 2026-08-06 */
-.pm{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:6px 0 36px;-webkit-overflow-scrolling:touch}
+.pm{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:6px 0 36px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-behavior:smooth}
 .pm::-webkit-scrollbar{display:none}
 .pm-track{display:flex;gap:14px;width:max-content;padding:4px 2px}
-.pm-track a{flex:0 0 auto;display:block;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.28)}
-.pm-track img{height:150px;width:auto;display:block}
-@media(max-width:640px){.pm-track img{height:100px}.pm{margin-bottom:26px}}
+.pm-track a{flex:0 0 auto;display:block;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.28);scroll-snap-align:center}
+.pm-track img{height:240px;width:auto;display:block}
+.pm-wrap{position:relative}
+.pm-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#151731;font-size:22px;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;line-height:1}
+.pm-btn:hover{background:#fff}
+.pm-btn.prev{left:-8px}
+.pm-btn.next{right:-8px}
+@media(max-width:640px){.pm-track img{height:160px}.pm{margin-bottom:26px}.pm-btn{width:36px;height:36px;font-size:18px}}
 
 /* 免費課卡整卡顯眼化 2026-08-06 */
 .course.free-spot{background:linear-gradient(160deg,#1D1F42,#0F1130);}
@@ -275,13 +280,13 @@
 <section id="pro" class="pro-section">
     <div class="wrap">
       <div><a class="back-choice" href="#">← 回到課程選擇</a></div>
-      <div class="pm" id="pmScroll" aria-label="就業力課程橫幅"><div class="pm-track" id="pmTrack">
+      <div class="pm-wrap"><button class="pm-btn prev" id="pmPrev" type="button" aria-label="上一張">‹</button><button class="pm-btn next" id="pmNext" type="button" aria-label="下一張">›</button><div class="pm" id="pmScroll" aria-label="就業力課程橫幅"><div class="pm-track" id="pmTrack">
 <a href="course-pro-sales.html"><img src="img-pro-sales-935.jpg" alt="百億成交技術" decoding="async"></a>
 <a href="course-pro-style.html"><img src="img-pro-style-935.jpg" alt="整體造型設計" decoding="async"></a>
 <a href="course-pro-aivideo.html"><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰" decoding="async"></a>
 <a href="course-pro-bodywork.html"><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理" decoding="async"></a>
 <a href="course-pro-cupping.html"><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理" decoding="async"></a>
-</div></div>
+</div></div></div>
 
       <div class="pro-head">
         <div class="eyebrow">Career Skills</div>
@@ -555,18 +560,17 @@
 (function(){
   var sc=document.getElementById("pmScroll"),tr=document.getElementById("pmTrack");
   if(!sc||!tr)return;
-  tr.innerHTML+=tr.innerHTML;
-  var paused=false,rt=null;
-  function pause(ms){paused=true;clearTimeout(rt);rt=setTimeout(function(){paused=false},ms||2500)}
-  ["pointerdown","touchstart","wheel"].forEach(function(e){sc.addEventListener(e,function(){pause(2500)},{passive:true})});
-  sc.addEventListener("mouseenter",function(){paused=true;clearTimeout(rt)});
-  sc.addEventListener("mouseleave",function(){pause(600)});
-  function step(){
-    var half=tr.scrollWidth/2;
-    if(!paused&&half>0){sc.scrollLeft+=0.6;if(sc.scrollLeft>=half)sc.scrollLeft-=half}
-    requestAnimationFrame(step);
+  function page(dir){
+    var s=[].slice.call(tr.children);if(!s.length)return;
+    var mid=sc.scrollLeft+sc.clientWidth/2,best=0,bd=1e9;
+    for(var i=0;i<s.length;i++){var c=s[i].offsetLeft+s[i].offsetWidth/2;var d=Math.abs(c-mid);if(d<bd){bd=d;best=i}}
+    var n=Math.min(Math.max(best+dir,0),s.length-1);
+    var el=s[n];
+    sc.scrollLeft=el.offsetLeft+el.offsetWidth/2-sc.clientWidth/2;
   }
-  requestAnimationFrame(step);
+  var p=document.getElementById("pmPrev"),x=document.getElementById("pmNext");
+  if(p)p.addEventListener("click",function(){page(-1)});
+  if(x)x.addEventListener("click",function(){page(1)});
 })();
 </script>
 <script>
