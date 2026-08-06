@@ -186,12 +186,13 @@
 /* 免費課卡整卡顯眼化 2026-08-06 */
 .course.free-spot{background:linear-gradient(165deg,#241F4A,#3A2F86);}
 .course.free-spot .ctop{background:radial-gradient(circle at 86% -12%,rgba(255,176,32,.4),transparent 52%),linear-gradient(135deg,#7C6CF0,#4B37D8);}
-.course.free-spot .ctop::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1.5px,transparent 1.5px);background-size:15px 15px;pointer-events:none;}
 .course.free-spot .ctop>*{position:relative;z-index:1;}
 .course.free-spot .cdesc{color:rgba(255,255,255,.88);}
 .course.free-spot .cfoot{border-top:1px solid rgba(255,255,255,.22);}
 .course.free-spot .price{color:#fff;}
-.course.free-spot .price small{color:rgba(255,255,255,.75);}
+.course.free-spot .price small{color:rgba(255,255,255,.78);display:block;font-size:13px;margin-top:4px;font-weight:500;}
+.course.free-spot .price{font-size:36px;line-height:1.1;font-family:var(--round);font-weight:800;}
+.course.free-spot .cname{font-size:27px;}
 .course.free-spot .buy{background:linear-gradient(135deg,#FFB020,#FF8A3D);color:#fff;box-shadow:0 10px 24px rgba(255,138,61,.4);}
 </style>
 <meta name="keywords" content="強腦力,記憶力課程,學習力課程,圖像記憶,記憶宮殿,聯想力,線上課程,國小,國中,強化腦力,腦力,高雄,高雄第一學習系統,SKY強腦力">
@@ -577,8 +578,8 @@
     if(el.classList.contains("free-spot"))return true;
     el.classList.add("free-spot");
     var n2=el.querySelector(".cname");if(n2){n2.textContent="免費體驗 十倍聯想力";n2.classList.add("sm")}
-    var s=el.querySelector(".csub");if(s)s.textContent="先體驗強腦力的方法，喜歡再上完整課程";
-    var d=el.querySelector(".cdesc");if(d)d.textContent="免費課程，登入後立即可看。先體驗強腦力的方法，喜歡再上完整課程。";
+    var s=el.querySelector(".csub");if(s)s.remove();
+    var d=el.querySelector(".cdesc");if(d)d.remove();
     return true;
   }
   if(!patch()){var mo=new MutationObserver(function(){if(patch())mo.disconnect()});mo.observe(g,{childList:true,subtree:true})}
