@@ -56,6 +56,7 @@
 .lv.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);}
 .lv.techblue{background:linear-gradient(135deg,#347585,#184851);}
 .lv.jade{background:linear-gradient(135deg,#437E64,#244B39);}
+.lv.ember{background:linear-gradient(135deg,#B0573B,#6E2E1C);}
   h1{font-weight:800;font-size:clamp(24px,3.6vw,34px);color:var(--indigo);}
   .h-sub{color:var(--ink-soft);margin-top:6px;font-size:15px;}
   .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#0d0f22;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);}
@@ -115,6 +116,7 @@
 .btn-buy.plum{background:linear-gradient(135deg,#C2668A,#8A3E5C);box-shadow:0 12px 28px rgba(138,62,92,.32);}
 .btn-buy.techblue{background:linear-gradient(135deg,#347585,#184851);box-shadow:0 12px 28px rgba(24,72,81,.32);}
 .btn-buy.jade{background:linear-gradient(135deg,#437E64,#244B39);box-shadow:0 12px 28px rgba(36,75,57,.32);}
+.btn-buy.ember{background:linear-gradient(135deg,#B0573B,#6E2E1C);box-shadow:0 12px 28px rgba(110,46,28,.32);}
   .btn-ghost{background:var(--paper-2);color:var(--indigo);}
   .btn-line{background:var(--line-brand);color:#fff;}
   .back-dash{display:inline-block;margin-top:8px;padding-bottom:60px;font-size:14px;color:var(--ink-soft);}
@@ -189,7 +191,7 @@
       owned = ownRes === true;
     }
 
-    const color = ['amber','teal','violet','indigo','rose','gold','grape','crimson','plum','techblue','jade'].includes(course.accent) ? course.accent : (course.accent==='free' ? 'violet' : 'amber');
+    const color = ['amber','teal','violet','indigo','rose','gold','grape','crimson','plum','techblue','jade','ember'].includes(course.accent) ? course.accent : (course.accent==='free' ? 'violet' : 'amber');
 
     // 就業力／洽詢制課程：不在這裡看，導去介紹與 LINE
     if(course.category==='career'){
