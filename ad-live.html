@@ -710,8 +710,13 @@ footer a:hover{color:var(--ink)}
 const CFG = {
   SUPABASE_URL : 'https://gfuqizxzihgydzyqywun.supabase.co',
   SUPABASE_ANON: 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv',
-  // 名單要寫進哪張表；第一張失敗會自動退到第二張
-  LEAD_TABLES  : ['leads', 'contacts'],
+  /* 名單要寫進哪張表；第一張失敗會自動退到第二張。
+     2026-08-06 實測線上資料庫的真實欄位：
+       leads    = id / name / email / source / created_at
+       contacts = id / name / email / source / note / created_at / tags
+     兩張表都「沒有 phone 欄位」。contacts 排前面，因為它有 note 可以放電話。
+     等 sky 在 Supabase 幫 contacts 加一欄 phone（text），下面的程式會自動改用它，不用再改這個檔案。 */
+  LEAD_TABLES  : ['contacts', 'leads'],
   SOURCE       : 'ad-live-2608',
   PRICE        : 2980,
   SESSIONS     : {
@@ -752,15 +757,58 @@ document.querySelectorAll('[data-cta]').forEach(el=>{
 /* ---- 台灣手機格式 ---- */
 const isPhone = v => /^09\d{8}$/.test(v.replace(/[\s-]/g,''));
 
-/* ---- 寫名單：leads 失敗就退到 contacts；兩張都失敗仍放行去結帳 ---- */
+/* ---- 寫名單 ----------------------------------------------------------
+   資料表沒有 phone 欄位，但這頁最重要的資產就是電話號碼。
+   所以不把欄位寫死，改成「送出去 → 資料庫說哪一欄不存在 → 拿掉那一欄再送」：
+
+   1. 先送完整 payload（含 phone）。以後 sky 在 Supabase 補了 phone 欄位，
+      這裡會自動開始用它，不必再改這個檔案。
+   2. PostgREST 找不到欄位時會回 PGRST204，訊息裡直接寫出是哪一欄，
+      解析出來拿掉再重試。
+   3. 唯一不准掉的是電話：phone 欄位不存在時，先併進 note；
+      連 note 都沒有（leads 就是這樣）就併進姓名，變成「王小明（0912345678）」。
+      名單少了電話就是廢的，寧可醜也不能掉。
+   4. 兩張表都失敗仍然放行去結帳 —— 名單再重要，也不能擋住要付錢的人。
+   -------------------------------------------------------------------- */
+async function insertInto(table, payload){
+  const tel  = payload.phone || null;
+  const base = Object.assign({}, payload); delete base.phone;   // 除了電話以外的欄位
+  const noteTxt = base.note || '';
+  const drop = new Set();          // 這張表確定不存在的欄位
+  let phoneCol = true;             // 還能不能用獨立的 phone 欄
+
+  for(let i=0; i<6; i++){
+    /* 每一輪都「重新組」payload，而不是在舊的上面刪。
+       這樣萬一電話先被塞進 note、note 又被判定不存在，
+       下一輪會自動把電話改塞進姓名，不會跟著 note 一起消失。 */
+    const p = {};
+    for(const k in base) if(!drop.has(k)) p[k] = base[k];
+    if(tel){
+      if(phoneCol)         p.phone = tel;
+      else if('note' in p) p.note  = '電話 ' + tel + (noteTxt ? '｜' + noteTxt : '');
+      else if('name' in p) p.name  = base.name + '（' + tel + '）';
+    }
+
+    const { error } = await supabase.from(table).insert(p);
+    if(!error) return { ok:true, sent:Object.keys(p) };
+
+    const miss = /Could not find the '([^']+)' column/.exec(error.message||'');
+    if(!miss) return { ok:false, error:error };
+    console.warn('[ad-live]', table, '沒有欄位', miss[1], '→ 換一種寫法重送');
+    if(miss[1] === 'phone') phoneCol = false; else drop.add(miss[1]);
+    if(!Object.keys(base).some(k => !drop.has(k))) return { ok:false, error:error };
+  }
+  return { ok:false, error:{ message:'欄位重試次數用完' } };
+}
+
 async function saveLead(payload){
   await sbReady;
   if(!supabase){ console.error('[ad-live] 名單沒有寫入：SDK 未載入'); return null; }
   for(const t of CFG.LEAD_TABLES){
     try{
-      const { error } = await supabase.from(t).insert(payload);
-      if(!error){ console.log('[ad-live] lead saved →', t); return t; }
-      console.warn('[ad-live] insert failed on', t, error.message);
+      const r = await insertInto(t, payload);
+      if(r.ok){ console.log('[ad-live] lead saved →', t, r.sent.join(',')); return t; }
+      console.warn('[ad-live] insert failed on', t, r.error && r.error.message);
     }catch(e){ console.warn('[ad-live] insert threw on', t, e); }
   }
   console.error('[ad-live] 名單沒有寫進資料庫，請檢查表格欄位與 RLS insert policy');
@@ -797,7 +845,8 @@ $('regForm').addEventListener('submit', async (e)=>{
   await Promise.race([
     saveLead({
       name  : name,
-      phone : phone,
+      // 存進資料庫的一律去掉空白與橫線，方便之後直接撥號與比對重複名單
+      phone : phone.replace(/[\s-]/g,''),
       email : email || null,
       source: CFG.SOURCE,
       note  : CFG.SESSIONS[sid] ? CFG.SESSIONS[sid].label + '（' + sid + '）' : sid
