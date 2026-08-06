@@ -155,6 +155,13 @@
 .course-top.techblue{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#347585,#184851);}
 .course-top.jade{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#437E64,#244B39);}
 .course-top.ember{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#B0573B,#6E2E1C);}
+/* 免費課卡：與前台「免費體驗 十倍聯想力」同款 2026-08-06 */
+.course.free-spot{background:linear-gradient(160deg,#1D1F42,#0F1130);}
+.course.free-spot .course-top{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,0) 46%),linear-gradient(135deg,#4E3FD1,#251F55);}
+.course.free-spot .course-lv{background:rgba(255,201,77,.2);color:#FFC94D;}
+.course.free-spot .course-body{color:rgba(255,255,255,.88);}
+.course.free-spot .course-actions .btn{background:rgba(255,255,255,.12);color:#fff;}
+.course.free-spot .btn-watch,.course.free-spot .btn-buy{background:linear-gradient(135deg,#FFB020,#FF8A3D);color:#fff;box-shadow:0 10px 24px rgba(255,138,61,.35);}
 .course-top.crimson::after,.course-top.plum::after,.course-top.techblue::after,.course-top.jade::after,.course-top.ember::after{display:none;}
 .course.is-locked .course-top>*{position:relative;z-index:1;}
 .course.is-locked .course-name,.course.is-locked .course-sub{text-shadow:0 1px 2px rgba(0,0,0,.22);}
@@ -473,6 +480,22 @@
       }catch(e){}
     });
   })(els[i]); }
+})();
+</script>
+<script>
+(function(){
+  function patch(){
+    var cards=[].slice.call(document.querySelectorAll(".course"));
+    var el=null;
+    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".course-name");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1)){el=cards[i];break}}
+    if(!el)return false;
+    if(el.classList.contains("free-spot"))return true;
+    el.classList.add("free-spot");
+    var n2=el.querySelector(".course-name");if(n2){n2.textContent="免費體驗 十倍聯想力";n2.classList.add("sm")}
+    var p=el.parentElement;if(p&&p.firstElementChild!==el)p.insertBefore(el,p.firstElementChild);
+    return true;
+  }
+  if(!patch()){var mo=new MutationObserver(function(){if(patch())mo.disconnect()});mo.observe(document.body,{childList:true,subtree:true})}
 })();
 </script>
 </body>
