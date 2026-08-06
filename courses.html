@@ -182,6 +182,17 @@
 .pm-track a{flex:0 0 auto;display:block;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.28)}
 .pm-track img{height:150px;width:auto;display:block}
 @media(max-width:640px){.pm-track img{height:100px}.pm{margin-bottom:26px}}
+
+/* 免費課卡整卡顯眼化 2026-08-06 */
+.course.free-spot{background:linear-gradient(165deg,#241F4A,#3A2F86);}
+.course.free-spot .ctop{background:radial-gradient(circle at 86% -12%,rgba(255,176,32,.4),transparent 52%),linear-gradient(135deg,#7C6CF0,#4B37D8);}
+.course.free-spot .ctop::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1.5px,transparent 1.5px);background-size:15px 15px;pointer-events:none;}
+.course.free-spot .ctop>*{position:relative;z-index:1;}
+.course.free-spot .cdesc{color:rgba(255,255,255,.88);}
+.course.free-spot .cfoot{border-top:1px solid rgba(255,255,255,.22);}
+.course.free-spot .price{color:#fff;}
+.course.free-spot .price small{color:rgba(255,255,255,.75);}
+.course.free-spot .buy{background:linear-gradient(135deg,#FFB020,#FF8A3D);color:#fff;box-shadow:0 10px 24px rgba(255,138,61,.4);}
 </style>
 <meta name="keywords" content="強腦力,記憶力課程,學習力課程,圖像記憶,記憶宮殿,聯想力,線上課程,國小,國中,強化腦力,腦力,高雄,高雄第一學習系統,SKY強腦力">
 <link rel="canonical" href="https://skybraining.com/courses.html">
@@ -262,11 +273,11 @@
     <div class="wrap">
       <div><a class="back-choice" href="#">← 回到課程選擇</a></div>
       <div class="pm" id="pmScroll" aria-label="就業力課程橫幅"><div class="pm-track" id="pmTrack">
-<a href="course-pro-sales.html"><img src="img-pro-sales-935.jpg" alt="百億成交技術" loading="lazy"></a>
-<a href="course-pro-style.html"><img src="img-pro-style-935.jpg" alt="整體造型設計" loading="lazy"></a>
-<a href="course-pro-aivideo.html"><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰" loading="lazy"></a>
-<a href="course-pro-bodywork.html"><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理" loading="lazy"></a>
-<a href="course-pro-cupping.html"><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理" loading="lazy"></a>
+<a href="course-pro-sales.html"><img src="img-pro-sales-935.jpg" alt="百億成交技術" decoding="async"></a>
+<a href="course-pro-style.html"><img src="img-pro-style-935.jpg" alt="整體造型設計" decoding="async"></a>
+<a href="course-pro-aivideo.html"><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰" decoding="async"></a>
+<a href="course-pro-bodywork.html"><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理" decoding="async"></a>
+<a href="course-pro-cupping.html"><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理" decoding="async"></a>
 </div></div>
 
       <div class="pro-head">
@@ -553,6 +564,24 @@
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
+})();
+</script>
+<script>
+(function(){
+  var g=document.getElementById("grid");if(!g)return;
+  function patch(){
+    var cards=[].slice.call(g.querySelectorAll(".course"));
+    var el=null;
+    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".cname");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1)){el=cards[i];break}}
+    if(!el)return false;
+    if(el.classList.contains("free-spot"))return true;
+    el.classList.add("free-spot");
+    var n2=el.querySelector(".cname");if(n2){n2.textContent="免費體驗 十倍聯想力";n2.classList.add("sm")}
+    var s=el.querySelector(".csub");if(s)s.textContent="先體驗強腦力的方法，喜歡再上完整課程";
+    var d=el.querySelector(".cdesc");if(d)d.textContent="免費課程，登入後立即可看。先體驗強腦力的方法，喜歡再上完整課程。";
+    return true;
+  }
+  if(!patch()){var mo=new MutationObserver(function(){if(patch())mo.disconnect()});mo.observe(g,{childList:true,subtree:true})}
 })();
 </script>
 </body>
