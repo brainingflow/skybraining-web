@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>就業力精品課・大師版預覽 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0F;--panel:#15151C;--panel-2:#1C1C25;
+  --ink:#F5F2EA;--ink-soft:rgba(245,242,234,.62);
+  --gold:#C9A050;--gold-2:#E6C87E;--amber:#FFB020;--orange:#FF8A3D;
+  --hair:rgba(245,242,234,.12);
+  --sans:"Noto Sans TC",sans-serif;--serif:"Noto Serif TC",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7}
+a{text-decoration:none;color:inherit}
+img{display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,11,15,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:900;font-size:22px;letter-spacing:.02em}
+.brand em{font-style:normal;color:var(--amber)}
+.nav-r{display:flex;gap:26px;align-items:center;font-size:14.5px;color:var(--ink-soft)}
+.nav-r a:hover{color:var(--ink)}
+.nav-login{border:1px solid var(--hair);border-radius:24px;padding:7px 18px;color:var(--ink)}
+@media(max-width:720px){.nav-r{gap:14px;font-size:13px}}
+
+/* HERO 輪播 */
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 80% 0%,#1E1B2E 0%,#0B0B0F 60%)}
+.slides{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.slide{flex:0 0 100%;min-height:480px;display:flex;align-items:center}
+.slide .in{max-width:1200px;margin:0 auto;padding:56px 24px;display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center;width:100%}
+.quote{font-family:var(--serif);font-size:44px;color:var(--gold);line-height:1;margin-bottom:8px}
+.s-name{font-family:var(--serif);font-weight:900;font-size:clamp(38px,5.6vw,64px);letter-spacing:.06em;background:linear-gradient(160deg,#FFF 20%,#CDB77E 90%);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.25}
+.s-course{font-family:var(--serif);font-weight:700;font-size:clamp(21px,2.8vw,30px);color:var(--gold-2);margin-top:8px;letter-spacing:.14em}
+.s-line{margin-top:14px;color:var(--ink-soft);font-size:16px}
+.s-cta{display:inline-block;margin-top:26px;background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;font-weight:800;padding:13px 30px;border-radius:30px;font-size:15.5px;box-shadow:0 12px 30px rgba(255,138,61,.3)}
+.s-img{border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.s-img img{width:100%;height:auto}
+.dots{position:absolute;left:0;right:0;bottom:18px;display:flex;gap:8px;justify-content:center}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.2s}
+.dot.on{background:var(--gold-2);transform:scale(1.25)}
+.h-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--hair);background:rgba(11,11,15,.5);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.h-arrow:hover{background:rgba(255,255,255,.14)}
+.h-prev{left:14px}.h-next{right:14px}
+@media(max-width:860px){.slide .in{grid-template-columns:1fr;gap:22px;padding:40px 24px 56px}.slide{min-height:0}}
+
+/* 區塊標題 */
+.sec{padding:64px 0}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+.sec-h h2{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em;border-bottom:3px solid var(--gold);padding-bottom:8px}
+.sec-h span{color:var(--ink-soft);font-size:13.5px}
+
+/* 課程卡（Shifu 式） */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.ccard{background:var(--panel);border:1px solid var(--hair);border-radius:16px;overflow:hidden;transition:transform .25s,box-shadow .25s;position:relative}
+.ccard:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.ccard .badge{position:absolute;top:12px;left:12px;background:var(--gold);color:#141414;font-size:12px;font-weight:800;padding:4px 11px;border-radius:20px;z-index:2}
+.ccard img{width:100%;height:auto;aspect-ratio:1870/841;object-fit:cover}
+.ccard .bd{padding:16px 18px 18px}
+.price{font-weight:900;font-size:20px}
+.price small{color:var(--ink-soft);font-weight:500;font-size:13px;margin-left:8px}
+.t-name{margin-top:8px;font-size:14px;color:var(--gold-2);font-weight:700}
+.c-name{font-size:17.5px;font-weight:800;margin-top:2px}
+.bar{margin-top:14px;height:5px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden}
+.bar i{display:block;height:100%;width:72%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--amber))}
+.bar-t{display:flex;justify-content:space-between;margin-top:7px;font-size:12.5px;color:var(--ink-soft)}
+
+/* 找師傅（直式肖像列） */
+.trow{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+.tcard{background:var(--panel);border:1px solid var(--hair);border-radius:14px;overflow:hidden;text-align:center;transition:transform .25s}
+.tcard:hover{transform:translateY(-5px)}
+.tcard .ph{aspect-ratio:3/4;overflow:hidden}
+.tcard .ph img{width:100%;height:100%;object-fit:cover;object-position:75% 20%}
+.tcard .bd{padding:12px 10px 15px}
+.tcard .tn{font-family:var(--serif);font-weight:700;font-size:16.5px}
+.tcard .tc{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+
+/* CTA 帶 */
+.cta-band{background:linear-gradient(135deg,#191624,#241C36);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);text-align:center;padding:56px 24px}
+.cta-band h2{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3.6vw,34px);letter-spacing:.1em}
+.cta-band p{color:var(--ink-soft);margin-top:10px}
+.cta-band .pts{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin:22px 0 6px;color:var(--gold-2);font-weight:700;font-size:15px}
+
+footer{padding:36px 24px;text-align:center;color:var(--ink-soft);font-size:13px}
+.preview-tag{position:fixed;right:14px;bottom:14px;background:rgba(201,160,80,.15);border:1px solid var(--gold);color:var(--gold-2);font-size:12px;padding:6px 12px;border-radius:20px;z-index:60}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a class="brand" href="index.html">強<em>腦</em>力 <span style="font-family:var(--serif);font-weight:700;font-size:15px;color:var(--gold-2)">大師課</span></a>
+  <div class="nav-r"><a href="courses.html">找課程</a><a href="#masters">找師傅</a><a href="articles.html">看文章</a><a class="nav-login" href="login.html">會員登入</a></div>
+</div></nav>
+
+<div class="hero" id="hero">
+  <button class="h-arrow h-prev" type="button" aria-label="上一張">‹</button>
+  <button class="h-arrow h-next" type="button" aria-label="下一張">›</button>
+  <div class="slides" id="slides">
+    <div class="slide"><div class="in">
+      <div><div class="quote">“</div><div class="s-name">周信廷</div><div class="s-course">百億成交技術</div><p class="s-line">把「成交」變成可複製的流程——業界高手實戰分享。</p><a class="s-cta" href="course-pro-sales.html">了解課程 →</a></div>
+      <div class="s-img"><img src="img-pro-sales-935.jpg" alt="百億成交技術"></div>
+    </div></div>
+    <div class="slide"><div class="in">
+      <div><div class="quote">“</div><div class="s-name">張玉諳</div><div class="s-course">溫罐筋膜調理</div><p class="s-line">養生行業 30 年——把身體照護變成能收費的專業。</p><a class="s-cta" href="course-pro-cupping.html">了解課程 →</a></div>
+      <div class="s-img"><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理"></div>
+    </div></div>
+    <div class="slide"><div class="in">
+      <div><div class="quote">“</div><div class="s-name">小可老師</div><div class="s-course">牛角筋絡調理</div><p class="s-line">一日學會，零基礎也能上手的放鬆手技。</p><a class="s-cta" href="course-pro-bodywork.html">了解課程 →</a></div>
+      <div class="s-img"><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理"></div>
+    </div></div>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+
+<div class="sec"><div class="wrap">
+  <div class="sec-h"><h2>精品課程</h2><span>實戰課程・拒絕紙上談兵</span></div>
+  <div class="cgrid">
+    <a class="ccard" href="course-pro-sales.html"><span class="badge">熱烈報名中</span><img src="img-pro-sales-935.jpg" alt="百億成交技術"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">周信廷</div><div class="c-name">百億成交技術</div><div class="bar"><i></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+    <a class="ccard" href="course-pro-style.html"><span class="badge">熱烈報名中</span><img src="img-pro-style-935.jpg" alt="整體造型設計"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">顏華君</div><div class="c-name">整體造型設計</div><div class="bar"><i style="width:64%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+    <a class="ccard" href="course-pro-aivideo.html"><span class="badge">熱烈報名中</span><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小語老師</div><div class="c-name">AI短影音實戰</div><div class="bar"><i style="width:80%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+    <a class="ccard" href="course-pro-bodywork.html"><span class="badge">熱烈報名中</span><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小可老師</div><div class="c-name">牛角筋絡調理</div><div class="bar"><i style="width:58%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+    <a class="ccard" href="course-pro-cupping.html"><span class="badge">熱烈報名中</span><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">張玉諳</div><div class="c-name">溫罐筋膜調理</div><div class="bar"><i style="width:68%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+  </div>
+</div></div>
+
+<div class="sec" id="masters" style="padding-top:8px"><div class="wrap">
+  <div class="sec-h"><h2>找師傅</h2><span>業界高手實戰分享</span></div>
+  <div class="trow">
+    <a class="tcard" href="course-pro-sales.html"><div class="ph"><img src="img-pro-sales-935.jpg" alt="周信廷"></div><div class="bd"><div class="tn">周信廷</div><div class="tc">百億成交技術</div></div></a>
+    <a class="tcard" href="course-pro-style.html"><div class="ph"><img src="img-pro-style-935.jpg" alt="顏華君"></div><div class="bd"><div class="tn">顏華君</div><div class="tc">整體造型設計</div></div></a>
+    <a class="tcard" href="course-pro-aivideo.html"><div class="ph"><img src="img-pro-aivideo-935.jpg" alt="小語老師"></div><div class="bd"><div class="tn">小語老師</div><div class="tc">AI短影音實戰</div></div></a>
+    <a class="tcard" href="course-pro-bodywork.html"><div class="ph"><img src="img-pro-bodywork-935.jpg" alt="小可老師"></div><div class="bd"><div class="tn">小可老師</div><div class="tc">牛角筋絡調理</div></div></a>
+    <a class="tcard" href="course-pro-cupping.html"><div class="ph"><img src="img-pro-cupping-935.jpg" alt="張玉諳"></div><div class="bd"><div class="tn">張玉諳</div><div class="tc">溫罐筋膜調理</div></div></a>
+  </div>
+</div></div>
+
+<div class="cta-band">
+  <h2>真正能賺到錢的技術</h2>
+  <p>由業界高手親自帶，從核心技術到實戰應用，一次學到能用在工作與生意上的真本事。</p>
+  <div class="pts"><span>✦ 業界高手實戰分享</span><span>✦ 真正能賺到錢的技術</span><span>✦ 實戰課程・拒絕紙上談兵</span></div>
+  <a class="s-cta" href="courses.html#pro">查看全部課程 →</a>
+</div>
+
+<footer>此頁為版型預覽（noindex）・© 2021 強腦力 SkyBraining LLC・skybraining.com</footer>
+<div class="preview-tag">版型預覽・圖片為現有海報示意</div>
+
+<script>
+(function(){
+  var sl=document.getElementById('slides'),dots=document.getElementById('dots');
+  var n=sl.children.length,cur=0,timer=null;
+  for(var i=0;i<n;i++){var d=document.createElement('span');d.className='dot'+(i?'':' on');(function(k){d.addEventListener('click',function(){go(k,true)})})(i);dots.appendChild(d)}
+  function go(k,manual){
+    cur=(k+n)%n;
+    sl.style.transform='translateX(-'+(cur*100)+'%)';
+    var ds=dots.children;for(var i=0;i<n;i++)ds[i].className='dot'+(i===cur?' on':'');
+    if(manual)restart();
+  }
+  function restart(){clearInterval(timer);timer=setInterval(function(){go(cur+1)},5000)}
+  document.querySelector('.h-prev').addEventListener('click',function(){go(cur-1,true)});
+  document.querySelector('.h-next').addEventListener('click',function(){go(cur+1,true)});
+  var hero=document.getElementById('hero');
+  hero.addEventListener('mouseenter',function(){clearInterval(timer)});
+  hero.addEventListener('mouseleave',restart);
+  restart();
+})();
+</script>
+</body>
+</html>
