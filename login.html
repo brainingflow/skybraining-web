@@ -161,7 +161,18 @@
   // ===== 設定（公開金鑰，可安全放前端；資料由 RLS 權限控管）=====
   const SUPABASE_URL  = 'https://gfuqizxzihgydzyqywun.supabase.co';
   const SUPABASE_ANON = 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
-  const AFTER_LOGIN   = 'member.html';
+  /* 登入後要去哪：優先用網址上的 next（結帳頁沒登入時會帶過來），
+     只接受本站同網域的路徑，避免變成開放轉址被拿去釣魚。 */
+  const AFTER_LOGIN   = (function(){
+    try{
+      const raw = new URLSearchParams(location.search).get('next');
+      if(!raw) return 'member.html';
+      const u = new URL(raw, location.href);
+      if(u.origin !== location.origin) return 'member.html';
+      if(/login\.html$/.test(u.pathname)) return 'member.html';   // 不要繞回自己
+      return u.pathname.replace(/^\//,'') + u.search + u.hash;
+    }catch(e){ return 'member.html'; }
+  })();
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const $ = (id)=>document.getElementById(id);
