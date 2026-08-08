@@ -356,7 +356,7 @@
       .select('*').eq('is_published',true).order('sort_order');
     if(error){ grid.innerHTML = `<div class="state" style="color:#d64545;">讀取課程失敗：${error.message}</div>`; return; }
     if(!courses || !courses.length){ grid.innerHTML = `<div class="state">目前尚無上架課程。</div>`; return; }
-    const brainList  = courses.filter(x=>x.category!=='career');
+    const brainList  = courses.filter(x=>x.category!=='career' && !/^live-/.test(x.id));  // live-* 是 FB 廣告專用場次，只從廣告頁進來，不放公開課程列表
     const careerList = courses.filter(x=>x.category==='career');
     grid.innerHTML = brainList.map(card).join('');
     const pg = document.getElementById('proGrid');
