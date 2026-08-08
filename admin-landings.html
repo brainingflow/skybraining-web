@@ -95,6 +95,27 @@
   const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
   const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
   const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
+
+  /* ── 刪除前再確認一次管理員密碼 ──────────────────────────
+     講清楚這是什麼：這不是安全機制。真正在擋人的是 Supabase 那邊的
+     is_admin 與 RLS，沒有管理員身分連 RPC 都叫不動。這一層純粹是
+     「防手滑」——避免自己點錯一下就把一整頁廣告頁刪掉。
+     密碼在這裡存的是 SHA-256 雜湊而不是明碼，所以看原始碼的人
+     看不到號碼本身。要換密碼就把新密碼的 SHA-256 換上去。 */
+  const ADMIN_PASS_SHA256='1008a3f2eec4c35b575685797a88948c93a2b088d29d2431ac835adb8a35a50d';
+  async function sha256hex(s){
+    const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+    return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+  }
+  async function askAdminPass(what){
+    const v=prompt('要刪除「'+what+'」，這個動作救不回來。\n請輸入管理員密碼：');
+    if(v===null) return false;
+    try{
+      if(await sha256hex(v.trim())===ADMIN_PASS_SHA256) return true;
+    }catch(e){ alert('這個瀏覽器不支援密碼驗證，沒有刪除任何東西。'); return false; }
+    alert('密碼不對，沒有刪除任何東西。');
+    return false;
+  }
   const $=(id)=>document.getElementById(id);
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmtDate=(s)=> s ? String(s).slice(0,16).replace('T',' ') : '';
@@ -196,6 +217,7 @@
       if(act==='edit'){ openEditor(slug); return; }
       if(act==='del'){
         if(btn.getAttribute('data-armed')!=='1'){ btn.setAttribute('data-armed','1'); btn.textContent='確認刪除'; setTimeout(()=>{ if(btn.isConnected){btn.setAttribute('data-armed','0');btn.textContent='刪除';} },3500); return; }
+        if(!(await askAdminPass(slug))){ btn.setAttribute('data-armed','0'); btn.textContent='刪除'; return; }
         const { error } = await supabase.rpc('admin_lp_delete',{ p_slug:slug });
         if(error){ alert('刪除失敗：'+error.message); return; }
         await load();
