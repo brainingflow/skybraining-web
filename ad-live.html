@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8/27 台北・8/29 高雄｜孩子的圖像記憶實戰課（3 小時）— 強腦力 SkyBraining</title>
-<meta name="description" content="孩子不是記性差，只是沒學過記憶的方法。3 小時實體班，現場學會圖像聯想、記憶宮殿與心智圖筆記。8/27 台北場、8/29 高雄場，NT$2,980。">
+<title>補習班加的是時數，這 3 小時換的是方法｜8/27 台北・8/29 高雄 記憶實戰課 — 強腦力 SkyBraining</title>
+<meta name="description" content="孩子不是記性差，只是沒人教過他怎麼記。3 小時實體實戰班，現場練會圖像串連、記憶宮殿與心智圖，每一科都能用。8/27 台北、8/29 高雄，NT$2,980，當天不滿意現金全額退。">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="孩子的圖像記憶實戰課｜8/27 台北・8/29 高雄">
-<meta property="og:description" content="孩子不是記性差，只是沒學過記憶的方法。3 小時實體班，現場練會可以帶回家用的方法。NT$2,980。">
+<meta property="og:title" content="補習班加的是時數。這 3 小時，換的是方法。｜8/27 台北・8/29 高雄">
+<meta property="og:description" content="孩子不是記性差，只是沒人教過他怎麼記。3 小時實體實戰班，NT$2,980，當天不滿意現金全額退你。">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://skybraining.com/og.png">
 <meta property="og:site_name" content="強腦力 SkyBraining">
@@ -109,10 +109,18 @@ section{padding:64px 0}
   box-shadow:0 4px 14px rgba(20,22,49,.06);
 }
 .pill i{width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px}
+/* 截止倒數的 chip：手機第一屏就要看得到，不能只放在右邊那張卡裡 */
+.pill.hot{background:rgba(255,176,32,.18);border-color:rgba(255,138,61,.4);color:#8A4B00;gap:4px}
+.pill.hot b{font-family:"Baloo 2";font-weight:800;color:var(--ink)}
 h1{font-size:clamp(26px,4.6vw,48px);line-height:1.32;margin:20px 0 14px;font-weight:800;letter-spacing:-.01em}
 /* 中文字是「滿框」的，螢光帶只要卡在字的中段就會被讀成刪除線。
    所以這裡改成蓋滿整個字高、降低不透明度的螢光筆效果。 */
 h1 em{font-style:normal;background:linear-gradient(180deg,transparent 12%,rgba(255,176,32,.42) 12%,rgba(255,176,32,.42) 96%,transparent 96%)}
+/* 定位句：整頁的立場，一句話講完我們跟補習班的差別 */
+.stance{font-size:clamp(18px,2.6vw,23px);line-height:1.5;font-weight:700;color:var(--ink);margin:0 0 16px;
+  padding-left:14px;border-left:4px solid var(--amber2)}
+.stance b{color:var(--indigo)}
 .lead{font-size:clamp(16px,2.2vw,19px);color:var(--ink2);margin:0 0 26px;max-width:660px}
 .herogrid{display:grid;grid-template-columns:1.15fr .85fr;gap:38px;align-items:center}
 @media(max-width:1000px){.herogrid{grid-template-columns:1fr;gap:26px}}
@@ -127,6 +135,15 @@ h1 em{font-style:normal;background:linear-gradient(180deg,transparent 12%,rgba(2
 .sesscard h3{margin:0 0 4px;font-size:19px}
 .sesscard .p{font-family:"Baloo 2";font-size:40px;font-weight:800;color:var(--ink);line-height:1.1}
 .sesscard .p small{font-size:15px;font-weight:600;color:var(--muted);font-family:"Noto Sans TC"}
+/* 價格錨定：先看到 26,800，再看到 2,980 */
+.anchor{font-size:13.5px;color:var(--muted);margin:6px 0 2px}
+.anchor s{color:var(--ink2);text-decoration-thickness:1.5px}
+/* 倒數與名額：日期是真的，數字要 sky 確認過才算數 */
+.countbar{margin:12px 0 4px;padding:11px 13px;border-radius:12px;background:rgba(255,176,32,.13);
+  border:1px solid rgba(255,138,61,.32);display:grid;gap:3px}
+.countbar b{font-size:14px;color:#8A4B00}
+.countbar span{font-family:"Baloo 2";font-size:19px;font-weight:800;color:var(--ink);letter-spacing:.01em}
+.countbar i{font-style:normal;font-size:12.5px;color:var(--muted)}
 .sessrow{display:flex;gap:10px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
 .sessrow b{font-weight:700}
 .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
@@ -136,6 +153,44 @@ h1 em{font-style:normal;background:linear-gradient(180deg,transparent 12%,rgba(2
 .eyebrow{font-size:13px;font-weight:800;letter-spacing:2.5px;color:var(--indigo);text-transform:uppercase;margin:0 0 10px}
 h2{font-size:clamp(24px,3.6vw,36px);line-height:1.3;margin:0 0 14px;font-weight:800}
 .sub{color:var(--ink2);font-size:17px;margin:0 0 34px;max-width:680px}
+
+/* 現場照片：實體課要讓人看到教室長什麼樣，這是這頁最重要的信任來源 */
+.scene{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:900px){.shots{grid-template-columns:1fr;gap:16px}}
+.shots figure{margin:0}
+.shots picture{display:block;line-height:0;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.shots img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+.shots figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
+
+/* 真實街訪影片 */
+.vids{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.vids{grid-template-columns:1fr}}
+.vid{margin:0}
+.vid .box{position:relative;padding-top:56.25%;border-radius:16px;overflow:hidden;background:#0f1130;box-shadow:var(--shadow-lg)}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
+
+/* 價格錨定卡 */
+.why{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+@media(max-width:900px){.why{grid-template-columns:1fr}}
+.ladder{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.lrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.lrow:first-of-type{border-top:0}
+.lrow b{font-family:"Baloo 2";font-size:19px;font-weight:800;white-space:nowrap}
+.lrow.now{background:rgba(255,176,32,.14);margin:6px -12px 0;padding:14px 12px;border-radius:12px;border-top:0}
+.lrow.now b{color:#8A4B00;font-size:24px}
+.honest{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--indigo);border-radius:14px;padding:18px 20px}
+.honest h3{margin:0 0 8px;font-size:18px}
+.honest p{margin:0 0 10px;font-size:15.5px;color:var(--ink2);line-height:1.75}
+.honest p:last-child{margin-bottom:0}
+
+/* 報名三步 */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 22px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px}
+.step b{display:block;font-family:"Baloo 2";font-size:15px;color:var(--amber);margin-bottom:4px}
+.step span{font-size:14px;color:#cdd0ea;line-height:1.6}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media(max-width:860px){.cards{grid-template-columns:1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
@@ -322,9 +377,13 @@ footer a:hover{color:var(--ink)}
 <header class="hero">
   <div class="wrap herogrid">
     <div>
-      <span class="pill"><i></i>8/27 台北場 ・ 8/29 高雄場</span>
+      <div class="pillrow">
+        <span class="pill"><i></i>8/27 台北場 ・ 8/29 高雄場</span>
+        <span class="pill hot">報名 8/24 截止・<b id="cdown2">計算中</b></span>
+      </div>
       <h1>孩子不是記性差，<br>只是<em>沒人教過他怎麼記</em>。</h1>
-      <p class="lead">3 小時的實體實戰班。不是聽演講、不是看影片——現場帶著孩子練，把「背了就忘」換成一套他自己會用的記憶方法，當天就帶回家。</p>
+      <p class="stance">補習班加的是<b>時數</b>。<br>這 3 小時，換的是<b>方法</b>。</p>
+      <p class="lead">實體實戰班。不是聽演講、不是看影片——現場帶著孩子練，把「反覆看、反覆抄」換成一套他自己會用的記憶方法，每一科都能用，當天就帶回家。</p>
       <ul class="checks">
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#16B0A8" opacity=".14"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#16B0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>現場實作：一次記住 20 個沒有關聯的詞，孩子自己做給你看</span></li>
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#16B0A8" opacity=".14"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#16B0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>英文單字、課文、歷史年代——當場拿孩子的課本練</span></li>
@@ -340,7 +399,13 @@ footer a:hover{color:var(--ink)}
 
     <aside class="sesscard">
       <h3>這一期只開兩場</h3>
+      <div class="anchor">實體初階班 <s>NT$26,800</s>　這 3 小時是其中最核心的一段</div>
       <div class="p">NT$2,980<small> ／人</small></div>
+      <div class="countbar">
+        <b>報名 8/24（一）23:59 截止</b>
+        <span id="cdown">計算中…</span>
+        <i>每場小班 16 位，額滿即關</i>
+      </div>
       <div class="sessrow"><i class="dot tp"></i><div><b>8/27（四）台北場</b><br><span style="color:var(--muted);font-size:13.5px">13:30–16:30</span></div></div>
       <div class="sessrow"><i class="dot kh"></i><div><b>8/29（六）高雄場</b><br><span style="color:var(--muted);font-size:13.5px">13:30–16:30・三民區明仁路 157 號</span></div></div>
       <div class="sessrow" style="border-top:1px solid var(--line)">
@@ -351,6 +416,35 @@ footer a:hover{color:var(--ink)}
     </aside>
   </div>
 </header>
+
+<!-- ============ 現場 ============ -->
+<section class="scene">
+  <div class="wrap">
+    <p class="eyebrow">現場</p>
+    <h2>不是講座，是一張桌子圍著一起做</h2>
+    <p class="sub">老師要看得到每個孩子寫了什麼、卡在哪一步，所以人不能多。這是高雄場的教室。</p>
+    <div class="shots">
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="img-founder-853.webp 853w, img-founder-1706.webp 1706w" sizes="(max-width:900px) 100vw, 560px">
+          <img src="img-founder-853.jpg" srcset="img-founder-853.jpg 853w, img-founder-1706.jpg 1706w" sizes="(max-width:900px) 100vw, 560px"
+               width="1706" height="960" loading="lazy" decoding="async"
+               alt="強腦力創辦人在高雄實體課現場帶學員操作記憶方法">
+        </picture>
+        <figcaption>高雄實體課現場，學員圍坐長桌一起操作。</figcaption>
+      </figure>
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="img-onsite-class-900.webp 900w, img-onsite-class-1600.webp 1600w" sizes="(max-width:900px) 100vw, 560px">
+          <img src="img-onsite-class-900.jpg" srcset="img-onsite-class-900.jpg 900w, img-onsite-class-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 560px"
+               loading="lazy" decoding="async"
+               alt="強腦力實體課學員在課堂上練習記憶方法">
+        </picture>
+        <figcaption>每個人手上都有事情做，不是坐著聽。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- ============ PAIN ============ -->
 <section>
@@ -535,6 +629,26 @@ footer a:hover{color:var(--ink)}
   </div>
 </section>
 
+<!-- ============ 影片 ============ -->
+<section class="vidsec">
+  <div class="wrap">
+    <p class="eyebrow">不用聽我說</p>
+    <h2>我們直接上街考路人</h2>
+    <p class="sub">方法有沒有用，在馬路上比在教室裡更看得出來。這兩支沒有腳本、沒有重來，第一次就錄。</p>
+    <div class="vids">
+      <figure class="vid">
+        <div class="box"><iframe data-src="https://player.vimeo.com/video/1212403025?title=0&byline=0&portrait=0&dnt=1" title="媽媽都說讚" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+        <figcaption>媽媽都說讚</figcaption>
+      </figure>
+      <figure class="vid">
+        <div class="box"><iframe data-src="https://player.vimeo.com/video/1212926731?title=0&byline=0&portrait=0&dnt=1" title="雄女街訪" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+        <figcaption>雄女街訪</figcaption>
+      </figure>
+    </div>
+    <p class="legal" style="margin-top:16px">影片為街頭隨機實測與現場回饋，未經剪接製造結果；每個人的起點與練習量不同，成效因人而異。</p>
+  </div>
+</section>
+
 <!-- ============ TESTIMONIALS ============ -->
 <section>
   <div class="wrap">
@@ -560,6 +674,29 @@ footer a:hover{color:var(--ink)}
       </div>
     </div>
     <p class="legal">以上為個別學員與家長的真實經驗分享，屬個人親身經驗，<b>個人成效不同，非一般結果，也不是課程效果保證</b>。本課程為學習方法教學，非醫療行為；若孩子有注意力或學習障礙方面的醫療疑慮，請諮詢專業醫師。</p>
+  </div>
+</section>
+
+<!-- ============ 價格錨定 ============ -->
+<section class="pricing" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <p class="eyebrow">價格</p>
+    <h2>為什麼 3 小時只要 2,980？</h2>
+    <p class="sub">先把我們自己的價目表攤開來，你才知道這個數字是什麼位置。</p>
+    <div class="why">
+      <div class="ladder">
+        <div class="lrow"><span>強腦力實體課・初階（完整一期）</span><b>NT$26,800</b></div>
+        <div class="lrow"><span>強化思維初階班・線上課</span><b>NT$12,600</b></div>
+        <div class="lrow"><span>瘋狂心智圖・線上課</span><b>NT$7,800</b></div>
+        <div class="lrow now"><span><b style="font-family:inherit;font-size:16px;color:var(--ink)">8/27 台北・8/29 高雄</b><br><span style="color:var(--ink2);font-size:14px">單堂 3 小時實體體驗場</span></span><b>NT$2,980</b></div>
+      </div>
+      <div class="honest">
+        <h3>老實說</h3>
+        <p>這 3 小時就是初階班最核心的那一段，我們把它單獨拉出來。你付的不是「便宜版的課」，是「先只買最關鍵的那一段」。</p>
+        <p><b>會不會在現場推薦後面的課？會。</b>上完我們會告訴你還有初階班。但這 3 小時本身是完整的——你什麼都不買，也帶得走三個當天就能用的方法，還有一張帶回家的複習表。</p>
+        <p>再加上當天不滿意就現金全額退你。所以最壞的情況是：你花了一個下午，沒有花錢。</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -601,7 +738,12 @@ footer a:hover{color:var(--ink)}
   <div class="wrap narrow">
     <div class="formwrap">
       <h2>報名這 3 小時</h2>
-      <p class="sub">留下姓名與電話，選好場次，下一步直接刷卡完成報名。</p>
+      <p class="sub">先講清楚接下來會發生什麼，你就不會按到一半不知道還有幾關。</p>
+      <div class="steps">
+        <div class="step"><b>1 ・ 現在</b><span>填姓名、電話、選場次，四個欄位。</span></div>
+        <div class="step"><b>2 ・ 約 30 秒</b><span>用 Google 或 LINE 一鍵建立帳號，不用記新密碼。上課通知與課後資源都放這裡。</span></div>
+        <div class="step"><b>3 ・ 刷卡完成</b><span>NT$2,980，付完就算報名成功，電子發票寄到你的 Email。</span></div>
+      </div>
 
       <form id="regForm" novalidate>
         <div class="field">
@@ -668,7 +810,10 @@ footer a:hover{color:var(--ink)}
   <div class="wrap narrow">
     <p class="eyebrow">報名前想問的</p>
     <h2>常見問題</h2>
-    <details open><summary>幾歲的孩子適合？</summary><p>10 歲以上（國小四年級起）到高中生都適合。方法本身沒有年齡上限，家長自己來上也可以。國小中低年級因為文字量還不夠，效果會打折扣，建議先從免費線上體驗課開始。</p></details>
+    <details open><summary>上完是不是就要被推銷更貴的課？</summary><p>會提到，但不會逼你。上完我們會告訴你還有實體初階班（NT$26,800），因為那是這套方法的完整版本。可是這 3 小時本身是完整的：你什麼都不買，也帶得走三個當天就能用的方法和一張回家複習表。現場不會有一對一逼單，也不會有「今天報名才有」的話術——真的想再上，官網什麼時候報名都是同一個價。</p></details>
+    <details><summary>我的孩子坐不住，3 小時撐得住嗎？</summary><p>這是最常被問的一題。這堂課不是坐著聽 3 小時：分成四段，每一段都要動手做、要出聲、要跟旁邊的人對答案，中間有休息。坐不住的孩子在這種課裡通常比在教室裡表現好，因為他一直有事情做。真的完全進不去狀況，當天說一聲，現金退你。</p></details>
+    <details><summary>3 小時真的學得完嗎？</summary><p>學得完的是「方法」，練到熟要靠回家。當天會做完三件事：圖像串連、記憶宮殿、心智圖入門，每一件都用他自己的課本練過一次，並且帶一張複習表回家。我們不會假裝 3 小時能讓孩子變成另一個人——但他會知道原來背東西有別的做法，而且他自己做得到。</p></details>
+    <details><summary>幾歲的孩子適合？</summary><p>10 歲以上（國小四年級起）到高中生都適合。方法本身沒有年齡上限，家長自己來上也可以。國小中低年級因為文字量還不夠，效果會打折扣，建議先從免費線上體驗課開始。</p></details>
     <details><summary>家長可以一起進教室嗎？</summary><p>可以，現場有家長席。很多家長說最有價值的部分是親眼看到孩子當場記住 20 個詞——回家之後才知道要怎麼陪他練。座位有限，報名後我們會電話確認陪同人數。</p></details>
     <details><summary>需要帶什麼？</summary><p>帶一支筆，還有孩子正在唸的那本課本或單字本（英文、社會科都可以）。講義現場提供。第三段會直接拿他自己的教材來練，帶了效果差很多。</p></details>
     <details><summary>跟你們的線上課有什麼不一樣？</summary><p>線上課的強項是可以回放、慢慢磨；實體課的強項是老師當場看得到孩子哪一步卡住，立刻調整。這 3 小時是把最需要「有人在旁邊看著」的部分做完，回家再用線上資源複習。</p></details>
@@ -680,8 +825,8 @@ footer a:hover{color:var(--ink)}
 <!-- ============ FINAL ============ -->
 <section class="final">
   <div class="wrap narrow">
-    <h2>方法學得越早，省下的時間越多</h2>
-    <p>一樣是一個下午。有的孩子拿去多寫一份考卷，有的孩子拿去換一套用得久的方法。</p>
+    <h2>一樣是一個下午</h2>
+    <p>有的孩子拿去多寫一份考卷，寫完就忘。有的孩子拿去換一套之後每一科都在用的方法。<br>不滿意的話，這個下午你連錢都沒有花。</p>
     <a href="#signup" class="btn btn-primary" data-cta="final">報名 8/27 台北 或 8/29 高雄
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     <p style="margin-top:22px;font-size:14px;color:#9498bd">NT$2,980 ／人 ・ 3 小時實體課 ・ 當天不滿意・現金全額退你</p>
@@ -719,6 +864,9 @@ const CFG = {
   LEAD_TABLES  : ['contacts', 'leads'],
   SOURCE       : 'ad-live-2608',
   PRICE        : 2980,
+  /* 報名截止時間。要留時間備教材與確認名單，所以比開課日早三天。
+     倒數是照這個時間算的，改這裡整頁就一起改。 */
+  CLOSE_AT     : '2026-08-24T23:59:59+08:00',
   SESSIONS     : {
     'live-taipei-0827'   : { label: '8/27（四）台北場', city: '台北' },
     'live-kaohsiung-0829': { label: '8/29（六）高雄場', city: '高雄' }
@@ -753,6 +901,51 @@ function track(gaName, fbName, params){
 document.querySelectorAll('[data-cta]').forEach(el=>{
   el.addEventListener('click', ()=>track('cta_click', 'ViewContent', {cta: el.getAttribute('data-cta')}));
 });
+
+/* ---- 報名倒數 ----
+   倒數的是「報名截止」這個真實時間點，不是假的循環倒數。
+   截止之後不再顯示倒數，改成請人留資料候補——寧可少收一筆，也不要騙人。 */
+(function(){
+  const el  = document.getElementById('cdown');
+  const el2 = document.getElementById('cdown2');
+  if(!el && !el2) return;
+  const end = new Date(CFG.CLOSE_AT).getTime();
+  function tick(){
+    const left = end - Date.now();
+    if(left <= 0){
+      if(el)  el.textContent  = '這一期報名已截止';
+      if(el2){ const chip = el2.closest('.pill'); if(chip) chip.textContent = '這一期報名已截止'; }
+      const bar = el && el.closest('.countbar');
+      if(bar){ const b = bar.querySelector('b'), i = bar.querySelector('i');
+               if(b) b.textContent = '報名已截止';
+               if(i) i.textContent = '還是想來的話留下資料，我們排候補與下一期。'; }
+      return;
+    }
+    const d = Math.floor(left/86400000);
+    const h = Math.floor(left/3600000) % 24;
+    const m = Math.floor(left/60000) % 60;
+    const long  = d > 0 ? ('還有 ' + d + ' 天 ' + h + ' 小時') : ('只剩 ' + h + ' 小時 ' + m + ' 分');
+    const short = d > 0 ? ('剩 ' + d + ' 天') : ('剩 ' + h + ' 小時');
+    if(el)  el.textContent  = long;
+    if(el2) el2.textContent = short;
+    setTimeout(tick, 60000);
+  }
+  tick();
+})();
+
+/* ---- 影片延後掛載 ----
+   iOS Safari 不吃 iframe 的 loading="lazy"，只靠原生屬性在 iPhone 上會一次載入全部。
+   所以用 IntersectionObserver 自己控，捲到附近才把 src 掛上去。 */
+(function(){
+  const frames = document.querySelectorAll('iframe[data-src]');
+  if(!frames.length) return;
+  const mount = f => { if(!f.src){ f.src = f.getAttribute('data-src'); } };
+  if(!('IntersectionObserver' in window)){ frames.forEach(mount); return; }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ mount(e.target); io.unobserve(e.target); } });
+  }, { rootMargin: '300px' });
+  frames.forEach(f=>io.observe(f));
+})();
 
 /* ---- 台灣手機格式 ---- */
 const isPhone = v => /^09\d{8}$/.test(v.replace(/[\s-]/g,''));
