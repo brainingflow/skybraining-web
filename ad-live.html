@@ -856,12 +856,14 @@ const CFG = {
   SUPABASE_URL : 'https://gfuqizxzihgydzyqywun.supabase.co',
   SUPABASE_ANON: 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv',
   /* 名單要寫進哪張表；第一張失敗會自動退到第二張。
-     2026-08-06 實測線上資料庫的真實欄位：
-       leads    = id / name / email / source / created_at
-       contacts = id / name / email / source / note / created_at / tags
-     兩張表都「沒有 phone 欄位」。contacts 排前面，因為它有 note 可以放電話。
-     等 sky 在 Supabase 幫 contacts 加一欄 phone（text），下面的程式會自動改用它，不用再改這個檔案。 */
-  LEAD_TABLES  : ['contacts', 'leads'],
+     2026-08-08 在 Supabase 實際處理過的狀態：
+       leads    = id / name / email / phone / note / child_grade / source / created_at
+                  email 已放寬成可空；RLS 有一條 ad_live_form_insert，
+                  只允許 source='ad-live-2608' 的 insert，讀取仍然關著。
+       contacts = 一條 policy 都沒有（完全鎖死，只能靠 SECURITY DEFINER 的 RPC 進出），
+                  所以直接寫它一定被擋，留在後面純粹當保險。
+     leads 排前面就是這個原因。 */
+  LEAD_TABLES  : ['leads', 'contacts'],
   SOURCE       : 'ad-live-2608',
   PRICE        : 2980,
   /* 報名截止時間。要留時間備教材與確認名單，所以比開課日早三天。
@@ -1034,13 +1036,19 @@ $('regForm').addEventListener('submit', async (e)=>{
   btn.style.opacity = .65;
   btn.textContent = '處理中…';
 
+  const tel = phone.replace(/[\s-]/g,'');
+
   // 最多等 4 秒。名單寫入再重要，也不能把想付錢的人卡在「處理中…」。
   await Promise.race([
     saveLead({
       name  : name,
       // 存進資料庫的一律去掉空白與橫線，方便之後直接撥號與比對重複名單
-      phone : phone.replace(/[\s-]/g,''),
-      email : email || null,
+      phone : tel,
+      /* 後台的名單列表是拿 email 當識別的，email 空的那一列不會出現在畫面上。
+         所以沒填 email 的人就用手機組一個假位址頂著——這樣後台看得到他，
+         而且 Email 欄位直接顯示得出電話，要打給他不用再翻別的地方。
+         noemail.skybraining.com 這個網域不存在，一看就知道不是真的信箱，不會誤寄。 */
+      email : email || (tel + '@noemail.skybraining.com'),
       source: CFG.SOURCE,
       note  : CFG.SESSIONS[sid] ? CFG.SESSIONS[sid].label + '（' + sid + '）' : sid
     }),
