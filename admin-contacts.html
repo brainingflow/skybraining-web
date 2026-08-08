@@ -84,6 +84,14 @@
   @keyframes sp{to{transform:rotate(360deg);}}
   .empty{padding:26px 0;text-align:center;color:var(--ink-soft);font-size:14px;}
   .pill{font-family:var(--round);font-weight:700;font-size:12px;color:#fff;background:linear-gradient(135deg,#7C6CF0,#4B37D8);border:none;padding:6px 12px;border-radius:16px;cursor:pointer;white-space:nowrap;}
+  /* 手動新增一筆 + 每列刪除鍵 */
+  .addrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+  .addrow input{flex:1;min-width:150px}
+  .btn-del{border:1px solid #e7c3c3;background:#fff;color:#b4453f;border-radius:9px;
+    padding:5px 11px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit}
+  .btn-del:hover{background:#fdf2f2}
+  .btn-del[data-armed="1"]{background:#b4453f;color:#fff;border-color:#b4453f}
+  .nodel{font-size:12px;color:var(--ink-soft);line-height:1.35;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -138,6 +146,18 @@
           </div>
           <div class="msg" id="impMsg"></div>
           <div id="impPreview" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="card">
+          <h2><span class="bar"></span>手動新增一筆</h2>
+          <div class="card-note">電話來的、活動現場拿到的、朋友介紹的，直接打進來。email 重複的話會更新原本那一筆，不會變成兩列。</div>
+          <div class="addrow">
+            <input id="newEmail" type="email" placeholder="email（必填）">
+            <input id="newName" type="text" placeholder="名字（選填）">
+            <input id="newTags" type="text" placeholder="標籤，用逗號分隔（選填）">
+            <button class="btn btn-primary" id="btnAddOne">新增</button>
+          </div>
+          <div class="msg" id="addMsg"></div>
         </div>
 
         <div class="card">
@@ -203,7 +223,7 @@
       const box=$('tblWrap');
       if(!view.length){ box.innerHTML='<div class="empty">沒有符合的名單。</div>'; return; }
       box.innerHTML=`<div class="tbl-scroll"><table>
-        <thead><tr><th>Email</th><th>名字</th><th>身分</th><th>已購課程</th><th>標籤</th><th>加入</th></tr></thead>
+        <thead><tr><th>Email</th><th>名字</th><th>身分</th><th>已購課程</th><th>標籤</th><th>加入</th><th>操作</th></tr></thead>
         <tbody>${view.slice(0,1000).map(p=>`<tr>
           <td class="email-cell">${esc(p.email)}</td>
           <td>${esc(p.name||'')}</td>
@@ -211,9 +231,60 @@
           <td>${courseChips(p.courses)}</td>
           <td>${tagChips(p)}</td>
           <td style="color:var(--ink-soft);white-space:nowrap;">${esc(fmtDate(p.created_at))}</td>
+          <td>${p.is_member ? '<span class="nodel">註冊會員<br>不能從這裡刪</span>' : '<button class="btn-del" data-email="'+esc(p.email)+'">刪除</button>'}</td>
         </tr>`).join('')}</tbody></table></div>
         ${view.length>1000?'<div class="card-note" style="margin-top:8px;">名單很多，先顯示前 1000 筆；用上方篩選縮小範圍或直接匯出 CSV。</div>':''}`;
       box.querySelectorAll('.tag-add').forEach(b=>b.onclick=()=>editTags(b.getAttribute('data-email')));
+      box.querySelectorAll('.btn-del').forEach(b=>b.onclick=()=>delContact(b, b.getAttribute('data-email')));
+    };
+
+    /* ── 刪除前再確認一次管理員密碼 ──────────────────────────
+       這不是安全機制：真正在擋人的是 Supabase 的 is_admin 與 RLS。
+       這一層純粹是「防手滑」，避免點錯一下就把名單刪掉。
+       密碼存的是 SHA-256 雜湊不是明碼，看原始碼的人看不到號碼本身。 */
+    const ADMIN_PASS_SHA256='1008a3f2eec4c35b575685797a88948c93a2b088d29d2431ac835adb8a35a50d';
+    async function sha256hex(s){
+      const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+      return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+    }
+    async function askAdminPass(what){
+      const v=prompt('要刪除「'+what+'」，這個動作救不回來。\n請輸入管理員密碼：');
+      if(v===null) return false;
+      try{
+        if(await sha256hex(v.trim())===ADMIN_PASS_SHA256) return true;
+      }catch(e){ alert('這個瀏覽器不支援密碼驗證，沒有刪除任何東西。'); return false; }
+      alert('密碼不對，沒有刪除任何東西。');
+      return false;
+    }
+
+    /* 刪一筆名單。註冊會員刪不掉——那要 service_role 才能刪 auth 使用者，
+       前台只有 anon key，所以會員那一列直接不給按，不做一個按了沒反應的鍵。 */
+    const delContact=async (btn, em)=>{
+      if(btn.getAttribute('data-armed')!=='1'){
+        btn.setAttribute('data-armed','1'); btn.textContent='確認刪除';
+        setTimeout(()=>{ if(btn.isConnected){ btn.setAttribute('data-armed','0'); btn.textContent='刪除'; } },3500);
+        return;
+      }
+      if(!(await askAdminPass(em))){ btn.setAttribute('data-armed','0'); btn.textContent='刪除'; return; }
+      const { error } = await supabase.from('contacts').delete().eq('email', em);
+      if(error){ alert('刪除失敗：'+error.message); btn.setAttribute('data-armed','0'); btn.textContent='刪除'; return; }
+      people = people.filter(x=>x.email!==em);
+      renderTiles(); rebuildTagFilter(); applyFilters();
+    };
+
+    const addOne=async ()=>{
+      const msg=$('addMsg');
+      const em=$('newEmail').value.trim().toLowerCase();
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ msg.textContent='email 看起來不對，再確認一次。'; return; }
+      const nm=$('newName').value.trim()||null;
+      const tags=$('newTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+      $('btnAddOne').disabled=true; msg.textContent='新增中…';
+      const { error } = await supabase.rpc('admin_contact_upsert',{ p_email:em, p_name:nm, p_tags:tags });
+      $('btnAddOne').disabled=false;
+      if(error){ msg.textContent='新增失敗：'+error.message; return; }
+      $('newEmail').value=''; $('newName').value=''; $('newTags').value='';
+      msg.textContent='已新增 '+em;
+      await load();
     };
 
     const editTags=async (em)=>{
