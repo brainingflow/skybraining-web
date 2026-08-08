@@ -32,25 +32,18 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,11,15,.88);backdrop-filt
 .nav-login{border:1px solid var(--hair);border-radius:24px;padding:7px 18px;color:var(--ink)}
 @media(max-width:720px){.nav-r{gap:14px;font-size:13px}}
 
-/* HERO 輪播 */
-.hero{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 80% 0%,#1E1B2E 0%,#0B0B0F 60%)}
+/* HERO 全幅海報輪播 */
+.hero{position:relative;overflow:hidden;background:#000}
 .slides{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
-.slide{flex:0 0 100%;min-height:480px;display:flex;align-items:center}
-.slide .in{max-width:1200px;margin:0 auto;padding:56px 24px;display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center;width:100%}
-.quote{font-family:var(--serif);font-size:44px;color:var(--gold);line-height:1;margin-bottom:8px}
-.s-name{font-family:var(--serif);font-weight:900;font-size:clamp(38px,5.6vw,64px);letter-spacing:.06em;background:linear-gradient(160deg,#FFF 20%,#CDB77E 90%);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.25}
-.s-course{font-family:var(--serif);font-weight:700;font-size:clamp(21px,2.8vw,30px);color:var(--gold-2);margin-top:8px;letter-spacing:.14em}
-.s-line{margin-top:14px;color:var(--ink-soft);font-size:16px}
-.s-cta{display:inline-block;margin-top:26px;background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;font-weight:800;padding:13px 30px;border-radius:30px;font-size:15.5px;box-shadow:0 12px 30px rgba(255,138,61,.3)}
-.s-img{border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.55)}
-.s-img img{width:100%;height:auto}
-.dots{position:absolute;left:0;right:0;bottom:18px;display:flex;gap:8px;justify-content:center}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.2s}
-.dot.on{background:var(--gold-2);transform:scale(1.25)}
-.h-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--hair);background:rgba(11,11,15,.5);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.h-arrow:hover{background:rgba(255,255,255,.14)}
-.h-prev{left:14px}.h-next{right:14px}
-@media(max-width:860px){.slide .in{grid-template-columns:1fr;gap:22px;padding:40px 24px 56px}.slide{min-height:0}}
+.slide{flex:0 0 100%;display:block}
+.slide img{width:100%;height:auto}
+.dots{position:absolute;left:0;right:0;bottom:16px;display:flex;gap:9px;justify-content:center;z-index:5}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.32);cursor:pointer;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.dot.on{background:var(--gold-2);transform:scale(1.3)}
+.h-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(11,11,15,.45);color:#fff;font-size:21px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.h-arrow:hover{background:rgba(255,255,255,.18)}
+.h-prev{left:16px}.h-next{right:16px}
+@media(max-width:640px){.h-arrow{width:34px;height:34px;font-size:17px}.h-prev{left:8px}.h-next{right:8px}.dots{bottom:8px}}
 
 /* 區塊標題 */
 .sec{padding:64px 0}
@@ -66,12 +59,13 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,11,15,.88);backdrop-filt
 .ccard img{width:100%;height:auto;aspect-ratio:1870/841;object-fit:cover}
 .ccard .bd{padding:16px 18px 18px}
 .price{font-weight:900;font-size:20px}
-.price small{color:var(--ink-soft);font-weight:500;font-size:13px;margin-left:8px}
 .t-name{margin-top:8px;font-size:14px;color:var(--gold-2);font-weight:700}
 .c-name{font-size:17.5px;font-weight:800;margin-top:2px}
 .bar{margin-top:14px;height:5px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden}
-.bar i{display:block;height:100%;width:72%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--amber))}
-.bar-t{display:flex;justify-content:space-between;margin-top:7px;font-size:12.5px;color:var(--ink-soft)}
+.bar i{display:block;height:100%;width:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--amber))}
+.bar-t{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--ink-soft)}
+.bar-t s{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:rgba(255,138,61,.9);text-decoration-thickness:2px}
+.bar-t .go{color:var(--gold-2);font-weight:800}
 
 /* 找師傅（直式肖像列） */
 .trow{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
@@ -84,6 +78,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,11,15,.88);backdrop-filt
 .tcard .tc{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
 
 /* CTA 帶 */
+.s-cta{display:inline-block;background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;font-weight:800;padding:13px 30px;border-radius:30px;font-size:15.5px;box-shadow:0 12px 30px rgba(255,138,61,.3)}
 .cta-band{background:linear-gradient(135deg,#191624,#241C36);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);text-align:center;padding:56px 24px}
 .cta-band h2{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3.6vw,34px);letter-spacing:.1em}
 .cta-band p{color:var(--ink-soft);margin-top:10px}
@@ -104,18 +99,11 @@ footer{padding:36px 24px;text-align:center;color:var(--ink-soft);font-size:13px}
   <button class="h-arrow h-prev" type="button" aria-label="上一張">‹</button>
   <button class="h-arrow h-next" type="button" aria-label="下一張">›</button>
   <div class="slides" id="slides">
-    <div class="slide"><div class="in">
-      <div><div class="quote">“</div><div class="s-name">周信廷</div><div class="s-course">百億成交技術</div><p class="s-line">把「成交」變成可複製的流程——業界高手實戰分享。</p><a class="s-cta" href="course-pro-sales.html">了解課程 →</a></div>
-      <div class="s-img"><img src="img-pro-sales-935.jpg" alt="百億成交技術"></div>
-    </div></div>
-    <div class="slide"><div class="in">
-      <div><div class="quote">“</div><div class="s-name">張玉諳</div><div class="s-course">溫罐筋膜調理</div><p class="s-line">養生行業 30 年——把身體照護變成能收費的專業。</p><a class="s-cta" href="course-pro-cupping.html">了解課程 →</a></div>
-      <div class="s-img"><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理"></div>
-    </div></div>
-    <div class="slide"><div class="in">
-      <div><div class="quote">“</div><div class="s-name">小可老師</div><div class="s-course">牛角筋絡調理</div><p class="s-line">一日學會，零基礎也能上手的放鬆手技。</p><a class="s-cta" href="course-pro-bodywork.html">了解課程 →</a></div>
-      <div class="s-img"><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理"></div>
-    </div></div>
+    <a class="slide" href="course-pro-sales.html"><img src="img-pro-sales-1870.jpg" alt="周信廷・百億成交技術"></a>
+    <a class="slide" href="course-pro-style.html"><img src="img-pro-style-1870.jpg" alt="顏華君・整體造型設計"></a>
+    <a class="slide" href="course-pro-aivideo.html"><img src="img-pro-aivideo-1870.jpg" alt="小語老師・AI短影音實戰"></a>
+    <a class="slide" href="course-pro-bodywork.html"><img src="img-pro-bodywork-1870.jpg" alt="小可老師・牛角筋絡調理"></a>
+    <a class="slide" href="course-pro-cupping.html"><img src="img-pro-cupping-1870.jpg" alt="張玉諳・溫罐筋膜調理"></a>
   </div>
   <div class="dots" id="dots"></div>
 </div>
@@ -123,11 +111,11 @@ footer{padding:36px 24px;text-align:center;color:var(--ink-soft);font-size:13px}
 <div class="sec"><div class="wrap">
   <div class="sec-h"><h2>精品課程</h2><span>實戰課程・拒絕紙上談兵</span></div>
   <div class="cgrid">
-    <a class="ccard" href="course-pro-sales.html"><span class="badge">熱烈報名中</span><img src="img-pro-sales-935.jpg" alt="百億成交技術"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">周信廷</div><div class="c-name">百億成交技術</div><div class="bar"><i></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
-    <a class="ccard" href="course-pro-style.html"><span class="badge">熱烈報名中</span><img src="img-pro-style-935.jpg" alt="整體造型設計"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">顏華君</div><div class="c-name">整體造型設計</div><div class="bar"><i style="width:64%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
-    <a class="ccard" href="course-pro-aivideo.html"><span class="badge">熱烈報名中</span><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小語老師</div><div class="c-name">AI短影音實戰</div><div class="bar"><i style="width:80%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
-    <a class="ccard" href="course-pro-bodywork.html"><span class="badge">熱烈報名中</span><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小可老師</div><div class="c-name">牛角筋絡調理</div><div class="bar"><i style="width:58%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
-    <a class="ccard" href="course-pro-cupping.html"><span class="badge">熱烈報名中</span><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">張玉諳</div><div class="c-name">溫罐筋膜調理</div><div class="bar"><i style="width:68%"></i></div><div class="bar-t"><span>名額有限</span><span>加 LINE 報名</span></div></div></a>
+    <a class="ccard" href="course-pro-sales.html"><span class="badge">熱烈報名中</span><img src="img-pro-sales-935.jpg" alt="百億成交技術"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">周信廷</div><div class="c-name">百億成交技術</div><div class="bar"><i></i></div><div class="bar-t"><span>原價 <s>NT$36,800</s></span><span class="go">課程介紹 →</span></div></div></a>
+    <a class="ccard" href="course-pro-style.html"><span class="badge">熱烈報名中</span><img src="img-pro-style-935.jpg" alt="整體造型設計"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">顏華君</div><div class="c-name">整體造型設計</div><div class="bar"><i></i></div><div class="bar-t"><span>原價 <s>NT$36,800</s></span><span class="go">課程介紹 →</span></div></div></a>
+    <a class="ccard" href="course-pro-aivideo.html"><span class="badge">熱烈報名中</span><img src="img-pro-aivideo-935.jpg" alt="AI短影音實戰"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小語老師</div><div class="c-name">AI短影音實戰</div><div class="bar"><i></i></div><div class="bar-t"><span>原價 <s>NT$36,800</s></span><span class="go">課程介紹 →</span></div></div></a>
+    <a class="ccard" href="course-pro-bodywork.html"><span class="badge">熱烈報名中</span><img src="img-pro-bodywork-935.jpg" alt="牛角筋絡調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">小可老師</div><div class="c-name">牛角筋絡調理</div><div class="bar"><i></i></div><div class="bar-t"><span>原價 <s>NT$36,800</s></span><span class="go">課程介紹 →</span></div></div></a>
+    <a class="ccard" href="course-pro-cupping.html"><span class="badge">熱烈報名中</span><img src="img-pro-cupping-935.jpg" alt="溫罐筋膜調理"><div class="bd"><div class="price">NT$19,800</div><div class="t-name">張玉諳</div><div class="c-name">溫罐筋膜調理</div><div class="bar"><i></i></div><div class="bar-t"><span>原價 <s>NT$36,800</s></span><span class="go">課程介紹 →</span></div></div></a>
   </div>
 </div></div>
 
