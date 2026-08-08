@@ -266,8 +266,27 @@
         return;
       }
       if(!(await askAdminPass(em))){ btn.setAttribute('data-armed','0'); btn.textContent='刪除'; return; }
-      const { error } = await supabase.from('contacts').delete().eq('email', em);
-      if(error){ alert('刪除失敗：'+error.message); btn.setAttribute('data-armed','0'); btn.textContent='刪除'; return; }
+      /* 先叫 RPC，沒有這個函式才退回直接刪。
+         為什麼要這樣繞：contacts 的 RLS 目前不讓前台刪，而 PostgREST 碰到被政策擋掉的
+         DELETE 不會回錯誤，只是「零列被刪」——按鈕看起來成功、重新整理資料還在。
+         所以一律用 .select() 把真的被刪掉的列要回來數，數不到就照實說。
+         等 Supabase 建好 admin_contact_delete，這段會自動改走 RPC，不用再改這個檔案。 */
+      const reset=()=>{ btn.setAttribute('data-armed','0'); btn.textContent='刪除'; };
+      const rpc = await supabase.rpc('admin_contact_delete',{ p_email: em });
+      let removed = null;
+      if(!rpc.error){
+        removed = Number(rpc.data) || 0;
+      }else if(/Could not find the function|schema cache|PGRST202/i.test(rpc.error.message||'')){
+        const { data, error } = await supabase.from('contacts').delete().eq('email', em).select('id');
+        if(error){ alert('刪除失敗：'+error.message); reset(); return; }
+        removed = (data||[]).length;
+      }else{
+        alert('刪除失敗：'+rpc.error.message); reset(); return;
+      }
+      if(!removed){
+        alert('沒有刪掉任何東西。\n\n資料庫的 RLS 政策目前不讓前台刪 contacts，而且這種情況 PostgREST 不會報錯，只會靜靜地零列生效。\n\n要讓這個按鈕真的能用，請在 Supabase 建一個 admin_contact_delete(p_email text) 的 SECURITY DEFINER 函式（裡面先檢查 is_admin）。建好之後這裡會自動改走它。');
+        reset(); return;
+      }
       people = people.filter(x=>x.email!==em);
       renderTiles(); rebuildTagFilter(); applyFilters();
     };
