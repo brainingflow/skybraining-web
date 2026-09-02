@@ -169,12 +169,16 @@
 @media(max-width:640px){
 .course .cdesc{display:none}
 .course.free-spot .cdesc{display:block}
-.ctop{min-height:0;padding:18px 18px 16px}
-.cname{font-size:19px;margin-top:8px}
+.ctop{min-height:0;padding:13px 16px 12px}
+.cname{font-size:19px;margin-top:0}
 .csub{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ctop::after{width:76px;height:76px;right:-22px;top:-22px}
-.cbody{padding:14px 16px 16px}
+.cbody{padding:12px 16px 14px}
 .cfoot{padding-top:0;border-top:0;flex-wrap:nowrap}
+/* 課程卡手機版收緊 2026-09-03：標籤移到右上角、課名補位、間距縮小 */
+.clv{position:absolute;top:11px;right:13px;font-size:11px;padding:3px 9px;z-index:2;}
+.cname{padding-right:72px;}
+.grid{gap:14px;padding:22px 0 46px;}
 }
 /* 就業力課程橫幅跑馬燈 2026-08-06 */
 .pm{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:6px 0 36px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
@@ -210,6 +214,45 @@
 .pcap .pt{display:block;font-family:var(--round);font-weight:800;font-size:19px;color:var(--ink);line-height:1.4}
 .pcap .pp{display:block;margin-top:3px;font-size:13.5px;color:var(--ink-soft);font-weight:600}
 @media(max-width:640px){.pcap .pt{font-size:17px}}
+
+/* ── 導覽改版 2026-09-03：兩個重點連結 ＋ 三條線選單 ── */
+.nav-quick{display:flex;align-items:center;gap:24px;margin-left:auto;margin-right:18px;font-weight:500;font-size:15px;}
+.nav-quick a{color:var(--ink-soft);white-space:nowrap;transition:color .2s;}
+.nav-quick a:hover{color:var(--indigo);}
+.nav-in .nav-cta{margin-right:14px;}
+.menu-toggle{display:block;background:none;border:none;cursor:pointer;padding:6px;flex:none;}
+.menu-toggle span{display:block;width:23px;height:2.4px;border-radius:2px;background:var(--indigo);margin:5px 0;transition:transform .3s,opacity .2s;}
+.menu-toggle.open span:nth-child(1){transform:translateY(7.4px) rotate(45deg);}
+.menu-toggle.open span:nth-child(2){opacity:0;}
+.menu-toggle.open span:nth-child(3){transform:translateY(-7.4px) rotate(-45deg);}
+.nav-menu{position:absolute;top:100%;left:0;right:0;display:flex;flex-direction:column;background:rgba(251,250,246,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair);max-height:0;overflow:hidden;transition:max-height .35s ease;z-index:45;}
+.nav-menu.open{max-height:calc(100vh - 60px);overflow-y:auto;}
+.nav-menu a{padding:15px clamp(20px,5vw,48px);border-top:1px solid var(--hair);font-size:16px;font-weight:500;color:var(--indigo);}
+.nav-menu a:hover{background:var(--paper-2);}
+.nav-menu .nm-line{margin:12px clamp(20px,5vw,48px) 18px;padding:14px 24px;border-top:0;border-radius:14px;text-align:center;font-weight:800;color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);box-shadow:0 8px 20px rgba(255,138,61,.3);}
+.nav-menu .nm-line:hover{background:linear-gradient(135deg,#FFB020,#FF8A3D);filter:brightness(1.05);}
+.nav-in .brand{white-space:nowrap;flex:none;}
+@media(max-width:420px){.nav-quick{gap:15px;font-size:14px;margin-right:12px;}.menu-toggle{padding:6px 0;}}
+@media(max-width:480px){.nav-in:has(.nav-cta) .nav-quick{display:none;}}
+/* 手機版兩個入口區塊收緊 2026-09-03：讓「進入就業力課程」按鈕進第一屏，桌機版不動 */
+@media(max-width:480px){
+  .duo .side{min-height:0;padding:30px 22px;}
+  .duo .s-intro{margin:10px 0 14px;font-size:15px;line-height:1.75;}
+  .duo .s-points{gap:7px;margin-bottom:18px;}
+  .duo .s-points li{font-size:14px;line-height:1.62;padding-left:23px;}
+  .duo .s-title{font-size:25px;}
+  .duo .s-eyebrow{margin-bottom:10px;}
+  .duo .s-cta{padding:11px 22px;font-size:14.5px;}
+}
+
+
+/* free-spot 卡手機版覆蓋 2026-09-03
+   .course.free-spot .ctop>*{position:relative} 權重較高且位置在後，
+   會把標籤釘回相對定位，所以這裡用 >.clv 提高權重並放在最後。 */
+@media(max-width:640px){
+  .course.free-spot .ctop>.clv{position:absolute;top:11px;right:13px;}
+  .course.free-spot .cname{font-size:20px;}
+}
 </style>
 <meta name="keywords" content="強腦力,記憶力課程,學習力課程,圖像記憶,記憶宮殿,聯想力,線上課程,國小,國中,強化腦力,腦力,高雄,高雄第一學習系統,SKY強腦力">
 <link rel="canonical" href="https://skybraining.com/courses.html">
@@ -228,16 +271,21 @@
 </head>
 <body>
 <nav>
-  <div class="nav-in">
-    <a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
-    <div class="nav-right">
-      <a href="index.html">← 回首頁</a>
-      <a href="#brain">強腦力課程</a>
-      <a href="pro.html">就業力課程</a>
-      <a href="kaohsiung.html">高雄實體</a>
-      <a class="nav-login" href="login.html">會員登入</a>
-    </div>
-  </div>
+<div class="nav-in">
+<a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
+<div class="nav-quick"><a href="mindmap.html">心智圖</a><a href="videos.html">影音</a></div>
+<button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
+</div>
+<div class="nav-menu" id="navMenu">
+<a href="index.html">回首頁</a>
+<a href="mindmap.html">心智圖</a>
+<a href="videos.html">影音</a>
+<a href="courses.html">精品課程</a>
+<a href="articles.html">提升效率</a>
+<a href="quiz.html">學習檢測</a>
+<a href="login.html">會員登入</a>
+<a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
+</div>
 </nav>
 
 <!-- ===== 左右分屏：強腦力 vs 就業力 ===== -->
@@ -248,8 +296,7 @@
       <h2 class="s-title">強腦力<span class="s-bar">｜</span>最強大腦學習力</h2>
       <p class="s-intro">世界腦力冠軍記憶大師的學習力系統——用大腦本來就擅長的方式，把「怎麼學」一次教會你。</p>
       <ul class="s-points">
-        <li>世界記憶大賽冠軍教練親授，方法經國際賽事驗證</li>
-        <li>圖像記憶 × 聯想思考 × 思維模板，記得快、想得廣</li>
+                <li>圖像記憶 × 聯想思考 × 思維模板，記得快、想得廣</li>
         <li>適合 10 歲以上到 35 歲——學生提分、大人提效</li>
         <li>從吊車尾到前三名、平均 85 進步到 98，見證無數</li>
       </ul>
@@ -478,6 +525,8 @@
   #nb-bubble a:hover{text-decoration:underline;}
   #nb-bubble .nb-name{display:block;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;color:#7C6CF0;font-size:12.5px;margin-bottom:2px;}
   @media(max-width:520px){#nb-body svg{width:60px;height:60px;}#nb-bubble{max-width:180px;left:66px;}#nb-bubble.side-left{left:auto;right:66px;}}
+  /* 燈寶手機版再縮：面積 75%（邊長 x0.87），60px -> 52px。2026-09-03 */
+  @media(max-width:480px){#nb-body svg{width:52px;height:52px;}#nb-bubble{max-width:170px;left:58px;}#nb-bubble.side-left{left:auto;right:58px;}}
 
   /* ── 社群追蹤按鈕（頁尾）── */
   .sb-social{width:100%;flex-basis:100%;max-width:1180px;margin:0 auto 26px;padding:0 22px 22px;box-sizing:border-box;border-bottom:1px solid rgba(140,140,155,.28);text-align:center;}
@@ -595,16 +644,32 @@
   function patch(){
     var cards=[].slice.call(g.querySelectorAll(".course"));
     var el=null;
-    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".cname");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1)){el=cards[i];break}}
+    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".cname");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1||n.textContent.indexOf("10x聯想力")>-1)){el=cards[i];break}}
     if(!el)return false;
     if(el.classList.contains("free-spot"))return true;
     el.classList.add("free-spot");
-    var n2=el.querySelector(".cname");if(n2){n2.textContent="免費體驗 十倍聯想力";n2.classList.add("sm")}
+    var n2=el.querySelector(".cname");if(n2){n2.textContent="免費體驗 10x聯想力";n2.classList.add("sm")}
     var s=el.querySelector(".csub");if(s)s.remove();
     var d=el.querySelector(".cdesc");if(d)d.textContent="免費課程，登入後立即可看。先體驗強腦力的方法，喜歡再上完整課程。";
     return true;
   }
   if(!patch()){var mo=new MutationObserver(function(){if(patch())mo.disconnect()});mo.observe(g,{childList:true,subtree:true})}
+})();
+</script>
+
+<script>
+/* 導覽三條線選單 */
+(function(){
+  var t=document.getElementById('menuToggle'), m=document.getElementById('navMenu');
+  if(!t||!m) return;
+  function shut(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}
+  t.addEventListener('click',function(){
+    var o=m.classList.toggle('open');
+    t.classList.toggle('open',o);
+    t.setAttribute('aria-expanded',o?'true':'false');
+  });
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',shut);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')shut();});
 })();
 </script>
 </body>

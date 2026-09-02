@@ -133,14 +133,46 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 .refs ol{margin:8px 0 0;padding-left:1.2em;}
 .refs li{font-size:13.5px;line-height:1.85;color:var(--ink-soft);margin:5px 0;}
 .refs a{color:var(--ink-soft);text-decoration:underline;word-break:break-all;}
+
+/* ── 導覽改版 2026-09-03：兩個重點連結 ＋ 三條線選單 ── */
+.nav-quick{display:flex;align-items:center;gap:24px;margin-left:auto;margin-right:18px;font-weight:500;font-size:15px;}
+.nav-quick a{color:var(--ink-soft);white-space:nowrap;transition:color .2s;}
+.nav-quick a:hover{color:var(--indigo);}
+.nav-in .nav-cta{margin-right:14px;}
+.menu-toggle{display:block;background:none;border:none;cursor:pointer;padding:6px;flex:none;}
+.menu-toggle span{display:block;width:23px;height:2.4px;border-radius:2px;background:var(--indigo);margin:5px 0;transition:transform .3s,opacity .2s;}
+.menu-toggle.open span:nth-child(1){transform:translateY(7.4px) rotate(45deg);}
+.menu-toggle.open span:nth-child(2){opacity:0;}
+.menu-toggle.open span:nth-child(3){transform:translateY(-7.4px) rotate(-45deg);}
+.nav-menu{position:absolute;top:100%;left:0;right:0;display:flex;flex-direction:column;background:rgba(251,250,246,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair);max-height:0;overflow:hidden;transition:max-height .35s ease;z-index:45;}
+.nav-menu.open{max-height:calc(100vh - 60px);overflow-y:auto;}
+.nav-menu a{padding:15px clamp(20px,5vw,48px);border-top:1px solid var(--hair);font-size:16px;font-weight:500;color:var(--indigo);}
+.nav-menu a:hover{background:var(--paper-2);}
+.nav-menu .nm-line{margin:12px clamp(20px,5vw,48px) 18px;padding:14px 24px;border-top:0;border-radius:14px;text-align:center;font-weight:800;color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);box-shadow:0 8px 20px rgba(255,138,61,.3);}
+.nav-menu .nm-line:hover{background:linear-gradient(135deg,#FFB020,#FF8A3D);filter:brightness(1.05);}
+.nav-in .brand{white-space:nowrap;flex:none;}
+@media(max-width:420px){.nav-quick{gap:15px;font-size:14px;margin-right:12px;}.menu-toggle{padding:6px 0;}}
+@media(max-width:480px){.nav-in:has(.nav-cta) .nav-quick{display:none;}}
+
 </style>
 </head>
 <body>
 <nav>
-  <div class="nav-in">
-    <a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
-    <div class="nav-right"><a href="mindmap.html">心智圖</a><a href="articles.html">提升效率</a><a class="nav-login" href="login.html">會員登入</a></div>
-  </div>
+<div class="nav-in">
+<a class="brand" href="index.html"><span class="wordmark">強<span class="wm-accent">腦</span>力</span></a>
+<div class="nav-quick"><a href="mindmap.html">心智圖</a><a href="videos.html">影音</a></div>
+<button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
+</div>
+<div class="nav-menu" id="navMenu">
+<a href="index.html">回首頁</a>
+<a href="mindmap.html">心智圖</a>
+<a href="videos.html">影音</a>
+<a href="courses.html">精品課程</a>
+<a href="articles.html">提升效率</a>
+<a href="quiz.html">學習檢測</a>
+<a href="login.html">會員登入</a>
+<a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
+</div>
 </nav>
 <div class="wrap">
   <div class="hero">
@@ -199,6 +231,8 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 
     <p>遺忘曲線告訴你「何時複習」，但<strong>一開始就把知識編碼得更好記，能讓每次複習都更省力</strong>。把文字轉成畫面（圖像記憶）、把架構畫成一張圖（心智圖），等於給大腦更多回想的線索。想了解怎麼做，可以看<a href="article-what-is-mindmap.html">心智圖是什麼、怎麼畫</a>這篇。</p>
 
+    <div style="margin:36px 0;background:#fff;border:1px solid rgba(20,22,49,.09);border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(20,22,49,.05)"><h2 style="margin:0 0 6px">影片版：學習很難、常常忘記？記憶的腦科學</h2><p style="margin:0 0 14px;color:#5a5e79">為什麼背了就忘？從腦科學看大腦怎麼決定「留下」或「丟掉」一段記憶，以及壓力對記憶的影響——搭配遺忘曲線文章一起看效果最好。</p><div class="yt-f" data-yt="D1IxCK8JsCY" data-t="學習很難、常常忘記？記憶的腦科學" role="button" tabindex="0" aria-label="播放影片：學習很難、常常忘記？記憶的腦科學" style="position:relative;cursor:pointer;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#0b0c1c"><img src="https://i.ytimg.com/vi/D1IxCK8JsCY/hqdefault.jpg" alt="學習很難、常常忘記？記憶的腦科學" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover"><span aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span style="width:64px;height:44px;border-radius:12px;background:rgba(20,22,49,.78);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.35)"><svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span></span><span style="position:absolute;right:10px;bottom:8px;background:rgba(0,0,0,.75);color:#fff;font-size:12.5px;font-weight:700;padding:2px 8px;border-radius:6px">15:20</span></div><div style="margin-top:14px"><strong>影片重點</strong><ul style="margin:8px 0 0;padding-left:22px"><li style="margin:6px 0">大腦天生就會忘——忘記是功能，不是故障</li><li style="margin:6px 0">壓力太大時，大腦會主動「丟掉」記憶</li><li style="margin:6px 0">想被記住的內容，要給大腦「重要」的訊號</li><li style="margin:6px 0">搭配本文的間隔複習法一起用，記得更牢</li></ul></div><p style="margin:12px 0 0"><a href="videos.html" style="font-weight:700">更多 Sky 老師的腦科學影片：強腦力YT →</a></p></div>
+
     <div class="faq">
       <h2>常見問題</h2>
       <details open><summary>遺忘曲線每個人都一樣嗎？</summary><div class="ans">曲線的「形狀」是普遍規律，但遺忘的速度因人、因材料、因熟悉度而異。有意義、理解過的內容，忘得比死背的音節慢。</div></details>
@@ -221,9 +255,9 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
       <h3>想讓孩子擁有一套自己的記憶方法？</h3>
       <p>《過目不忘・超級記憶力》：圖像記憶×記憶宮殿×間隔複習，把記憶從死背變成可以練的方法。線上授課、買斷後於服務存續期間可反覆回看。</p>
       <a href="course-memory.html">了解過目不忘 →</a>
-      <a class="cta2" href="lp.html?p=free-course">先免費上一堂《無限聯想力》體驗課</a>
+      <a class="cta2" href="lp.html?p=free-course">先免費上一堂《十倍聯想力》體驗課</a>
     </div>
-    <div class="guar"><span class="gk">零風險嘗試</span>高雄的<a href="course-onsite-basic.html">實體初階班</a>與<a href="course-onsite-advanced.html">實體進階班</a>提供<strong>無效退費</strong>：上完第一堂課後 7 天內，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期，開課前可申請取消——所以我們更建議先免費上一堂體驗課再決定。</div>
+    <div class="guar"><span class="gk">零風險嘗試</span>高雄的<a href="course-onsite-basic.html">實體初階班</a>與<a href="course-onsite-advanced.html">實體進階班</a>提供<strong>無效退費</strong>：上完第一堂課的當天，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期——所以我們更建議先免費上一堂體驗課再決定。</div>
 
     <div class="refs"><strong>參考文獻</strong><ol><li>Ebbinghaus, H. (1885). Über das Gedächtnis (Memory: A Contribution to Experimental Psychology). — 遺忘曲線原始研究。</li><li>Murre, J. M. J., &amp; Dros, J. (2015). Replication and Analysis of Ebbinghaus' Forgetting Curve. PLoS ONE, 10(7), e0120644. <a href="https://doi.org/10.1371/journal.pone.0120644" target="_blank" rel="noopener nofollow">https://doi.org/10.1371/journal.pone.0120644</a></li><li>Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., &amp; Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. Psychological Bulletin, 132(3), 354–380.</li><li>Roediger, H. L., &amp; Karpicke, J. D. (2006). Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention. Psychological Science, 17(3), 249–255.</li></ol></div>
   </article>
@@ -309,6 +343,8 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
   #nb-bubble a:hover{text-decoration:underline;}
   #nb-bubble .nb-name{display:block;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;color:#7C6CF0;font-size:12.5px;margin-bottom:2px;}
   @media(max-width:520px){#nb-body svg{width:60px;height:60px;}#nb-bubble{max-width:180px;left:66px;}#nb-bubble.side-left{left:auto;right:66px;}}
+  /* 燈寶手機版再縮：面積 75%（邊長 x0.87），60px -> 52px。2026-09-03 */
+  @media(max-width:480px){#nb-body svg{width:52px;height:52px;}#nb-bubble{max-width:170px;left:58px;}#nb-bubble.side-left{left:auto;right:58px;}}
 </style>
 <script>
 (function(){
@@ -367,6 +403,28 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
   function onScroll(){ if(window.scrollY>240) firstGreet(); }
   window.addEventListener('scroll',onScroll,{passive:true});
   setTimeout(firstGreet,12000);
+})();
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "學習很難、常常忘記？記憶的腦科學", "description": "為什麼背了就忘？從腦科學看大腦怎麼決定「留下」或「丟掉」一段記憶，以及壓力對記憶的影響——搭配遺忘曲線文章一起看效果最好。", "thumbnailUrl": ["https://i.ytimg.com/vi/D1IxCK8JsCY/hqdefault.jpg"], "uploadDate": "2024-11-08", "duration": "PT15M20S", "embedUrl": "https://www.youtube-nocookie.com/embed/D1IxCK8JsCY", "contentUrl": "https://www.youtube.com/watch?v=D1IxCK8JsCY", "publisher": {"@type": "Organization", "name": "強腦力 SkyBraining", "url": "https://skybraining.com"}}</script>
+<script>
+(function(){function play(f){if(f.dataset.on)return;f.dataset.on=1;var id=f.getAttribute('data-yt');var ifr=document.createElement('iframe');ifr.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';ifr.title=f.getAttribute('data-t')||'YouTube video';ifr.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';ifr.allowFullscreen=true;ifr.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0';f.innerHTML='';f.appendChild(ifr)}
+document.addEventListener('click',function(e){var f=e.target.closest('.yt-f');if(f)play(f)});
+document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var f=e.target.closest?e.target.closest('.yt-f'):null;if(f){e.preventDefault();play(f)}});})();
+</script>
+
+<script>
+/* 導覽三條線選單 */
+(function(){
+  var t=document.getElementById('menuToggle'), m=document.getElementById('navMenu');
+  if(!t||!m) return;
+  function shut(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}
+  t.addEventListener('click',function(){
+    var o=m.classList.toggle('open');
+    t.classList.toggle('open',o);
+    t.setAttribute('aria-expanded',o?'true':'false');
+  });
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',shut);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')shut();});
 })();
 </script>
 </body>
