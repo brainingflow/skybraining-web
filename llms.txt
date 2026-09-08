@@ -4,18 +4,42 @@
 
 強腦力主張：孩子不是記性差，只是沒學過記憶的方法。透過圖像記憶把抽象文字變成畫面、用記憶宮殿與聯想力建立長期記憶、以間隔複習對抗遺忘曲線，讓孩子記得快、記得牢、想得廣。適合 10 歲以上到 35 歲：國小中年級以上的孩子、國高中生，到想提升學習力的大人。
 
-## 課程
+## 課程（線上，全台）
 - [所有課程](https://skybraining.com/courses.html)：免費體驗課與完整付費課程一覽，買斷、永久觀看
-- [過目不忘・超級記憶力](https://skybraining.com/course-memory.html)：用圖像記憶與記憶宮殿，把單字、課文、公式記得又快又牢
-- [瘋狂心智圖・超級思考](https://skybraining.com/course-thinking.html)：用聯想訓練與思考模板，讓孩子從被動接收變成主動思考
-- [十倍聯想力（免費體驗課）](https://skybraining.com/login.html)：登入即可免費觀看的入門體驗課
+- [記憶力課程《過目不忘・超級記憶力》](https://skybraining.com/course-memory.html)：圖像記憶與記憶宮殿，NT$4,200 買斷永久觀看
+- [心智圖課程《瘋狂心智圖・超級思考》](https://skybraining.com/course-thinking.html)：心智圖教學、聯想訓練、思考模板，NT$7,800 買斷永久觀看
+- [強化思維初階班（線上版）](https://skybraining.com/course-strong-thinking.html)：實體初階班的完整線上版
+- [免費體驗課「十倍聯想力」](https://skybraining.com/free.html)：0 元、註冊就能看
 
-## 精品文章（腦科學與學習方法）
+## 高雄實體班（高雄記憶課程・心智圖課程）
+- [高雄心智圖・記憶力課程總覽](https://skybraining.com/kaohsiung.html)：高雄市區小班制，分初階、進階兩階段，完整介紹、常見問題與高雄街頭實測影片；上完第一堂課當天不滿意全額退
+- [強腦力首頁](https://skybraining.com/)：品牌入口，含高雄實體班與線上課程總覽
+- [高雄實體初階班：記憶力與全腦開發](https://skybraining.com/course-onsite-basic.html)：NT$26,800
+- [高雄實體進階班：心智圖與思維訓練](https://skybraining.com/course-onsite-advanced.html)：NT$26,800
+- [強腦力大補包](https://skybraining.com/course-bundle.html)：實體初階＋實體進階＋線上課＋一對一輔導的四合一方案，NT$45,800；實體部分在高雄上課
+- [實戰見證](https://skybraining.com/testimonials.html)：22 支家長、學員與高雄街頭實測影片
+
+## 心智圖
+- [心智圖完整指南](https://skybraining.com/mindmap.html)：是什麼、誰發明、五步驟怎麼畫、科學根據、常見問題（pillar）
+- [心智圖是什麼？入門指南](https://skybraining.com/article-what-is-mindmap.html)
+- [心智圖怎麼畫？5 步驟](https://skybraining.com/article-mindmap.html)
+- [心智圖怎麼用在作文](https://skybraining.com/article-mindmap-writing.html)
+- [線上 vs 實體：心智圖課程怎麼選](https://skybraining.com/article-mindmap-online-vs-offline.html)
+- [心智圖是誰發明的？東尼・博贊](https://skybraining.com/article-master-buzan.html)
+- 「大師的那張圖」視覺思考系列：達文西、達爾文、費曼、門得列夫、柏內茲-李、迪士尼、石川馨、愛因斯坦、特斯拉（各篇網址為 https://skybraining.com/article-master-<姓氏>.html，姓氏用 davinci、darwin、feynman、mendeleev、berners-lee、disney、ishikawa、einstein、tesla）
+
+## 記憶與學習方法文章
 - [為什麼背了就忘？大腦記憶的科學](https://skybraining.com/article-forgetting-curve.html)：艾賓浩斯遺忘曲線、海馬迴與間隔複習
 - [為什麼「用畫面記」比「用文字背」強？圖像記憶的腦科學](https://skybraining.com/article-image-memory.html)：雙重編碼理論、圖像優勢效應、記憶宮殿
 - [孩子讀書坐不住、專注力差怎麼辦？6 個科學方法](https://skybraining.com/article-focus.html)：從腦科學提升孩子專注力與學習力
 - [記憶宮殿是什麼？孩子也學得會的記憶法（5 步驟）](https://skybraining.com/article-memory-palace.html)：位置記憶法的原理與實作步驟
 - [考前一週複習計畫：用間隔複習高效衝刺](https://skybraining.com/article-exam-prep.html)：附一週複習表與主動回想技巧
+- [如何提升孩子記憶力？6 個有科學根據的方法](https://skybraining.com/article-improve-child-memory.html)
+- [背英文單字的方法](https://skybraining.com/article-memorize-english-vocabulary.html)
+
+## 免費工具
+- [孩子學習力檢測](https://skybraining.com/quiz.html)：16 題、3 分鐘
+- [記憶配對挑戰](https://skybraining.com/game.html)
 
 ## 影音（強腦力YT）
 - [強腦力YT](https://skybraining.com/videos.html)：14 支腦科學長影片——記憶力提升、專注力、睡眠與大腦、學習效率、失智預防、AI 時代思維與金錢腦，全部免費看
@@ -23,9 +47,9 @@
 
 ## 關於強腦力 SkyBraining
 - 品牌名稱：強腦力 SkyBraining（別名：SKY強腦力、強腦力、強化腦力學習系統）
-- 定位：高雄第一學習系統，線上授課，全台灣皆可上課
+- 定位：高雄第一學習系統；高雄開實體小班，線上課全台皆可上
 - 服務對象：10 歲以上到 35 歲的學習者與家長
-- 核心關鍵字：強腦力、腦力、學習力、強化腦力、記憶力、圖像記憶、記憶宮殿、聯想力、間隔複習、專注力、考試複習
+- 核心關鍵字：強腦力、腦力、學習力、強化腦力、記憶力、圖像記憶、記憶宮殿、聯想力、間隔複習、專注力、考試複習、記憶力課程、心智圖課程、高雄記憶課程、高雄心智圖
 - 官方 LINE：https://lin.ee/9EGO8IT
 - YouTube：https://www.youtube.com/@Dreams_memory
 - 網站：https://skybraining.com
