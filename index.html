@@ -99,7 +99,9 @@
     .nav-dd{display:block;}
     .nav-dd-t{display:none;}
     .nav-dd-m{position:static;opacity:1;visibility:visible;transform:none;margin:0;min-width:0;background:none;border:none;box-shadow:none;padding:0;border-radius:0;}
+    .nav-dd:hover .nav-dd-m,.nav-dd:focus-within .nav-dd-m{transform:none;}
     .nav-dd-m a{border-radius:0;font-family:var(--sans);font-weight:500;}
+    .nav-dd-m a:hover{background:none;}
     .nav-dd-m a small{display:none;}
     .menu-toggle{display:block;}
     body.menu-open .menu-toggle span:nth-child(1){transform:translateY(7.4px) rotate(45deg);}
