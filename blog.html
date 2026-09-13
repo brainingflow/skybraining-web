@@ -115,7 +115,7 @@
 <a href="kaohsiung.html">高雄心智圖</a>
 <a href="videos.html">影音</a>
 <a href="courses.html">精品課程</a>
-<a href="articles.html">提升效率</a>
+<a href="articles.html">學習力文章</a>
 <a href="quiz.html">學習檢測</a>
 <a href="login.html">會員登入</a>
 <a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -128,7 +128,7 @@
     <h1>最新消息・每日腦力</h1>
     <p>記憶、專注、學習方法的即時分享，還有強腦力的最新動態。</p>
     <div class="backlinks">
-      <a href="articles.html">→ 深入的提升效率</a>
+      <a href="articles.html">→ 深入的學習力文章</a>
       <a href="courses.html">→ 看看課程</a>
     </div>
   </div>
@@ -175,7 +175,7 @@
       .order('published_at',{ascending:false})
       .limit(60);
     if(error){ feed.innerHTML = `<div class="state" style="color:#d64545;">讀取失敗：${esc(error.message)}<br><span style="font-size:13px;">（若還沒建立 posts 資料表，請先在 Supabase 執行 posts_schema.sql）</span></div>`; return; }
-    if(!data || !data.length){ feed.innerHTML = `<div class="state">目前還沒有消息，很快就會有第一篇！<br><span style="font-size:13px;">先去看看 <a href="articles.html" style="color:var(--teal-deep);font-weight:600;">提升效率</a> 吧。</span></div>`; return; }
+    if(!data || !data.length){ feed.innerHTML = `<div class="state">目前還沒有消息，很快就會有第一篇！<br><span style="font-size:13px;">先去看看 <a href="articles.html" style="color:var(--teal-deep);font-weight:600;">學習力文章</a> 吧。</span></div>`; return; }
     feed.innerHTML = data.map(postCard).join('');
   })();
 

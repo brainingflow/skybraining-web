@@ -142,6 +142,48 @@
   .mod h3{font-size:16.5px;color:var(--indigo);margin-bottom:3px;}
   .mod p{font-size:14px;color:var(--ink-soft);line-height:1.7;}
   .mid-cta{text-align:center;margin-top:30px;}
+  /* ── 共用區塊：為什麼學習力比一切都重要 ── */
+  .why{padding:clamp(46px,7vw,72px) 0 0;}
+  .why h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:22px;}
+  .why-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:26px 28px;box-shadow:var(--sh-sm);}
+  .why-box p{font-size:15px;color:var(--ink-soft);line-height:1.95;}
+  .why-box p+p{margin-top:14px;}
+  .why-src{max-width:820px;margin:10px auto 0;font-size:12px;color:var(--ink-soft);opacity:.75;text-align:right;}
+  @media(max-width:600px){.why-box{padding:20px 18px;}.why-src{text-align:left;}}
+  /* ── 名人這樣學 ── */
+  .mstr{padding:clamp(46px,7vw,72px) 0 0;}
+  .mstr h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:26px;}
+  .mstr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:760px;margin:0 auto;}
+  @media(max-width:860px){.mstr-grid{grid-template-columns:1fr;}}
+  .mcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);transition:transform .25s,box-shadow .25s;}
+  .mcard:hover{transform:translateY(-5px);box-shadow:var(--sh-md);}
+  .mcard b{display:block;font-family:var(--round);font-size:16.5px;color:var(--indigo);margin-bottom:8px;}
+  .mcard p{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+  .mcard .mgo{display:inline-block;margin-top:auto;padding-top:12px;font-family:var(--round);font-weight:700;font-size:13.5px;color:var(--accent-solid);}
+  /* ── 適合誰 ── */
+  .who{padding:clamp(46px,7vw,72px) 0 clamp(40px,6vw,60px);}
+  .who h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .who-list{max-width:820px;margin:0 auto;display:grid;gap:12px;}
+  .who-item{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:18px 22px;box-shadow:var(--sh-sm);}
+  .who-k{flex:none;width:28px;height:28px;border-radius:10px;background:var(--accent);color:#fff;font-family:var(--round);font-weight:800;font-size:15px;display:grid;place-items:center;line-height:1;}
+  .who-item p{font-size:14.5px;color:var(--ink-soft);line-height:1.75;}
+  /* ── 現場照片 ── */
+  .shots{padding:clamp(46px,7vw,72px) 0 0;}
+  .shots h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .shot-box{max-width:820px;margin:0 auto;}
+  .shot-box img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--hair);box-shadow:var(--sh-sm);}
+  .shot-cap{margin-top:12px;font-size:13px;color:var(--ink-soft);line-height:1.75;text-align:center;}
+  /* ── 學員怎麼說 ── */
+  .voice{padding:0 0 clamp(40px,6vw,60px);}
+  .voice h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .voice-grid{max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:860px){.voice-grid{grid-template-columns:1fr;}}
+  .vcard{position:relative;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);}
+  .vq{position:absolute;top:14px;right:20px;font-family:var(--round);font-weight:800;font-size:44px;line-height:1;color:var(--paper-2);}
+  .vcard p{position:relative;font-size:14.5px;color:var(--ink-soft);line-height:1.8;}
+  .vwho{margin-top:16px;}
+  .vname{display:block;font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .vrole{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-soft);}
   /* ── 法遵 / FAQ ── */
   .legal-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-left:4px solid var(--accent-solid);border-radius:14px;padding:18px 22px;font-size:13px;color:var(--ink-soft);line-height:1.8;}
   .faq-sec{padding:clamp(46px,7vw,72px) 0;}
@@ -227,7 +269,7 @@
 <a href="kaohsiung.html">高雄心智圖</a>
 <a href="videos.html">影音</a>
 <a href="courses.html">精品課程</a>
-<a href="articles.html">提升效率</a>
+<a href="articles.html">學習力文章</a>
 <a href="quiz.html">學習檢測</a>
 <a href="login.html">會員登入</a>
 <a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -238,17 +280,17 @@
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow">實體小班・進階實戰</span>
-    <h1>初階給你工具<br>進階帶你<em>上戰場</em></h1>
-    <p class="sub">學過方法不等於用得出來——進階班把記憶與思考整合成實戰力，直接打在最難的科目、最複雜的題型、最真實的考場上</p>
+    <h1>高雄實體進階班：<br>把方法<em>練到考場上</em></h1>
+    <p class="sub">六階段實戰・跨科整合・建議完成初階或同等基礎・NT$26,800</p>
     <div class="cta-row">
-      <a class="btn-main" href="checkout.html?course=onsite-advanced">立即報名 NT$26,800 →</a>
+      <a class="btn-main" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 詢問場次</a>
       <a class="btn-ghost" href="course-onsite-basic.html">先了解初階班</a>
     </div>
     <div class="trust">小班制・名額有限・NT$26,800・線上報名保留名額，建議完成初階或同等基礎</div>
       <p style="margin:12px 0 0;font-size:16px;line-height:1.85;color:#5a5a5a">進階實體班一樣在<strong>高雄</strong>上課。想一次看完高雄實體課的兩個階段、上課地點與常見問題，可以看 <a href="kaohsiung.html" style="color:#e8590c;font-weight:800;text-decoration:none;border-bottom:2px solid rgba(232,89,12,.35)">高雄心智圖・記憶力課程總覽 →</a></p>
     <div class="guarband">
       <span class="gb-k">零風險報名</span>
-      <div class="gb-t">上完第一堂課，當天覺得沒幫助，學費全額退</div>
+      <div class="gb-t">上完第一堂課，當天不滿意，學費全額退</div>
       <div class="gb-p">不是試聽、不是體驗課，是真的上完一整堂正課再決定。上課當天當場告訴老師哪裡沒幫助，NT$26,800 學費全額退回原付款方式，7 個工作天內完成。我們敢這樣寫，是因為方法有沒有用，上一堂課就看得出來。<a href="refund.html">看完整退費政策 →</a></div>
     </div>
   </div>
@@ -267,6 +309,18 @@
       <div class="pcard reveal"><div class="pi">🥋</div><b>缺乏實戰演練</b><p>方法沒有經過考試強度的壓力測試，就像沒下過水的游泳選手</p></div>
       <div class="pcard reveal"><div class="pi">⏳</div><b>能力還沒定型</b><p>學了但還不是「自己的」——不用刻意想就能用出來，才叫真的會</p></div>
     </div>
+  </div>
+</section>
+
+<!-- 共用區塊：為什麼學習力比一切都重要 -->
+<section class="why">
+  <div class="wrap">
+    <h2 class="reveal">為什麼學習力比一切都重要</h2>
+    <div class="why-box reveal">
+      <p>世界變得太快，沒有人能事先把孩子要用的知識全部教完。OpenAI 執行長 Sam Altman 在 2025 年 8 月的 People by WTF 播客訪談裡說，學習本身就有價值，而「學會怎麼學」這件事本身就是一種能力，一輩子都用得到；不論學的是電腦工程還是生物，先把「學東西」練好，之後學任何新東西都會快。</p>
+      <p>這不是要孩子少學知識，而是先把「怎麼學」練成一套可以重複使用的流程。強腦力教的就是這一層：把記憶、聯想、心智圖變成孩子自己的方法。方法在手上，換科目、換考試、換時代，他都有辦法重新學一次。</p>
+    </div>
+    <div class="why-src">出處：People by WTF 播客（主持人 Nikhil Kamath），2025-08-14</div>
   </div>
 </section>
 
@@ -341,21 +395,69 @@
 <section class="cur" id="content">
   <div class="wrap">
     <h2 class="reveal">課程內容</h2>
-    <p class="lead reveal">六個階段，把方法鍛造成上得了考場的實戰力</p>
+    <p class="lead reveal" style="max-width:54ch;margin-left:auto;margin-right:auto;text-align:left;font-size:15.5px;line-height:1.95;">方法都學過了，一進考場還是退回老路，這不是不夠認真，是能力還沒定型。高雄實體進階班的系統源自世界腦力冠軍記憶大師，從診斷開始：先找出孩子現在的盲區，再加上進階記憶技術、跨科整合與更深的思考模板，最後用貼近真實考試的題目與情境演練。六個階段跑完，方法才不會只停在平常練習的時候。</p>
     <div class="cur-note">＊單元名稱與數量將依正式課程內容調整</div>
-    <div class="mod reveal"><div class="mod-n">01</div><div><h3>快速複習與診斷</h3><p>帶孩子快速複習核心方法，並診斷目前的弱點與盲區</p></div></div>
-    <div class="mod reveal"><div class="mod-n">02</div><div><h3>進階記憶技術</h3><p>加入更高效的記憶技巧，處理更大量、更抽象的內容</p></div></div>
-    <div class="mod reveal"><div class="mod-n">03</div><div><h3>跨科整合應用</h3><p>把記憶與思考方法橫跨各科整合，面對綜合題型</p></div></div>
-    <div class="mod reveal"><div class="mod-n">04</div><div><h3>思考模板深化</h3><p>深化拆解、串連與產出的思考框架，訓練更複雜的問題</p></div></div>
-    <div class="mod reveal"><div class="mod-n">05</div><div><h3>考試實戰演練</h3><p>用貼近真實考試的題目與情境，實戰演練並修正</p></div></div>
-    <div class="mod reveal"><div class="mod-n">06</div><div><h3>專題與定型</h3><p>以專題整合所學，讓能力定型成孩子長期的實力</p></div></div>
-    <div class="mid-cta reveal"><a class="btn-main" href="checkout.html?course=onsite-advanced">立即報名 NT$26,800 →</a></div>
+    <div class="mod reveal"><div class="mod-n">01</div><div><h3>快速複習與診斷</h3><p>先帶孩子複習核心方法，並找出目前的弱點與盲區。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">02</div><div><h3>進階記憶技術</h3><p>處理更大量、更抽象的內容，把天花板再拉高一層。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">03</div><div><h3>跨科整合應用</h3><p>把記憶與思考方法橫跨各科整合，面對綜合題型。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">04</div><div><h3>思考模板深化</h3><p>拆解、串連、產出的框架用在更複雜的問題上。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">05</div><div><h3>考試實戰演練</h3><p>用貼近真實考試的題目與情境演練並修正。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">06</div><div><h3>專題與定型</h3><p>以專題整合所學，讓能力定型成孩子長期的實力。</p></div></div>
+    <div class="mid-cta reveal"><a class="btn-main" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 詢問場次</a></div>
+  </div>
+</section>
+
+<!-- 名人這樣學 -->
+<section class="mstr">
+  <div class="wrap">
+    <h2 class="reveal">名人這樣學</h2>
+    <div class="mstr-grid">
+      <a class="mcard reveal" href="article-master-ishikawa.html"><b>石川馨：工具要簡單到願意拿起來</b><p>石川馨相信工具要簡單到大家願意用，複雜的方法再正確也沒有人會拿起來。魚骨圖就是這樣一張圖：問題在右，原因往左拆，一路問五次為什麼，答案常常藏在第三、第四層。進階班的弱點診斷用的就是這種拆法。</p><span class="mgo">讀這一篇 →</span></a>
+      <a class="mcard reveal" href="article-master-disney.html"><b>迪士尼：把比較搬到眼前</b><p>人只能看到局部的時候很難判斷整體，這是工作記憶的限制。迪士尼把整部片釘上牆，就是把比較這件事從腦內搬到眼前。進階班的跨科整合也一樣：先把一整個範圍攤開來看，再決定哪裡要補、哪裡可以放。</p><span class="mgo">讀這一篇 →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 現場照片 -->
+<section class="shots">
+  <div class="wrap">
+    <h2 class="reveal">現場照片</h2>
+    <figure class="shot-box reveal">
+      <picture>
+        <source type="image/webp" srcset="img-onsite-class-900.webp 900w, img-onsite-class-1600.webp 1600w" sizes="(max-width:880px) 100vw, 820px">
+        <img src="img-onsite-class-900.jpg" srcset="img-onsite-class-900.jpg 900w, img-onsite-class-1600.jpg 1600w" sizes="(max-width:880px) 100vw, 820px" width="1600" height="900" loading="lazy" decoding="async" alt="Sky 老師在高雄實體課現場走到長桌旁，帶家長與孩子一起練習">
+      </picture>
+      <figcaption class="shot-cap">高雄教室現場：進階班一樣是當面帶練，練到考場上用得出來。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 適合誰 -->
+<section class="who">
+  <div class="wrap">
+    <h2 class="reveal">適合誰</h2>
+    <div class="who-list">
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>已完成實體初階班或線上《強化思維初階班》的孩子。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>平常練得好、考試一緊張就用不出方法的學生。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>綜合題、跨章節題一出現就打結，想把弱點一個一個處理掉的家庭。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 學員怎麼說 -->
+<section class="voice">
+  <div class="wrap">
+    <h2 class="reveal">學員怎麼說</h2>
+    <div class="voice-grid">
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>以前是考前熬夜狂背型，現在提前兩週排間隔複習，睡飽去考反而穩定前十。</p><div class="vwho"><span class="vname">蘇郁婷</span><span class="vrole">18歲・高三學生</span></div></div>
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>我陪兒子一起上課，兩個人晚上輪流考對方，他段考進步、我連簡報都變得有邏輯。</p><div class="vwho"><span class="vname">吳建霖</span><span class="vrole">47歲・高一家長</span></div></div>
+    </div>
   </div>
 </section>
 
 <section style="padding:0 0 10px;">
   <div class="wrap">
-    <div class="legal-box reveal"><strong>報名前請留意：</strong>本課程為高雄實體小班課。線上完成付款即為<strong>保留名額</strong>，我們會在 1 個工作天內用 LINE 與您聯繫，確認孩子的年級、最近梯次與上課地點。若梯次無法配合，可免費改期，不會有任何自動扣款；改期以外不提供退費，退費僅限上課當天於現場提出。想先問清楚再報名也完全沒問題，<a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" style="color:var(--accent-solid);">加 LINE 洽詢</a>即可。付款成功後自動開立電子發票寄至您的 email。完整說明請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
+    <div class="legal-box reveal"><strong>報名前請留意：</strong>本課程為高雄實體小班課。線上完成付款即為<strong>保留名額</strong>，我們會在 1 個工作天內用 LINE 與您聯繫，確認孩子的年級、最近梯次與上課地點。上完第一堂課的當天，若認為對孩子沒有幫助，可申請全額退費，退回原付款方式，7 個工作天內完成；若梯次無法配合，可免費改期，不會有任何自動扣款；改期以外不提供退費，退費僅限上課當天於現場提出。想先問清楚再報名也完全沒問題，<a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" style="color:var(--accent-solid);">加 LINE 洽詢</a>即可。付款成功後自動開立電子發票寄至您的 email。完整說明請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
   </div>
 </section>
 
@@ -372,15 +474,15 @@
 <section class="buy-sec" id="buy">
   <div class="wrap">
     <div class="buy-cta reveal">
-      <h2>把方法整合成孩子的實戰力</h2>
-      <p>小班制・名額有限・NT$26,800・線上報名先保留名額，專人 LINE 與你確認梯次</p>
+      <h2>初階給工具，進階是讓工具在壓力下還留在手上。</h2>
+      <p>梯次、分組與基礎確認</p>
       <div class="cta-row">
-        <a class="btn-main" href="checkout.html?course=onsite-advanced">立即報名 NT$26,800 →</a>
+        <a class="btn-main" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 詢問場次</a>
         <a class="btn-ghost" href="course-onsite-basic.html">先了解初階班</a>
       </div>
     <div class="guarband">
       <span class="gb-k">零風險報名</span>
-      <div class="gb-t">上完第一堂課，當天覺得沒幫助，學費全額退</div>
+      <div class="gb-t">上完第一堂課，當天不滿意，學費全額退</div>
       <div class="gb-p">不是試聽、不是體驗課，是真的上完一整堂正課再決定。上課當天當場告訴老師哪裡沒幫助，NT$26,800 學費全額退回原付款方式，7 個工作天內完成。我們敢這樣寫，是因為方法有沒有用，上一堂課就看得出來。<a href="refund.html">看完整退費政策 →</a></div>
     </div>
     </div>

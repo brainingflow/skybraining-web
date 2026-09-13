@@ -142,6 +142,49 @@
   .mod h3{font-size:16.5px;color:var(--indigo);margin-bottom:3px;}
   .mod p{font-size:14px;color:var(--ink-soft);line-height:1.7;}
   .mid-cta{text-align:center;margin-top:30px;}
+  /* ── 共用區塊：為什麼學習力比一切都重要 ── */
+  .why{padding:clamp(46px,7vw,72px) 0 0;}
+  .why h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:22px;}
+  .why-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:26px 28px;box-shadow:var(--sh-sm);}
+  .why-box p{font-size:15px;color:var(--ink-soft);line-height:1.95;}
+  .why-box p+p{margin-top:14px;}
+  .why-src{max-width:820px;margin:10px auto 0;font-size:12px;color:var(--ink-soft);opacity:.75;text-align:right;}
+  @media(max-width:600px){.why-box{padding:20px 18px;}.why-src{text-align:left;}}
+  /* ── 名人這樣學 ── */
+  .mstr{padding:clamp(46px,7vw,72px) 0 0;}
+  .mstr h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:26px;}
+  .mstr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:860px){.mstr-grid{grid-template-columns:1fr;}}
+  .mcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);transition:transform .25s,box-shadow .25s;}
+  .mcard:hover{transform:translateY(-5px);box-shadow:var(--sh-md);}
+  .mcard b{display:block;font-family:var(--round);font-size:16.5px;color:var(--indigo);margin-bottom:8px;}
+  .mcard p{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+  .mcard .mgo{display:inline-block;margin-top:auto;padding-top:12px;font-family:var(--round);font-weight:700;font-size:13.5px;color:var(--accent-solid);}
+  /* ── 適合誰 ── */
+  .who{padding:clamp(46px,7vw,72px) 0 clamp(40px,6vw,60px);}
+  .who h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .who-list{max-width:820px;margin:0 auto;display:grid;gap:12px;}
+  .who-item{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:18px 22px;box-shadow:var(--sh-sm);}
+  .who-k{flex:none;width:28px;height:28px;border-radius:10px;background:var(--accent);color:#fff;font-family:var(--round);font-weight:800;font-size:15px;display:grid;place-items:center;line-height:1;}
+  .who-item p{font-size:14.5px;color:var(--ink-soft);line-height:1.75;}
+  /* ── 現場照片 ── */
+  .shots{padding:clamp(46px,7vw,72px) 0 0;}
+  .shots h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .shot-box{max-width:820px;margin:0 auto;}
+  .shot-box img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--hair);box-shadow:var(--sh-sm);}
+  .shot-cap{margin-top:12px;font-size:13px;color:var(--ink-soft);line-height:1.75;text-align:center;}
+  /* ── 學員怎麼說 ── */
+  .voice{padding:0 0 clamp(40px,6vw,60px);}
+  .voice h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .voice-grid{max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:860px){.voice-grid{grid-template-columns:1fr;}}
+  .vcard{position:relative;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);}
+  .vq{position:absolute;top:14px;right:20px;font-family:var(--round);font-weight:800;font-size:44px;line-height:1;color:var(--paper-2);}
+  .vcard p{position:relative;font-size:14.5px;color:var(--ink-soft);line-height:1.8;}
+  .vwho{margin-top:16px;}
+  .vname{display:block;font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .vrole{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-soft);}
+  .stat .num.sm{font-size:clamp(24px,3.4vw,36px);}
   /* ── 法遵 / FAQ ── */
   .legal-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-left:4px solid var(--accent-solid);border-radius:14px;padding:18px 22px;font-size:13px;color:var(--ink-soft);line-height:1.8;}
   .faq-sec{padding:clamp(46px,7vw,72px) 0;}
@@ -221,7 +264,7 @@
 <a href="kaohsiung.html">高雄心智圖</a>
 <a href="videos.html">影音</a>
 <a href="courses.html">精品課程</a>
-<a href="articles.html">提升效率</a>
+<a href="articles.html">學習力文章</a>
 <a href="quiz.html">學習檢測</a>
 <a href="login.html">會員登入</a>
 <a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -232,12 +275,11 @@
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow">LEVEL 2・超級思考</span>
-    <h1>會背的孩子拿分數<br><em>會想的孩子拿未來</em></h1>
+    <h1>心智圖課程：<br>把知識連成<em>一張網</em></h1>
     <h2 style="margin:16px auto 0;font-family:var(--round);font-weight:700;font-size:clamp(14.5px,1.9vw,18px);line-height:1.65;color:var(--ink-soft);max-width:46ch;">高雄心智圖課程《瘋狂心智圖》——Sky 老師的心智圖教學與思考力訓練，線上授課全台可學</h2>
-    <p class="sub">記得住只是入場券。《瘋狂心智圖》把大腦練成一張會自己長大的網——題目再怎麼變、世界再怎麼變，他都想得出來</p>
+    <p class="sub">線上《瘋狂心智圖》・聯想訓練與思考模板・買斷永久觀看 NT$7,800</p>
     <div class="cta-row">
-      <a class="btn-main" href="checkout.html?course=super-thinking">立即報名 NT$7,800 →</a>
-      <a class="btn-ghost" href="login.html">▶ 先免費試看一堂</a>
+      <a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a>
     </div>
     <div class="trust">適合 10 歲以上到 35 歲・買斷永久觀看・統一金流 PAYUNi・電子發票</div>
   </div>
@@ -256,6 +298,18 @@
       <div class="pcard reveal"><div class="pi">📚</div><b>筆記抄滿卻讀不懂</b><p>抄了一整本，回家看不懂自己在抄什麼</p></div>
       <div class="pcard reveal"><div class="pi">🎯</div><b>只會找標準答案</b><p>考試有標準答案，人生沒有——這才是最該擔心的事</p></div>
     </div>
+  </div>
+</section>
+
+<!-- 共用區塊：為什麼學習力比一切都重要 -->
+<section class="why">
+  <div class="wrap">
+    <h2 class="reveal">為什麼學習力比一切都重要</h2>
+    <div class="why-box reveal">
+      <p>世界變得太快，沒有人能事先把孩子要用的知識全部教完。OpenAI 執行長 Sam Altman 在 2025 年 8 月的 People by WTF 播客訪談裡說，學習本身就有價值，而「學會怎麼學」這件事本身就是一種能力，一輩子都用得到；不論學的是電腦工程還是生物，先把「學東西」練好，之後學任何新東西都會快。</p>
+      <p>這不是要孩子少學知識，而是先把「怎麼學」練成一套可以重複使用的流程。強腦力教的就是這一層：把記憶、聯想、心智圖變成孩子自己的方法。方法在手上，換科目、換考試、換時代，他都有辦法重新學一次。</p>
+    </div>
+    <div class="why-src">出處：People by WTF 播客（主持人 Nikhil Kamath），2025-08-14</div>
   </div>
 </section>
 
@@ -313,12 +367,12 @@
 <!-- ④ 數字 -->
 <section class="stats">
   <div class="wrap">
-    <h2 class="reveal">數字不會說謊</h2>
-    <p class="lead reveal">來自學員實際回報的成果</p>
+    <h2 class="reveal">這門課，一眼看清</h2>
+    <p class="lead reveal">規格與數字都在這裡</p>
     <div class="stat-grid">
-      <div class="stat reveal"><div class="num">×5</div><div class="lab">想法產出量</div><div class="note">心智圖 vs 硬想</div></div>
-      <div class="stat reveal"><div class="num">85→98</div><div class="lab">段考平均</div><div class="note">學員實例</div></div>
-      <div class="stat reveal"><div class="num">+18分</div><div class="lab">會考比模擬考進步</div><div class="note">學員實例</div></div>
+      <div class="stat reveal"><div class="num">6 個單元</div><div class="lab">聯想到思考模板</div></div>
+      <div class="stat reveal"><div class="num sm">2 套思考模板</div><div class="lab">拆解・串連整合</div></div>
+      <div class="stat reveal"><div class="num">∞</div><div class="lab">買斷永久觀看</div></div>
       <div class="stat reveal"><div class="num">94%</div><div class="lab">課程完課率</div></div>
     </div>
   </div>
@@ -328,21 +382,67 @@
 <section class="cur" id="content">
   <div class="wrap">
     <h2 class="reveal">課程內容</h2>
-    <p class="lead reveal">六個單元，把聯想力和思考模板練成孩子自己的武器</p>
+    <p class="lead reveal" style="max-width:54ch;margin-left:auto;margin-right:auto;text-align:left;font-size:15.5px;line-height:1.95;">孩子背得起來，卻常常一變題就卡住。那多半不是不夠熟，是知識還是一顆一顆分開放的，沒有連成網。《瘋狂心智圖》教的是一套畫得出來的思考流程：中心放主題，主幹往外拉，關鍵字掛上去，再把彼此的關係寫在線上。作文要開頭、報告要架構、複習要抓重點，用的都是同一張圖。</p>
     <div class="cur-note">＊單元名稱與數量將依正式課程內容調整</div>
-    <div class="mod reveal"><div class="mod-n">01</div><div><h3>為什麼要「聯想」：把點連成網</h3><p>讓孩子理解知識不是一顆顆孤立的點，而是可以彼此連結的網絡</p></div></div>
-    <div class="mod reveal"><div class="mod-n">02</div><div><h3>聯想力訓練：讓知識彼此勾連</h3><p>透過遊戲化練習，訓練快速建立關聯、產生大量想法的能力</p></div></div>
-    <div class="mod reveal"><div class="mod-n">03</div><div><h3>思考模板一：拆解問題</h3><p>面對陌生題目，先學會把大問題拆成小問題，找到切入點</p></div></div>
-    <div class="mod reveal"><div class="mod-n">04</div><div><h3>思考模板二：串連與整合</h3><p>把拆開的線索重新組織，串起已學的知識，形成完整的答案</p></div></div>
-    <div class="mod reveal"><div class="mod-n">05</div><div><h3>實戰應用：寫作與表達</h3><p>把聯想與模板用到作文、報告與口語表達，讓孩子言之有物</p></div></div>
-    <div class="mod reveal"><div class="mod-n">06</div><div><h3>實戰應用：解題與創意發想</h3><p>延伸到數理解題與開放式思考，邏輯與創意並進</p></div></div>
-    <div class="mid-cta reveal"><a class="btn-main" href="checkout.html?course=super-thinking">立即報名 NT$7,800 →</a></div>
+    <div class="mod reveal"><div class="mod-n">01</div><div><h3>為什麼要聯想</h3><p>讓孩子看懂知識是可以互相連起來的網，不是一顆顆孤立的點。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">02</div><div><h3>聯想力訓練</h3><p>用遊戲化的練習，練快速建立關聯、一次拉出大量想法。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">03</div><div><h3>思考模板一，拆解問題</h3><p>面對陌生題目，先把大問題拆成小問題，找到切入點。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">04</div><div><h3>思考模板二，串連與整合</h3><p>把拆開的線索重新組織，接上已經學過的知識。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">05</div><div><h3>實戰應用一</h3><p>寫作與表達，把聯想與模板用到作文、報告與口語表達。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">06</div><div><h3>實戰應用二</h3><p>解題與創意發想，延伸到數理解題與開放式思考。</p></div></div>
+    <div class="mid-cta reveal"><a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a></div>
+  </div>
+</section>
+
+<!-- 名人這樣學 -->
+<section class="mstr">
+  <div class="wrap">
+    <h2 class="reveal">名人這樣學</h2>
+    <div class="mstr-grid">
+      <a class="mcard reveal" href="article-master-buzan.html"><b>博贊：把畫法寫成規則</b><p>心智圖這個名字，是英國人東尼・博贊在 1974 年的 BBC 節目《Use Your Head》裡定名的。他自己說這不是原創，前面早有人這樣畫；他做的是把規則寫清楚：中心一個主題、一條線一個關鍵字、多用顏色與小圖。</p><span class="mgo">讀這一篇 →</span></a>
+      <a class="mcard reveal" href="article-master-disney.html"><b>迪士尼：整部片釘上牆</b><p>1930 年代的迪士尼工作室，把重點畫稿一張張釘上牆，整組人第一次能一眼看完整部片，哪裡拖、哪裡跳全看得出來。分鏡板的規則很簡單：一格一個關鍵畫面，而且可以隨時拔下來換位置。心智圖的分支也是這樣用的。</p><span class="mgo">讀這一篇 →</span></a>
+      <a class="mcard reveal" href="article-master-feynman.html"><b>費曼：先畫關係，再算數字</b><p>費曼在 1949 年發表的畫法，是把幾頁算式的結構先畫成線和點：誰跟誰互動、在哪裡、順序是什麼。先畫關係，再算數字。他還有一本筆記本專門寫「我不知道的東西」——先誠實標出還不會的地方，再一題一題補。</p><span class="mgo">讀這一篇 →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 現場照片 -->
+<section class="shots">
+  <div class="wrap">
+    <h2 class="reveal">現場照片</h2>
+    <figure class="shot-box reveal">
+      <img src="img-class-talk-900.jpg" srcset="img-class-talk-900.jpg 900w, img-class-talk-1600.jpg 1600w" sizes="(max-width:880px) 100vw, 820px" width="1600" height="900" loading="lazy" decoding="async" alt="Sky 老師在高雄場次現場站著講課，家長坐在長桌旁聽講，背景螢幕是強腦力 logo">
+      <figcaption class="shot-cap">高雄場次現場：Sky 老師在台前講解，家長坐在台下一起聽。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 適合誰 -->
+<section class="who">
+  <div class="wrap">
+    <h2 class="reveal">適合誰</h2>
+    <div class="who-list">
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>背得起來、一換題型就卡住的孩子。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>作文與報告寫不出架構、筆記抄滿卻讀不懂的孩子。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>已經上過《過目不忘》，想從「記得住」進到「想得出來」的學生。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 學員怎麼說 -->
+<section class="voice">
+  <div class="wrap">
+    <h2 class="reveal">學員怎麼說</h2>
+    <div class="voice-grid">
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>最有感的是上課變得敢舉手，因為知識在腦中有畫面、有結構，講得出來。</p><div class="vwho"><span class="vname">洪偉傑</span><span class="vrole">16歲・高一學生</span></div></div>
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>我陪兒子一起上課，兩個人晚上輪流考對方，他段考進步、我連簡報都變得有邏輯。</p><div class="vwho"><span class="vname">吳建霖</span><span class="vrole">47歲・高一家長</span></div></div>
+    </div>
   </div>
 </section>
 
 <section style="padding:0 0 10px;">
   <div class="wrap">
-    <div class="legal-box reveal"><strong>購買前請留意：</strong>本課程為線上數位影音內容，屬「一經提供即完成之數位內容」。依規定，於您在結帳頁完成付款後，將排除七天猶豫期（不適用七日內無條件退費）。付款採統一金流 PAYUNi，成功後自動開立電子發票寄至您的 email。完整內容請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
+    <div class="legal-box reveal"><strong>購買前請留意：</strong>本課程為線上數位影音內容，屬「一經提供即完成之數位內容」。線上課不退費：完成付款即表示同意排除七天鑑賞期，沒有任何退費條件。付款採統一金流 PAYUNi，成功後自動開立電子發票寄至您的 email。完整內容請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
   </div>
 </section>
 
@@ -367,11 +467,10 @@
 <section class="buy-sec" id="buy">
   <div class="wrap">
     <div class="buy-cta reveal">
-      <h2>讓孩子從「會背」變成「會想」</h2>
-      <p>買斷永久觀看・NT$7,800・統一金流 PAYUNi・電子發票</p>
+      <h2>記得住是入場券，想得出來才是帶得走的能力。</h2>
+      <p>30 分鐘先體會把字變成畫面這一步。</p>
       <div class="cta-row">
-        <a class="btn-main" href="checkout.html?course=super-thinking">立即報名 NT$7,800 →</a>
-        <a class="btn-ghost" href="login.html">▶ 先免費試看一堂</a>
+        <a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a>
       </div>
     </div>
   </div>

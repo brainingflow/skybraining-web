@@ -142,6 +142,48 @@
   .mod h3{font-size:16.5px;color:var(--indigo);margin-bottom:3px;}
   .mod p{font-size:14px;color:var(--ink-soft);line-height:1.7;}
   .mid-cta{text-align:center;margin-top:30px;}
+  /* ── 共用區塊：為什麼學習力比一切都重要 ── */
+  .why{padding:clamp(46px,7vw,72px) 0 0;}
+  .why h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:22px;}
+  .why-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:26px 28px;box-shadow:var(--sh-sm);}
+  .why-box p{font-size:15px;color:var(--ink-soft);line-height:1.95;}
+  .why-box p+p{margin-top:14px;}
+  .why-src{max-width:820px;margin:10px auto 0;font-size:12px;color:var(--ink-soft);opacity:.75;text-align:right;}
+  @media(max-width:600px){.why-box{padding:20px 18px;}.why-src{text-align:left;}}
+  /* ── 名人這樣學 ── */
+  .mstr{padding:clamp(46px,7vw,72px) 0 0;}
+  .mstr h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:26px;}
+  .mstr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:860px){.mstr-grid{grid-template-columns:1fr;}}
+  .mcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);transition:transform .25s,box-shadow .25s;}
+  .mcard:hover{transform:translateY(-5px);box-shadow:var(--sh-md);}
+  .mcard b{display:block;font-family:var(--round);font-size:16.5px;color:var(--indigo);margin-bottom:8px;}
+  .mcard p{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+  .mcard .mgo{display:inline-block;margin-top:auto;padding-top:12px;font-family:var(--round);font-weight:700;font-size:13.5px;color:var(--accent-solid);}
+  /* ── 適合誰 ── */
+  .who{padding:clamp(46px,7vw,72px) 0 clamp(40px,6vw,60px);}
+  .who h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .who-list{max-width:820px;margin:0 auto;display:grid;gap:12px;}
+  .who-item{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:18px 22px;box-shadow:var(--sh-sm);}
+  .who-k{flex:none;width:28px;height:28px;border-radius:10px;background:var(--accent);color:#fff;font-family:var(--round);font-weight:800;font-size:15px;display:grid;place-items:center;line-height:1;}
+  .who-item p{font-size:14.5px;color:var(--ink-soft);line-height:1.75;}
+  /* ── 現場照片 ── */
+  .shots{padding:clamp(46px,7vw,72px) 0 0;}
+  .shots h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .shot-box{max-width:820px;margin:0 auto;}
+  .shot-box img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--hair);box-shadow:var(--sh-sm);}
+  .shot-cap{margin-top:12px;font-size:13px;color:var(--ink-soft);line-height:1.75;text-align:center;}
+  /* ── 學員怎麼說 ── */
+  .voice{padding:0 0 clamp(40px,6vw,60px);}
+  .voice h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);text-align:center;color:var(--indigo);margin-bottom:24px;}
+  .voice-grid{max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:860px){.voice-grid{grid-template-columns:1fr;}}
+  .vcard{position:relative;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm);}
+  .vq{position:absolute;top:14px;right:20px;font-family:var(--round);font-weight:800;font-size:44px;line-height:1;color:var(--paper-2);}
+  .vcard p{position:relative;font-size:14.5px;color:var(--ink-soft);line-height:1.8;}
+  .vwho{margin-top:16px;}
+  .vname{display:block;font-weight:700;font-size:14.5px;color:var(--indigo);}
+  .vrole{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-soft);}
   /* ── 法遵 / FAQ ── */
   .legal-box{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-left:4px solid var(--accent-solid);border-radius:14px;padding:18px 22px;font-size:13px;color:var(--ink-soft);line-height:1.8;}
   .faq-sec{padding:clamp(46px,7vw,72px) 0;}
@@ -221,7 +263,7 @@
 <a href="kaohsiung.html">高雄心智圖</a>
 <a href="videos.html">影音</a>
 <a href="courses.html">精品課程</a>
-<a href="articles.html">提升效率</a>
+<a href="articles.html">學習力文章</a>
 <a href="quiz.html">學習檢測</a>
 <a href="login.html">會員登入</a>
 <a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -232,12 +274,11 @@
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow">LEVEL 1・超級記憶力</span>
-    <h1>死背 10 小時<br>輸給<em>會記的人 10 分鐘</em></h1>
+    <h1>記憶力課程：<br>把課本變成<em>畫面</em></h1>
     <h2 style="margin:16px auto 0;font-family:var(--round);font-weight:700;font-size:clamp(14.5px,1.9vw,18px);line-height:1.65;color:var(--ink-soft);max-width:46ch;">兒童記憶力訓練課程《過目不忘》——圖像記憶×記憶宮殿的超級記憶力教學</h2>
-    <p class="sub">腦力不是天生的，是可以鍛鍊的。《過目不忘》教的是一套世界記憶大賽等級的記憶技術——把課本變成畫面，背一次，記一輩子</p>
+    <p class="sub">線上《過目不忘》・圖像記憶與記憶宮殿・買斷永久觀看 NT$4,200</p>
     <div class="cta-row">
-      <a class="btn-main" href="checkout.html?course=super-memory">立即報名 NT$4,200 →</a>
-      <a class="btn-ghost" href="login.html">▶ 先免費試看一堂</a>
+      <a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a>
     </div>
     <div class="trust">適合 10 歲以上到 35 歲・買斷永久觀看・統一金流 PAYUNi・電子發票</div>
   </div>
@@ -256,6 +297,18 @@
       <div class="pcard reveal"><div class="pi">💸</div><b>補習補不到點</b><p>補習班教的是「進度」，從來沒人教「怎麼記」——錢一直繳，洞一直在</p></div>
       <div class="pcard reveal"><div class="pi">📉</div><b>分數卡死不動</b><p>用錯方法，再努力都是原地踏步——這不是努力問題，是方法問題</p></div>
     </div>
+  </div>
+</section>
+
+<!-- 共用區塊：為什麼學習力比一切都重要 -->
+<section class="why">
+  <div class="wrap">
+    <h2 class="reveal">為什麼學習力比一切都重要</h2>
+    <div class="why-box reveal">
+      <p>世界變得太快，沒有人能事先把孩子要用的知識全部教完。OpenAI 執行長 Sam Altman 在 2025 年 8 月的 People by WTF 播客訪談裡說，學習本身就有價值，而「學會怎麼學」這件事本身就是一種能力，一輩子都用得到；不論學的是電腦工程還是生物，先把「學東西」練好，之後學任何新東西都會快。</p>
+      <p>這不是要孩子少學知識，而是先把「怎麼學」練成一套可以重複使用的流程。強腦力教的就是這一層：把記憶、聯想、心智圖變成孩子自己的方法。方法在手上，換科目、換考試、換時代，他都有辦法重新學一次。</p>
+    </div>
+    <div class="why-src">出處：People by WTF 播客（主持人 Nikhil Kamath），2025-08-14</div>
   </div>
 </section>
 
@@ -315,12 +368,12 @@
 <!-- ④ 數字 -->
 <section class="stats">
   <div class="wrap">
-    <h2 class="reveal">數字不會說謊</h2>
-    <p class="lead reveal">來自學員實際回報的成果</p>
+    <h2 class="reveal">這門課，一眼看清</h2>
+    <p class="lead reveal">規格與數字都在這裡</p>
     <div class="stat-grid">
-      <div class="stat reveal"><div class="num">×10</div><div class="lab">記憶速度有感提升</div><div class="note">圖像 vs 死背</div></div>
-      <div class="stat reveal"><div class="num">−50%</div><div class="lab">複習時間</div></div>
-      <div class="stat reveal"><div class="num">2000→5000</div><div class="lab">三個月單字量</div><div class="note">學員實例</div></div>
+      <div class="stat reveal"><div class="num">6 個單元</div><div class="lab">從原理到實戰</div></div>
+      <div class="stat reveal"><div class="num">10 歲＋</div><div class="lab">適合 10 歲以上到 35 歲</div></div>
+      <div class="stat reveal"><div class="num">∞</div><div class="lab">買斷永久觀看</div></div>
       <div class="stat reveal"><div class="num">12,000+</div><div class="lab">累計學員</div></div>
     </div>
   </div>
@@ -330,21 +383,67 @@
 <section class="cur" id="content">
   <div class="wrap">
     <h2 class="reveal">課程內容</h2>
-    <p class="lead reveal">六個單元，從原理到實戰，一步一步把方法練成能力</p>
+    <p class="lead reveal" style="max-width:54ch;margin-left:auto;margin-right:auto;text-align:left;font-size:15.5px;line-height:1.95;">孩子每天花在背誦上的時間，比你想的多。單字、課文、公式、年代，多半是靠一次一次重複硬記下來的，考完就掉。《過目不忘》換一條路：先把文字轉成畫面，再把畫面掛進一座自己的記憶宮殿，讓內容有地方放、有順序可循。這套系統源自世界腦力冠軍記憶大師，可以套到任何科目，不是某一科的口訣。</p>
     <div class="cur-note">＊單元名稱與數量將依正式課程內容調整</div>
-    <div class="mod reveal"><div class="mod-n">01</div><div><h3>認識你的大腦：為什麼死背沒用</h3><p>用簡單的實驗讓孩子親身體會「畫面」比「文字」好記，先建立學習動機</p></div></div>
-    <div class="mod reveal"><div class="mod-n">02</div><div><h3>圖像記憶入門：把文字變畫面</h3><p>學會誇張、聯想、感官化三個技巧，把任何抽象詞變成記得住的圖像</p></div></div>
-    <div class="mod reveal"><div class="mod-n">03</div><div><h3>記憶宮殿：一次記住一長串</h3><p>建立自己的第一座記憶宮殿，練習記住清單、順序與流程</p></div></div>
-    <div class="mod reveal"><div class="mod-n">04</div><div><h3>實戰應用：英文單字與國語課文</h3><p>把方法套用到最常見的背誦題型，一步一步示範怎麼做</p></div></div>
-    <div class="mod reveal"><div class="mod-n">05</div><div><h3>實戰應用：公式、歷史年代與地理</h3><p>延伸到數理與社會科，讓不同科目都能用同一套方法</p></div></div>
-    <div class="mod reveal"><div class="mod-n">06</div><div><h3>複習系統：讓記憶留得更久</h3><p>搭配間隔複習的節奏，把短期記得變成長期記牢</p></div></div>
-    <div class="mid-cta reveal"><a class="btn-main" href="checkout.html?course=super-memory">立即報名 NT$4,200 →</a></div>
+    <div class="mod reveal"><div class="mod-n">01</div><div><h3>先弄懂大腦為什麼記不住死背的東西，孩子才願意換方法。</h3></div></div>
+    <div class="mod reveal"><div class="mod-n">02</div><div><h3>圖像記憶入門</h3><p>用誇張、聯想、感官化三個技巧，把抽象的字變成記得住的畫面。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">03</div><div><h3>記憶宮殿</h3><p>蓋出自己的第一座宮殿，用來記清單、順序與流程。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">04</div><div><h3>學科實戰一</h3><p>英文單字與國語課文，把方法套到最常見的背誦題型。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">05</div><div><h3>學科實戰二</h3><p>公式、歷史年代與地理，讓不同科目都能用同一套方法。</p></div></div>
+    <div class="mod reveal"><div class="mod-n">06</div><div><h3>複習系統</h3><p>搭配間隔複習的節奏，把短期記得變成長期記牢。</p></div></div>
+    <div class="mid-cta reveal"><a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a></div>
+  </div>
+</section>
+
+<!-- 名人這樣學 -->
+<section class="mstr">
+  <div class="wrap">
+    <h2 class="reveal">名人這樣學</h2>
+    <div class="mstr-grid">
+      <a class="mcard reveal" href="article-master-tesla.html"><b>特斯拉：先在腦中跑一遍</b><p>特斯拉在自傳《My Inventions》裡自述，他能在腦中把一台機器裝起來、讓它運轉，再回頭看哪個零件會先壞。那是自述，不是實驗證據；但心像確實是可以練的能力，也是圖像記憶的第一步——先讓內容在腦中有畫面。</p><span class="mgo">讀這一篇 →</span></a>
+      <a class="mcard reveal" href="article-master-mendeleev.html"><b>門得列夫：把六十幾張卡片攤開</b><p>1869 年，門得列夫把六十幾種元素各寫成一張卡片，全部攤在桌上搬來搬去，週期表才長出來。他不是硬記，是把比較的工作交給桌面。記憶宮殿用的是同一個道理：先給資訊一個固定的位置。</p><span class="mgo">讀這一篇 →</span></a>
+      <a class="mcard reveal" href="article-master-davinci.html"><b>達文西：同一件事存兩份</b><p>達文西留下超過七千頁手稿，圖在中間，字繞著圖長。認知心理學的雙重編碼理論說，同一個概念同時存成字和圖，等於在腦中存了兩份，想起任何一份都能把另一份拉出來。孩子的筆記只抄字，就只存了一份。</p><span class="mgo">讀這一篇 →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 現場照片 -->
+<section class="shots">
+  <div class="wrap">
+    <h2 class="reveal">現場照片</h2>
+    <figure class="shot-box reveal">
+      <img src="img-class-family-900.jpg" srcset="img-class-family-900.jpg 900w, img-class-family-1600.jpg 1600w" sizes="(max-width:880px) 100vw, 820px" width="1600" height="1200" loading="lazy" decoding="async" alt="Sky 老師在高雄實體課現場走到長桌旁，家長與孩子圍著桌子練習，牆上螢幕寫著「學這麼多 為了什麼」">
+      <figcaption class="shot-cap">高雄實體課現場：Sky 老師走到每一桌，看孩子怎麼把課本變成畫面。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 適合誰 -->
+<section class="who">
+  <div class="wrap">
+    <h2 class="reveal">適合誰</h2>
+    <div class="who-list">
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>每天花很多時間背誦、隔天卻想不起來的孩子。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>想把單字、課文、公式用同一套方法處理的國中小與高中生。</p></div>
+      <div class="who-item reveal"><span class="who-k" aria-hidden="true">✓</span><p>自己也想記得住簡報與名字的爸媽（課程適合 10 歲以上到 35 歲）。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 學員怎麼說 -->
+<section class="voice">
+  <div class="wrap">
+    <h2 class="reveal">學員怎麼說</h2>
+    <div class="voice-grid">
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>每天通勤 40 分鐘用來在腦中走一遍記憶宮殿，零碎時間全變成複習時間。</p><div class="vwho"><span class="vname">楊子霆</span><span class="vrole">17歲・高三學生</span></div></div>
+      <div class="vcard reveal"><span class="vq" aria-hidden="true">”</span><p>單字量從 2000 卡了一年，三個月拉到 5000，英文段考第一次上 90。</p><div class="vwho"><span class="vname">Kevin Liu</span><span class="vrole">17歲・高二學生</span></div></div>
+    </div>
   </div>
 </section>
 
 <section style="padding:0 0 10px;">
   <div class="wrap">
-    <div class="legal-box reveal"><strong>購買前請留意：</strong>本課程為線上數位影音內容，屬「一經提供即完成之數位內容」。依規定，於您在結帳頁完成付款後，將排除七天猶豫期（不適用七日內無條件退費）。付款採統一金流 PAYUNi，成功後自動開立電子發票寄至您的 email。完整內容請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
+    <div class="legal-box reveal"><strong>購買前請留意：</strong>本課程為線上數位影音內容，屬「一經提供即完成之數位內容」。線上課不退費：完成付款即表示同意排除七天鑑賞期，沒有任何退費條件。付款採統一金流 PAYUNi，成功後自動開立電子發票寄至您的 email。完整內容請見 <a href="refund.html" style="color:var(--accent-solid);">退款政策與電子發票說明</a></div>
   </div>
 </section>
 
@@ -361,11 +460,10 @@
 <section class="buy-sec" id="buy">
   <div class="wrap">
     <div class="buy-cta reveal">
-      <h2>讓孩子從今天開始「記得住」</h2>
-      <p>買斷永久觀看・NT$4,200・統一金流 PAYUNi・電子發票</p>
+      <h2>孩子不是記性差，只是沒學過記憶的方法。</h2>
+      <p>想先確認方法合不合用，30 分鐘看老師把字變成畫面。</p>
       <div class="cta-row">
-        <a class="btn-main" href="checkout.html?course=super-memory">立即報名 NT$4,200 →</a>
-        <a class="btn-ghost" href="login.html">▶ 先免費試看一堂</a>
+        <a class="btn-main" href="free.html">免費先上一堂《十倍聯想力》</a>
       </div>
     </div>
   </div>

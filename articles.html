@@ -276,7 +276,7 @@
 <a href="kaohsiung.html">高雄心智圖</a>
 <a href="videos.html">影音</a>
 <a href="courses.html">精品課程</a>
-<a href="articles.html">提升效率</a>
+<a href="articles.html">學習力文章</a>
 <a href="quiz.html">學習檢測</a>
 <a href="login.html">會員登入</a>
 <a class="nm-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -285,11 +285,21 @@
 
 <div class="wrap">
   <div class="head">
-    <div class="eyebrow">提升效率｜給家長的學習方法指南</div>
+    <div class="eyebrow">學習力文章｜給家長的學習方法指南</div>
     <h1>孩子背不起來、坐不住、讀不完？</h1>
     <p>24 篇用腦科學拆解過的記憶方法、心智圖與專注力訓練，每一篇都寫清楚「今天晚上就可以怎麼做」。先看方法，再決定要不要讓老師當面帶。</p>
   </div>
-  <div class="grid">
+  <div class="jumps">
+    <a class="jbtn jbtn-ghost" href="#masters">科學家心智圖<svg class="jcur" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3.4 18.4 10.8 12.6 12.1 9.9 17.6Z"/></svg></a>
+    <a class="jbtn jbtn-ghost" href="#guide">增強學習力<svg class="jcur" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3.4 18.4 10.8 12.6 12.1 9.9 17.6Z"/></svg></a>
+    <a class="jbtn jbtn-main" href="learning.html">頂尖論文期刊<svg class="jcur" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3.4 18.4 10.8 12.6 12.1 9.9 17.6Z"/></svg></a>
+  </div>
+
+  <div class="head sec2" id="papers">
+    <div class="eyebrow">論文文獻｜研究怎麼說</div>
+    <h2>三篇研究，三個今晚就能做的動作</h2>
+  </div>
+  <div class="grid gtight">
 
     <a class="card" href="article-memorize-textbook.html">
       <div class="cov teal"><div class="cn">孩子背課文背不起來，<br>先看他讀的時候在做什麼</div></div>
@@ -320,6 +330,10 @@
         <div class="cfoot"><span class="cread">閱讀約 8 分鐘</span><span class="cgo">閱讀文章 →</span></div>
       </div>
     </a>
+
+  </div>
+
+  <div class="grid" id="guide">
 
     <a class="card" href="article-mindmap-writing.html">
       <div class="cov teal"><div class="cn">作文卡住不是沒想法，<br>是想法沒被整理出來</div></div>
@@ -443,7 +457,7 @@
     </a>
   </div>
 
-  <div class="head sec2">
+  <div class="head sec2" id="masters">
     <div class="eyebrow">大師的那張圖・系列 10 篇</div>
     <h2>他們沒有用「心智圖」這個詞，但都在做同一件事</h2>
     <p>達文西、達爾文、費曼、門得列夫、柏內茲-李……10 位真實存在的人，10 張還留在檔案館與博物館裡的圖。每一篇都標明史料出處，也誠實標明哪些是後人的詮釋。</p>
@@ -660,6 +674,18 @@
 .cov.mp .pv{width:84px;height:84px;flex:0 0 84px;display:block;position:relative;z-index:1;filter:drop-shadow(0 6px 14px rgba(20,22,49,.24));}
 .cov.mp .cn{font-size:clamp(17px,2.3vw,20px);}
 @media(max-width:760px){.cov.mp{gap:13px;}.cov.mp .pv{width:74px;height:74px;flex:0 0 74px;}}
+
+.jumps{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:24px 0 2px}
+.jbtn{position:relative;font-family:var(--round);font-weight:800;font-size:16px;line-height:1.2;color:var(--indigo);display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 36px 13px 26px;border-radius:40px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.jbtn-main{background:linear-gradient(135deg,var(--amber),var(--orange));box-shadow:0 12px 30px rgba(255,138,61,.32)}
+.jbtn-ghost{background:#fff;border:2px solid var(--hair)}
+.jcur{position:absolute;right:8px;bottom:6px;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;opacity:.72;pointer-events:none;animation:jcur-tap 2s ease-in-out infinite}
+@keyframes jcur-tap{0%,80%,100%{transform:translate(0,0)}88%{transform:translate(-2px,-2px)}94%{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.jcur{animation:none}}
+@media(hover:hover){.jbtn-main:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,138,61,.44)}.jbtn-ghost:hover{transform:translateY(-2px);border-color:var(--indigo)}}
+#papers,#guide,#masters{scroll-margin-top:80px}
+.grid.gtight{padding-bottom:clamp(10px,2.4vw,24px)}
+@media(max-width:420px){.jumps{gap:10px}.jbtn{font-size:15px;padding:13px 30px 13px 18px}}
 </style>
 <script>
 (function(){
