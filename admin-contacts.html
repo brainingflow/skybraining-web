@@ -100,6 +100,7 @@
   <a href="admin.html">總覽・銷售</a>
   <a href="admin-courses.html">課程管理</a>
   <a href="admin-contacts.html" class="active">名單管理</a>
+  <a href="admin-funv.html">婦女再就業報名</a>
   <a href="admin-broadcast.html">群發信</a>
   <a href="admin-landings.html">廣告頁</a>
   <a href="admin-admins.html">管理員</a>
@@ -114,6 +115,33 @@
   const $=(id)=>document.getElementById(id);
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmtDate=(s)=> s ? String(s).slice(0,10) : '';
+
+  /* SheetJS 體積約 1MB，只有按下「匯出 Excel」才抓，平常開後台不多載 */
+  let xlsxReady=null;
+  const loadXLSX=()=>{
+    if(window.XLSX) return Promise.resolve(window.XLSX);
+    if(!xlsxReady) xlsxReady=new Promise((ok,bad)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload=()=>window.XLSX?ok(window.XLSX):bad(new Error('載進來了但沒有 XLSX'));
+      s.onerror=()=>bad(new Error('連不到 cdn.jsdelivr.net'));
+      document.head.appendChild(s);
+    }).catch(e=>{ xlsxReady=null; throw e; });
+    return xlsxReady;
+  };
+  const today8=()=>{ const t=new Date(Date.now()+8*3600*1000),p=(n)=>String(n).padStart(2,'0');
+    return ''+t.getUTCFullYear()+p(t.getUTCMonth()+1)+p(t.getUTCDate()); };
+  const saveSheet=(XLSX,aoa,sheet,file)=>{
+    const ws=XLSX.utils.aoa_to_sheet(aoa);
+    /* !cols 的 wch 以半形為單位，中文一個字佔兩格；上限抓 18 個字，
+       不然光題目那欄就會寬到整張表要橫捲 */
+    const zi=(v)=>{ let n=0; for(const c of String(v==null?'':v)) n+=c.charCodeAt(0)<256?0.5:1; return n; };
+    ws['!cols']=aoa[0].map((_,i)=>{ let m=0; for(const r of aoa){ const w=zi(r[i]); if(w>m) m=w; }
+      return { wch:Math.round(Math.min(18,Math.max(6,m+1))*2) }; });
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,sheet);
+    XLSX.writeFile(wb,file);
+  };
 
   (async ()=>{
     const { data:{ session } } = await supabase.auth.getSession();
@@ -167,9 +195,11 @@
             <select id="fRole"><option value="">全部身分</option><option value="member">會員</option><option value="lead">報名名單</option><option value="contact">匯入名單</option></select>
             <select id="fCourse"><option value="">全部（不分課程）</option><option value="__none__">尚未購課</option></select>
             <select id="fTag"><option value="">全部標籤</option></select>
+            <button class="btn btn-primary" id="btnExportXlsx" style="font-size:13.5px;padding:9px 18px;">⬇ 匯出 Excel</button>
             <button class="btn btn-ghost" id="btnExport">⬇ 匯出目前名單 CSV</button>
             <a class="btn btn-violet" id="btnToBroadcast" href="admin-broadcast.html" style="line-height:1.3;">用這批寄信 →</a>
           </div>
+          <div class="msg" id="xlsxMsg"></div>
           <div id="tblWrap"><div class="state"><div class="spin"></div>載入名單中…</div></div>
         </div>
       </div>`;
@@ -418,6 +448,23 @@
       const csv='﻿'+lines.join('\r\n');
       const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
       a.download='強腦力-名單.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+    };
+
+    // ── 匯出 Excel：欄位與上面的 CSV 完全一樣，只換檔案格式 ──
+    $('btnExportXlsx').onclick=async ()=>{
+      const btn=$('btnExportXlsx'), msgEl=$('xlsxMsg');
+      btn.disabled=true; btn.textContent='產生中…'; msgEl.className='msg'; msgEl.textContent='';
+      try{
+        const XLSX=await loadXLSX();
+        const head=['email','name','身分','已購課程','標籤','加入時間'];
+        const roleTxt=(p)=>[p.is_member?'會員':'',p.is_lead?'報名':'',p.is_contact?'名單':''].filter(Boolean).join('/');
+        const aoa=[head].concat(view.map(p=>[p.email,p.name||'',roleTxt(p),(p.courses||[]).join('、'),(p.tags||[]).join('、'),fmtDate(p.created_at)]));
+        saveSheet(XLSX,aoa,'名單','強腦力名單_'+today8()+'.xlsx');
+      }catch(e){
+        msgEl.className='msg show error';
+        msgEl.textContent='Excel 元件載入失敗（'+(e.message||e)+'）。請改按「匯出目前名單 CSV」，Excel 一樣打得開。';
+      }
+      btn.disabled=false; btn.textContent='⬇ 匯出 Excel';
     };
 
     ['fSearch','fRole','fCourse','fTag'].forEach(id=>$(id).addEventListener('input',applyFilters));
