@@ -40,6 +40,20 @@
 - [如何提升孩子記憶力？6 個有科學根據的方法](https://skybraining.com/article-improve-child-memory.html)
 - [背英文單字的方法](https://skybraining.com/article-memorize-english-vocabulary.html)
 
+## 頂尖論文期刊
+- [主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少](https://skybraining.com/learn-active-learning.html)：2019 年 PNAS 刊出哈佛大學物理系的主動學習研究：同一份講義兩種上法，測驗分數與學生自評走向相反
+- [孩子查資料後就說「我懂了」？耶魯的一項研究發現，查過容易高估自己](https://skybraining.com/learn-search-illusion.html)：2015 年 Journal of Experimental Psychology: General 刊出耶魯大學心理系九個實驗：上網查過的人替自己的理解打分較高
+- [線上課看不進去？哈佛的一項研究：每一小段停下來考自己一次](https://skybraining.com/learn-interpolated-testing.html)：2013 年 PNAS 刊出哈佛大學心理系研究：21 分鐘線上課切成四段、每段停下來考一次
+- [一心多用的人，工作記憶差在哪？史丹佛的一項研究，和它沒說的事](https://skybraining.com/learn-media-multitasking.html)：2016 年 Psychonomic Bulletin & Review 刊出史丹佛大學心理系研究：媒體多工與工作記憶的關聯，不是因果
+- [考前複習怎麼排？十種讀書方法裡證據最強的兩種](https://skybraining.com/learn-study-strategies.html)：本單元入口文，Dunlosky 2013 年十種讀書方法評比，證據最強的兩種是練習測驗與分散練習
+- [孩子讀完就忘？考前複習先改這一個動作：提取練習](https://skybraining.com/learn-retrieval-practice.html)：什麼是提取練習、美國中學課堂量到什麼、今晚五分鐘怎麼做與研究的限制
+- [位置記憶法有用嗎？記憶宮殿的四十天訓練研究怎麼說](https://skybraining.com/learn-method-of-loci.html)：位置記憶法與記憶宮殿的關係、四十天訓練研究量到什麼、今晚五個位置怎麼開始
+- [心智圖真的有效嗎？12 篇研究的回顧](https://skybraining.com/learn-mindmap-evidence.html)：2026 年 BMC Medical Education 一份收錄 12 篇研究的系統性回顧，正向結果集中在哪五件事
+- [間隔複習怎麼做？一個紙盒，把遺忘曲線變成孩子的複習表](https://skybraining.com/learn-spaced-repetition.html)：萊特納盒七格怎麼運作、答對往後挪答錯退回第一格，家長今晚就能做的四個動作
+- [交錯練習怎麼做？把舊題混進本週數學作業的複習法](https://skybraining.com/learn-interleaving.html)：把前面章節的舊題混進本週作業，孩子才練得到「這題該用哪一招」的判斷
+- [分散式學習：同樣的總時數，為什麼每天二十分鐘記得比較久](https://skybraining.com/learn-distributed-practice.html)：總時數不變只換排法，為什麼每天二十分鐘記得比較久；附上班族四個動作
+- [假的成長型思維：Dweck 自己指出的三個誇獎陷阱](https://skybraining.com/learn-growth-mindset.html)：Dweck 2016 年自己指出的三種假的成長型思維，與家長今晚能換掉的四句話
+
 ## 免費工具
 - [孩子學習力檢測](https://skybraining.com/quiz.html)：16 題、3 分鐘
 - [記憶配對挑戰](https://skybraining.com/game.html)

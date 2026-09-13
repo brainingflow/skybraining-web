@@ -121,7 +121,7 @@
   .cat:hover{color:var(--indigo);border-color:rgba(20,22,49,.22);}
   .cat[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo);color:#fff;}
   .grid{padding-top:clamp(24px,4vw,36px);}
-  @media(max-width:760px){.cats{gap:8px;margin-top:18px;}.cat{font-size:13.5px;padding:9px 15px;}}
+  @media(max-width:760px){.cats{gap:8px;margin-top:18px;}.cat{font-size:13.5px;padding:9px 15px;}.cov .cn br{display:none;}}
   #cardGrid{padding-bottom:clamp(18px,3vw,28px);}
   .soon{max-width:30em;margin:0 auto 80px;text-align:center;color:var(--ink-soft);font-size:14.5px;line-height:1.8;}
   @media(max-width:420px){.soon{max-width:22em;}}
@@ -153,14 +153,137 @@
   <div class="head">
     <div class="eyebrow">頂尖論文期刊</div>
     <h1>頂尖論文期刊</h1>
-    <p>哈佛、史丹佛、牛津、耶魯論文</p>
+    <p>哈佛、史丹佛、牛津、耶魯等大學研究</p>
     <div class="cats" role="group" aria-label="文章分類">
       <button type="button" class="cat" data-cat="all" aria-pressed="true">全部</button>
+      <button type="button" class="cat" data-cat="school" aria-pressed="false">四校論文</button>
       <button type="button" class="cat" data-cat="study" aria-pressed="false">學習方法</button>
       <button type="button" class="cat" data-cat="memory" aria-pressed="false">記憶</button>
+      <button type="button" class="cat" data-cat="focus" aria-pressed="false">專注</button>
+      <button type="button" class="cat" data-cat="mindmap" aria-pressed="false">心智圖</button>
     </div>
   </div>
   <div class="grid" id="cardGrid">
+
+    <a class="card" data-cat="school study" href="learn-active-learning.html">
+      <div class="cov amber"><div class="cn">哈佛的一項研究：<br>同一份講義，兩種上法</div></div>
+      <div class="cbody">
+        <span class="ctag amber">哈佛大學物理系</span>
+        <div class="ctitle">主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少</div>
+        <div class="cdesc">孩子說「這樣讀好累」，先別急著換回原本的方法。2019 年美國國家科學院院刊 PNAS 刊出哈佛大學物理系團隊的主動學習研究：同一份講義、兩種上法，自己動手解題那堂課測驗分數較高，學生卻覺得自己學得比較少。這篇整理研究怎麼做、今晚在家可以做哪三件事，以及這個研究沒有說的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="school study" href="learn-search-illusion.html">
+      <div class="cov teal"><div class="cn">耶魯的一項研究：<br>查過的人，替自己打的分數比較高</div></div>
+      <div class="cbody">
+        <span class="ctag teal">耶魯大學心理系</span>
+        <div class="ctitle">孩子查資料後就說「我懂了」？耶魯的一項研究發現，查過容易高估自己</div>
+        <div class="cdesc">孩子查資料後就說「我懂了」，講起來卻卡住。2015 年美國心理學會的期刊 Journal of Experimental Psychology: General 刊出耶魯大學心理系的九個實驗：上網查過的人，替自己的理解打的分數比較高，連查不到答案時也一樣。這篇整理研究怎麼做、今晚可以加上哪一個動作，以及研究沒有說的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="school focus" href="learn-interpolated-testing.html">
+      <div class="cov violet"><div class="cn">哈佛的一項研究：<br>把小考塞進一支 21 分鐘的線上課</div></div>
+      <div class="cbody">
+        <span class="ctag violet">哈佛大學心理系</span>
+        <div class="ctitle">線上課看不進去？哈佛的一項研究：每一小段停下來考自己一次</div>
+        <div class="cdesc">孩子開著線上課，眼睛盯著螢幕，問他剛剛講什麼卻答不出來。2013 年美國國家科學院院刊 PNAS 刊出哈佛大學心理系的研究：一支 21 分鐘的線上課切成四段，每段停下來考一次的那組，被抽問時說自己在分心的比例較低、答對較多。這篇整理研究怎麼做、在家怎麼停，以及研究沒有說的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="school focus" href="learn-media-multitasking.html">
+      <div class="cov amber"><div class="cn">史丹佛的一項研究：<br>先問你同時開幾個媒體，再考你的記憶</div></div>
+      <div class="cbody">
+        <span class="ctag amber">史丹佛大學心理系</span>
+        <div class="ctitle">一心多用的人，工作記憶差在哪？史丹佛的一項研究，和它沒說的事</div>
+        <div class="cdesc">孩子一邊讀書一邊滑手機，還說這樣比較不無聊。2016 年 Psychonomic Bulletin &amp; Review 刊出史丹佛大學心理系的研究：媒體多工指數較高的成人，工作記憶與事後的辨識力都較低，而且畫面上有沒有干擾都一樣。這篇整理研究怎麼做、在家怎麼把「同時」改成「排隊」，以及為什麼這是關聯而不是因果。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-study-strategies.html">
+      <div class="cov violet"><div class="cn">被評為證據最強的兩種：<br>練習測驗與分散練習</div></div>
+      <div class="cbody">
+        <span class="ctag violet">學習方法</span>
+        <div class="ctitle">考前複習怎麼排？十種讀書方法裡證據最強的兩種</div>
+        <div class="cdesc">孩子讀到十一點，考卷發回來還是錯同幾題。我們讀了肯特州立大學教授 John Dunlosky 在 2013 年整理的十種讀書方法評比，用自己的話寫成這篇：哪兩種被評為證據最強、其餘八種為什麼只算證據較弱或條件有限、家長與上班族今晚就能換的三個動作，以及這份回顧沒說的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 8 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-retrieval-practice.html">
+      <div class="cov teal"><div class="cn">讀過就忘，<br>是因為孩子一直在放進去，很少練拿出來</div></div>
+      <div class="cbody">
+        <span class="ctag teal">學習方法</span>
+        <div class="ctitle">孩子讀完就忘？考前複習先改這一個動作：提取練習</div>
+        <div class="cdesc">孩子讀完就忘，多半不是記性差，而是複習時一直在「放進去」，很少練「拿出來」。我們讀了 Cult of Pedagogy 2017 年的提取練習專文與它引用的研究，整理成這篇：什麼是提取練習、美國中學課堂量到什麼、今晚五分鐘怎麼做、研究沒說的限制，以及家長最常問的三個問題。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="memory" href="learn-method-of-loci.html">
+      <div class="cov amber"><div class="cn">記性是天生的嗎？<br>研究先找了一批沒受過訓練的成年人</div></div>
+      <div class="cbody">
+        <span class="ctag amber">記憶</span>
+        <div class="ctitle">位置記憶法有用嗎？記憶宮殿的四十天訓練研究怎麼說</div>
+        <div class="cdesc">「他記性差，像我。」這句話被研究者拿去測過。我們讀了泛科學 2017 年那篇位置記憶法，以及它引用的 Neuron 論文，整理成這篇：成年人每天練三十分鐘、連續四十天後測到什麼、位置記憶法和記憶宮殿的關係、今晚五個位置怎麼開始，以及這份研究沒說的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mindmap" href="learn-mindmap-evidence.html">
+      <div class="cov teal"><div class="cn">心智圖有效嗎？<br>這個問題要先問「對誰、量什麼」</div></div>
+      <div class="cbody">
+        <span class="ctag teal">心智圖</span>
+        <div class="ctitle">心智圖真的有效嗎？12 篇研究的回顧</div>
+        <div class="cdesc">心智圖有效嗎？孩子的圖畫得漂亮，成績卻沒動。我們讀了 2026 年 BMC Medical Education 一份收錄 12 篇研究的系統性回顧，用自己的話整理成這篇：正向結果集中在哪五件事、為什麼不能推論因果、受試者是誰，以及家長今晚可以怎麼帶孩子畫第一張心智圖。</div>
+        <div class="cfoot"><span class="cread">閱讀約 6 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-spaced-repetition.html">
+      <div class="cov violet"><div class="cn">萊特納盒怎麼運作：<br>答對往後挪一格，答錯退回第一格</div></div>
+      <div class="cbody">
+        <span class="ctag violet">學習方法</span>
+        <div class="ctitle">間隔複習怎麼做？一個紙盒，把遺忘曲線變成孩子的複習表</div>
+        <div class="cdesc">孩子背完就忘，多半不是記性問題，是複習的時間點沒排。這篇整理 Nicky Case 2018 年互動網頁與 Dunlosky 等人 2013 年的回顧研究，說明間隔複習與萊特納盒怎麼運作：七格紙盒、答對往後挪、答錯退回第一格，還有家長今晚就能做的四個動作與研究本身的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-interleaving.html">
+      <div class="cov amber"><div class="cn">交錯練習當下會比較慢，<br>這是正常的</div></div>
+      <div class="cbody">
+        <span class="ctag amber">學習方法</span>
+        <div class="ctitle">交錯練習怎麼做？把舊題混進本週數學作業的複習法</div>
+        <div class="cdesc">孩子作業整頁同一個公式都全對，段考題目混在一起就卡住。這篇整理 American Educator 2020 年那篇交錯練習文章與 Rohrer 團隊的研究：把前面章節的舊題混進本週作業，孩子才練得到「這題該用哪一招」的判斷，內含四個在家動作、上班族版與研究本身的限制。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-distributed-practice.html">
+      <div class="cov teal"><div class="cn">為什麼開夜車隔天有效、<br>一個學期後不見</div></div>
+      <div class="cbody">
+        <span class="ctag teal">學習方法</span>
+        <div class="ctitle">分散式學習：同樣的總時數，為什麼每天二十分鐘記得比較久</div>
+        <div class="cdesc">週末一次讀八小時，下週再翻開像沒讀過。這篇從《哈佛商業評論》繁體中文版 2020 年的書摘出發，補回 Ebbinghaus 與 Dunlosky 等人 2013 年的研究出處，說明分散式學習為什麼在總時數不變的情況下記得比較久，以及上班族的四個動作與家長版做法。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="study" href="learn-growth-mindset.html">
+      <div class="cov violet"><div class="cn">假的成長型思維長什麼樣子：<br>三種最常見的說法</div></div>
+      <div class="cbody">
+        <span class="ctag violet">學習方法</span>
+        <div class="ctitle">假的成長型思維：Dweck 自己指出的三個誇獎陷阱</div>
+        <div class="cdesc">誇孩子努力，孩子卻沒有學會。史丹佛大學心理學教授 Carol Dweck 在 2016 年回頭指出三種假的成長型思維：只誇努力、空頭鼓勵、把卡住怪到心態上。這篇整理她的說明、家長今晚能換掉的四句話，以及近年大型整合分析對效果量的評估。</div>
+        <div class="cfoot"><span class="cread">閱讀約 7 分鐘</span><span class="cgo">閱讀文章 →</span></div>
+      </div>
+    </a>
 
     <a class="card" data-cat="memory" href="article-memorize-textbook.html">
       <div class="cov teal"><div class="cn">孩子背課文背不起來，<br>先看他讀的時候在做什麼</div></div>
@@ -194,7 +317,6 @@
 
   </div>
 
-  <p class="soon">哈佛、史丹佛、牛津、耶魯八篇研究文章整理中，陸續上線</p>
 </div>
 <style>
 /* ── 社群追蹤按鈕（頁尾）── */
@@ -383,7 +505,7 @@
     b.addEventListener("click",function(){
       var c=b.getAttribute("data-cat");
       for(var j=0;j<btns.length;j++){ btns[j].setAttribute("aria-pressed", btns[j]===b?"true":"false"); }
-      for(var k=0;k<cards.length;k++){ cards[k].style.display=(c==="all"||cards[k].getAttribute("data-cat")===c)?"":"none"; }
+      for(var k=0;k<cards.length;k++){ cards[k].style.display=(c==="all"||(" "+cards[k].getAttribute("data-cat")+" ").indexOf(" "+c+" ")>=0)?"":"none"; }
     });
   })(btns[i]); }
 })();
