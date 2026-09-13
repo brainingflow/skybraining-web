@@ -253,6 +253,69 @@
   .course.free-spot .ctop>.clv{position:absolute;top:11px;right:13px;}
   .course.free-spot .cname{font-size:20px;}
 }
+
+/* 強腦力課程卡橫向化 2026-09-13：左色塊放課名、右側放副標與說明，與 articles.html 卡片同型 */
+#grid{grid-template-columns:repeat(2,1fr);gap:22px;}
+#grid .course{flex-direction:row;align-items:stretch;}
+.bcov{width:38%;flex:none;box-sizing:border-box;padding:30px 28px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+.bcov::after{content:"";position:absolute;right:-34px;top:-34px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.14);}
+.bcov.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
+.bcov.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
+.bcov.violet{background:linear-gradient(135deg,#7C6CF0,#4B37D8);}
+.bcov.indigo{background:linear-gradient(135deg,#22264f,#141330);}
+.bcov.rose{background:linear-gradient(135deg,#FF6B8B,#E23A63);}
+.bcov.gold{background:linear-gradient(135deg,#F5A623,#E0761B);}
+.bcov.grape{background:linear-gradient(135deg,#8E5BEE,#5B2AC6);}
+.bcov.crimson{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#A6763A,#6B471B);}
+.bcov.plum{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#C2668A,#8A3E5C);}
+.bcov.techblue{background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(135deg,#347585,#184851);}
+.bbadge{align-self:flex-start;font-family:var(--round);font-weight:700;font-size:12px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:20px;margin-bottom:10px;position:relative;z-index:1;}
+.bcn{font-family:var(--round);font-weight:800;font-size:clamp(19px,3vw,23px);line-height:1.35;position:relative;z-index:1;}
+.bbody{flex:1;min-width:0;padding:22px 26px 26px;display:flex;flex-direction:column;}
+.btitle{font-family:var(--round);font-weight:800;font-size:19px;color:var(--indigo);line-height:1.4;margin-bottom:8px;}
+.bdesc{font-size:14.5px;color:var(--ink-soft);line-height:1.75;flex:1;}
+.bnote{align-self:flex-start;margin-top:10px;font-family:var(--round);font-weight:700;font-size:12px;color:#c85f1a;background:rgba(255,138,61,.14);padding:3px 11px;border-radius:20px;}
+.bfoot{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--hair);}
+.bprice{font-family:var(--round);font-weight:800;font-size:22px;color:var(--indigo);}
+.bprice small{display:block;font-family:var(--sans);font-size:11.5px;font-weight:400;color:var(--ink-soft);}
+.bprice.free{color:var(--violet-deep);}
+.bgo{font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--indigo);white-space:nowrap;}
+#grid .course:hover .bgo{color:var(--teal-deep);}
+/* 免費課卡深色樣式沿用（free-spot 由頁尾腳本加上） */
+.course.free-spot .bcov{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,0) 46%),linear-gradient(135deg,#4E3FD1,#251F55);}
+.course.free-spot .bbadge{background:rgba(255,201,77,.2);color:#FFC94D;}
+.course.free-spot .btitle{color:#fff;}
+.course.free-spot .bdesc{color:#FFC94D;}
+.course.free-spot .bnote{background:rgba(255,201,77,.18);color:#FFC94D;}
+.course.free-spot .bfoot{border-top-color:rgba(255,255,255,.16);}
+.course.free-spot .bprice,.course.free-spot .bprice.free{color:#FFC94D;}
+.course.free-spot .bprice small{color:rgba(255,255,255,.78);}
+.course.free-spot .bgo{color:#FFC94D;}
+#grid .course.free-spot:hover .bgo{color:#fff;}
+/* 761–900px（平板直向）仍是兩欄，欄寬只有 340 左右，字級收一級才不會擠爆 */
+@media(min-width:761px) and (max-width:900px){
+  .bcov{padding:22px 18px;}
+  .bcn{font-size:19px;}
+  .bbody{padding:18px 20px 20px;}
+  .btitle{font-size:17px;}
+  .bdesc{font-size:14px;line-height:1.7;}
+  .bprice{font-size:19px;}
+  .bgo{font-size:13.5px;}
+}
+@media(max-width:760px){
+  #grid{grid-template-columns:1fr;gap:14px;}
+  .bcov{padding:16px 12px;}
+  .bcov::after{width:90px;height:90px;right:-24px;top:-24px;}
+  .bbadge{margin-bottom:8px;font-size:11px;padding:3px 9px;}
+  .bcn{font-size:14.5px;line-height:1.4;}
+  .bbody{padding:12px 14px;}
+  .btitle{font-size:15px;margin-bottom:6px;}
+  .bdesc{font-size:12.5px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .bnote{margin-top:8px;font-size:11px;}
+  .bfoot{margin-top:8px;padding-top:8px;}
+  .bprice{font-size:18px;}
+  .bgo{font-size:13px;}
+}
 </style>
 <meta name="keywords" content="強腦力,記憶力課程,學習力課程,圖像記憶,記憶宮殿,聯想力,線上課程,國小,國中,強化腦力,腦力,高雄,高雄第一學習系統,SKY強腦力">
 <link rel="canonical" href="https://skybraining.com/courses.html">
@@ -433,30 +496,26 @@
     const isBundle = id==='bundle-all';
     const badge = isFree ? '免費體驗' : isOnsite ? '實體課' : isBundle ? '超值全套' : '線上課';
     const priceSub = isFree ? '登入就能看' : (isOnsite||isBundle) ? '報名・名額有限' : '買斷・永久觀看';
-    const noteHtml = c.note ? `<span class="note-line">${c.note}</span>` : '';
+    const noteHtml = c.note ? `<div class="bnote">${c.note}</div>` : '';
     const priceHtml = isFree
-      ? `<div class="price free">免費<small>${priceSub}</small></div>`
-      : `<div class="price">NT$${Number(c.price).toLocaleString()}<small>${priceSub}</small></div>`;
-    let btn;
-    const intro = c.intro_url || INTRO[id];
-    if(isFree){
-      btn = `<a class="buy ${color}" href="login.html">免費開通 →</a>`;
-    } else {
-      const more = intro ? `<a class="buy-more" href="${intro}">了解課程</a>` : '';
-      btn = `<div class="btns"><a class="buy ${color}" href="checkout.html?course=${id}">立即報名 →</a>${more}</div>`;
-    }
-    return `<div class="course">
-      <div class="ctop ${color}">
-        <span class="clv">${badge}</span>
-        <div class="cname ${(c.name||'').length>=16?'xs':(c.name||'').length>=9?'sm':''}">${c.name||''}</div>
-        <div class="csub">${c.subtitle||''}</div>
+      ? `<div class="bprice free">免費<small>${priceSub}</small></div>`
+      : `<div class="bprice">NT$${Number(c.price).toLocaleString()}<small>${priceSub}</small></div>`;
+    const href = isFree ? 'login.html' : (c.intro_url || INTRO[id] || '');
+    const go = isFree ? '免費開通 →' : '了解課程 →';
+    const inner = `
+      <div class="bcov ${color}">
+        <span class="bbadge">${badge}</span>
+        <div class="bcn">${c.name||''}</div>
+      </div>
+      <div class="bbody">
+        <div class="btitle">${c.subtitle||''}</div>
+        <div class="bdesc">${c.description||''}</div>
         ${noteHtml}
-      </div>
-      <div class="cbody">
-        <div class="cdesc">${c.description||''}</div>
-        <div class="cfoot">${priceHtml}${btn}</div>
-      </div>
-    </div>`;
+        <div class="bfoot">${priceHtml}<span class="bgo">${go}</span></div>
+      </div>`;
+    return href
+      ? `<a class="course" href="${href}">${inner}</a>`
+      : `<div class="course">${inner}</div>`;
   }
 
   function careerCard(c){
@@ -645,13 +704,12 @@
   function patch(){
     var cards=[].slice.call(g.querySelectorAll(".course"));
     var el=null;
-    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".cname");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1||n.textContent.indexOf("10x聯想力")>-1)){el=cards[i];break}}
+    for(var i=0;i<cards.length;i++){var n=cards[i].querySelector(".bcn");if(n&&(n.textContent.indexOf("無限聯想力")>-1||n.textContent.indexOf("十倍聯想力")>-1||n.textContent.indexOf("10x聯想力")>-1)){el=cards[i];break}}
     if(!el)return false;
     if(el.classList.contains("free-spot"))return true;
     el.classList.add("free-spot");
-    var n2=el.querySelector(".cname");if(n2){n2.textContent="免費體驗 10x聯想力";n2.classList.add("sm")}
-    var s=el.querySelector(".csub");if(s)s.remove();
-    var d=el.querySelector(".cdesc");if(d)d.textContent="免費課程，登入後立即可看。先體驗強腦力的方法，喜歡再上完整課程。";
+    var n2=el.querySelector(".bcn");if(n2){n2.textContent="免費體驗 10x聯想力"}
+    var d=el.querySelector(".bdesc");if(d)d.textContent="免費課程，登入後立即可看。先體驗強腦力的方法，喜歡再上完整課程。";
     return true;
   }
   if(!patch()){var mo=new MutationObserver(function(){if(patch())mo.disconnect()});mo.observe(g,{childList:true,subtree:true})}
