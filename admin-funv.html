@@ -30,6 +30,11 @@
   .tabs a{font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--ink-soft);padding:14px 16px;border-bottom:3px solid transparent;white-space:nowrap;}
   .tabs a.active{color:var(--indigo);border-bottom-color:var(--orange);}
   .tabs a:hover{color:var(--indigo);}
+  /* 課程分頁列：每個課程一個實體頁，目前頁高亮 */
+  .ctabs{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 18px;}
+  .ctabs a{font-family:var(--round);font-weight:700;font-size:13.5px;line-height:1;color:var(--ink-soft);background:#fff;border:1.5px solid var(--hair);border-radius:24px;padding:10px 15px;white-space:nowrap;}
+  .ctabs a:hover{border-color:var(--orange);color:var(--indigo);}
+  .ctabs a.on{background:var(--accent);border-color:transparent;color:#fff;}
   .wrap{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,34px) 16px 90px;}
   .h{margin-bottom:4px;font-family:var(--round);font-weight:800;font-size:clamp(22px,4vw,29px);color:var(--indigo);}
   .sub{color:var(--ink-soft);margin-bottom:22px;font-size:14.5px;}
@@ -157,10 +162,29 @@
     }).catch(e=>{ xlsxReady=null; throw e; });
     return xlsxReady;
   };
+  /* JSZip 只有按「下載全部身分證」才抓，平常開後台不多載 */
+  let zipReady=null;
+  const loadJSZip=()=>{
+    if(window.JSZip) return Promise.resolve(window.JSZip);
+    if(!zipReady) zipReady=new Promise((ok,bad)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+      s.onload=()=>window.JSZip?ok(window.JSZip):bad(new Error('載進來了但沒有 JSZip'));
+      s.onerror=()=>bad(new Error('連不到 cdn.jsdelivr.net'));
+      document.head.appendChild(s);
+    }).catch(e=>{ zipReady=null; throw e; });
+    return zipReady;
+  };
   const today8=()=>{ const t=new Date(Date.now()+8*3600*1000),p=(n)=>String(n).padStart(2,'0');
     return ''+t.getUTCFullYear()+p(t.getUTCMonth()+1)+p(t.getUTCDate()); };
-  const saveSheet=(XLSX,aoa,sheet,file)=>{
+  const saveSheet=(XLSX,aoa,sheet,file,linkCols)=>{
     const ws=XLSX.utils.aoa_to_sheet(aoa);
+    (linkCols||[]).forEach(ci=>{ for(let ri=1;ri<aoa.length;ri++){
+      const v=aoa[ri][ci];
+      if(typeof v!=='string'||v.indexOf('http')!==0) continue;
+      const ref=XLSX.utils.encode_cell({r:ri,c:ci});
+      if(ws[ref]) ws[ref].l={Target:v,Tooltip:'點開身分證影本（7 天內有效）'};
+    }});
     /* !cols 的 wch 以半形為單位，中文一個字佔兩格；上限抓 18 個字，
        不然光題目那欄就會寬到整張表要橫捲 */
     const zi=(v)=>{ let n=0; for(const c of String(v==null?'':v)) n+=c.charCodeAt(0)<256?0.5:1; return n; };
@@ -193,7 +217,7 @@
     {n:18,k:'referrer',         q:'邀請人'},
     {n:19,k:'course_choice',    q:'【選擇課程】'},
     {n:20,k:'course_reason',    q:'選此課程原因'},
-    {n:21,k:'target_job',       q:'未來推薦職業的名稱'},
+    {n:21,k:'target_job',       q:'未來想就業方向'},
     {n:22,k:'job_relevance',    q:'參加這門課對您未來就業的關聯性？'},
     {n:23,k:'after_training',   q:'結訓後您預計如何運用所學？（可多選）', multi:true},
     {n:24,k:'family_care',      q:'家庭照護需求如何解決？'},
@@ -204,50 +228,59 @@
     {n:29,k:'transport',        q:'交通工具（選填）'},
     {n:30,k:'confirmed',        q:'確認：1 先「送出表單」 2 加入Line，私信「名字+電話」 3 上課＋完成心得＋登入就業通 4 後續：有更多優質補助＋課程內容通知唷', bool:true}
   ];
+  /* 這一頁只看哪一門課。七個課程頁與本頁共用同一份程式，只有 COURSE_KEY 這一行不同，'' = 全部 */
+  const COURSE_KEY='';
+  const COURSE_LIST=[
+    { key:'style',   kw:'整體造型設計',     name:'華君【整體造型設計】', file:'admin-funv-style.html' },
+    { key:'massage', kw:'牛角筋絡調理',     name:'小可【牛角筋絡調理】',     file:'admin-funv-massage.html' },
+    { key:'coffee',  kw:'手沖咖啡師',       name:'宏森【手沖咖啡師技巧班】', file:'admin-funv-coffee.html' },
+    { key:'mindmap', kw:'心智圖講師班',     name:'Sky【心智圖講師班】',     file:'admin-funv-mindmap.html' },
+    { key:'sales',   kw:'百億品牌成交技術', name:'信廷【百億品牌成交技術】', file:'admin-funv-sales.html' },
+    { key:'aivideo', kw:'AI短影音實戰班',   name:'小語【AI短影音實戰班】', file:'admin-funv-aivideo.html' },
+    { key:'rental',  kw:'包租代管實戰班',   name:'育誠【包租代管實戰班】', file:'admin-funv-rental.html' }
+  ];
+  const COURSE=COURSE_LIST.filter(c=>c.key===COURSE_KEY)[0]||null;
+  const inCourse=(r)=>!COURSE||String(r.course_choice||'').indexOf(COURSE.kw)>=0;
   const STATUS=['new','聯絡中','已送件','完成','不符'];
   const ST_CLASS={'new':'st-new','聯絡中':'st-go','已送件':'st-sent','完成':'st-done','不符':'st-no'};
 
   /* ?demo=1：給老闆看版面用。不登入、不打 Supabase，資料全是假的。
      也吃 #demo=1，因為本機 npx serve 會把 /admin-funv.html 301 到 /admin-funv 並把 query 丟掉，hash 才留得住 */
   const DEMO=new URLSearchParams(location.search).get('demo')==='1' || /(^|[#&])demo=?1?([&]|$)/.test(location.hash);
-  const DEMO_ROWS=[
-    { id:'demo-0001', created_at:'2026-09-13T01:20:00.000Z', status:'new', note:'',
-      labor_insurance:'（示範）沒有保勞保', name:'示範一', line_id:'demo-line-01', id_number:'A200000001',
-      id_front_path:'demo-0001/front.jpg', id_back_path:'demo-0001/back.jpg',
-      birthday:'1988-03-15', mobile:'0912-000-001', address:'（示範）高雄市三民區示範路 1 號',
-      email:'demo1@example.com', education:'（示範）示範科技大學／美容系', skills:'（示範）美甲、彩妝',
-      last_company:'（示範）示範造型工作室', last_title:'（示範）助理', leave_reason:'（示範）生育後離開職場',
-      work_start:'2015-06', work_end:'2019-08', referrer:'（示範）王老師',
-      course_choice:'華君【整體造型設計】', course_reason:'（示範）想學一技之長回職場',
-      target_job:'新娘秘書', job_relevance:'（示範）【化妝師】直接相關',
-      after_training:['（示範）自行創業','（示範）接案兼職'], family_care:'（示範）長輩可幫忙接送小孩',
-      self_improvement:['（示範）線上課程','（示範）考取證照'], job_search:'（示範）有，投過 3 間',
-      commute_pref:'（示範）高雄市區', work_hours:'（示範）白班', transport:'（示範）機車', confirmed:true },
-    { id:'demo-0002', created_at:'2026-09-13T09:45:00.000Z', status:'聯絡中', note:'（示範）打過電話沒接，晚上再撥',
-      labor_insurance:'（示範）有，示範職業工會 07-000-0000，2019/03', name:'示範二', line_id:'demo-line-02', id_number:'A200000002',
-      id_front_path:'demo-0002/front.jpg', id_back_path:'demo-0002/back.jpg',
-      birthday:'1979-11-02', mobile:'0912-000-002', address:'（示範）高雄市鳳山區示範路 2 號',
-      email:'demo2@example.com', education:'（示範）示範高商／商業經營科', skills:'（示範）門市管理',
-      last_company:'（示範）示範便利商店', last_title:'（示範）店長', leave_reason:'（示範）照顧生病家人',
-      work_start:'2010-01', work_end:'2018-12', referrer:'（示範）李小姐',
-      course_choice:'華君【整體造型設計】', course_reason:'（示範）想轉行做造型',
-      target_job:'彩妝師', job_relevance:'（示範）【自媒體】經營個人品牌',
-      after_training:['（示範）應徵全職'], family_care:'（示範）家人已安置機構',
-      self_improvement:['（示範）自學'], job_search:'（示範）沒有',
-      commute_pref:'（示範）不限', work_hours:'（示範）都可以', transport:'（示範）汽車', confirmed:true },
-    { id:'demo-0003', created_at:'2026-09-14T02:10:00.000Z', status:'已送件', note:'（示範）資料已寄出，等勞動部回覆',
-      labor_insurance:'（示範）農保', name:'示範三', line_id:'demo-line-03', id_number:'A200000003',
-      id_front_path:'demo-0003/front.jpg', id_back_path:'demo-0003/back.jpg',
-      birthday:'1992-07-21', mobile:'0912-000-003', address:'（示範）高雄市大寮區示範路 3 號',
-      email:'demo3@example.com', education:'（示範）示範大學／中文系', skills:'（示範）文書、攝影',
-      last_company:'（示範）示範農產行', last_title:'（示範）行政', leave_reason:'（示範）公司結束營業',
-      work_start:'2017-03', work_end:'2020-05', referrer:'（示範）示範一',
-      course_choice:'華君【整體造型設計】', course_reason:'（示範）朋友推薦',
-      target_job:'整體造型師', job_relevance:'（示範）【顧問】提供形象建議',
-      after_training:['（示範）自行創業','（示範）接案兼職','（示範）應徵全職'], family_care:'（示範）小孩已上小學',
-      self_improvement:['（示範）社區大學','（示範）線上課程'], job_search:'（示範）有，面試過 1 間',
-      commute_pref:'（示範）高雄市區', work_hours:'（示範）早班', transport:'（示範）大眾運輸', confirmed:false }
+  /* 示範資料：每個課程 2 到 3 筆，course_choice 用報名頁真的會存進去的課程全名 */
+  const DEMO_SEED=[
+    ['示範一','0912-000-001','華君【整體造型設計】','new','','新娘秘書','（示範）【化妝師】直接相關','（示範）王老師','2026-09-13T01:20:00.000Z',true],
+    ['示範二','0912-000-002','華君【整體造型設計】','聯絡中','（示範）打過電話沒接，晚上再撥','整體造型師','（示範）【自媒體】經營個人品牌','（示範）李小姐','2026-09-13T09:45:00.000Z',true],
+    ['示範三','0912-000-003','華君【整體造型設計】','已送件','（示範）資料已寄出，等勞動部回覆','彩妝講師、美容美儀講師','（示範）【顧問】提供形象建議','（示範）示範一','2026-09-14T02:10:00.000Z',false],
+    ['示範四','0912-000-004','小可【牛角筋絡調理】','new','','筋絡調理師、民俗療法、個人按摩、推拿師','（示範）【筋絡調理】想自行創業','（示範）小可老師','2026-09-14T03:05:00.000Z',true],
+    ['示範五','0912-000-005','小可【牛角筋絡調理】','聯絡中','（示範）想問上課地點','按摩師、腳底按摩','（示範）【按摩技巧】想進診所','（示範）示範四','2026-09-14T03:12:00.000Z',true],
+    ['示範六','0912-000-006','宏森【手沖咖啡師技巧班】','new','','手沖咖啡師','（示範）【咖啡師】想到咖啡店上班','（示範）施老師','2026-09-14T03:20:00.000Z',true],
+    ['示範七','0912-000-007','宏森【手沖咖啡師技巧班】','完成','（示範）已開課','咖啡銷售','（示範）【咖啡師】想自己開店','（示範）示範六','2026-09-14T03:28:00.000Z',true],
+    ['示範八','0912-000-008','Sky【心智圖講師班】','new','','心智圖講師','（示範）想擔任社區心智圖老師','（示範）Sky 老師','2026-09-14T03:35:00.000Z',true],
+    ['示範九','0912-000-009','Sky【心智圖講師班】','聯絡中','（示範）想確認梯次','補習班陪讀、助教','（示範）補習班陪讀需要專業能力','（示範）示範八','2026-09-14T03:41:00.000Z',true],
+    ['示範十','0912-000-010','信廷【百億品牌成交技術】','new','','房仲','（示範）【銷售】想加強客戶溝通','（示範）信廷老師','2026-09-14T03:48:00.000Z',true],
+    ['示範十一','0912-000-011','信廷【百億品牌成交技術】','不符','（示範）勞保未滿 180 天','櫃姐','（示範）【顧問】想提高專業度','（示範）示範十','2026-09-14T03:55:00.000Z',false],
+    ['示範十二','0912-000-012','小語【AI短影音實戰班】','new','','短影片導演','（示範）【AI行銷】想進行銷部門','（示範）小語老師','2026-09-14T04:02:00.000Z',true],
+    ['示範十三','0912-000-013','小語【AI短影音實戰班】','已送件','（示範）資料已寄出','AI 剪輯師','（示範）【拍攝影片】想接案','（示範）示範十二','2026-09-14T04:09:00.000Z',true],
+    ['示範十四','0912-000-014','育誠【包租代管實戰班】','new','','包租代管業務、租賃管理專員','（示範）想進不動產、租賃管理公司上班','（示範）張育誠老師','2026-09-14T04:15:00.000Z',true],
+    ['示範十五','0912-000-015','育誠【包租代管實戰班】','聯絡中','（示範）想確認上課地點','二房東、自有房屋出租經營','（示範）想把自己的房子出租經營','（示範）示範十四','2026-09-14T04:22:00.000Z',true]
   ];
+  const DEMO_ROWS=DEMO_SEED.map((d,i)=>{
+    const id='demo-'+String(i+1).padStart(4,'0');
+    return { id, created_at:d[8], status:d[3], note:d[4],
+      labor_insurance:'（示範）沒有保勞保', name:d[0], line_id:'demo-line-'+String(i+1).padStart(2,'0'),
+      id_number:'A2000000'+String(i+1).padStart(2,'0'),
+      id_front_path:id+'/front.jpg', id_back_path:id+'/back.jpg',
+      birthday:'1988-03-15', mobile:d[1], address:'（示範）高雄市三民區示範路 '+(i+1)+' 號',
+      email:'demo'+(i+1)+'@example.com', education:'（示範）示範高職／示範科', skills:'（示範）文書、攝影',
+      last_company:'（示範）示範有限公司', last_title:'（示範）門市人員', leave_reason:'（示範）照顧未滿12歲子女',
+      work_start:'2015-06', work_end:'2019-08', referrer:d[7],
+      course_choice:d[2], course_reason:'（示範）想學一技之長回職場',
+      target_job:d[5], job_relevance:d[6],
+      after_training:['（示範）取得認證','（示範）實作應用'], family_care:'（示範）小孩已上小學',
+      self_improvement:['（示範）線上課程'], job_search:'（示範）尚未開始投遞',
+      commute_pref:'（示範）半小時內', work_hours:'（示範）排班', transport:'（示範）機車', confirmed:d[9] };
+  });
 
   (async ()=>{
     if(DEMO){
@@ -264,18 +297,20 @@
 
     $('content').innerHTML=`
       <div class="wrap">
-        <div class="h">婦女再就業報名</div>
-        <div class="sub">funv-apply.html 送出的報名表都在這裡，一筆一列，最新的排最上面。點一列展開，可以看 30 題全部答案、看身分證、改狀態、寫備註。</div>
+        <div class="h">婦女再就業報名｜${COURSE?esc(COURSE.name):'全部課程'}</div>
+        <div class="ctabs"><a href="admin-funv.html"${COURSE?'':' class="on"'}>全部</a>${COURSE_LIST.map(c=>`<a href="${c.file}"${COURSE&&COURSE.key===c.key?' class="on"':''}>${esc(c.name)}</a>`).join('')}</div>
+        <div class="sub">${COURSE?`只看「${esc(COURSE.name)}」的報名表`:'七個課程的報名表都在這裡'}，一筆一列，最新的排最上面。點一列展開，可以看 30 題全部答案、看身分證、改狀態、寫備註。</div>
         <div class="warnbar">身分證影本申請完成後要刪除：到 Supabase Storage → funv-ids 刪該申請的資料夾（資料夾名稱＝展開明細裡的申請編號）。</div>
 
         <div class="card">
           <h2><span class="bar"></span>報名名單（<span id="cnt">0</span>）</h2>
-          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題。</div>
+          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題，最後兩欄是身分證正反面的連結（7 天內有效，Excel 可直接點）。「下載全部身分證（ZIP）」會把篩選結果每個人的正反面打包，一人一個資料夾。</div>
           <div class="filters">
             <input class="search" id="fSearch" type="text" placeholder="搜尋名字或手機…">
             <select id="fStatus"></select>
             <button class="btn btn-primary" id="btnExportXlsx" style="font-size:13.5px;padding:9px 18px;">⬇ 匯出 Excel</button>
             <button class="btn btn-ghost" id="btnExport">⬇ 匯出 CSV</button>
+            <button class="btn btn-ghost" id="btnZip">⬇ 下載全部身分證（ZIP）</button>
           </div>
           <div class="msg" id="xlsxMsg"></div>
           <div id="tblWrap"><div class="state"><div class="spin"></div>載入報名表中…</div></div>
@@ -298,13 +333,33 @@
     };
     const show=(el,txt,type)=>{ el.className='msg e-msg show '+type; el.textContent=txt; };
 
+    /* 身分證在私有 bucket，只能發簽名網址：匯出給別人看的給 7 天，站內下載 60 秒就夠 */
+    const IDCOLS=[{k:'id_front_path',side:'正面',t:'身分證正面連結'},{k:'id_back_path',side:'背面',t:'身分證背面連結'}];
+    const extOf=(p)=>{ const m=/\.[a-zA-Z0-9]+$/.exec(String(p||'')); return m?m[0].toLowerCase():'.jpg'; };
+    const safeName=(v)=>{ const t=String(v==null?'':v).replace(/[\\/:*?"<>|]/g,'_').trim(); return t||'未填'; };
+    const signOne=async (path,sec)=>{
+      const { data, error } = await supabase.storage.from('funv-ids').createSignedUrl(path,sec);
+      if(error||!data||!data.signedUrl) throw new Error((error&&error.message)||'沒拿到網址');
+      return data.signedUrl;
+    };
+    const idPaths=(rs)=>{ const out=[]; rs.forEach(r=>IDCOLS.forEach(c=>{ if(r[c.k]) out.push(r[c.k]); })); return out; };
+    const signMany=async (paths,msgEl,label)=>{
+      const map={};
+      for(let i=0;i<paths.length;i++){
+        msgEl.className='msg show'; msgEl.textContent=label+' '+(i+1)+'/'+paths.length+'…';
+        try{ map[paths[i]]=await signOne(paths[i],604800); }catch(e){ map[paths[i]]=''; }
+      }
+      return map;
+    };
+    const idCell=(map,r,c)=>{ const p=r[c.k]; if(!p) return '（沒有檔案）'; if(DEMO) return '示範模式無圖'; return map[p]||'（連結產生失敗）'; };
+
     const detailHtml=(r)=>{
       const qa=QS.map(qq=>{
         let an;
         if(qq.side){
           const p=r[qq.k];
           an = p
-            ? `<div class="idbtns"><button class="btn btn-ghost idbtn" data-path="${esc(p)}" data-side="${esc(qq.side)}">${DEMO?'示範模式無圖':'看身分證'+esc(qq.side)}</button><span class="path">${esc(p)}</span></div>`
+            ? `<div class="idbtns"><button class="btn btn-ghost idbtn" data-path="${esc(p)}" data-side="${esc(qq.side)}">${DEMO?'示範模式無圖':'看身分證'+esc(qq.side)}</button><button class="btn btn-ghost iddl" data-path="${esc(p)}" data-side="${esc(qq.side)}">⬇ 下載</button><span class="path">${esc(p)}</span></div>`
             : '<div class="an none">（沒有檔案）</div>';
         }else{
           const t=answer(r,qq);
@@ -342,6 +397,24 @@
       }else{
         msgEl.className='msg e-msg'; msgEl.textContent='';
       }
+    };
+
+    /* 直接開簽名網址瀏覽器只會另開分頁，抓成 blob 才能指定檔名 */
+    const dlId=async (btn,r,msgEl)=>{
+      const path=btn.getAttribute('data-path'), side=btn.getAttribute('data-side');
+      if(DEMO){ show(msgEl,'示範模式無圖：這批是假資料，沒有真的身分證檔案。正式登入後這顆按鈕才會下載。','error'); return; }
+      const old=btn.textContent; btn.disabled=true; btn.textContent='下載中…';
+      try{
+        const res=await fetch(await signOne(path,60));
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(await res.blob());
+        a.download=safeName(r.name)+'_身分證'+side+extOf(path);
+        document.body.appendChild(a); a.click();
+        setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+        msgEl.className='msg e-msg'; msgEl.textContent='';
+      }catch(e){ show(msgEl,'下載失敗：'+(e.message||e),'error'); }
+      btn.disabled=false; btn.textContent=old;
     };
 
     const save=async (r,td)=>{
@@ -393,6 +466,7 @@
         dt.setAttribute('data-built','1');
         const msgEl=td.querySelector('.e-msg');
         td.querySelectorAll('.idbtn').forEach(b=>b.onclick=()=>openId(b,msgEl));
+        td.querySelectorAll('.iddl').forEach(b=>b.onclick=()=>dlId(b,r,msgEl));
         td.querySelector('.e-save').onclick=()=>save(r,td);
       }
       dt.classList.add('on'); tr.classList.add('open');
@@ -430,23 +504,27 @@
     };
 
     // ── 匯出目前篩選結果，欄位順序照 30 題 ──
-    $('btnExport').onclick=()=>{
+    $('btnExport').onclick=async ()=>{
+      const btn=$('btnExport'), msgEl=$('xlsxMsg'), old=btn.textContent;
+      btn.disabled=true; msgEl.className='msg'; msgEl.textContent='';
+      const map=DEMO?{}:await signMany(idPaths(view),msgEl,'產生連結中');
       const q=(v)=>{ const s=String(v==null?'':v); return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s; };
-      const head=QS.map(qq=>qq.n+'. '+qq.q);
+      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(IDCOLS.map(c=>c.t));
       const lines=[head.map(q).join(',')].concat(view.map(r=>QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
         if(qq.multi) return (v||[]).join(' / ');
         return v==null?'':String(v);
-      }).map(q).join(',')));
+      }).concat(IDCOLS.map(c=>idCell(map,r,c))).map(q).join(',')));
       const csv='﻿'+lines.join('\r\n');
       const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-      a.download='強腦力-婦女再就業報名.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+      a.download='強腦力-婦女再就業報名'+(COURSE?'-'+COURSE.name:'')+'.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+      msgEl.className='msg'; msgEl.textContent=''; btn.disabled=false; btn.textContent=old;
     };
 
     // ── 匯出 Excel：同一批篩選結果，30 題後面再接申請編號／申請時間／狀態／備註 ──
-    const xlsxRows=()=>{
-      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['申請編號','申請時間','狀態','備註']);
+    const xlsxRows=(map)=>{
+      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['申請編號','申請時間','狀態','備註']).concat(IDCOLS.map(c=>c.t));
       return [head].concat(view.map(r=>QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
@@ -457,14 +535,18 @@
         fmtTPE(r.created_at),
         String(r.status||'new'),
         r.note==null?'':String(r.note)
-      ])));
+      ]).concat(IDCOLS.map(c=>idCell(map,r,c)))));
     };
     $('btnExportXlsx').onclick=async ()=>{
       const btn=$('btnExportXlsx'), msgEl=$('xlsxMsg');
       btn.disabled=true; btn.textContent='產生中…'; msgEl.className='msg'; msgEl.textContent='';
       try{
         const XLSX=await loadXLSX();
-        saveSheet(XLSX,xlsxRows(),'報名資料','婦女再就業報名_'+today8()+'.xlsx');
+        const map=DEMO?{}:await signMany(idPaths(view),msgEl,'產生連結中');
+        const aoa=xlsxRows(map);
+        const n=aoa[0].length;
+        saveSheet(XLSX,aoa,'報名資料','婦女再就業報名'+(COURSE?'_'+COURSE.name:'')+'_'+today8()+'.xlsx',[n-2,n-1]);
+        msgEl.className='msg'; msgEl.textContent='';
       }catch(e){
         msgEl.className='msg show error';
         msgEl.textContent='Excel 元件載入失敗（'+(e.message||e)+'）。請改按「匯出 CSV」，Excel 一樣打得開。';
@@ -472,12 +554,63 @@
       btn.disabled=false; btn.textContent='⬇ 匯出 Excel';
     };
 
+    // ── 下載全部身分證：目前篩選結果，一人一個資料夾 ──
+    $('btnZip').onclick=async ()=>{
+      const btn=$('btnZip'), msgEl=$('xlsxMsg'), old=btn.textContent;
+      if(!view.length){ msgEl.className='msg show error'; msgEl.textContent='目前篩選結果是 0 筆，沒有東西可以打包。'; return; }
+      btn.disabled=true; msgEl.className='msg show'; msgEl.textContent='準備中…';
+      try{
+        const JSZip=await loadJSZip();
+        const zip=new JSZip();
+        const fails=[];
+        let done=0, okCount=0;
+        if(DEMO){
+          zip.file('說明.txt','示範模式：這是假資料，沒有真的身分證檔案。\r\n正式登入後這顆按鈕會把目前篩選到的每個人的身分證正反面打包，一人一個資料夾（名字_手機）。\r\n目前篩選到 '+view.length+' 筆。');
+        }else{
+          const total=view.reduce((n,r)=>n+IDCOLS.filter(c=>r[c.k]).length,0);
+          for(const r of view){
+            const folder=safeName(r.name)+'_'+safeName(r.mobile);
+            for(const c of IDCOLS){
+              const p=r[c.k]; if(!p) continue;
+              btn.textContent='打包中 '+(done+1)+'/'+total+'…';
+              msgEl.textContent='打包中 '+(done+1)+'/'+total+'…';
+              try{
+                const res=await fetch(await signOne(p,60));
+                if(!res.ok) throw new Error('HTTP '+res.status);
+                zip.folder(folder).file('身分證'+c.side+extOf(p),await res.blob());
+                okCount++;
+              }catch(e){ fails.push(safeName(r.name)+' 的身分證'+c.side+'：'+(e.message||e)); }
+              done++;
+            }
+          }
+          if(fails.length) zip.file('抓不到的檔案.txt',fails.join('\r\n'));
+        }
+        /* 身分證已經是 JPEG，再壓一次只是白燒 CPU，直接 STORE */
+        const blob=await zip.generateAsync({type:'blob',compression:'STORE'},m=>{
+          btn.textContent='壓縮中 '+Math.round(m.percent)+'%';
+          msgEl.textContent='壓縮中 '+Math.round(m.percent)+'%';
+        });
+        const fn='婦女再就業_身分證_'+(COURSE?COURSE.name:'全部')+'_'+today8()+'.zip';
+        const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fn;
+        document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);
+        if(DEMO){ msgEl.className='msg show'; msgEl.textContent='已下載 '+fn+'（示範模式，裡面只有一份說明.txt）。'; }
+        else if(fails.length){ msgEl.className='msg show error'; msgEl.textContent='已下載 '+fn+'，成功 '+okCount+' 張，這幾張抓不到（也寫在 ZIP 裡的「抓不到的檔案.txt」）：\n'+fails.join('\n'); }
+        else { msgEl.className='msg show'; msgEl.textContent='已下載 '+fn+'，共 '+okCount+' 張、'+view.length+' 個人。'; }
+      }catch(e){
+        msgEl.className='msg show error';
+        msgEl.textContent='打包失敗（'+(e.message||e)+'）。如果寫的是連不到 cdn.jsdelivr.net，請檢查網路後再試一次。';
+      }
+      btn.disabled=false; btn.textContent=old;
+    };
+
     ['fSearch','fStatus'].forEach(id=>$(id).addEventListener('input',applyFilters));
 
     const load=async ()=>{
       $('tblWrap').innerHTML='<div class="state"><div class="spin"></div>載入報名表中…</div>';
-      if(DEMO){ rows=DEMO_ROWS.slice().sort((a,b)=>(b.created_at||'').localeCompare(a.created_at||'')); applyFilters(); return; }
-      const { data, error } = await supabase.from('funv_applications').select('*').order('created_at',{ascending:false});
+      if(DEMO){ rows=DEMO_ROWS.filter(inCourse).sort((a,b)=>(b.created_at||'').localeCompare(a.created_at||'')); applyFilters(); return; }
+      let qy=supabase.from('funv_applications').select('*');
+      if(COURSE) qy=qy.ilike('course_choice','%'+COURSE.kw+'%');
+      const { data, error } = await qy.order('created_at',{ascending:false});
       if(error){ $('tblWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'</div>'; return; }
       rows=data||[];
       applyFilters();
