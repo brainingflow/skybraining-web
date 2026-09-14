@@ -45,6 +45,10 @@
 - [孩子查資料後就說「我懂了」？耶魯的一項研究發現，查過容易高估自己](https://skybraining.com/learn-search-illusion.html)：2015 年 Journal of Experimental Psychology: General 刊出耶魯大學心理系九個實驗：上網查過的人替自己的理解打分較高
 - [線上課看不進去？哈佛的一項研究：每一小段停下來考自己一次](https://skybraining.com/learn-interpolated-testing.html)：2013 年 PNAS 刊出哈佛大學心理系研究：21 分鐘線上課切成四段、每段停下來考一次
 - [一心多用的人，工作記憶差在哪？史丹佛的一項研究，和它沒說的事](https://skybraining.com/learn-media-multitasking.html)：2016 年 Psychonomic Bulletin & Review 刊出史丹佛大學心理系研究：媒體多工與工作記憶的關聯，不是因果
+- [孩子說「我懂了」？耶魯的一項研究：請他講一遍，才知道懂到哪](https://skybraining.com/learn-explanatory-depth.html)：2002 年 Cognitive Science 期刊耶魯大學心理系 12 個研究：講一遍解釋，自評分數幾乎人人往下掉
+- [孩子口語表達跟不上？牛津在 193 所小學做的 20 週口語課研究](https://skybraining.com/learn-oral-language-intervention.html)：牛津大學教育系在英國 193 所小學做的大規模試驗，教學助理帶 20 週口語課
+- [同一個字要在不同的書裡遇到：牛津閱讀研究者談孩子閱讀量](https://skybraining.com/learn-reading-experience.html)：牛津大學實驗心理學系 Kate Nation 談「詞彙遺產」，閱讀量與識字的四份研究回顧
+- [線上思維課對誰有用？史丹佛的研究與三年後的整合分析](https://skybraining.com/learn-mindset-intervention.html)：史丹佛大學心理系研究與三年後 29 篇整合分析，效果集中在原本落後的學生
 - [考前複習怎麼排？十種讀書方法裡證據最強的兩種](https://skybraining.com/learn-study-strategies.html)：本單元入口文，Dunlosky 2013 年十種讀書方法評比，證據最強的兩種是練習測驗與分散練習
 - [孩子讀完就忘？考前複習先改這一個動作：提取練習](https://skybraining.com/learn-retrieval-practice.html)：什麼是提取練習、美國中學課堂量到什麼、今晚五分鐘怎麼做與研究的限制
 - [位置記憶法有用嗎？記憶宮殿的四十天訓練研究怎麼說](https://skybraining.com/learn-method-of-loci.html)：位置記憶法與記憶宮殿的關係、四十天訓練研究量到什麼、今晚五個位置怎麼開始
