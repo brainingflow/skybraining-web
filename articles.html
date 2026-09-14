@@ -676,13 +676,16 @@
 @media(max-width:760px){.cov.mp{gap:13px;}.cov.mp .pv{width:74px;height:74px;flex:0 0 74px;}}
 
 .jumps{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:24px 0 2px}
-.jbtn{position:relative;font-family:var(--round);font-weight:800;font-size:16px;line-height:1.2;color:var(--indigo);display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 36px 13px 26px;border-radius:40px;transition:transform .2s,box-shadow .2s,border-color .2s}
-.jbtn-main{background:linear-gradient(135deg,var(--amber),var(--orange));box-shadow:0 12px 30px rgba(255,138,61,.32)}
-.jbtn-ghost{background:#fff;border:2px solid var(--hair)}
+.jbtn{position:relative;font-family:var(--round);font-weight:800;font-size:16px;line-height:1.2;color:var(--indigo);display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 36px 13px 26px;border-radius:40px;border:none;isolation:isolate;background:var(--jgrad);transition:transform .2s,box-shadow .2s}
+.jbtn::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(115deg,transparent 30%,var(--beam) 48%,transparent 66%);background-size:260% 260%;background-repeat:no-repeat;opacity:.3;animation:jbeam 9.5s ease-in-out infinite;animation-delay:var(--jdelay,0s);pointer-events:none}
+.jbtn-main{--jgrad:linear-gradient(135deg,var(--amber),var(--orange));--beam:rgba(251,250,246,.22);--jdelay:0s;box-shadow:0 12px 30px rgba(255,138,61,.32)}
+.jbtn-ghost{--jgrad:linear-gradient(135deg,var(--indigo),var(--indigo) 55%,var(--teal));--beam:rgba(251,250,246,.28);--jdelay:-3.2s;color:var(--paper);box-shadow:0 12px 30px rgba(22,176,168,.3)}
+.jumps .jbtn:nth-child(2){--jgrad:linear-gradient(135deg,var(--indigo),var(--indigo) 55%,var(--amber));--jdelay:-6.4s;box-shadow:0 12px 30px rgba(255,176,32,.26)}
 .jcur{position:absolute;right:8px;bottom:6px;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;opacity:.72;pointer-events:none;animation:jcur-tap 2s ease-in-out infinite}
 @keyframes jcur-tap{0%,80%,100%{transform:translate(0,0)}88%{transform:translate(-2px,-2px)}94%{transform:translate(0,0)}}
-@media(prefers-reduced-motion:reduce){.jcur{animation:none}}
-@media(hover:hover){.jbtn-main:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,138,61,.44)}.jbtn-ghost:hover{transform:translateY(-2px);border-color:var(--indigo)}}
+@keyframes jbeam{0%{background-position:130% 0;opacity:.3}50%{opacity:.95}100%{background-position:-40% 0;opacity:.3}}
+@media(prefers-reduced-motion:reduce){.jcur{animation:none}.jbtn::before{animation:none}}
+@media(hover:hover){.jbtn:hover{transform:translateY(-2px)}.jbtn-main:hover{box-shadow:0 18px 40px rgba(255,138,61,.44)}.jbtn-ghost:hover{box-shadow:0 16px 34px rgba(20,22,49,.3)}}
 #papers,#guide,#masters{scroll-margin-top:80px}
 .grid.gtight{padding-bottom:clamp(10px,2.4vw,24px)}
 @media(max-width:420px){.jumps{gap:10px}.jbtn{font-size:15px;padding:13px 30px 13px 18px}}
