@@ -11,19 +11,19 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>婦女再就業補助｜就業技能課程報名｜手沖咖啡師技巧班｜強腦力 SkyBraining</title>
-<meta name="description" content="婦女再就業補助的就業技能課程線上報名表：離開公司職場滿 180 天、目前沒有公司勞保的女性可以申請，本頁報名「手沖咖啡師技巧班」。填完表單會有專人打電話跟你確認。">
+<title>婦女再就業補助｜實戰就業力四選一 報名｜強腦力 SkyBraining</title>
+<meta name="description" content="婦女再就業補助的就業技能課程線上報名表：離開公司職場滿 180 天、目前沒有公司勞保的女性可以申請，實戰就業力 4 選 1：心智圖、AI短影音、百億銷售、整體造型擇一報名。填完表單會有專人打電話跟你確認。">
 <meta name="author" content="強腦力 SkyBraining">
 <meta name="robots" content="noindex,nofollow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="強腦力 SkyBraining">
-<meta property="og:title" content="婦女再就業補助｜手沖咖啡師技巧班報名">
+<meta property="og:title" content="婦女再就業補助｜實戰就業力四選一 報名">
 <meta property="og:description" content="離開公司職場滿 180 天、目前沒有公司勞保的女性可以申請。六個步驟填完，專人打電話跟你確認。">
-<meta property="og:url" content="https://skybraining.com/funv-apply-coffee.html">
+<meta property="og:url" content="https://skybraining.com/funv-apply-4in1.html">
 <meta property="og:image" content="https://skybraining.com/og.png">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="婦女再就業補助｜手沖咖啡師技巧班報名">
+<meta name="twitter:title" content="婦女再就業補助｜實戰就業力四選一 報名">
 <meta name="twitter:description" content="離開公司職場滿 180 天、目前沒有公司勞保的女性可以申請。六個步驟填完，專人打電話跟你確認。">
 <meta name="twitter:image" content="https://skybraining.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,7 @@
 .fhead{padding:clamp(26px,5vw,42px) 0 2px;}
 .fhead h1{font-weight:800;font-size:clamp(24px,4.4vw,35px);color:var(--indigo);line-height:1.32;}
 .fhead .lede{margin-top:12px;font-size:16.5px;color:var(--ink-soft);line-height:1.9;}
+  .fhead .f4tag{margin-top:10px;font-family:var(--round);font-weight:800;font-size:14.5px;color:var(--teal-deep);background:rgba(22,176,168,.12);display:inline-block;padding:4px 12px;border-radius:20px;}
 .pwrap{margin:20px 0 18px;}
 .progress{height:10px;background:var(--paper-2);border-radius:6px;overflow:hidden;}
 .progress .bar{height:100%;width:16.7%;background:linear-gradient(90deg,var(--amber),var(--orange));border-radius:6px;transition:width .35s ease;}
@@ -140,6 +141,7 @@ fieldset.f legend{padding:0;}
 <main class="fwrap">
   <div class="fhead">
     <h1>婦女再就業補助・就業技能課程報名</h1>
+    <p class="f4tag">實戰就業力 4 選 1</p>
     <p class="lede">感謝您報名婦女就業補助計劃❤️ 就業不只是為了收入，是為了掌握人生的選擇權。</p>
   </div>
 
@@ -154,10 +156,8 @@ fieldset.f legend{padding:0;}
   <!-- 第 1 步：資格與準備 -->
   <section class="step on" id="step1" data-title="資格與準備">
     <figure class="poster">
-      <img src="img-funv-coffee-poster.jpg" alt="手沖咖啡師技巧班 課程海報（講師施宏森）" width="1024" height="1536" loading="eager" decoding="async">
-    </figure>
-
-    <figure class="poster">
+      <img src="img-funv-4in1-poster.jpg" alt="婦女再就業補助專案・實戰就業力四選一（心智圖、AI短影音、百億銷售、整體造型）課程海報" width="941" height="1672" loading="eager" decoding="async">
+    </figure><figure class="poster">
       <img src="img-funv-eligibility.jpg" alt="婦女就業補助資格與補助重點" width="941" height="1672" loading="eager" decoding="async">
     </figure>
 
@@ -187,9 +187,16 @@ fieldset.f legend{padding:0;}
         <p class="err"></p>
       </div>
 
-      <div class="f" data-name="course_choice" data-fixed-value="宏森【手沖咖啡師技巧班】">
-        <p class="course-badge"><span class="cb-label">你報名的課程：</span><b>宏森【手沖咖啡師技巧班】</b></p>
-      </div>
+      <fieldset class="f" data-name="course_choice" data-kind="radio" data-req="1" data-msg="請選一堂課。">
+        <legend class="q">【選擇課程】<span class="req">*</span></legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="course_choice" value="Sky【心智圖講師班】"><span>Sky【心智圖講師班】</span></label>
+          <label class="opt"><input type="radio" name="course_choice" value="小語【AI短影音實戰班】"><span>小語【AI短影音實戰班】</span></label>
+          <label class="opt"><input type="radio" name="course_choice" value="信廷【百億品牌成交技術】"><span>信廷【百億品牌成交技術】</span></label>
+          <label class="opt"><input type="radio" name="course_choice" value="華君【整體造型設計】"><span>華君【整體造型設計】</span></label>
+        </div>
+        <p class="err"></p>
+      </fieldset>
     </div>
 
     <div class="navbtns"><button type="button" class="btn btn-next" data-go="1">下一步</button></div>
@@ -375,25 +382,47 @@ fieldset.f legend{padding:0;}
         <p class="err"></p>
       </div>
 
-      <fieldset class="f" data-name="target_job" data-kind="radio" data-req="1" data-msg="請選一個未來想從事的職業方向。">
-        <legend class="q">未來想就業方向<span class="req">*</span></legend>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="target_job" value="咖啡師、手沖咖啡師"><span>咖啡師、手沖咖啡師</span></label>
-          <label class="opt"><input type="radio" name="target_job" value="咖啡店員"><span>咖啡店員</span></label>
-          <label class="opt"><input type="radio" name="target_job" value="咖啡銷售"><span>咖啡銷售</span></label>
-          <label class="opt"><input type="radio" name="target_job" value="其他" data-other="1"><span>其他</span></label>
-        </div>
-        <input type="text" class="other-in" placeholder="其他：請簡單寫一下" aria-label="其他，請簡單寫一下" disabled>
-        <p class="err"></p>
-      </fieldset>
+      <div class="f" data-name="target_job" hidden>
+        <input type="hidden" id="targetJobHidden">
+      </div>
 
       <fieldset class="f" data-name="job_relevance" data-kind="radio" data-req="1" data-msg="請選一個最接近的。">
         <legend class="q">參加這門課對您未來就業的關聯性？<span class="req">*</span></legend>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="job_relevance" value="【咖啡師】咖啡師、咖啡店員、手沖咖啡師、咖啡銷售"><span>【咖啡師】咖啡師、咖啡店員、手沖咖啡師、咖啡銷售</span></label>
+        <div class="tj-group" data-course="Sky【心智圖講師班】" hidden>
+          <div class="opts">
+          <label class="opt"><input type="radio" name="job_relevance" value="補習班陪讀需要有一些專業能力"><span>補習班陪讀需要有一些專業能力</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="想擔任社區心智圖老師"><span>想擔任社區心智圖老師</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="心智圖的概念可以幫助我快速上手任何事情"><span>心智圖的概念可以幫助我快速上手任何事情</span></label>
+        </div>
+        </div>
+
+        <div class="tj-group" data-course="小語【AI短影音實戰班】" hidden>
+          <div class="opts">
+          <label class="opt"><input type="radio" name="job_relevance" value="【AI行銷】透過製作媒體、剪輯技巧，進入公司行銷部門"><span>【AI行銷】透過製作媒體、剪輯技巧，進入公司行銷部門</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="【拍攝影片】當導演、藏鏡人、參與行銷部門經營"><span>【拍攝影片】當導演、藏鏡人、參與行銷部門經營</span></label>
           <label class="opt"><input type="radio" name="job_relevance" value="其他" data-other="1"><span>其他</span></label>
         </div>
         <input type="text" class="other-in" placeholder="其他：請簡單寫一下" aria-label="其他，請簡單寫一下" disabled>
+        </div>
+
+        <div class="tj-group" data-course="信廷【百億品牌成交技術】" hidden>
+          <div class="opts">
+          <label class="opt"><input type="radio" name="job_relevance" value="【銷售】保險、房仲、業務，需具備與客戶深度溝通能力"><span>【銷售】保險、房仲、業務，需具備與客戶深度溝通能力</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="【顧問】專櫃業務、保險、房仲、業務，提高形象專業程度"><span>【顧問】專櫃業務、保險、房仲、業務，提高形象專業程度</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="其他" data-other="1"><span>其他</span></label>
+        </div>
+        <input type="text" class="other-in" placeholder="其他：請簡單寫一下" aria-label="其他，請簡單寫一下" disabled>
+        </div>
+
+        <div class="tj-group" data-course="華君【整體造型設計】" hidden>
+          <div class="opts">
+          <label class="opt"><input type="radio" name="job_relevance" value="【化妝師】想要擔任一個專業的化妝師或整體造型師"><span>【化妝師】想要擔任一個專業的化妝師或整體造型師</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="【顧問】專櫃業務、保險、房仲、業務，提高形象專業程度"><span>【顧問】專櫃業務、保險、房仲、業務，提高形象專業程度</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="【自媒體】用彩妝與造型經營個人品牌或接案"><span>【自媒體】用彩妝與造型經營個人品牌或接案</span></label>
+          <label class="opt"><input type="radio" name="job_relevance" value="其他" data-other="1"><span>其他</span></label>
+        </div>
+        <input type="text" class="other-in" placeholder="其他：請簡單寫一下" aria-label="其他，請簡單寫一下" disabled>
+        </div>
         <p class="err"></p>
       </fieldset>
 
@@ -803,6 +832,35 @@ fieldset.f legend{padding:0;}
 
   showStep(1);
   inited = true;
+})();
+</script>
+<script>
+/* 實戰就業力四選一報名頁：選課後自動帶入就業方向（隱藏欄位，題目本身不顯示）＋依課程切換關聯性選項（2026-09-15） */
+(function(){
+  var TARGET_JOB = {
+    'Sky【心智圖講師班】': '心智圖講師、兒童心智圖講師、補習班陪讀助教、企業內訓講師、線上課程講師',
+    '小語【AI短影音實戰班】': '自媒體行銷、短影片導演、AI 剪輯師、公司行銷人員、拍片手',
+    '信廷【百億品牌成交技術】': '櫃姐、門市銷售、房仲、保險業務、公司業務',
+    '華君【整體造型設計】': '化妝師、新娘秘書、整體造型師、個人形象顧問、專櫃美容顧問'
+  };
+  var ccInputs = document.querySelectorAll('input[name="course_choice"]');
+  var groups = document.querySelectorAll('.tj-group');
+  var tjHidden = document.getElementById('targetJobHidden');
+  function applyCourse(course){
+    groups.forEach(function(g){
+      var match = g.getAttribute('data-course') === course;
+      g.hidden = !match;
+      if(!match){
+        g.querySelectorAll('input[type=radio]').forEach(function(r){ r.checked = false; });
+        var oi = g.querySelector('.other-in');
+        if(oi){ oi.disabled = true; oi.value = ''; }
+      }
+    });
+    if(tjHidden) tjHidden.value = TARGET_JOB[course] || '';
+  }
+  ccInputs.forEach(function(r){
+    r.addEventListener('change', function(){ applyCourse(r.value); });
+  });
 })();
 </script>
 </body>

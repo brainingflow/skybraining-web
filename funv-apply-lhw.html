@@ -287,6 +287,18 @@ fieldset.f legend{padding:0;}
         </div>
         <p class="err"></p>
       </div>
+
+      <div class="f" data-name="passbook" data-kind="file" data-file="passbook">
+        <span class="q">匯款帳簿封面照片（有的話請一起上傳，沒有可以先送出）</span>
+        <p class="hint">用來核對補助匯款帳號；我們公司寄件後即刪除・單張 10MB 以內</p>
+        <div class="shot">
+          <input type="file" id="q31" accept="image/*">
+          <label class="pick" for="q31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>拍照／選檔案</label>
+          <img class="thumb" id="thumbPassbook" alt="匯款帳簿封面預覽">
+          <span class="fname" id="namePassbook"></span>
+        </div>
+        <p class="err"></p>
+      </div>
     </div>
 
     <div class="navbtns"><button type="button" class="btn btn-prev" data-back="2">上一步</button><button type="button" class="btn btn-next" data-go="3">下一步</button></div>
@@ -706,6 +718,7 @@ fieldset.f legend{padding:0;}
   }
   wireShot('q5', 'front', 'thumbFront', 'nameFront');
   wireShot('q6', 'back',  'thumbBack',  'nameBack');
+  wireShot('q31', 'passbook', 'thumbPassbook', 'namePassbook');
 
   /* ── 送出前壓縮：長邊 1600px、JPEG 0.85 ── */
   function compress(file){
@@ -784,10 +797,11 @@ fieldset.f legend{padding:0;}
     btn.disabled = true;
     btn.textContent = '送出中…';
     if(DEMO){ setTimeout(function(){ finish(true); }, 600); return; }
-    Promise.all([compress(picked.front), compress(picked.back)]).then(function(b){
+    Promise.all([compress(picked.front), compress(picked.back), picked.passbook ? compress(picked.passbook) : Promise.resolve(null)]).then(function(b){
       var fd = collect();
       fd.append('id_front', b[0], 'front.jpg');
       fd.append('id_back',  b[1], 'back.jpg');
+      if(b[2]) fd.append('passbook', b[2], 'passbook.jpg');
       return fetch(FN, { method:'POST', headers:{ apikey: ANON }, body: fd });
     }).then(function(r){
       return r.json().then(function(j){ return !!(r.ok && j && j.ok); }, function(){ return false; });

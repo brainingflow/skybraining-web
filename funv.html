@@ -57,8 +57,7 @@
   .head{padding:clamp(48px,7vw,80px) 0 6px;text-align:center;}
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:16px;}
   .eyebrow::before,.eyebrow::after{content:"";width:22px;height:2px;border-radius:2px;background:linear-gradient(120deg,var(--amber),var(--orange));}
-  .head h1{font-weight:800;font-size:clamp(30px,5vw,48px);color:var(--indigo);line-height:1.14;}
-  .head p{margin:14px auto 0;color:var(--ink-soft);font-size:16.5px;max-width:46ch;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:clamp(36px,5vw,54px) 0 80px;}
   .card{background:var(--card);border:1px solid var(--hair);border-radius:24px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
   .card:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
@@ -141,17 +140,8 @@
 .line-fab:hover{filter:brightness(1.05);}
 .panel{background:var(--card);border:1px solid var(--hair);border-radius:22px;box-shadow:var(--sh-1);padding:clamp(20px,4.5vw,30px);margin:26px 0;}
 .panel h2{font-family:var(--round);font-weight:800;font-size:clamp(20px,3.4vw,26px);color:var(--indigo);line-height:1.4;margin-bottom:14px;}
-.target{font-family:var(--round);font-weight:800;font-size:clamp(17px,2.8vw,20px);color:var(--indigo);line-height:1.5;margin-bottom:14px;}
-.cond{list-style:none;margin:0;padding:0;}
-.cond li{background:#fff;border:1px solid var(--hair);border-left:5px solid var(--teal);border-radius:12px;padding:12px 15px;margin:9px 0;font-size:16px;line-height:1.75;}
-.claim-sub{display:block;margin-top:6px;font-size:clamp(16px,2.85vw,20px);font-weight:700;opacity:.92;}
-@media(max-width:375px){.claim-sub{font-size:clamp(15px,2.7vw,19px);}}
-.claim{margin:18px 0 0;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;font-family:var(--round);font-weight:800;font-size:clamp(17px,3vw,21px);line-height:1.5;text-align:center;}
-.gov{margin:18px 0 0;font-size:15.5px;line-height:1.8;}
-.gov a{color:var(--teal-deep);font-weight:700;text-decoration:underline;text-underline-offset:3px;word-break:break-all;}
-.lbtn{max-width:420px;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;padding:15px 24px;border-radius:40px;background:var(--line-brand);color:#fff;font-family:var(--round);font-weight:800;font-size:17px;box-shadow:0 10px 24px rgba(6,199,85,.3);}
-.lbtn svg{width:21px;height:21px;fill:#fff;flex:none;}
-.lbtn:hover{filter:brightness(1.05);}
+.hero-poster{margin:clamp(28px,5vw,44px) 0 8px;text-align:center;}
+.hero-poster img{display:block;width:100%;height:auto;border-radius:24px;box-shadow:var(--sh-1);}
 .fthumb{position:relative;display:block;flex:none;background:var(--paper-2);aspect-ratio:3/4;overflow:hidden;border-bottom:1px solid var(--hair);}
 .fthumb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;}
 .fbody{padding:18px 22px 22px;display:flex;flex-direction:column;flex:1;}
@@ -167,7 +157,6 @@
 .steps4{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 .steps4 li{background:var(--paper-2);border-radius:16px;padding:16px 18px;font-size:15.5px;line-height:1.7;}
 .steps4 .n{display:block;font-family:var(--round);font-weight:800;font-size:24px;color:var(--orange);line-height:1.2;margin-bottom:4px;}
-.nb2{white-space:nowrap;}
 @media(max-width:760px){.card.fcard{flex-direction:column;}.steps4{grid-template-columns:1fr;gap:10px;}}
 @media(max-width:420px){.fbody{padding:16px 18px 20px;}}
 </style>
@@ -194,24 +183,8 @@
 </nav>
 
 <div class="wrap">
-  <div class="head">
-    <div class="eyebrow">婦女再就業專案</div>
-    <h1><span class="nb2">婦女再就業補助・</span><span class="nb2">就業技能課程</span></h1>
-    <p>就業不只是為了收入，是為了掌握人生的選擇權。</p>
-  </div>
-
-  <section class="panel" id="qualify">
-    <p class="target">對象：沒保公司勞保超過 180 天的女性</p>
-    <ul class="cond">
-      <li>🚫180天內，沒有「公司勞保」</li>
-      <li>✅公會勞保、農保、漁保...可以參加!!!</li>
-      <li>♥️你是一個女生</li>
-      <li>🔥180天沒工作薪水</li>
-    </ul>
-    <p class="claim">政府補助 20,000 學費＋再領 5,000 獎學金<span class="claim-sub">結業後再補助 70,000 創業、就業獎金</span></p>
-    <p class="gov"><a href="https://yct168.wda.gov.tw/News_Content.aspx?n=9033C1B0BF411300&amp;sms=ECFC6372C8869F6D&amp;s=336CFE3D932B2F01" target="_blank" rel="noopener">勞動部網頁（補助辦法原文）→</a></p>
-    <a class="lbtn" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>先加 LINE 再填表單</a>
-  </section>
+  <h1 class="sr-only">婦女再就業補助・就業技能課程</h1>
+  <figure class="hero-poster"><img src="img-funv-eligibility.jpg" width="941" height="1672" alt="婦女再就業補助資格與補助重點" fetchpriority="high"></figure>
 
   <div class="head sec2" id="courses">
     <div class="eyebrow">選擇課程</div>

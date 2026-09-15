@@ -1,6 +1,6 @@
 // ============================================================
 // 婦女再就業補助報名：funv-apply.html 的送出端點
-// 收 multipart/form-data → 兩張身分證存進私有 bucket funv-ids → 其餘欄位寫進 funv_applications。
+// 收 multipart/form-data → 身分證正反面（必填）＋匯款帳簿封面（選填）存進私有 bucket funv-ids → 其餘欄位寫進 funv_applications。
 // 不寄信、不打 LINE：通知一律人工處理（公司規則「人決定、AI 執行」）。
 //
 // 部署設定：Verify JWT = OFF（報名表沒有登入，前端只帶 anon key）
@@ -89,17 +89,31 @@ Deno.serve(async (req) => {
       if (f.size > MAX_BYTES) return J({ ok: false, error: `${label}超過 10MB` }, 400);
     }
 
-    // ── 先產 id，兩張圖放在 <申請id>/ 底下，再連同路徑寫進資料表 ──
+    // 匯款帳簿封面照片：選填，前端有選才會附這個欄位
+    const passbookRaw = fd.get("passbook");
+    const passbook = passbookRaw instanceof File && passbookRaw.size > 0 ? passbookRaw : null;
+    if (passbook) {
+      if (!passbook.type.startsWith("image/")) return J({ ok: false, error: "匯款帳簿封面請上傳圖片檔" }, 400);
+      if (passbook.size > MAX_BYTES) return J({ ok: false, error: "匯款帳簿封面超過 10MB" }, 400);
+    }
+
+    // ── 先產 id，圖片放在 <申請id>/ 底下，再連同路徑寫進資料表 ──
     const id = crypto.randomUUID();
     for (const [name, f] of [["front", front as File], ["back", back as File]] as [string, File][]) {
       const { error } = await admin.storage.from(BUCKET)
         .upload(`${id}/${name}.jpg`, f, { contentType: f.type || "image/jpeg", upsert: true });
       if (error) return J({ ok: false, error: "照片上傳失敗：" + error.message }, 500);
     }
+    if (passbook) {
+      const { error } = await admin.storage.from(BUCKET)
+        .upload(`${id}/passbook.jpg`, passbook, { contentType: passbook.type || "image/jpeg", upsert: true });
+      if (error) return J({ ok: false, error: "匯款帳簿封面上傳失敗：" + error.message }, 500);
+    }
 
     row.id = id;
     row.id_front_path = `${id}/front.jpg`;
     row.id_back_path  = `${id}/back.jpg`;
+    row.passbook_path = passbook ? `${id}/passbook.jpg` : null;
     row.ip = ip;
     row.user_agent = ua;
 

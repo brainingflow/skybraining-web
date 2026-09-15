@@ -179,11 +179,12 @@
     return ''+t.getUTCFullYear()+p(t.getUTCMonth()+1)+p(t.getUTCDate()); };
   const saveSheet=(XLSX,aoa,sheet,file,linkCols)=>{
     const ws=XLSX.utils.aoa_to_sheet(aoa);
-    (linkCols||[]).forEach(ci=>{ for(let ri=1;ri<aoa.length;ri++){
+    (linkCols||[]).forEach(ci=>{ const tip=aoa[0][ci]==='匯款帳簿封面'?'點開匯款帳簿封面（7 天內有效）':'點開身分證影本（7 天內有效）';
+      for(let ri=1;ri<aoa.length;ri++){
       const v=aoa[ri][ci];
       if(typeof v!=='string'||v.indexOf('http')!==0) continue;
       const ref=XLSX.utils.encode_cell({r:ri,c:ci});
-      if(ws[ref]) ws[ref].l={Target:v,Tooltip:'點開身分證影本（7 天內有效）'};
+      if(ws[ref]) ws[ref].l={Target:v,Tooltip:tip};
     }});
     /* !cols 的 wch 以半形為單位，中文一個字佔兩格；上限抓 18 個字，
        不然光題目那欄就會寬到整張表要橫捲 */
@@ -249,28 +250,28 @@
   const DEMO=new URLSearchParams(location.search).get('demo')==='1' || /(^|[#&])demo=?1?([&]|$)/.test(location.hash);
   /* 示範資料：每個課程 2 到 3 筆，course_choice 用報名頁真的會存進去的課程全名 */
   const DEMO_SEED=[
-    ['示範一','0912-000-001','華君【整體造型設計】','new','','新娘秘書','（示範）【化妝師】直接相關','（示範）王老師','2026-09-13T01:20:00.000Z',true],
-    ['示範二','0912-000-002','華君【整體造型設計】','聯絡中','（示範）打過電話沒接，晚上再撥','整體造型師','（示範）【自媒體】經營個人品牌','（示範）李小姐','2026-09-13T09:45:00.000Z',true],
-    ['示範三','0912-000-003','華君【整體造型設計】','已送件','（示範）資料已寄出，等勞動部回覆','彩妝講師、美容美儀講師','（示範）【顧問】提供形象建議','（示範）示範一','2026-09-14T02:10:00.000Z',false],
-    ['示範四','0912-000-004','小可【牛角筋絡調理】','new','','筋絡調理師、民俗療法、個人按摩、推拿師','（示範）【筋絡調理】想自行創業','（示範）小可老師','2026-09-14T03:05:00.000Z',true],
-    ['示範五','0912-000-005','小可【牛角筋絡調理】','聯絡中','（示範）想問上課地點','按摩師、腳底按摩','（示範）【按摩技巧】想進診所','（示範）示範四','2026-09-14T03:12:00.000Z',true],
-    ['示範六','0912-000-006','宏森【手沖咖啡師技巧班】','new','','手沖咖啡師','（示範）【咖啡師】想到咖啡店上班','（示範）施老師','2026-09-14T03:20:00.000Z',true],
-    ['示範七','0912-000-007','宏森【手沖咖啡師技巧班】','完成','（示範）已開課','咖啡銷售','（示範）【咖啡師】想自己開店','（示範）示範六','2026-09-14T03:28:00.000Z',true],
-    ['示範八','0912-000-008','Sky【心智圖講師班】','new','','心智圖講師','（示範）想擔任社區心智圖老師','（示範）Sky 老師','2026-09-14T03:35:00.000Z',true],
-    ['示範九','0912-000-009','Sky【心智圖講師班】','聯絡中','（示範）想確認梯次','補習班陪讀、助教','（示範）補習班陪讀需要專業能力','（示範）示範八','2026-09-14T03:41:00.000Z',true],
-    ['示範十','0912-000-010','信廷【百億品牌成交技術】','new','','房仲','（示範）【銷售】想加強客戶溝通','（示範）信廷老師','2026-09-14T03:48:00.000Z',true],
-    ['示範十一','0912-000-011','信廷【百億品牌成交技術】','不符','（示範）勞保未滿 180 天','櫃姐','（示範）【顧問】想提高專業度','（示範）示範十','2026-09-14T03:55:00.000Z',false],
-    ['示範十二','0912-000-012','小語【AI短影音實戰班】','new','','短影片導演','（示範）【AI行銷】想進行銷部門','（示範）小語老師','2026-09-14T04:02:00.000Z',true],
-    ['示範十三','0912-000-013','小語【AI短影音實戰班】','已送件','（示範）資料已寄出','AI 剪輯師','（示範）【拍攝影片】想接案','（示範）示範十二','2026-09-14T04:09:00.000Z',true],
-    ['示範十四','0912-000-014','育誠【包租代管實戰班】','new','','包租代管業務、租賃管理專員','（示範）想進不動產、租賃管理公司上班','（示範）張育誠老師','2026-09-14T04:15:00.000Z',true],
-    ['示範十五','0912-000-015','育誠【包租代管實戰班】','聯絡中','（示範）想確認上課地點','二房東、自有房屋出租經營','（示範）想把自己的房子出租經營','（示範）示範十四','2026-09-14T04:22:00.000Z',true]
+    ['示範一','0912-000-001','華君【整體造型設計】','new','','新娘秘書','（示範）【化妝師】直接相關','（示範）王老師','2026-09-13T01:20:00.000Z',true,true],
+    ['示範二','0912-000-002','華君【整體造型設計】','聯絡中','（示範）打過電話沒接，晚上再撥','整體造型師','（示範）【自媒體】經營個人品牌','（示範）李小姐','2026-09-13T09:45:00.000Z',true,false],
+    ['示範三','0912-000-003','華君【整體造型設計】','已送件','（示範）資料已寄出，等勞動部回覆','彩妝講師、美容美儀講師','（示範）【顧問】提供形象建議','（示範）示範一','2026-09-14T02:10:00.000Z',false,false],
+    ['示範四','0912-000-004','小可【牛角筋絡調理】','new','','筋絡調理師、民俗療法、個人按摩、推拿師','（示範）【筋絡調理】想自行創業','（示範）小可老師','2026-09-14T03:05:00.000Z',true,true],
+    ['示範五','0912-000-005','小可【牛角筋絡調理】','聯絡中','（示範）想問上課地點','按摩師、腳底按摩','（示範）【按摩技巧】想進診所','（示範）示範四','2026-09-14T03:12:00.000Z',true,false],
+    ['示範六','0912-000-006','宏森【手沖咖啡師技巧班】','new','','手沖咖啡師','（示範）【咖啡師】想到咖啡店上班','（示範）施老師','2026-09-14T03:20:00.000Z',true,false],
+    ['示範七','0912-000-007','宏森【手沖咖啡師技巧班】','完成','（示範）已開課','咖啡銷售','（示範）【咖啡師】想自己開店','（示範）示範六','2026-09-14T03:28:00.000Z',true,true],
+    ['示範八','0912-000-008','Sky【心智圖講師班】','new','','心智圖講師','（示範）想擔任社區心智圖老師','（示範）Sky 老師','2026-09-14T03:35:00.000Z',true,false],
+    ['示範九','0912-000-009','Sky【心智圖講師班】','聯絡中','（示範）想確認梯次','補習班陪讀、助教','（示範）補習班陪讀需要專業能力','（示範）示範八','2026-09-14T03:41:00.000Z',true,false],
+    ['示範十','0912-000-010','信廷【百億品牌成交技術】','new','','房仲','（示範）【銷售】想加強客戶溝通','（示範）信廷老師','2026-09-14T03:48:00.000Z',true,true],
+    ['示範十一','0912-000-011','信廷【百億品牌成交技術】','不符','（示範）勞保未滿 180 天','櫃姐','（示範）【顧問】想提高專業度','（示範）示範十','2026-09-14T03:55:00.000Z',false,false],
+    ['示範十二','0912-000-012','小語【AI短影音實戰班】','new','','短影片導演','（示範）【AI行銷】想進行銷部門','（示範）小語老師','2026-09-14T04:02:00.000Z',true,false],
+    ['示範十三','0912-000-013','小語【AI短影音實戰班】','已送件','（示範）資料已寄出','AI 剪輯師','（示範）【拍攝影片】想接案','（示範）示範十二','2026-09-14T04:09:00.000Z',true,true],
+    ['示範十四','0912-000-014','育誠【包租代管實戰班】','new','','包租代管業務、租賃管理專員','（示範）想進不動產、租賃管理公司上班','（示範）張育誠老師','2026-09-14T04:15:00.000Z',true,false],
+    ['示範十五','0912-000-015','育誠【包租代管實戰班】','聯絡中','（示範）想確認上課地點','二房東、自有房屋出租經營','（示範）想把自己的房子出租經營','（示範）示範十四','2026-09-14T04:22:00.000Z',true,false]
   ];
   const DEMO_ROWS=DEMO_SEED.map((d,i)=>{
     const id='demo-'+String(i+1).padStart(4,'0');
     return { id, created_at:d[8], status:d[3], note:d[4],
       labor_insurance:'（示範）沒有保勞保', name:d[0], line_id:'demo-line-'+String(i+1).padStart(2,'0'),
       id_number:'A2000000'+String(i+1).padStart(2,'0'),
-      id_front_path:id+'/front.jpg', id_back_path:id+'/back.jpg',
+      id_front_path:id+'/front.jpg', id_back_path:id+'/back.jpg', passbook_path:d[10]?id+'/passbook.jpg':null,
       birthday:'1988-03-15', mobile:d[1], address:'（示範）高雄市三民區示範路 '+(i+1)+' 號',
       email:'demo'+(i+1)+'@example.com', education:'（示範）示範高職／示範科', skills:'（示範）文書、攝影',
       last_company:'（示範）示範有限公司', last_title:'（示範）門市人員', leave_reason:'（示範）照顧未滿12歲子女',
@@ -304,7 +305,7 @@
 
         <div class="card">
           <h2><span class="bar"></span>報名名單（<span id="cnt">0</span>）</h2>
-          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題，最後兩欄是身分證正反面的連結（7 天內有效，Excel 可直接點）。「下載全部身分證（ZIP）」會把篩選結果每個人的正反面打包，一人一個資料夾。</div>
+          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題，最後三欄是身分證正反面與匯款帳簿封面的連結（7 天內有效，Excel 可直接點）。「下載全部身分證（ZIP）」會把篩選結果每個人的身分證正反面與匯款帳簿封面（如果有上傳）打包，一人一個資料夾。</div>
           <div class="filters">
             <input class="search" id="fSearch" type="text" placeholder="搜尋名字或手機…">
             <select id="fStatus"></select>
@@ -334,7 +335,7 @@
     const show=(el,txt,type)=>{ el.className='msg e-msg show '+type; el.textContent=txt; };
 
     /* 身分證在私有 bucket，只能發簽名網址：匯出給別人看的給 7 天，站內下載 60 秒就夠 */
-    const IDCOLS=[{k:'id_front_path',side:'正面',t:'身分證正面連結'},{k:'id_back_path',side:'背面',t:'身分證背面連結'}];
+    const IDCOLS=[{k:'id_front_path',side:'正面',t:'身分證正面連結'},{k:'id_back_path',side:'背面',t:'身分證背面連結'},{k:'passbook_path',side:'匯款帳簿封面',t:'匯款帳簿封面',emptyText:''}];
     const extOf=(p)=>{ const m=/\.[a-zA-Z0-9]+$/.exec(String(p||'')); return m?m[0].toLowerCase():'.jpg'; };
     const safeName=(v)=>{ const t=String(v==null?'':v).replace(/[\\/:*?"<>|]/g,'_').trim(); return t||'未填'; };
     const signOne=async (path,sec)=>{
@@ -351,22 +352,33 @@
       }
       return map;
     };
-    const idCell=(map,r,c)=>{ const p=r[c.k]; if(!p) return '（沒有檔案）'; if(DEMO) return '示範模式無圖'; return map[p]||'（連結產生失敗）'; };
+    const idCell=(map,r,c)=>{ const p=r[c.k]; if(!p) return c.emptyText!=null?c.emptyText:'（沒有檔案）'; if(DEMO) return '示範模式無圖'; return map[p]||'（連結產生失敗）'; };
 
+    const qaRow=(r,qq)=>{
+      let an;
+      if(qq.side){
+        const p=r[qq.k];
+        an = p
+          ? `<div class="idbtns"><button class="btn btn-ghost idbtn" data-path="${esc(p)}" data-side="${esc(qq.side)}">${DEMO?'示範模式無圖':'看身分證'+esc(qq.side)}</button><button class="btn btn-ghost iddl" data-path="${esc(p)}" data-side="${esc(qq.side)}">⬇ 下載</button><span class="path">${esc(p)}</span></div>`
+          : '<div class="an none">（沒有檔案）</div>';
+      }else{
+        const t=answer(r,qq);
+        an = t ? `<div class="an">${esc(t)}</div>` : '<div class="an none">（未填）</div>';
+      }
+      return `<div class="qa"><div class="qn">${qq.n}. ${esc(qq.q)}</div><div>${an}</div></div>`;
+    };
+    /* 匯款帳簿封面：身分證正反面（第 5、6 題）之後多一格，選填，不算在 30 題編號裡；
+       匯出時另外接在 IDCOLS 尾巴（見 idPaths/idCell），不影響前面 30 欄的順序 */
+    const pbRow=(r)=>{
+      const p=r.passbook_path;
+      let an;
+      if(!p){ an='<div class="an none">未上傳</div>'; }
+      else if(DEMO){ an='<div class="an">（示範）已上傳</div>'; }
+      else{ an=`<div class="idbtns"><button class="btn btn-ghost pbopen" data-path="${esc(p)}">看匯款帳簿封面</button><button class="btn btn-ghost pbdl" data-path="${esc(p)}">⬇ 下載</button><span class="path">${esc(p)}</span></div>`; }
+      return `<div class="qa"><div class="qn">匯款帳簿封面照片（有的話請一起上傳，沒有可以先送出）</div><div>${an}</div></div>`;
+    };
     const detailHtml=(r)=>{
-      const qa=QS.map(qq=>{
-        let an;
-        if(qq.side){
-          const p=r[qq.k];
-          an = p
-            ? `<div class="idbtns"><button class="btn btn-ghost idbtn" data-path="${esc(p)}" data-side="${esc(qq.side)}">${DEMO?'示範模式無圖':'看身分證'+esc(qq.side)}</button><button class="btn btn-ghost iddl" data-path="${esc(p)}" data-side="${esc(qq.side)}">⬇ 下載</button><span class="path">${esc(p)}</span></div>`
-            : '<div class="an none">（沒有檔案）</div>';
-        }else{
-          const t=answer(r,qq);
-          an = t ? `<div class="an">${esc(t)}</div>` : '<div class="an none">（未填）</div>';
-        }
-        return `<div class="qa"><div class="qn">${qq.n}. ${esc(qq.q)}</div><div>${an}</div></div>`;
-      }).join('');
+      const qa=QS.slice(0,6).map(qq=>qaRow(r,qq)).join('')+pbRow(r)+QS.slice(6).map(qq=>qaRow(r,qq)).join('');
       const cur=r.status||'new';
       const opts=STATUS.includes(cur)?STATUS:STATUS.concat([cur]);
       return `<div class="dhead">申請編號（＝Supabase Storage → funv-ids 裡的資料夾名稱）：${esc(r.id)}　｜　申請時間：${esc(fmtDT(r.created_at))}</div>
@@ -410,6 +422,43 @@
         const a=document.createElement('a');
         a.href=URL.createObjectURL(await res.blob());
         a.download=safeName(r.name)+'_身分證'+side+extOf(path);
+        document.body.appendChild(a); a.click();
+        setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+        msgEl.className='msg e-msg'; msgEl.textContent='';
+      }catch(e){ show(msgEl,'下載失敗：'+(e.message||e),'error'); }
+      btn.disabled=false; btn.textContent=old;
+    };
+
+    /* 匯款帳簿封面的看/下載，跟身分證共用同一顆 funv-ids bucket，只是欄位與檔名不同，
+       獨立寫一份而不是把 openId/dlId 改成通用參數，避免動到已經在跑的身分證邏輯 */
+    const openPassbook=async (btn,msgEl)=>{
+      const path=btn.getAttribute('data-path');
+      if(DEMO){ show(msgEl,'示範模式無圖：這批是假資料，沒有真的匯款帳簿封面檔案。正式登入後這顆按鈕才會開圖。','error'); return; }
+      btn.disabled=true;
+      const { data, error } = await supabase.storage.from('funv-ids').createSignedUrl(path,300);
+      btn.disabled=false;
+      if(error||!data||!data.signedUrl){
+        show(msgEl,'開不了匯款帳簿封面照片：'+((error&&error.message)||'沒拿到網址')+'\n如果寫的是 not authorized 之類的，請到 Supabase SQL Editor 重跑 supabase/sql/funv_applications.sql 的「5) Storage policy：管理員可讀 funv-ids」那一段。','error');
+        return;
+      }
+      const w=window.open(data.signedUrl,'_blank','noopener');
+      if(!w){
+        msgEl.className='msg e-msg show error';
+        msgEl.innerHTML=`瀏覽器擋住新分頁，<a href="${esc(data.signedUrl)}" target="_blank" rel="noopener">點這裡開啟匯款帳簿封面</a>（連結 5 分鐘內有效）。`;
+      }else{
+        msgEl.className='msg e-msg'; msgEl.textContent='';
+      }
+    };
+    const dlPassbook=async (btn,r,msgEl)=>{
+      const path=btn.getAttribute('data-path');
+      if(DEMO){ show(msgEl,'示範模式無圖：這批是假資料，沒有真的匯款帳簿封面檔案。正式登入後這顆按鈕才會下載。','error'); return; }
+      const old=btn.textContent; btn.disabled=true; btn.textContent='下載中…';
+      try{
+        const res=await fetch(await signOne(path,60));
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(await res.blob());
+        a.download=safeName(r.name)+'_匯款帳簿封面'+extOf(path);
         document.body.appendChild(a); a.click();
         setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
         msgEl.className='msg e-msg'; msgEl.textContent='';
@@ -467,6 +516,8 @@
         const msgEl=td.querySelector('.e-msg');
         td.querySelectorAll('.idbtn').forEach(b=>b.onclick=()=>openId(b,msgEl));
         td.querySelectorAll('.iddl').forEach(b=>b.onclick=()=>dlId(b,r,msgEl));
+        td.querySelectorAll('.pbopen').forEach(b=>b.onclick=()=>openPassbook(b,msgEl));
+        td.querySelectorAll('.pbdl').forEach(b=>b.onclick=()=>dlPassbook(b,r,msgEl));
         td.querySelector('.e-save').onclick=()=>save(r,td);
       }
       dt.classList.add('on'); tr.classList.add('open');
@@ -545,7 +596,7 @@
         const map=DEMO?{}:await signMany(idPaths(view),msgEl,'產生連結中');
         const aoa=xlsxRows(map);
         const n=aoa[0].length;
-        saveSheet(XLSX,aoa,'報名資料','婦女再就業報名'+(COURSE?'_'+COURSE.name:'')+'_'+today8()+'.xlsx',[n-2,n-1]);
+        saveSheet(XLSX,aoa,'報名資料','婦女再就業報名'+(COURSE?'_'+COURSE.name:'')+'_'+today8()+'.xlsx',[n-3,n-2,n-1]);
         msgEl.className='msg'; msgEl.textContent='';
       }catch(e){
         msgEl.className='msg show error';
@@ -572,14 +623,16 @@
             const folder=safeName(r.name)+'_'+safeName(r.mobile);
             for(const c of IDCOLS){
               const p=r[c.k]; if(!p) continue;
+              const label=c.k==='passbook_path'?'匯款帳簿封面':('身分證'+c.side);
+              const fname=c.k==='passbook_path'?(safeName(r.name)+'_匯款帳簿封面'+extOf(p)):(label+extOf(p));
               btn.textContent='打包中 '+(done+1)+'/'+total+'…';
               msgEl.textContent='打包中 '+(done+1)+'/'+total+'…';
               try{
                 const res=await fetch(await signOne(p,60));
                 if(!res.ok) throw new Error('HTTP '+res.status);
-                zip.folder(folder).file('身分證'+c.side+extOf(p),await res.blob());
+                zip.folder(folder).file(fname,await res.blob());
                 okCount++;
-              }catch(e){ fails.push(safeName(r.name)+' 的身分證'+c.side+'：'+(e.message||e)); }
+              }catch(e){ fails.push(safeName(r.name)+' 的'+label+'：'+(e.message||e)); }
               done++;
             }
           }
