@@ -111,6 +111,20 @@
   .edit .wide{flex:2 1 320px;}
   .edit .sv{flex:0 0 auto;min-width:0;align-self:flex-end;}
   .edit textarea{min-height:76px;font-family:var(--sans);font-size:14px;}
+  /* 顏色標記 */
+  .tagwarn{background:#FFF4D6;border-bottom:1px solid rgba(255,176,32,.55);color:#8a5a00;font-weight:700;font-size:14px;text-align:center;padding:11px 16px;}
+  tbody tr.rw td.c0,thead th:first-child{padding-left:20px;}
+  .nmw:has(.tdot){white-space:nowrap;}
+  .tdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:0;}
+  .taglegend{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;}
+  .taglegend .lg{display:inline-flex;align-items:center;white-space:nowrap;}
+  .edit .tagfld{flex:2 1 360px;}
+  .tagbtns{display:flex;gap:7px;flex-wrap:wrap;}
+  .tagbtn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13px;font-weight:500;line-height:1.2;color:var(--ink);background:#fff;border:1.5px solid var(--hair);border-radius:10px;padding:8px 11px;cursor:pointer;}
+  .tagbtn .sw{width:15px;height:15px;border-radius:4px;background:var(--c);color:#fff;font-size:11px;line-height:15px;text-align:center;font-weight:700;}
+  .tagbtn:hover{border-color:var(--c);}
+  .tagbtn.on{border:2px solid var(--c);padding:7.5px 10.5px;background:color-mix(in srgb,var(--c) 14%,#fff);font-weight:700;}
+  .tagbtn:disabled{opacity:.55;cursor:wait;}
 </style>
 </head>
 <body>
@@ -128,6 +142,17 @@
 
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  /* ── 顏色標記：老闆要改名稱或顏色，只改這裡 ──
+     name＝畫面上與匯出 Excel／CSV 顯示的中文，color＝色塊顏色，兩個都可以隨時改；
+     key 是存進資料庫的值，不要改。要「多加一種顏色」才需要同步改 supabase/sql/funv_tag.sql 的 check。 */
+  const TAGS=[
+    { key:'red',    name:'不符資格',     color:'#E5484D' },
+    { key:'orange', name:'待補件',       color:'#FF8A3D' },
+    { key:'yellow', name:'待確認',       color:'#FFB020' },
+    { key:'green',  name:'合格・可送件', color:'#2FA84F' },
+    { key:'blue',   name:'已請款',       color:'#3B82F6' },
+    { key:'gray',   name:'退出／不聯絡', color:'#9CA3AF' }
+  ];
   const SUPABASE_URL='https://gfuqizxzihgydzyqywun.supabase.co';
   const SUPABASE_ANON='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
   const supabase=createClient(SUPABASE_URL,SUPABASE_ANON);
@@ -244,6 +269,9 @@
   const inCourse=(r)=>!COURSE||String(r.course_choice||'').indexOf(COURSE.kw)>=0;
   const STATUS=['new','聯絡中','已送件','完成','不符'];
   const ST_CLASS={'new':'st-new','聯絡中':'st-go','已送件':'st-sent','完成':'st-done','不符':'st-no'};
+  const tagOf=(k)=>TAGS.find(t=>t.key===k)||null;
+  const tagKey=(r)=>tagOf(r.tag)?r.tag:'none';
+  const tagName=(r)=>{ const t=tagOf(r.tag); return t?t.name:''; };
 
   /* ?demo=1：給老闆看版面用。不登入、不打 Supabase，資料全是假的。
      也吃 #demo=1，因為本機 npx serve 會把 /admin-funv.html 301 到 /admin-funv 並把 query 丟掉，hash 才留得住 */
@@ -266,9 +294,10 @@
     ['示範十四','0912-000-014','育誠【包租代管實戰班】','new','','包租代管業務、租賃管理專員','（示範）想進不動產、租賃管理公司上班','（示範）張育誠老師','2026-09-14T04:15:00.000Z',true,false],
     ['示範十五','0912-000-015','育誠【包租代管實戰班】','聯絡中','（示範）想確認上課地點','二房東、自有房屋出租經營','（示範）想把自己的房子出租經營','（示範）示範十四','2026-09-14T04:22:00.000Z',true,false]
   ];
+  const DEMO_TAGS={'示範十一':'red','示範三':'green','示範五':'yellow'};
   const DEMO_ROWS=DEMO_SEED.map((d,i)=>{
     const id='demo-'+String(i+1).padStart(4,'0');
-    return { id, created_at:d[8], status:d[3], note:d[4],
+    return { id, created_at:d[8], status:d[3], note:d[4], tag:DEMO_TAGS[d[0]]||'none',
       labor_insurance:'（示範）沒有保勞保', name:d[0], line_id:'demo-line-'+String(i+1).padStart(2,'0'),
       id_number:'A2000000'+String(i+1).padStart(2,'0'),
       id_front_path:id+'/front.jpg', id_back_path:id+'/back.jpg', passbook_path:d[10]?id+'/passbook.jpg':null,
@@ -300,7 +329,7 @@
       <div class="wrap">
         <div class="h">婦女再就業報名｜${COURSE?esc(COURSE.name):'全部課程'}</div>
         <div class="ctabs"><a href="admin-funv.html"${COURSE?'':' class="on"'}>全部</a>${COURSE_LIST.map(c=>`<a href="${c.file}"${COURSE&&COURSE.key===c.key?' class="on"':''}>${esc(c.name)}</a>`).join('')}</div>
-        <div class="sub">${COURSE?`只看「${esc(COURSE.name)}」的報名表`:'七個課程的報名表都在這裡'}，一筆一列，最新的排最上面。點一列展開，可以看 30 題全部答案、看身分證、改狀態、寫備註。</div>
+        <div class="sub">${COURSE?`只看「${esc(COURSE.name)}」的報名表`:'七個課程的報名表都在這裡'}，一筆一列，最新的排最上面。點一列展開，可以看 30 題全部答案、看身分證、改狀態、標顏色、寫備註。</div>
         <div class="warnbar">身分證影本申請完成後要刪除：到 Supabase Storage → funv-ids 刪該申請的資料夾（資料夾名稱＝展開明細裡的申請編號）。</div>
 
         <div class="card">
@@ -309,11 +338,13 @@
           <div class="filters">
             <input class="search" id="fSearch" type="text" placeholder="搜尋名字或手機…">
             <select id="fStatus"></select>
+            <select id="fTag" aria-label="依標記篩選"></select>
             <button class="btn btn-primary" id="btnExportXlsx" style="font-size:13.5px;padding:9px 18px;">⬇ 匯出 Excel</button>
             <button class="btn btn-ghost" id="btnExport">⬇ 匯出 CSV</button>
             <button class="btn btn-ghost" id="btnZip">⬇ 下載全部身分證（ZIP）</button>
           </div>
           <div class="msg" id="xlsxMsg"></div>
+          <div class="taglegend"><span>標記：</span>${TAGS.map(t=>`<span class="lg"><span class="tdot" style="background:${t.color}"></span>${esc(t.name)}</span>`).join('')}<span>（點一列展開，按色塊就存；再按同色＝清除）</span></div>
           <div id="tblWrap"><div class="state"><div class="spin"></div>載入報名表中…</div></div>
         </div>
       </div>`;
@@ -321,6 +352,7 @@
     $('fStatus').innerHTML='<option value="">全部狀態</option>'+STATUS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
 
     let rows=[], view=[];
+    let HAS_TAG=true;
 
     const badge=(st)=>{
       const s=st||'new';
@@ -377,6 +409,9 @@
       else{ an=`<div class="idbtns"><button class="btn btn-ghost pbopen" data-path="${esc(p)}">看匯款帳簿封面</button><button class="btn btn-ghost pbdl" data-path="${esc(p)}">⬇ 下載</button><span class="path">${esc(p)}</span></div>`; }
       return `<div class="qa"><div class="qn">匯款帳簿封面照片（有的話請一起上傳，沒有可以先送出）</div><div>${an}</div></div>`;
     };
+    const tagBtnHtml=(t,on)=>`<button type="button" class="tagbtn${on?' on':''}" data-tag="${t.key}" style="--c:${t.color}" aria-pressed="${on}"><span class="sw">${on?'✓':''}</span>${esc(t.name)}</button>`;
+    const barCss=(r)=>{ const t=tagOf(r.tag); return t?'box-shadow:inset 10px 0 0 '+t.color+';':''; };
+    const dotHtml=(r)=>{ const t=tagOf(r.tag); return t?`<span class="tdot" style="background:${t.color}" title="${esc(t.name)}" aria-label="標記：${esc(t.name)}"></span>`:''; };
     const detailHtml=(r)=>{
       const qa=QS.slice(0,6).map(qq=>qaRow(r,qq)).join('')+pbRow(r)+QS.slice(6).map(qq=>qaRow(r,qq)).join('');
       const cur=r.status||'new';
@@ -385,6 +420,7 @@
         ${qa}
         <div class="edit">
           <div class="fld"><label>狀態</label><select class="e-st">${opts.map(s=>`<option value="${esc(s)}"${s===cur?' selected':''}>${esc(s)}</option>`).join('')}</select></div>
+          <div class="fld tagfld"><label>標記（點了就存，再點同色清除）</label><div class="tagbtns">${TAGS.map(t=>tagBtnHtml(t,tagKey(r)===t.key)).join('')}</div></div>
           <div class="fld wide"><label>備註（只有後台看得到）</label><textarea class="e-note" placeholder="打過電話沒接、缺哪份資料、寄件日期…">${esc(r.note||'')}</textarea></div>
           <div class="fld sv"><button class="btn btn-primary e-save">儲存</button></div>
         </div>
@@ -499,6 +535,49 @@
       show(msgEl,'已儲存。','ok');
     };
 
+    const paintTag=(r,td)=>{
+      const tr=document.querySelector('tr.rw[data-id="'+r.id+'"]');
+      if(tr){
+        const t=tagOf(r.tag);
+        tr.querySelector('.c0').style.boxShadow=t?'inset 10px 0 0 '+t.color:'';
+        tr.querySelector('.dotw').innerHTML=dotHtml(r);
+      }
+      if(td) td.querySelectorAll('.tagbtn').forEach(b=>{
+        const on=b.getAttribute('data-tag')===tagKey(r);
+        b.classList.toggle('on',on); b.setAttribute('aria-pressed',String(on));
+        b.querySelector('.sw').textContent=on?'✓':'';
+      });
+      fillTagSel(baseRows());
+    };
+    const setTag=async (r,td,key)=>{
+      const next=tagKey(r)===key?'none':key;
+      const msgEl=td.querySelector('.e-msg');
+      const label=next==='none'?'已清除標記':'已標記「'+tagOf(next).name+'」';
+      if(DEMO){
+        r.tag=next; paintTag(r,td);
+        show(msgEl,'示範模式不會存：畫面上'+label+'，但沒有寫進資料庫。','ok');
+        return;
+      }
+      if(!HAS_TAG){ show(msgEl,'後台還沒加標記欄位，請先在 Supabase 執行 supabase/sql/funv_tag.sql','error'); return; }
+      const btns=td.querySelectorAll('.tagbtn');
+      btns.forEach(b=>b.disabled=true); show(msgEl,'標記儲存中…','ok');
+      /* 跟 save() 同一個理由：RLS 擋掉不會報錯，要數真的改到幾列 */
+      const { data, error } = await supabase.from('funv_applications')
+        .update({ tag:next }).eq('id',r.id).select('id');
+      btns.forEach(b=>b.disabled=false);
+      if(error){
+        const m=error.message||'';
+        show(msgEl,'標記存不起來：'+m+(m.indexOf('tag')>=0?'\n（標記欄位還沒建：請到 Supabase SQL Editor 執行 supabase/sql/funv_tag.sql）':''),'error');
+        return;
+      }
+      if(!(data||[]).length){
+        show(msgEl,'沒有存到任何一列。多半是資料庫政策（RLS）擋掉了，這種情況 PostgREST 不會報錯。確認一下登入的帳號 is_admin 是不是 true。','error');
+        return;
+      }
+      r.tag=next; paintTag(r,td);
+      show(msgEl,label+'。','ok');
+    };
+
     const toggle=(id)=>{
       const tr=document.querySelector('tr.rw[data-id="'+id+'"]');
       const dt=document.querySelector('tr.dt[data-id="'+id+'"]');
@@ -519,6 +598,7 @@
         td.querySelectorAll('.pbopen').forEach(b=>b.onclick=()=>openPassbook(b,msgEl));
         td.querySelectorAll('.pbdl').forEach(b=>b.onclick=()=>dlPassbook(b,r,msgEl));
         td.querySelector('.e-save').onclick=()=>save(r,td);
+        td.querySelectorAll('.tagbtn').forEach(b=>b.onclick=()=>setTag(r,td,b.getAttribute('data-tag')));
       }
       dt.classList.add('on'); tr.classList.add('open');
       tr.querySelector('.caret').textContent='收起 ▴';
@@ -531,8 +611,8 @@
       box.innerHTML=`<div class="tbl-scroll"><table>
         <thead><tr><th>申請時間</th><th>名字</th><th>手機</th><th>選課</th><th>狀態</th><th>邀請人</th><th></th></tr></thead>
         <tbody>${view.map(r=>`<tr class="rw" data-id="${esc(r.id)}">
-          <td style="white-space:nowrap;color:var(--ink-soft);">${esc(fmtDT(r.created_at))}</td>
-          <td style="font-weight:500;color:var(--indigo);">${esc(r.name||'')}</td>
+          <td class="c0" style="white-space:nowrap;color:var(--ink-soft);${barCss(r)}">${esc(fmtDT(r.created_at))}</td>
+          <td style="font-weight:500;color:var(--indigo);"><span class="nmw"><span class="dotw">${dotHtml(r)}</span>${esc(r.name||'')}</span></td>
           <td style="white-space:nowrap;">${esc(r.mobile||'')}</td>
           <td>${r.course_choice?`<span class="chip course">${esc(r.course_choice)}</span>`:'<span style="color:#c9ccd8;">—</span>'}</td>
           <td class="st-cell">${badge(r.status)}</td>
@@ -543,14 +623,31 @@
       box.querySelectorAll('tr.rw').forEach(tr=>tr.onclick=()=>toggle(tr.getAttribute('data-id')));
     };
 
-    const applyFilters=()=>{
+    const baseRows=()=>{
       const q=$('fSearch').value.trim().toLowerCase();
       const st=$('fStatus').value;
-      view=rows.filter(r=>{
+      return rows.filter(r=>{
         if(q && !((r.name||'')+' '+(r.mobile||'')).toLowerCase().includes(q)) return false;
         if(st && (r.status||'new')!==st) return false;
         return true;
       });
+    };
+    /* 人數跟著搜尋與狀態篩選走，選下去看到幾筆就是括號裡的數字 */
+    const fillTagSel=(base)=>{
+      const sel=$('fTag'), cur=sel.value, c={none:0};
+      TAGS.forEach(t=>c[t.key]=0);
+      base.forEach(r=>c[tagKey(r)]++);
+      sel.innerHTML=`<option value="">全部標記（${base.length}）</option>`
+        +TAGS.map(t=>`<option value="${t.key}" style="color:${t.color}">● ${esc(t.name)}（${c[t.key]}）</option>`).join('')
+        +`<option value="none">沒標記（${c.none}）</option>`;
+      sel.value=cur;
+      const t=tagOf(cur); sel.style.borderColor=t?t.color:'';
+    };
+    const applyFilters=()=>{
+      const base=baseRows();
+      fillTagSel(base);
+      const tg=$('fTag').value;
+      view=tg?base.filter(r=>tagKey(r)===tg):base;
       renderTable();
     };
 
@@ -560,13 +657,13 @@
       btn.disabled=true; msgEl.className='msg'; msgEl.textContent='';
       const map=DEMO?{}:await signMany(idPaths(view),msgEl,'產生連結中');
       const q=(v)=>{ const s=String(v==null?'':v); return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s; };
-      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(IDCOLS.map(c=>c.t));
+      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['標記']).concat(IDCOLS.map(c=>c.t));
       const lines=[head.map(q).join(',')].concat(view.map(r=>QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
         if(qq.multi) return (v||[]).join(' / ');
         return v==null?'':String(v);
-      }).concat(IDCOLS.map(c=>idCell(map,r,c))).map(q).join(',')));
+      }).concat([tagName(r)]).concat(IDCOLS.map(c=>idCell(map,r,c))).map(q).join(',')));
       const csv='﻿'+lines.join('\r\n');
       const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
       a.download='強腦力-婦女再就業報名'+(COURSE?'-'+COURSE.name:'')+'.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
@@ -575,7 +672,7 @@
 
     // ── 匯出 Excel：同一批篩選結果，30 題後面再接申請編號／申請時間／狀態／備註 ──
     const xlsxRows=(map)=>{
-      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['申請編號','申請時間','狀態','備註']).concat(IDCOLS.map(c=>c.t));
+      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['申請編號','申請時間','狀態','標記','備註']).concat(IDCOLS.map(c=>c.t));
       return [head].concat(view.map(r=>QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
@@ -585,6 +682,7 @@
         String(r.id==null?'':r.id),
         fmtTPE(r.created_at),
         String(r.status||'new'),
+        tagName(r),
         r.note==null?'':String(r.note)
       ]).concat(IDCOLS.map(c=>idCell(map,r,c)))));
     };
@@ -656,11 +754,21 @@
       btn.disabled=false; btn.textContent=old;
     };
 
-    ['fSearch','fStatus'].forEach(id=>$(id).addEventListener('input',applyFilters));
+    ['fSearch','fStatus','fTag'].forEach(id=>$(id).addEventListener('input',applyFilters));
 
+    /* select('*') 遇到還沒建的 tag 欄不會報錯、只是少一欄，要單獨問 tag 才知道欄位在不在 */
+    const checkTagCol=async ()=>{
+      const { error, status } = await supabase.from('funv_applications').select('tag').limit(1);
+      if(!error) return;
+      if(status===400 || error.code==='42703' || /tag/.test(error.message||'')){
+        HAS_TAG=false;
+        document.body.insertAdjacentHTML('afterbegin','<div class="tagwarn">後台還沒加標記欄位，請先在 Supabase 執行 supabase/sql/funv_tag.sql</div>');
+      }
+    };
     const load=async ()=>{
       $('tblWrap').innerHTML='<div class="state"><div class="spin"></div>載入報名表中…</div>';
       if(DEMO){ rows=DEMO_ROWS.filter(inCourse).sort((a,b)=>(b.created_at||'').localeCompare(a.created_at||'')); applyFilters(); return; }
+      checkTagCol();
       let qy=supabase.from('funv_applications').select('*');
       if(COURSE) qy=qy.ilike('course_choice','%'+COURSE.kw+'%');
       const { data, error } = await qy.order('created_at',{ascending:false});
