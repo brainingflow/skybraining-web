@@ -134,6 +134,7 @@
 .done h2{font-weight:800;font-size:clamp(21px,3.8vw,27px);color:var(--indigo);line-height:1.5;margin:14px 0 10px;}
 .done p{font-size:16.5px;color:var(--ink-soft);line-height:1.9;margin-bottom:22px;}
 .done p b{color:var(--indigo);}
+.done p a{text-decoration:underline;text-underline-offset:2px;}
 .done p.fwhy{margin:0 0 12px;color:#d7263d;font-weight:500;}
 
 @media(max-width:420px){.btn{font-size:16px;}.btn-prev{flex:0 0 36%;}}
@@ -582,7 +583,7 @@ fieldset.f legend{padding:0;}
       <div class="emoji">😣</div>
       <h2>送出失敗，請稍後再試一次</h2>
       <p class="fwhy" id="failWhy" hidden></p>
-      <p>若一直失敗，請打 0906666267 黃主任，由黃主任協助你報名；你填的資料還留在這一頁，也可以按「再試一次」重送。</p>
+      <p>若一直失敗，請打 <a href="tel:0906666267">0906666267</a> 黃&#8288;主&#8288;任，由黃&#8288;主&#8288;任協助你報名；你填的資料還留在這一頁，也可以按「再試一次」重送。</p>
       <div><button type="button" class="btn-ghost" id="btnRetry">再試一次</button></div>
     </div>
   </div>
@@ -764,11 +765,13 @@ fieldset.f legend{padding:0;}
       clearErr(f);
       // 電腦選 iPhone 原檔時 HEIC 的型別是空字串，要靠副檔名認
       if(!/^image\//.test(file.type) && !/\.(heic|heif)$/i.test(file.name)){ fail('請選圖片檔，用手機直接拍一張最快。'); return; }
+      if(file.size > 20 * 1024 * 1024){ fail('照片檔太大（超過 20MB），請改\u2060用手機「拍\u2060照」或先截圖再選。'); return; }
       busy[key] = true;
       nm.textContent = '照片處理中…';
       function done(b){
         if(my !== seq) return;
         busy[key] = false;
+        if(typeof b === 'string'){ fail(b); return; }
         // bucket 只收 jpeg／png／webp，瀏覽器解不開的（多半是 HEIC）送原檔一定失敗，所以當場擋
         // 「拍\u2060照」夾不換行字元：375 寬時這兩字剛好落在行尾，會被拆成兩行
         if(!b){ fail('這張照片格式讀不到，請改用手機「拍\u2060照」或先截圖再選。'); return; }
@@ -780,7 +783,14 @@ fieldset.f legend{padding:0;}
         r.onload = function(){ if(my === seq){ thumb.src = r.result; thumb.classList.add('on'); } };
         r.readAsDataURL(b);
       }
-      compress(file).then(done, function(){ done(null); });
+      compress(file).then(function(b){
+        if(b || my !== seq) return b;
+        return isHeic(file).then(function(h){
+          if(!h || my !== seq) return null;
+          nm.textContent = '照片轉檔中，請稍等幾秒…';
+          return heicToJpeg(file, function(){ return my === seq; });
+        });
+      }).then(done, function(){ done(null); });
     });
   }
   wireShot('q5', 'front', 'thumbFront', 'nameFront');
@@ -810,6 +820,65 @@ fieldset.f legend{padding:0;}
         img.src = r.result;
       };
       r.readAsDataURL(file);
+    });
+  }
+
+  /* ── HEIC：瀏覽器解不開的 iPhone 原檔，交給同網域 worker 用 libheif 轉成 JPG；選到 HEIC 才下載程式庫 ── */
+  var HEIC_BRAND = /^(heic|heix|heim|heis|hevc|hevx|mif1|msf1)$/;
+  var HEIC_MSG = {
+    toobig:  '這張照片太大（超過 3000 萬像素），請改\u2060用手機「拍\u2060照」或先截圖再選。',
+    timeout: '照片轉檔太久，請改\u2060用手機「拍\u2060照」或先截圖再選。'
+  };
+  var heicQueue = Promise.resolve();
+  function isHeic(file){
+    if(/^image\/hei[cf]/i.test(file.type) || /\.(heic|heif)$/i.test(file.name)) return Promise.resolve(true);
+    return new Promise(function(res){
+      var r = new FileReader();
+      r.onerror = function(){ res(false); };
+      r.onload = function(){
+        var s = String.fromCharCode.apply(null, new Uint8Array(r.result));
+        res(s.slice(4, 8) === 'ftyp' && HEIC_BRAND.test(s.slice(8, 12)));
+      };
+      r.readAsArrayBuffer(file.slice(0, 12));
+    });
+  }
+  // 一次只轉一張：正面、背面、存摺連選時三個 worker 同時解碼，手機記憶體撐不住
+  function heicToJpeg(file, alive){
+    var job = heicQueue.then(function(){ return alive() ? convertHeic(file) : null; });
+    heicQueue = job;
+    return job;
+  }
+  // 回傳壓縮好的 JPG；太大、逾時回紅字；其他解不開回 null（沿用「格式讀不到」那句）
+  function convertHeic(file){
+    var t0 = Date.now(), w = null, over = false, timer;
+    return new Promise(function(res){
+      function end(d){ if(!over){ over = true; clearTimeout(timer); res(d); } }
+      timer = setTimeout(function(){ end({ err:'timeout' }); }, 30000);
+      var r = new FileReader();
+      r.onerror = function(){ end({ err:'fail' }); };
+      r.onload = function(){
+        if(over) return;
+        try{ w = new Worker('/heic-worker.js'); }catch(e){ return end({ err:'fail' }); }
+        w.onmessage = function(e){ end(e.data || { err:'fail' }); };
+        w.onerror = function(e){ e.preventDefault(); end({ err:'fail' }); };
+        w.postMessage(r.result, [r.result]);
+      };
+      r.readAsArrayBuffer(file);
+    }).then(function(d){
+      if(w) w.terminate();
+      if(!d.data) return HEIC_MSG[d.err] ? d.err : 'fail';
+      var c = document.createElement('canvas');
+      c.width = d.w; c.height = d.h;
+      c.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(d.data), d.w, d.h), 0, 0);
+      return new Promise(function(res){ c.toBlob(res, 'image/jpeg', 0.9); }).then(function(jpg){
+        c.width = c.height = 0;
+        return jpg ? compress(jpg) : null;
+      }).then(function(b){ return b || 'fail'; });
+    }).then(null, function(){ return 'fail'; }).then(function(out){
+      var result = typeof out === 'string' ? out : 'ok';
+      // GA 只帶結果與耗時，不帶檔名
+      track('funv_heic', { result: result, ms: Date.now() - t0 });
+      return result === 'ok' ? out : (HEIC_MSG[result] || null);
     });
   }
 
