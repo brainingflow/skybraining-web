@@ -134,6 +134,7 @@
 .done h2{font-weight:800;font-size:clamp(21px,3.8vw,27px);color:var(--indigo);line-height:1.5;margin:14px 0 10px;}
 .done p{font-size:16.5px;color:var(--ink-soft);line-height:1.9;margin-bottom:22px;}
 .done p b{color:var(--indigo);}
+.done p.fwhy{margin:0 0 12px;color:#d7263d;font-weight:500;}
 
 @media(max-width:420px){.btn{font-size:16px;}.btn-prev{flex:0 0 36%;}}
 fieldset.f{border:0;padding:0;margin:0 0 26px;min-width:0;}
@@ -282,7 +283,7 @@ fieldset.f legend{padding:0;}
 
       <div class="f" data-name="id_front" data-kind="file" data-file="front" data-req="1" data-msg="請拍一張身分證正面。">
         <span class="q">身分證正面（請拍很清楚）<span class="req">*</span></span>
-        <p class="hint">檔案「申請補助後刪除」・單張 10MB 以內</p>
+        <p class="hint">檔案「申請補助後刪除」・手機直接拍照最穩，系統會自動縮圖</p>
         <div class="shot">
           <input type="file" id="q5" accept="image/*">
           <label class="pick" for="q5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>拍照／選檔案</label>
@@ -294,7 +295,7 @@ fieldset.f legend{padding:0;}
 
       <div class="f" data-name="id_back" data-kind="file" data-file="back" data-req="1" data-msg="請拍一張身分證背面。">
         <span class="q">身分證背面（請拍很清楚）<span class="req">*</span></span>
-        <p class="hint">檔案「申請補助後刪除」・單張 10MB 以內</p>
+        <p class="hint">檔案「申請補助後刪除」・手機直接拍照最穩，系統會自動縮圖</p>
         <div class="shot">
           <input type="file" id="q6" accept="image/*">
           <label class="pick" for="q6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>拍照／選檔案</label>
@@ -306,7 +307,7 @@ fieldset.f legend{padding:0;}
 
       <div class="f" data-name="passbook" data-kind="file" data-file="passbook">
         <span class="q">匯款帳簿封面照片（有的話請一起上傳，沒有可以先送出）</span>
-        <p class="hint">用來核對補助匯款帳號；我們公司寄件後即刪除・單張 10MB 以內</p>
+        <p class="hint">用來核對補助匯款帳號；我們公司寄件後即刪除・手機直接拍照最穩，系統會自動縮圖</p>
         <div class="shot">
           <input type="file" id="q31" accept="image/*">
           <label class="pick" for="q31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>拍照／選檔案</label>
@@ -555,7 +556,8 @@ fieldset.f legend{padding:0;}
     <div class="dcard">
       <div class="emoji">😣</div>
       <h2>送出失敗，請稍後再試一次</h2>
-      <p>若一直失敗，請打 0906666267 黃主任；你填的資料還留在這一頁，也可以按「再試一次」重送。</p>
+      <p class="fwhy" id="failWhy" hidden></p>
+      <p>若一直失敗，請打 0906666267 黃主任，由黃主任協助你報名；你填的資料還留在這一頁，也可以按「再試一次」重送。</p>
       <div><button type="button" class="btn-ghost" id="btnRetry">再試一次</button></div>
     </div>
   </div>
@@ -566,10 +568,9 @@ fieldset.f legend{padding:0;}
 (function(){
   var FN   = 'https://gfuqizxzihgydzyqywun.supabase.co/functions/v1/funv-submit';
   var ANON = 'sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
-  // 本機 npx serve 會把 /funv-apply.html?demo=1 轉址成 /funv-apply 並吃掉 query，所以也認 #demo
-  // 檢查模式（2026-09-15 老闆要求）：hash 含 demo 或本機測試環境，六步全部不做必填檢查，方便快速點過一輪；送出仍走示範模式、不打 supabase。正式站沒有這兩個條件時行為完全不變。
-  var CHECKMODE = /demo/i.test(location.hash) || /^(localhost|127\.0\.0\.1)$/i.test(location.hostname);
-  var DEMO = CHECKMODE || /[?&]demo=1(&|$)/.test(location.search);
+  // 檢查模式（2026-09-15 老闆要求）：六步不做必填檢查、送出走示範不打 supabase。只認本機主機名，不再看 ?demo=1／#demo：正式站帶這兩個會假成功，轉傳出去的連結就報不到名（T170）。
+  var CHECKMODE = /^(localhost|127\.0\.0\.1)$|\.test$/i.test(location.hostname);
+  var DEMO = CHECKMODE;
   var TOTAL = 6, cur = 1, inited = false;
   if(CHECKMODE){
     var _cmb = document.getElementById('checkModeBanner');
@@ -584,6 +585,8 @@ fieldset.f legend{padding:0;}
   var ptitle = document.getElementById('ptitle');
   var btn    = document.getElementById('btnSubmit');
   var picked = { front:null, back:null };
+  var busy = {}, fileErr = {};
+  var PAGE = location.pathname.replace(/^\//, '') || 'index.html';
 
   /* ── 步驟切換 ── */
   function showStep(n){
@@ -656,7 +659,10 @@ fieldset.f legend{padding:0;}
       return true;
     }
     if(kind === 'file'){
-      if(req && !picked[f.getAttribute('data-file')]) return setErr(f, msg);
+      var k = f.getAttribute('data-file');
+      if(busy[k]) return setErr(f, '照片還在處理，請稍等一下再按。');
+      if(!picked[k] && fileErr[k]){ setErr(f, fileErr[k]); return !req; }
+      if(req && !picked[k]) return setErr(f, msg);
       return true;
     }
     var el = f.querySelector('input, textarea');
@@ -706,54 +712,74 @@ fieldset.f legend{padding:0;}
   form.addEventListener('input', autoClear);
   form.addEventListener('change', autoClear);
 
-  /* ── 身分證照片：即時縮圖 ── */
+  /* ── 身分證照片：選好就壓縮＋縮圖 ── */
   function wireShot(inputId, key, thumbId, nameId){
     var input = document.getElementById(inputId);
     var thumb = document.getElementById(thumbId);
     var nm    = document.getElementById(nameId);
     var f     = input.closest('.f');
+    var seq   = 0;
     function reset(){
       picked[key] = null;
+      busy[key] = false;
       input.value = '';
       thumb.classList.remove('on');
       thumb.removeAttribute('src');
       nm.textContent = '';
     }
+    function fail(msg){ reset(); fileErr[key] = msg; setErr(f, msg); }
     input.addEventListener('change', function(){
       var file = input.files && input.files[0];
       if(!file) return;
-      if(!/^image\//.test(file.type)){ reset(); setErr(f, '請選圖片檔，用手機直接拍一張最快。'); return; }
-      if(file.size > 10 * 1024 * 1024){ reset(); setErr(f, '這張圖超過 10MB，請重拍一張或選小一點的檔案。'); return; }
-      picked[key] = file;
+      var my = ++seq;
+      picked[key] = null;
+      fileErr[key] = null;
+      thumb.classList.remove('on');
+      thumb.removeAttribute('src');
       clearErr(f);
-      nm.textContent = '已選好：' + file.name;
-      var r = new FileReader();
-      r.onload = function(){ thumb.src = r.result; thumb.classList.add('on'); };
-      r.readAsDataURL(file);
+      // 電腦選 iPhone 原檔時 HEIC 的型別是空字串，要靠副檔名認
+      if(!/^image\//.test(file.type) && !/\.(heic|heif)$/i.test(file.name)){ fail('請選圖片檔，用手機直接拍一張最快。'); return; }
+      busy[key] = true;
+      nm.textContent = '照片處理中…';
+      function done(b){
+        if(my !== seq) return;
+        busy[key] = false;
+        // bucket 只收 jpeg／png／webp，瀏覽器解不開的（多半是 HEIC）送原檔一定失敗，所以當場擋
+        // 「拍\u2060照」夾不換行字元：375 寬時這兩字剛好落在行尾，會被拆成兩行
+        if(!b){ fail('這張照片格式讀不到，請改用手機「拍\u2060照」或先截圖再選。'); return; }
+        if(b.size > 10 * 1024 * 1024){ fail('這張圖超過 10MB，請重拍一張或選小一點的檔案。'); return; }
+        picked[key] = b;
+        clearErr(f);
+        nm.textContent = '已選好：' + file.name;
+        var r = new FileReader();
+        r.onload = function(){ if(my === seq){ thumb.src = r.result; thumb.classList.add('on'); } };
+        r.readAsDataURL(b);
+      }
+      compress(file).then(done, function(){ done(null); });
     });
   }
   wireShot('q5', 'front', 'thumbFront', 'nameFront');
   wireShot('q6', 'back',  'thumbBack',  'nameBack');
   wireShot('q31', 'passbook', 'thumbPassbook', 'namePassbook');
 
-  /* ── 送出前壓縮：長邊 1600px、JPEG 0.85 ── */
+  /* ── 壓縮：長邊 1600px、JPEG 0.85；解不開回 null ── */
   function compress(file){
     return new Promise(function(res){
       var r = new FileReader();
-      r.onerror = function(){ res(file); };
+      r.onerror = function(){ res(null); };
       r.onload = function(){
         var img = new Image();
-        img.onerror = function(){ res(file); };
+        img.onerror = function(){ res(null); };
         img.onload = function(){
           var max = 1600, w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
-          if(!w || !h) return res(file);
+          if(!w || !h) return res(null);
           if(Math.max(w, h) > max){ var s = max / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
           var c = document.createElement('canvas');
           c.width = w; c.height = h;
           var ctx = c.getContext('2d');
           ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
           ctx.drawImage(img, 0, 0, w, h);
-          if(c.toBlob) c.toBlob(function(b){ res(b || file); }, 'image/jpeg', 0.85);
+          if(c.toBlob) c.toBlob(function(b){ res(b); }, 'image/jpeg', 0.85);
           else res(file);
         };
         img.src = r.result;
@@ -796,11 +822,27 @@ fieldset.f legend{padding:0;}
     return fd;
   }
 
-  function finish(ok){
+  function track(name, params){
+    try{ if(window.gtag) gtag('event', name, params); }catch(e){}
+  }
+
+  function failInfo(status, j){
+    var e = (j && typeof j.error === 'string') ? j.error : '';
+    if(/缺少必填欄位/.test(e)) return { ok:false, code:'http_' + status, text:'有欄位沒填到，請按「再試一次」回去逐步檢查。' };
+    if(/mime type .*not supported/i.test(e)) return { ok:false, code:'photo_format', text:'照片格式不支援，請改用拍照或截圖。' };
+    // 英文多半是資料庫或儲存服務的原句，報名的人看不懂也無從處理
+    if((e.match(/[a-z]/gi) || []).length > 10) return { ok:false, code:'http_' + status, text:'系統暫時無法收件，請稍後再試，或打下面的電話找黃主任。' };
+    return { ok:false, code:'http_' + status, text:e };
+  }
+
+  function finish(ok, why){
     btn.disabled = false;
     btn.textContent = '送出報名';
     form.style.display = 'none';
     pwrap.style.display = 'none';
+    var w = document.getElementById('failWhy');
+    w.textContent = why || '';
+    w.hidden = !why;
     document.getElementById('doneBox').classList.toggle('on', ok);
     document.getElementById('failBox').classList.toggle('on', !ok);
     window.scrollTo({ top:0, behavior:'smooth' });
@@ -813,15 +855,24 @@ fieldset.f legend{padding:0;}
     btn.disabled = true;
     btn.textContent = '送出中…';
     if(DEMO){ setTimeout(function(){ finish(true); }, 600); return; }
-    Promise.all([compress(picked.front), compress(picked.back), picked.passbook ? compress(picked.passbook) : Promise.resolve(null)]).then(function(b){
+    Promise.resolve().then(function(){
       var fd = collect();
-      fd.append('id_front', b[0], 'front.jpg');
-      fd.append('id_back',  b[1], 'back.jpg');
-      if(b[2]) fd.append('passbook', b[2], 'passbook.jpg');
-      return fetch(FN, { method:'POST', headers:{ apikey: ANON }, body: fd });
-    }).then(function(r){
-      return r.json().then(function(j){ return !!(r.ok && j && j.ok); }, function(){ return false; });
-    }).then(finish).catch(function(){ finish(false); });
+      fd.append('id_front', picked.front, 'front.jpg');
+      fd.append('id_back',  picked.back,  'back.jpg');
+      if(picked.passbook) fd.append('passbook', picked.passbook, 'passbook.jpg');
+      return fetch(FN, { method:'POST', headers:{ apikey: ANON }, body: fd }).then(function(r){
+        return r.json().then(function(j){
+          return (r.ok && j && j.ok) ? { ok:true } : failInfo(r.status, j);
+        }, function(){ return failInfo(r.status, null); });
+      }, function(){ return { ok:false, code:'network', text:'' }; });
+    }).catch(function(){
+      return { ok:false, code:'script', text:'' };
+    }).then(function(res){
+      // GA 只帶錯誤碼與頁名，不帶任何填寫內容
+      if(res.ok) track('funv_submit_ok', { page: PAGE });
+      else track('funv_submit_fail', { error_code: res.code, page: PAGE });
+      finish(res.ok, res.text);
+    });
   }
 
   document.querySelectorAll('[data-go]').forEach(function(b){
