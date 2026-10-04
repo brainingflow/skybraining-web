@@ -102,11 +102,13 @@
   .qa .qn{font-size:12.5px;color:var(--ink-soft);line-height:1.55;}
   .qa .an{font-size:14px;color:var(--ink);line-height:1.6;white-space:pre-wrap;word-break:break-word;}
   .qa .an.none{color:#c9ccd8;}
-  /* 表格為了 7 欄有 min-width:720px，手機上明細會被推到畫面外，所以把明細內容收在看得到的寬度內 */
+  /* 表格為了 9 欄有 min-width:720px，手機上明細會被推到畫面外，所以把明細內容收在看得到的寬度內 */
   @media(max-width:720px){.qa{grid-template-columns:1fr;}tr.dt td>*{max-width:calc(100vw - 96px);}}
   .idbtns{display:flex;gap:9px;flex-wrap:wrap;align-items:center;}
   .idbtns .path{font-size:11.5px;color:#a7abc2;word-break:break-all;}
-  .edit{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-top:16px;padding-top:8px;border-top:2px solid var(--hair);}
+  /* 老闆要一打開明細就看到標記與備註，所以這組放在 30 題上面，用底線跟題目隔開 */
+  .etop{margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--hair);}
+  .edit{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
   .edit .fld{flex:1 1 200px;min-width:180px;}
   .edit .wide{flex:2 1 320px;}
   .edit .sv{flex:0 0 auto;min-width:0;align-self:flex-end;}
@@ -114,7 +116,6 @@
   /* 顏色標記 */
   .tagwarn{background:#FFF4D6;border-bottom:1px solid rgba(255,176,32,.55);color:#8a5a00;font-weight:700;font-size:14px;text-align:center;padding:11px 16px;}
   tbody tr.rw td.c0,thead th:first-child{padding-left:20px;}
-  .nmw:has(.tdot){white-space:nowrap;}
   .tdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:0;}
   .taglegend{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;}
   .taglegend .lg{display:inline-flex;align-items:center;white-space:nowrap;}
@@ -125,6 +126,10 @@
   .tagbtn:hover{border-color:var(--c);}
   .tagbtn.on{border:2px solid var(--c);padding:7.5px 10.5px;background:color-mix(in srgb,var(--c) 14%,#fff);font-weight:700;}
   .tagbtn:disabled{opacity:.55;cursor:wait;}
+  /* 備註欄折行不截斷；手機收窄，讓標記＋備註＋名字三欄不用橫捲就看得到 */
+  .notew{min-width:8em;max-width:15em;white-space:pre-line;overflow-wrap:anywhere;}
+  @media(max-width:720px){.notew{max-width:9em;}}
+  @media(max-width:600px){.notew{min-width:5em;max-width:6em;}}
 </style>
 </head>
 <body>
@@ -262,7 +267,7 @@
     { key:'coffee',  kw:'手沖咖啡師',       name:'宏森【手沖咖啡師技巧班】', file:'admin-funv-coffee.html' },
     { key:'mindmap', kw:'心智圖講師班',     name:'Sky【心智圖講師班】',     file:'admin-funv-mindmap.html' },
     { key:'sales',   kw:'百億品牌成交技術', name:'信廷【百億品牌成交技術】', file:'admin-funv-sales.html' },
-    { key:'aivideo', kw:'AI短影音實戰班',   name:'小語【AI短影音實戰班】', file:'admin-funv-aivideo.html' },
+    { key:'aivideo', kw:'短影音實戰班',     name:'小語【AI 短影音實戰班】', file:'admin-funv-aivideo.html' }, /* 舊報名的課名 AI 後面沒空格、新報名有空格，kw 去掉 AI 兩種都比對得到 */
     { key:'rental',  kw:'包租代管實戰班',   name:'育誠【包租代管實戰班】', file:'admin-funv-rental.html' }
   ];
   const COURSE=COURSE_LIST.filter(c=>c.key===COURSE_KEY)[0]||null;
@@ -289,8 +294,8 @@
     ['示範九','0912-000-009','Sky【心智圖講師班】','聯絡中','（示範）想確認梯次','補習班陪讀、助教','（示範）補習班陪讀需要專業能力','（示範）示範八','2026-09-14T03:41:00.000Z',true,false],
     ['示範十','0912-000-010','信廷【百億品牌成交技術】','new','','房仲','（示範）【銷售】想加強客戶溝通','（示範）信廷老師','2026-09-14T03:48:00.000Z',true,true],
     ['示範十一','0912-000-011','信廷【百億品牌成交技術】','不符','（示範）勞保未滿 180 天','櫃姐','（示範）【顧問】想提高專業度','（示範）示範十','2026-09-14T03:55:00.000Z',false,false],
-    ['示範十二','0912-000-012','小語【AI短影音實戰班】','new','','短影片導演','（示範）【AI行銷】想進行銷部門','（示範）小語老師','2026-09-14T04:02:00.000Z',true,false],
-    ['示範十三','0912-000-013','小語【AI短影音實戰班】','已送件','（示範）資料已寄出','AI 剪輯師','（示範）【拍攝影片】想接案','（示範）示範十二','2026-09-14T04:09:00.000Z',true,true],
+    ['示範十二','0912-000-012','小語【AI 短影音實戰班】','new','','短影片導演','（示範）【AI行銷】想進行銷部門','（示範）小語老師','2026-09-14T04:02:00.000Z',true,false],
+    ['示範十三','0912-000-013','小語【AI 短影音實戰班】','已送件','（示範）資料已寄出','AI 剪輯師','（示範）【拍攝影片】想接案','（示範）示範十二','2026-09-14T04:09:00.000Z',true,true],
     ['示範十四','0912-000-014','育誠【包租代管實戰班】','new','','包租代管業務、租賃管理專員','（示範）想進不動產、租賃管理公司上班','（示範）張育誠老師','2026-09-14T04:15:00.000Z',true,false],
     ['示範十五','0912-000-015','育誠【包租代管實戰班】','聯絡中','（示範）想確認上課地點','二房東、自有房屋出租經營','（示範）想把自己的房子出租經營','（示範）示範十四','2026-09-14T04:22:00.000Z',true,false]
   ];
@@ -334,7 +339,7 @@
 
         <div class="card">
           <h2><span class="bar"></span>報名名單（<span id="cnt">0</span>）</h2>
-          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題，最後三欄是身分證正反面與匯款帳簿封面的連結（7 天內有效，Excel 可直接點）。「下載全部身分證（ZIP）」會把篩選結果每個人的身分證正反面與匯款帳簿封面（如果有上傳）打包，一人一個資料夾。</div>
+          <div class="card-note">狀態與備註改完要按「儲存」才會寫回資料庫。匯出 Excel 或 CSV 匯的都是目前篩選後的結果，欄位順序照表單 30 題（Excel 與 CSV 前兩欄都是標記、備註），最後三欄是身分證正反面與匯款帳簿封面的連結（7 天內有效，Excel 可直接點）。「下載全部身分證（ZIP）」會把篩選結果每個人的身分證正反面與匯款帳簿封面（如果有上傳）打包，一人一個資料夾。</div>
           <div class="filters">
             <input class="search" id="fSearch" type="text" placeholder="搜尋名字或手機…">
             <select id="fStatus"></select>
@@ -412,19 +417,23 @@
     const tagBtnHtml=(t,on)=>`<button type="button" class="tagbtn${on?' on':''}" data-tag="${t.key}" style="--c:${t.color}" aria-pressed="${on}"><span class="sw">${on?'✓':''}</span>${esc(t.name)}</button>`;
     const barCss=(r)=>{ const t=tagOf(r.tag); return t?'box-shadow:inset 10px 0 0 '+t.color+';':''; };
     const dotHtml=(r)=>{ const t=tagOf(r.tag); return t?`<span class="tdot" style="background:${t.color}" title="${esc(t.name)}" aria-label="標記：${esc(t.name)}"></span>`:''; };
+    const NIL='<span style="color:#c9ccd8;">—</span>';
+    const tagCell=(r)=>{ const t=tagOf(r.tag); return t?dotHtml(r)+esc(t.name):NIL; };
+    const noteHtml=(r)=>r.note?`<div class="notew">${esc(r.note)}</div>`:NIL;
+    const paintNote=(r)=>{ const c=document.querySelector('tr.rw[data-id="'+r.id+'"] .note-cell'); if(c) c.innerHTML=noteHtml(r); };
     const detailHtml=(r)=>{
       const qa=QS.slice(0,6).map(qq=>qaRow(r,qq)).join('')+pbRow(r)+QS.slice(6).map(qq=>qaRow(r,qq)).join('');
       const cur=r.status||'new';
       const opts=STATUS.includes(cur)?STATUS:STATUS.concat([cur]);
-      return `<div class="dhead">申請編號（＝Supabase Storage → funv-ids 裡的資料夾名稱）：${esc(r.id)}　｜　申請時間：${esc(fmtDT(r.created_at))}</div>
-        ${qa}
-        <div class="edit">
+      return `<div class="etop"><div class="edit">
           <div class="fld"><label>狀態</label><select class="e-st">${opts.map(s=>`<option value="${esc(s)}"${s===cur?' selected':''}>${esc(s)}</option>`).join('')}</select></div>
           <div class="fld tagfld"><label>標記（點了就存，再點同色清除）</label><div class="tagbtns">${TAGS.map(t=>tagBtnHtml(t,tagKey(r)===t.key)).join('')}</div></div>
           <div class="fld wide"><label>備註（只有後台看得到）</label><textarea class="e-note" placeholder="打過電話沒接、缺哪份資料、寄件日期…">${esc(r.note||'')}</textarea></div>
           <div class="fld sv"><button class="btn btn-primary e-save">儲存</button></div>
         </div>
-        <div class="msg e-msg"></div>`;
+        <div class="msg e-msg"></div></div>
+        <div class="dhead">申請編號（＝Supabase Storage → funv-ids 裡的資料夾名稱）：${esc(r.id)}　｜　申請時間：${esc(fmtDT(r.created_at))}</div>
+        ${qa}`;
     };
 
     /* 身分證在私有 bucket，前端拿不到直接網址，只能要一張 5 分鐘的簽名網址 */
@@ -511,6 +520,7 @@
         r.status=st; r.note=note||null;
         const c0=document.querySelector('tr.rw[data-id="'+r.id+'"] .st-cell');
         if(c0) c0.innerHTML=badge(r.status);
+        paintNote(r);
         show(msgEl,'示範模式不會存：畫面上已經改成「'+st+'」，但沒有寫進資料庫。','ok');
         return;
       }
@@ -532,15 +542,16 @@
       r.status=st; r.note=note||null;
       const cell=document.querySelector('tr.rw[data-id="'+r.id+'"] .st-cell');
       if(cell) cell.innerHTML=badge(r.status);
+      paintNote(r);
       show(msgEl,'已儲存。','ok');
     };
 
     const paintTag=(r,td)=>{
       const tr=document.querySelector('tr.rw[data-id="'+r.id+'"]');
       if(tr){
-        const t=tagOf(r.tag);
-        tr.querySelector('.c0').style.boxShadow=t?'inset 10px 0 0 '+t.color:'';
-        tr.querySelector('.dotw').innerHTML=dotHtml(r);
+        const t=tagOf(r.tag), c0=tr.querySelector('.c0');
+        c0.style.boxShadow=t?'inset 10px 0 0 '+t.color:'';
+        c0.innerHTML=tagCell(r);
       }
       if(td) td.querySelectorAll('.tagbtn').forEach(b=>{
         const on=b.getAttribute('data-tag')===tagKey(r);
@@ -609,17 +620,19 @@
       const box=$('tblWrap');
       if(!view.length){ box.innerHTML='<div class="empty">沒有符合的報名表。</div>'; return; }
       box.innerHTML=`<div class="tbl-scroll"><table>
-        <thead><tr><th>申請時間</th><th>名字</th><th>手機</th><th>選課</th><th>狀態</th><th>邀請人</th><th></th></tr></thead>
+        <thead><tr><th>標記</th><th>備註</th><th>名字</th><th>申請時間</th><th>手機</th><th>選課</th><th>狀態</th><th>邀請人</th><th></th></tr></thead>
         <tbody>${view.map(r=>`<tr class="rw" data-id="${esc(r.id)}">
-          <td class="c0" style="white-space:nowrap;color:var(--ink-soft);${barCss(r)}">${esc(fmtDT(r.created_at))}</td>
-          <td style="font-weight:500;color:var(--indigo);"><span class="nmw"><span class="dotw">${dotHtml(r)}</span>${esc(r.name||'')}</span></td>
+          <td class="c0" style="white-space:nowrap;${barCss(r)}">${tagCell(r)}</td>
+          <td class="note-cell">${noteHtml(r)}</td>
+          <td style="font-weight:500;color:var(--indigo);white-space:nowrap;">${esc(r.name||'')}</td>
+          <td style="white-space:nowrap;color:var(--ink-soft);">${esc(fmtDT(r.created_at))}</td>
           <td style="white-space:nowrap;">${esc(r.mobile||'')}</td>
           <td>${r.course_choice?`<span class="chip course">${esc(r.course_choice)}</span>`:'<span style="color:#c9ccd8;">—</span>'}</td>
           <td class="st-cell">${badge(r.status)}</td>
           <td>${esc(r.referrer||'')}</td>
           <td class="caret">看明細 ▾</td>
         </tr>
-        <tr class="dt" data-id="${esc(r.id)}"><td colspan="7"></td></tr>`).join('')}</tbody></table></div>`;
+        <tr class="dt" data-id="${esc(r.id)}"><td colspan="9"></td></tr>`).join('')}</tbody></table></div>`;
       box.querySelectorAll('tr.rw').forEach(tr=>tr.onclick=()=>toggle(tr.getAttribute('data-id')));
     };
 
@@ -651,39 +664,37 @@
       renderTable();
     };
 
-    // ── 匯出目前篩選結果，欄位順序照 30 題 ──
+    // ── 匯出目前篩選結果：標記、備註在最前，接著照 30 題 ──
     $('btnExport').onclick=async ()=>{
       const btn=$('btnExport'), msgEl=$('xlsxMsg'), old=btn.textContent;
       btn.disabled=true; msgEl.className='msg'; msgEl.textContent='';
       const map=DEMO?{}:await signMany(idPaths(view),msgEl,'產生連結中');
       const q=(v)=>{ const s=String(v==null?'':v); return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s; };
-      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['標記']).concat(IDCOLS.map(c=>c.t));
-      const lines=[head.map(q).join(',')].concat(view.map(r=>QS.map(qq=>{
+      const head=['標記','備註'].concat(QS.map(qq=>qq.n+'. '+qq.q)).concat(IDCOLS.map(c=>c.t));
+      const lines=[head.map(q).join(',')].concat(view.map(r=>[tagName(r),r.note==null?'':String(r.note)].concat(QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
         if(qq.multi) return (v||[]).join(' / ');
         return v==null?'':String(v);
-      }).concat([tagName(r)]).concat(IDCOLS.map(c=>idCell(map,r,c))).map(q).join(',')));
+      })).concat(IDCOLS.map(c=>idCell(map,r,c))).map(q).join(',')));
       const csv='﻿'+lines.join('\r\n');
       const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
       a.download='強腦力-婦女再就業報名'+(COURSE?'-'+COURSE.name:'')+'.csv'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
       msgEl.className='msg'; msgEl.textContent=''; btn.disabled=false; btn.textContent=old;
     };
 
-    // ── 匯出 Excel：同一批篩選結果，30 題後面再接申請編號／申請時間／狀態／備註 ──
+    // ── 匯出 Excel：同一批篩選結果，標記、備註在最前（跟 CSV 一樣），30 題後面再接申請編號／申請時間／狀態 ──
     const xlsxRows=(map)=>{
-      const head=QS.map(qq=>qq.n+'. '+qq.q).concat(['申請編號','申請時間','狀態','標記','備註']).concat(IDCOLS.map(c=>c.t));
-      return [head].concat(view.map(r=>QS.map(qq=>{
+      const head=['標記','備註'].concat(QS.map(qq=>qq.n+'. '+qq.q)).concat(['申請編號','申請時間','狀態']).concat(IDCOLS.map(c=>c.t));
+      return [head].concat(view.map(r=>[tagName(r),r.note==null?'':String(r.note)].concat(QS.map(qq=>{
         if(qq.bool) return r[qq.k]===true?'是':'否';
         const v=r[qq.k];
         if(qq.multi) return (v||[]).join('、');
         return v==null?'':String(v);
-      }).concat([
+      })).concat([
         String(r.id==null?'':r.id),
         fmtTPE(r.created_at),
-        String(r.status||'new'),
-        tagName(r),
-        r.note==null?'':String(r.note)
+        String(r.status||'new')
       ]).concat(IDCOLS.map(c=>idCell(map,r,c)))));
     };
     $('btnExportXlsx').onclick=async ()=>{
