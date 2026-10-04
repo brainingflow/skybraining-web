@@ -23,7 +23,8 @@
     { "source": "/記憶力大解密：五大記憶原理一次看懂",    "destination": "/article-improve-child-memory.html", "permanent": true },
     { "source": "/記憶力大解密：五大記憶原理一次看懂/",   "destination": "/article-improve-child-memory.html", "permanent": true },
     { "source": "/%e8%a8%98%e6%86%b6%e5%8a%9b%e5%a4%a7%e8%a7%a3%e5%af%86%ef%bc%9a%e4%ba%94%e5%a4%a7%e8%a8%98%e6%86%b6%e5%8e%9f%e7%90%86%e4%b8%80%e6%ac%a1%e7%9c%8b%e6%87%82", "destination": "/article-improve-child-memory.html", "permanent": true },
-    { "source": "/%e8%a8%98%e6%86%b6%e5%8a%9b%e5%a4%a7%e8%a7%a3%e5%af%86%ef%bc%9a%e4%ba%94%e5%a4%a7%e8%a8%98%e6%86%b6%e5%8e%9f%e7%90%86%e4%b8%80%e6%ac%a1%e7%9c%8b%e6%87%82/", "destination": "/article-improve-child-memory.html", "permanent": true }
+    { "source": "/%e8%a8%98%e6%86%b6%e5%8a%9b%e5%a4%a7%e8%a7%a3%e5%af%86%ef%bc%9a%e4%ba%94%e5%a4%a7%e8%a8%98%e6%86%b6%e5%8e%9f%e7%90%86%e4%b8%80%e6%ac%a1%e7%9c%8b%e6%87%82/", "destination": "/article-improve-child-memory.html", "permanent": true },
+    { "source": "/:page([A-Za-z0-9_-]+)/", "destination": "/:page", "permanent": true }
   ],
   "headers": [
     {
@@ -37,5 +38,8 @@
         { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://gfuqizxzihgydzyqywun.supabase.co wss://gfuqizxzihgydzyqywun.supabase.co https://vimeo.com https://*.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.facebook.com https://connect.facebook.net; frame-src https://player.vimeo.com https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.payuni.com.tw https://sandbox-api.payuni.com.tw; object-src 'none'" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/:page([A-Za-z0-9_-]+)", "destination": "/:page.html" }
   ]
 }
