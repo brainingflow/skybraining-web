@@ -13,6 +13,9 @@ const PAYUNI_KEY = Deno.env.get("PAYUNI_HASH_KEY") || "";
 const PAYUNI_IV  = Deno.env.get("PAYUNI_HASH_IV") || "";
 const PAYUNI_ENV = Deno.env.get("PAYUNI_ENV") || "sandbox";
 const SITE = "https://skybraining.com";
+// LINE 註冊沒給 Email 時代填的網域（同 line-auth），寄到這裡的收據本人收不到
+const PLACEHOLDER_DOMAIN = "members.skybraining.com";
+const EMAIL_RE = /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+([.][A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?([.][A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?)*[.][A-Za-z]{2,}$/;
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -38,7 +41,7 @@ Deno.serve(async (req) => {
     const { data: { user }, error: uErr } = await admin.auth.getUser(jwt);
     if (uErr || !user) return J({ ok: false, error: "登入狀態失效，請重新登入" }, 401);
 
-    const { course_id, provider } = await req.json();
+    const { course_id, provider, receipt_email } = await req.json();
     if (!course_id || !provider) return J({ ok: false, error: "缺少參數" }, 400);
 
     // ── 價格永遠以資料庫為準（不信前端）──
@@ -53,10 +56,27 @@ Deno.serve(async (req) => {
       .eq("user_id", user.id).eq("course_id", course_id).maybeSingle();
     if (owned) return J({ ok: false, error: "你已經擁有這門課程了，直接去上課吧！" }, 400);
 
+    // 代填信箱的會員：收據改寄結帳頁填的 Email，只記在這筆訂單，不改帳號 Email（避免跟登入帳號衝突）
+    const placeholder = isPlaceholder(user.email);
+    const receipt = placeholder && typeof receipt_email === "string" ? receipt_email.trim() : "";
+    if (placeholder) {
+      if (!receipt) return J({ ok: false, error: "請先填你的 Email，收據才寄得到你" }, 400);
+      if (receipt.length > 254 || !EMAIL_RE.test(receipt)) return J({ ok: false, error: "這個 Email 格式不對，你再檢查一下" }, 400);
+      if (isPlaceholder(receipt)) return J({ ok: false, error: "這是系統代填的信箱，請填你自己常用的 Email" }, 400);
+    }
+    const mail = placeholder ? receipt : (user.email || "");
+
     // ── 建立訂單（pending）──
-    const { data: order, error: oErr } = await admin.from("orders").insert({
+    const row: Record<string, unknown> = {
       user_id: user.id, course_id, amount: price, currency: "TWD", provider, status: "pending",
-    }).select("*").single();
+    };
+    if (placeholder) row.receipt_email = receipt;
+    let { data: order, error: oErr } = await admin.from("orders").insert(row).select("*").single();
+    // receipt_email 欄位的 SQL 還沒跑（PostgREST 找不到欄位）時照舊建單，收據信箱仍交給金流
+    if (oErr && placeholder && (oErr.code === "PGRST204" || /receipt_email/.test(oErr.message || ""))) {
+      delete row.receipt_email;
+      ({ data: order, error: oErr } = await admin.from("orders").insert(row).select("*").single());
+    }
     if (oErr) return J({ ok: false, error: "建立訂單失敗：" + oErr.message }, 500);
 
     // ── Stripe Checkout ──
@@ -75,7 +95,7 @@ Deno.serve(async (req) => {
       f.set("metadata[order_id]", order.id);
       f.set("metadata[course_id]", course_id);
       f.set("metadata[user_id]", user.id);
-      if (user.email) f.set("customer_email", user.email);
+      if (mail) f.set("customer_email", mail);
       const r = await fetch("https://api.stripe.com/v1/checkout/sessions", {
         method: "POST",
         headers: { "Authorization": "Bearer " + STRIPE_KEY, "Content-Type": "application/x-www-form-urlencoded" },
@@ -102,7 +122,7 @@ Deno.serve(async (req) => {
         TradeAmt: String(price),
         Timestamp: String(ts),
         ProdDesc: String(course.name || "").slice(0, 550),
-        UsrMail: user.email || "",
+        UsrMail: mail,
         ReturnURL: `${SITE}/success.html?order=${order.id}`,
         NotifyURL: `${SB_URL}/functions/v1/pay-webhook?provider=payuni`, // 僅限 80 / 443 port
         BackURL: `${SITE}/checkout.html?course=${course_id}&canceled=1`,
@@ -126,6 +146,9 @@ Deno.serve(async (req) => {
   }
 });
 
+function isPlaceholder(email: string | undefined): boolean {
+  return String(email || "").trim().toLowerCase().endsWith("@" + PLACEHOLDER_DOMAIN);
+}
 async function sha256Hex(s: string): Promise<string> {
   const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");

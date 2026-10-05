@@ -87,6 +87,13 @@
   .msg.show{display:block;}
   .msg.error{background:rgba(214,69,69,.1);color:var(--err);border:1px solid rgba(214,69,69,.25);}
   .msg.info{background:rgba(255,176,32,.12);color:#8a5c00;border:1px solid rgba(255,176,32,.3);}
+  .rcpt{margin-top:22px;scroll-margin-top:84px;}
+  .rcpt label{display:block;font-family:var(--round);font-weight:800;font-size:16.5px;color:var(--indigo);margin-bottom:10px;}
+  .rcpt input{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--hair);border-radius:14px;padding:12px 15px;outline:none;transition:border-color .2s;}
+  .rcpt input:focus{border-color:var(--teal);}
+  .rcpt input[aria-invalid="true"]{border-color:var(--err);}
+  .rcpt .hint{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.7;}
+  .rcpt .hint.err{color:var(--err);}
   .state{padding:80px 0;text-align:center;color:var(--ink-soft);}
   .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
@@ -216,6 +223,19 @@
       + (course.description ? `<div class="bd">${esc(course.description)}</div>` : '')
       + perks.map(p=>`<div class="pt"><i>✓</i><span>${esc(p)}</span></div>`).join('');
 
+    // LINE 註冊沒給 Email 的會員是代填信箱（line_…@members.skybraining.com），收據寄不到本人，結帳前先問一個 Email；
+    // members 表前端讀不到，用網域判斷（同 member.html）
+    const isPh=(e)=>String(e||'').trim().toLowerCase().endsWith('@members.skybraining.com');
+    const needRcpt=isPh(session.user&&session.user.email);
+    const EMAIL_RE=/^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+([.][A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?([.][A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?)*[.][A-Za-z]{2,}$/;
+    const rcptErr=(v)=>!v ? '請先填你的 Email，收據才寄得到你'
+      : (v.length>254 || !EMAIL_RE.test(v)) ? '這個 Email 格式不對，你再檢查一下'
+      : isPh(v) ? '這是系統代填的信箱，請填你自己常用的 Email' : '';
+    const rcptHint='你是用 LINE 註冊的，我們還沒有你的 Email，先留一個你常收信的信箱。';
+    const rcptHtml = needRcpt
+      ? `<div class="rcpt"><label for="rcptEmail">收據要寄到哪個 Email？</label><input id="rcptEmail" type="email" inputmode="email" autocomplete="email" required aria-describedby="rcptHint" placeholder="you@example.com"><div class="hint" id="rcptHint" aria-live="polite">${rcptHint}</div></div>`
+      : '';
+
     $('content').innerHTML=`
       <div class="card">
         <div class="ctop ${color}">
@@ -232,7 +252,7 @@
           <div class="h2">你買到的是什麼</div>
           <div class="brief">${briefHtml}</div>
 
-          <div class="h2">選擇付款方式</div>
+          ${rcptHtml}<div class="h2">選擇付款方式</div>
           <button class="pay-btn" id="btnPayuni" ${cfg.payuni?'':'disabled'}>
             <span class="ic tw">💳</span>
             <span><b>統一金流 PAYUNi</b><small>信用卡・ATM 轉帳・超商代碼・行動支付</small></span>
@@ -260,12 +280,22 @@
     if(qs.get('canceled')==='1'){ const m=$('payMsg'); m.className='msg show info'; m.textContent='已取消付款。想好了隨時可以再按一次，訂單不會重複扣款'; }
 
     const pay=async (provider,btn)=>{
-      const m=$('payMsg'); m.className='msg'; btn.disabled=true;
+      const m=$('payMsg'); m.className='msg';
+      const body={ course_id:courseId, provider };
+      if(needRcpt){
+        const inp=$('rcptEmail'), hint=$('rcptHint'), v=inp.value.trim(), err=rcptErr(v);
+        inp.setAttribute('aria-invalid', err ? 'true' : 'false');
+        hint.className=err ? 'hint err' : 'hint'; hint.textContent=err ? '✗ '+err : rcptHint;
+        // 導覽列是 sticky，focus() 自己捲會把欄位捲到導覽列底下；改用 .rcpt 的 scroll-margin-top 捲到看得見的地方
+        if(err){ inp.focus({ preventScroll:true }); inp.closest('.rcpt').scrollIntoView({ block:'nearest' }); return; }
+        body.receipt_email=v;
+      }
+      btn.disabled=true;
       const old=btn.querySelector('b').textContent; btn.querySelector('b').textContent='建立安全連線中…';
       try{
         const r=await fetch(FN,{ method:'POST',
           headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+session.access_token, 'apikey':SUPABASE_ANON },
-          body:JSON.stringify({ course_id:courseId, provider }) });
+          body:JSON.stringify(body) });
         const j=await r.json();
         if(!j.ok) throw new Error(j.error||('錯誤 '+r.status));
         if(j.redirect){ location.href=j.redirect; return; }

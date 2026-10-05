@@ -9,6 +9,8 @@ alter table public.orders enable row level security;
 do $$ begin
   create policy orders_self_read on public.orders for select using ( auth.uid() = user_id or public.is_admin() );
 exception when duplicate_object then null; end $$;
+-- 2026-10-05：LINE 註冊代填信箱（@members.skybraining.com）的會員，收據寄到結帳頁填的 Email，只記在訂單
+alter table public.orders add column if not exists receipt_email text;
 
 -- 金鑰（全部放 Edge Function Secrets，不進版本庫）：
 --   STRIPE_SECRET_KEY      sk_live_…（或 sk_test_… 先測試）
