@@ -91,10 +91,13 @@
   (async ()=>{
     const { data:{ session } } = await supabase.auth.getSession();
     if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
+    // LINE 註冊時 LINE 沒給 Email，系統代填 line_…@members.skybraining.com，不秀給本人看
+    const em = session.user.email || '';
+    const who = em.toLowerCase().endsWith('@members.skybraining.com') ? 'LINE（還沒有設定 Email）' : (em || '（此帳號無 email）');
     $('card').innerHTML=`
       <h1>設定 / 修改密碼</h1>
       <p class="lead">設定密碼後，你也可以用「Email ＋ 密碼」登入（原本的 Google／LINE 登入仍然可用）。</p>
-      <div class="who">目前帳號：${esc(session.user.email||'（此帳號無 email）')}</div>
+      <div class="who">目前帳號：${esc(who)}</div>
       <label for="pw">新密碼</label>
       <input id="pw" type="password" autocomplete="new-password" placeholder="至少 8 碼">
       <label for="pw2">再輸入一次新密碼</label>

@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // 回呼網址帶著 LINE 的一次性 code、state，不送進 GA
+  gtag('config','G-22EQNGV8C4',{ page_location: location.origin + location.pathname });
+</script>
 <meta charset="UTF-8">
+<meta name="referrer" content="strict-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 <title>LINE 連結處理中 — 強腦力 SkyBraining</title>
@@ -49,6 +59,15 @@
   const FN = SUPABASE_URL + '/functions/v1/line-auth';
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const $ = (id)=>document.getElementById(id);
+  const wait = (ms)=>new Promise(ok=>setTimeout(ok, ms));
+  // gtag.js 被擋或沒載入時 event_callback 不會回來，最多等 800ms 就放行，不能卡住登入
+  const track = (name)=>new Promise(ok=>{
+    if(typeof window.gtag !== 'function'){ ok(); return; }
+    const t = setTimeout(ok, 800);
+    try{
+      window.gtag('event', name, { method:'line', event_callback:()=>{ clearTimeout(t); ok(); } });
+    }catch(e){ clearTimeout(t); ok(); }
+  });
 
   const show = (title, msg, cls, actionsHtml)=>{
     $('sp').style.display='none';
@@ -102,7 +121,7 @@
       show('LINE 綁定完成 ✓',
            `以後你用 LINE 登入，看到的會是同一個會員編號、同一批課程。`,
            'ok', `<a class="btn" href="member.html?line=ok#account">回會員中心</a>`);
-      setTimeout(()=>{ location.href='member.html?line=ok#account'; }, 1600);
+      Promise.all([wait(1600), track('link_line')]).then(()=>{ location.href='member.html?line=ok#account'; });
       return;
     }
 
@@ -113,8 +132,10 @@
              `<a class="btn" href="login.html">前往登入</a>`);
         return;
       }
-      show('登入成功 ✓', `會員編號 <b>${r.member_no||''}</b>，正在帶你進會員中心…`, 'ok', '');
-      setTimeout(()=>{ location.href='member.html'; }, 900);
+      // 沒綁過的 LINE 由 line-auth 當場建會員並回 is_new，這次算註冊不算登入
+      const isNew = r.is_new === true;
+      show(isNew ? '註冊完成 ✓' : '登入成功 ✓', `會員編號 <b>${r.member_no||''}</b>，正在帶你進會員中心…`, 'ok', '');
+      Promise.all([wait(900), track(isNew ? 'sign_up' : 'login')]).then(()=>{ location.href='member.html'; });
       return;
     }
 
@@ -122,6 +143,10 @@
     if(reason === 'not_bound'){
       show('這個 LINE 還沒有綁定會員',
            '請先用 <b>Email 或 Google</b> 登入，到會員中心的「使用者帳號」按一次「連結 LINE」。綁定過之後，以後就能直接用 LINE 登入了。',
+           'err', `<a class="btn" href="login.html">用 Email／Google 登入</a>`);
+    }else if(reason === 'email_taken'){
+      show('你已經有會員帳號了',
+           '你 LINE 帳號的 Email 已經註冊過會員。請先用 <b>Email 或 Google</b> 登入，到會員中心的「使用者帳號」按一次「連結 LINE」，以後就能直接用 LINE 登入。',
            'err', `<a class="btn" href="login.html">用 Email／Google 登入</a>`);
     }else if(reason === 'not_configured'){
       show('LINE 登入還在設定中', 'LINE 的頻道資訊還沒設定完成，目前請先用 Email 或 Google 登入。', 'err',

@@ -182,6 +182,14 @@
   const abs = (p)=> new URL(p, location.href).href;   // 轉成絕對網址供 OAuth 導回
   function show(text,type){ msg.textContent=text; msg.className='msg show '+type; }
   function clearMsg(){ msg.className='msg'; }
+  // gtag.js 被擋或沒載入時 event_callback 不會回來，最多等 800ms 就放行，不能卡住註冊
+  const track = (name, method)=>new Promise(ok=>{
+    if(typeof window.gtag !== 'function'){ ok(); return; }
+    const t = setTimeout(ok, 800);
+    try{
+      window.gtag('event', name, { method, event_callback:()=>{ clearTimeout(t); ok(); } });
+    }catch(e){ clearTimeout(t); ok(); }
+  });
 
   // 已登入 → 直接進會員中心
   supabase.auth.getSession().then(({data})=>{ if(data.session){ location.href = AFTER_LOGIN; } });
@@ -258,8 +266,12 @@
     });
     $('btnSignup').disabled=false;
     if(error){ show(translate(error.message),'error'); return; }
-    if(data.session){ location.href = AFTER_LOGIN; }
-    else{ show('帳號已建立！我們寄了一封確認信到你的信箱，請點信中連結完成驗證後即可登入。','ok'); setTab(true); }
+    // Email 已註冊過時 Supabase 為了不洩漏帳號存在，照樣回成功但 identities 是空陣列：那不是新會員，不送 sign_up；
+    // 畫面上分不出新舊，所以兩種都顯示同一句。setTab 會清掉訊息，要先切分頁再顯示
+    const isNew = !!data.user && !(Array.isArray(data.user.identities) && data.user.identities.length === 0);
+    const sent = isNew ? track('sign_up', 'email') : Promise.resolve();
+    if(data.session){ sent.then(()=>{ location.href = AFTER_LOGIN; }); }
+    else{ setTab(true); show('我們寄了一封確認信到你的信箱，點信中連結就能登入。如果你之前就用這個 Email 註冊過，不會再收到信，請直接登入。','ok'); }
   };
 
   function translate(m){

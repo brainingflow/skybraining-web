@@ -226,6 +226,30 @@
   const LOGIN_PAGE = 'login.html';
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const $ = (id)=>document.getElementById(id);
+  // gtag.js 被擋或沒載入時 event_callback 不會回來，最多等 800ms 就放行，不能卡住註冊
+  const track = (name, method)=>new Promise(ok=>{
+    if(typeof window.gtag !== 'function'){ ok(); return; }
+    const t = setTimeout(ok, 800);
+    try{
+      window.gtag('event', name, { method, event_callback:()=>{ clearTimeout(t); ok(); } });
+    }catch(e){ clearTimeout(t); ok(); }
+  });
+  // Google 第一次登入＝帳號剛建立：created_at 與 last_sign_in_at 都是伺服器時間，相差不到 1 分鐘就是剛註冊（不看手機時鐘）。
+  // 只算 provider＝google 建的帳號（Email、LINE 註冊在別處送），同一個帳號在同一台裝置只送一次
+  function trackGoogleSignup(user){
+    try{
+      if(!user || !user.app_metadata || user.app_metadata.provider !== 'google') return;
+      const gap = Math.abs(Date.parse(user.last_sign_in_at) - Date.parse(user.created_at));
+      if(!(gap <= 60000)) return;
+      const k = 'sb_signup_sent_' + user.id;
+      if(localStorage.getItem(k)) return;
+      localStorage.setItem(k, '1');
+      track('sign_up', 'google');
+    }catch(e){}
+  }
+  // LINE 註冊時 LINE 沒給 Email，系統代填 line_…@members.skybraining.com（資料庫 members.email_placeholder），不秀給本人看；
+  // members 表前端讀不到，用網域判斷
+  const isPlaceholderEmail = (e)=>String(e||'').toLowerCase().endsWith('@members.skybraining.com');
 
   $('logout').onclick = async ()=>{ await supabase.auth.signOut(); location.href = LOGIN_PAGE; };
   const esc = (s)=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -246,9 +270,10 @@
     const { data:{ session } } = await supabase.auth.getSession();
     if(!session){ location.href = LOGIN_PAGE; return; }
     const user = session.user;
+    trackGoogleSignup(user);
 
     // 讀 profile（家長暱稱）
-    let name = user.email;
+    let name = isPlaceholderEmail(user.email) ? ((user.user_metadata||{}).display_name || '') : user.email;
     const { data:prof } = await supabase.from('profiles').select('display_name,child_nickname').eq('id', user.id).maybeSingle();
     if(prof && prof.display_name) name = prof.display_name;
     // 管理員入口：改由資料庫的 admins 名單決定（後台「管理員」分頁可新增）
@@ -258,7 +283,7 @@
         document.getElementById('ddAdmin').innerHTML='<a class="dd-item admin" href="admin.html" role="menuitem">後台管理</a>';
       }
     }catch(e){ /* 舊資料庫尚未部署 admins.sql 時靜默略過 */ }
-    $('hi').textContent = `嗨，${name}！`;
+    $('hi').textContent = name ? `嗨，${name}！` : '嗨！';
 
     // 同一個 Email 的 Google／Email 帳號自動合併（只補課程權限、不刪任何資料）
     let mergedNow = 0;
@@ -308,7 +333,7 @@
     if(ownedCourses.length){
       html += '<div class="grid">' + ownedCourses.map(c=>card(c,true)).join('') + '</div>';
     }else{
-      html += `<div class="foot-note">你目前還沒有已開通的課程。下方是可選購的課程，或先加 LINE 免費試看。</div>`;
+      html += `<div class="foot-note">你目前還沒有已開通的課程。下方是可選購的課程，或先加 LINE 免費試看。<span style="display:block;margin-top:4px;font-size:12px;">如果你之前用 Email 或 Google 買過課，請登出後改用那個方式登入，再到「使用者帳號」按「連結 LINE」。</span></div>`;
     }
     if(otherCourses.length){
       html += `<div class="section-t"><span class="bar"></span>探索更多課程</div>`;
@@ -335,6 +360,9 @@
     // 加上同一個會員編號底下、其他帳號的登入方式
     const provs = new Set(ids.map(i=>i.provider));
     if(me && Array.isArray(me.providers)) me.providers.forEach(p=>provs.add(p));
+    // 代填信箱是系統建帳號時自動算的一種，不是本人設的 Email／密碼
+    const ph = isPlaceholderEmail(email);
+    if(ph) provs.delete('email');
     const has = (p)=> provs.has(p);
     const line = me && me.line ? me.line : null;
 
@@ -351,7 +379,7 @@
     let rows = '';
     rows += row('Email ／ 密碼登入', has('email'), has('email')? esc(email||'') : '',
       has('email') ? `<a class="link-btn ghost" href="account.html">改密碼</a>`
-                   : `<a class="link-btn" href="account.html">設定密碼 →</a>`);
+                   : (ph ? '' : `<a class="link-btn" href="account.html">設定密碼 →</a>`));
     rows += row('Google 登入', has('google'), '',
       has('google') ? '' : `<button class="link-btn" id="linkGoogle">連結 Google →</button>`);
     rows += row('LINE 登入', !!line,
@@ -369,7 +397,7 @@
       <div class="section-t" id="account"><span class="bar"></span>使用者帳號</div>
       <div class="links-card">
         ${idCard}
-        <div class="acct-email">目前登入帳號：<b>${esc(email||'（此帳號無 Email）')}</b></div>
+        <div class="acct-email">目前登入帳號：<b${ph ? ' style="word-break:normal"' : ''}>${ph ? 'LINE（還沒有設定 Email）' : esc(email||'（此帳號無 Email）')}</b></div>
         <p class="links-lead">下面三種登入方式，<b>綁定之後都會對應到上面同一個會員編號</b>——不管你今天用哪一個登入，看到的課程、紀錄都完全一樣。</p>
         ${rows}
         <div class="link-msg" id="linkMsg"></div>
