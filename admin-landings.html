@@ -76,6 +76,23 @@
   .empty{padding:26px 0;text-align:center;color:var(--ink-soft);font-size:14px;}
   #editorCard{display:none;}
   #editorCard.show{display:block;}
+  .sp-intro{font-size:13px;color:var(--ink-soft);margin:-6px 0 2px;}
+  .sp-group{font-family:var(--round);font-weight:800;font-size:14.5px;color:var(--indigo);margin:16px 0 8px;}
+  .sp-list{border:1px solid var(--hair);border-radius:12px;}
+  .sp-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.35fr) minmax(0,.9fr);gap:10px 18px;padding:13px 14px;border-bottom:1px solid var(--hair);font-size:13.5px;}
+  .sp-row:last-child{border-bottom:none;}
+  .sp-use{color:var(--ink-soft);font-size:12.5px;line-height:1.6;margin-top:3px;}
+  .sp-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+  .sp-k{font-size:11.5px;font-weight:700;color:var(--ink-soft);margin-bottom:2px;}
+  .sp-url{display:block;font-size:12.5px;word-break:break-all;margin-bottom:7px;}
+  .sp-adm{display:block;font-size:13px;font-weight:700;}
+  .sp-none{color:var(--ink-soft);font-size:12.5px;}
+  .st.live,.st.chk.ok{background:rgba(22,176,168,.14);color:#0a6b65;}
+  .st.pending{background:rgba(255,176,32,.2);color:#6e4700;}
+  .st.update{background:rgba(255,138,61,.16);color:#8a3c0c;}
+  .st.chk{background:var(--paper-2);color:var(--ink-soft);}
+  .st.chk.bad{background:rgba(214,69,69,.1);color:#b3261e;}
+  @media (max-width:720px){ .sp-row{grid-template-columns:minmax(0,1fr);gap:10px;} }
 </style>
 </head>
 <body>
@@ -122,6 +139,32 @@
   const fmtDate=(s)=> s ? String(s).slice(0,16).replace('T',' ') : '';
   const lpUrl=(slug)=> location.origin + '/lp.html?p=' + encodeURIComponent(slug);
 
+  /* ── 獨立報名頁登記表（單一真相）──────────────────────────
+     寫在網站程式裡的靜態報名頁，不在下面 Supabase 的廣告頁資料庫；
+     後台「獨立報名頁」那一區就是照這張表畫的。
+     新增獨立報名頁時在這裡加一行；下架、改網址、新版上線也要回來改這裡。
+     status：live＝線上｜pending＝本機待審（還沒上線）｜update＝線上是舊版、新版本機待審
+     admin：對應後台頁，沒有就寫 [] 並在 none 寫一句為什麼沒有 */
+  const LIVE_ORIGIN='https://skybraining.com';
+  const STATIC_PAGES=[
+    { group:'強腦力體驗課', file:'ad-live.html', name:'3 小時體驗場（限時免費）', use:'高雄 3 小時實體體驗場，報名走 LINE。', admin:[], none:'報名走 LINE', status:'live' },
+    { group:'強腦力體驗課', file:'free.html', name:'免費體驗課「10 倍聯想力」', use:'線上免費體驗課，按「免費領取」註冊會員後在會員中心看，名單進名單管理。', admin:[{ href:'admin-contacts.html', label:'名單管理' }], status:'live' },
+    { group:'高雄實體課', file:'kaohsiung.html', name:'高雄心智圖・記憶力課程（高雄王座頁）', use:'高雄實體初階／進階報名：頁首「立即報名」直接到進階班結帳頁，初階、進階兩顆報名鈕先到課程頁再結帳。', admin:[{ href:'admin.html', label:'總覽・銷售（銷售／開通紀錄）' }], status:'live' },
+    { group:'婦女再就業', file:'funv.html', name:'婦女再就業：總覽頁', use:'八門課的入口，點課程卡進各自的報名表。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply.html', name:'婦女再就業：整體造型設計報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-style.html', label:'整體造型設計名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-massage.html', name:'婦女再就業：牛角筋絡調理報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-massage.html', label:'牛角筋絡調理名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-coffee.html', name:'婦女再就業：手沖咖啡師技巧班報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-coffee.html', label:'手沖咖啡師技巧班名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-mindmap.html', name:'婦女再就業：心智圖講師班報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-mindmap.html', label:'心智圖講師班名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-sales.html', name:'婦女再就業：百億品牌成交技術報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-sales.html', label:'百億品牌成交技術名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-aivideo.html', name:'婦女再就業：AI 短影音實戰班報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-aivideo.html', label:'AI 短影音實戰班名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-rental.html', name:'婦女再就業：包租代管實戰班報名', use:'只報這一門，表單（含身分證照片）寫進婦女再就業名單。', admin:[{ href:'admin-funv-rental.html', label:'包租代管實戰班名單' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-4in1.html', name:'婦女再就業：實戰就業力 4 選 1 報名', use:'心智圖、AI 短影音、百億成交、整體造型四選一，寫進婦女再就業名單（所選那門課的名單也看得到）。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-lhw.html', name:'婦女再就業：林慧雯推薦專屬報名', use:'推薦人專屬連結（總覽頁沒連過去），邀請人自動帶林慧雯；整體造型、心智圖二選一。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-pyy.html', name:'婦女再就業：龎芸芸推薦專屬報名', use:'推薦人專屬連結（總覽頁沒連過去），邀請人自動帶龎芸芸；百億成交、心智圖、AI 短影音、整體造型四選一。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-zz.html', name:'婦女再就業：珠珠姐推薦專屬報名', use:'推薦人專屬連結（總覽頁沒連過去），邀請人自動帶珠珠姐；手沖咖啡、整體造型、心智圖三選一。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' },
+    { group:'婦女再就業', file:'funv-apply-g4.html', name:'婦女再就業：推薦人專屬報名（邀請人自己填）', use:'推薦人專屬連結（總覽頁沒連過去），邀請人由報名者自己填；心智圖、百億成交、AI 短影音、整體造型四選一。', admin:[{ href:'admin-funv.html', label:'婦女再就業報名（全部）' }], status:'live' }
+  ];
+
   (async ()=>{
     const { data:{ session } } = await supabase.auth.getSession();
     if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
@@ -135,7 +178,15 @@
     $('content').innerHTML=`
       <div class="wrap">
         <div class="h">廣告頁</div>
-        <div class="sub">投廣告用的一頁式落地頁，全部存在這裡。可以複製一頁做成新的變體、隨時修改、隨時上下架。</div>
+        <div class="sub">所有行銷報名頁的網址都在這裡。上面是寫在網站程式裡的獨立報名頁；下面是投廣告用的一頁式落地頁，可以複製變體、隨時修改、隨時上下架。</div>
+
+        <div class="card" id="spCard">
+          <div class="row-top">
+            <h2><span class="bar"></span>獨立報名頁（<span id="spCnt">0</span>）</h2>
+          </div>
+          <div class="sp-intro">這些頁寫在網站程式裡，改內容要請工程師。每次打開這頁都會檢查一次線上網址打不打得開。</div>
+          <div id="spWrap"></div>
+        </div>
         <div class="how">
           <b>怎麼運作：</b>每一頁都有自己的獨立網址 <code>skybraining.com/lp.html?p=代號</code>。新增或複製後<b>馬上生效、不用部署</b>——投廣告時就把這個網址貼到廣告後台。做 A/B 測試時，複製一頁、改個標題、換個代號，就是一支新廣告頁。
         </div>
@@ -273,6 +324,35 @@
       return (style?style.outerHTML:'') + '\n' + body.innerHTML;
     };
 
+    const SP_STATUS={ live:'線上', pending:'本機待審', update:'線上舊版・新版本機待審' };
+    const renderStatic=()=>{
+      $('spCnt').textContent=STATIC_PAGES.length;
+      const groups=[...new Set(STATIC_PAGES.map(p=>p.group))];
+      $('spWrap').innerHTML=groups.map(g=>`<div class="sp-group">${esc(g)}</div><div class="sp-list">${STATIC_PAGES.filter(p=>p.group===g).map(p=>{
+        const url=LIVE_ORIGIN+'/'+p.file;
+        const adm=p.admin.length ? p.admin.map(a=>`<a class="sp-adm" href="${esc(a.href)}">${esc(a.label)} →</a>`).join('') : `<span class="sp-none">無${p.none?'（'+esc(p.none)+'）':''}</span>`;
+        return `<div class="sp-row" data-file="${esc(p.file)}">
+          <div><div class="pg-name">${esc(p.name)}</div><div class="sp-use">${esc(p.use)}</div>
+            <div class="sp-tags"><span class="st ${esc(p.status)}">${esc(SP_STATUS[p.status]||p.status)}</span><span class="st chk" data-chk>檢查線上網址中…</span></div>
+            ${p.note?`<div class="sp-use">${esc(p.note)}</div>`:''}</div>
+          <div><div class="sp-k">線上網址</div><a class="sp-url" href="${esc(url)}" target="_blank" rel="noopener">${esc(url)}</a><button class="btn btn-sm btn-primary" data-copy="${esc(url)}" aria-label="複製網址：${esc(p.name)}">複製網址</button></div>
+          <div><div class="sp-k">對應後台</div>${adm}</div>
+        </div>`;}).join('')}</div>`).join('');
+      $('spWrap').querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copy(b.getAttribute('data-copy'), '已複製網址：\n'+b.getAttribute('data-copy')));
+      $('spWrap').querySelectorAll('.sp-row').forEach(row=>probeLive(STATIC_PAGES.find(p=>p.file===row.getAttribute('data-file')), row.querySelector('[data-chk]')));
+    };
+    // 正式站上這是同網域請求，CSP connect-src 'self' 就放行，不必為了檢查加白名單
+    const probeLive=async (p, tag)=>{
+      const ac=new AbortController(), timer=setTimeout(()=>ac.abort(), 10000);
+      try{
+        const r=await fetch(LIVE_ORIGIN+'/'+p.file,{ method:'HEAD', cache:'no-store', signal:ac.signal });
+        if(r.status===200){ tag.className='st chk ok'; tag.textContent='網址打得開'; }
+        else if(p.status==='pending'){ tag.textContent='線上還沒有（'+r.status+'）'; }
+        else { tag.className='st chk bad'; tag.textContent='打不開（'+r.status+'）'; }
+      }catch(e){ tag.textContent='無法確認'; }
+      clearTimeout(timer);
+    };
+
     const load=async ()=>{
       $('listWrap').innerHTML='<div class="state"><div class="spin"></div>載入廣告頁中…</div>';
       let { data, error } = await supabase.rpc('admin_lp_list');
@@ -288,6 +368,7 @@
       }
       renderList();
     };
+    renderStatic();
     load();
   })();
 </script>
