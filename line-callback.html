@@ -69,6 +69,31 @@
     }catch(e){ clearTimeout(t); ok(); }
   });
 
+  // LINE 授權回來只會落在本頁、網址沒有 next：login.html 按 LINE 前把要回去的頁記在 sessionStorage，
+  // 另記一份帶時間的在 localStorage（手機 LINE App 授權完可能開新分頁回來），那份只認 10 分鐘內的；兩邊讀完都清掉。
+  // 只接受同網域或 https://skybraining.com/，避免被拿去當開放轉址；一律留在目前網域（登入狀態存在這個網域）
+  const NEXT_KEY = 'sb_after_login';
+  const takeNext = ()=>{
+    let raw = null, saved = null;
+    try{ raw = sessionStorage.getItem(NEXT_KEY); sessionStorage.removeItem(NEXT_KEY); }catch(e){}
+    try{ saved = localStorage.getItem(NEXT_KEY); localStorage.removeItem(NEXT_KEY); }catch(e){}
+    if(!raw && saved){
+      try{
+        const o = JSON.parse(saved);
+        const age = o && typeof o.t === 'number' ? Date.now() - o.t : -1;
+        if(o && typeof o.u === 'string' && age >= 0 && age <= 10 * 60 * 1000) raw = o.u;
+      }catch(e){}
+    }
+    if(!raw) return null;
+    try{
+      const u = new URL(raw, location.href);
+      if(u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+      if(u.origin !== location.origin && u.origin !== 'https://skybraining.com') return null;
+      if(/[/](login|line-callback)([.]html)?$/i.test(u.pathname)) return null;
+      return location.origin + u.pathname + u.search + u.hash;
+    }catch(e){ return null; }
+  };
+
   const show = (title, msg, cls, actionsHtml)=>{
     $('sp').style.display='none';
     $('t').textContent = title;
@@ -135,7 +160,8 @@
       // 沒綁過的 LINE 由 line-auth 當場建會員並回 is_new，這次算註冊不算登入
       const isNew = r.is_new === true;
       show(isNew ? '註冊完成 ✓' : '登入成功 ✓', `會員編號 <b>${r.member_no||''}</b>，正在帶你進會員中心…`, 'ok', '');
-      Promise.all([wait(900), track(isNew ? 'sign_up' : 'login')]).then(()=>{ location.href='member.html'; });
+      const next = takeNext();
+      Promise.all([wait(900), track(isNew ? 'sign_up' : 'login')]).then(()=>{ location.href = next || 'member.html'; });
       return;
     }
 

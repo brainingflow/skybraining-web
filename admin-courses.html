@@ -120,6 +120,24 @@
   .warnbox b{color:var(--err);}
   .tipbox{background:linear-gradient(135deg,#fff8ec,#fdeede);border:1px solid rgba(255,176,32,.32);border-radius:14px;padding:14px 18px;font-size:13.5px;margin:16px 0;}
   .tipbox b{color:var(--indigo);}
+  /* 現場收款 */
+  .onsite{display:none;}
+  .onsite.show{display:block;}
+  .os-list{display:flex;flex-direction:column;gap:10px;}
+  .os-item{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;border:1.5px solid var(--hair);border-radius:14px;padding:14px 16px;}
+  .os-info{flex:1 1 200px;min-width:0;}
+  .os-price{font-family:var(--round);font-weight:800;font-size:18px;color:var(--indigo);white-space:nowrap;}
+  .os-btn{min-height:46px;font-size:15px;padding:11px 22px;}
+  @media (max-width:560px){ .os-btn{flex:1 1 auto;} }
+  #qrmodal{position:fixed;inset:0;z-index:90;background:#fff;display:none;overflow-y:auto;padding:20px;}
+  #qrmodal.show{display:flex;}
+  #qrmodal .qrbox{margin:auto;width:100%;max-width:560px;text-align:center;}
+  #qrImg{width:min(86vw,calc(100vh - 320px),520px);width:min(86vw,calc(100dvh - 320px),520px);min-width:200px;margin:0 auto;}
+  #qrImg svg{display:block;width:100%;height:auto;}
+  #qrName{margin-top:14px;font-family:var(--round);font-weight:800;color:var(--indigo);font-size:clamp(22px,5.6vw,34px);line-height:1.3;word-break:keep-all;overflow-wrap:anywhere;}
+  #qrPrice{font-family:var(--round);font-weight:800;color:#B04A06;font-size:clamp(28px,7.2vw,44px);line-height:1.25;}
+  #qrmodal .qrtip{margin-top:6px;font-size:clamp(17px,4.4vw,21px);font-weight:700;color:var(--ink);}
+  #qrClose{margin-top:18px;min-width:180px;min-height:50px;font-size:17px;}
 </style>
 </head>
 <body>
@@ -136,6 +154,7 @@
 <div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
 
 <div id="vmodal"><button class="vclose" onclick="document.getElementById('vmodal').classList.remove('show');document.getElementById('vbox').innerHTML='';">✕ 關閉</button><div class="vbox" id="vbox"></div></div>
+<div id="qrmodal" role="dialog" aria-modal="true" aria-labelledby="qrName"><div class="qrbox"><div id="qrImg"></div><div id="qrName"></div><div id="qrPrice"></div><p class="qrtip">請用手機掃描後完成付款</p><button class="btn btn-primary" id="qrClose">關閉</button></div></div>
 
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -149,6 +168,80 @@
   const vimeoId=(x)=>{ const m=String(x||'').match(/(\d{6,})/); return m?m[1]:''; };
 
   window.showVideo=(vid,ratio)=>{ const b=$('vbox'); b.className='vbox'+(ratio==='9:16'?' v916':''); b.innerHTML=`<iframe src="https://player.vimeo.com/video/${encodeURIComponent(vid)}?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`; $('vmodal').classList.add('show'); };
+
+  // 現場收款 QR：自寫編碼器（位元組模式、糾錯 M、版本 1～10，照 ISO/IEC 18004），不載外部 script，vercel.json 的 CSP 不用改
+  const qrMatrix=(()=>{
+    const EC=[0,10,16,26,18,24,16,18,22,22,26], NB=[0,1,1,1,2,2,4,4,4,5,5];
+    const rawBits=(v)=>{ let r=(16*v+128)*v+64; if(v>=2){ const a=Math.floor(v/7)+2; r-=(25*a-10)*a-55; if(v>=7) r-=36; } return r; };
+    const dataCw=(v)=>Math.floor(rawBits(v)/8)-EC[v]*NB[v];
+    const gmul=(x,y)=>{ let z=0; for(let i=7;i>=0;i--){ z=(z<<1)^((z>>>7)*0x11D); z^=((y>>>i)&1)*x; } return z; };
+    const rsDiv=(deg)=>{ const r=new Array(deg).fill(0); r[deg-1]=1; let root=1; for(let i=0;i<deg;i++){ for(let j=0;j<deg;j++){ r[j]=gmul(r[j],root); if(j+1<deg) r[j]^=r[j+1]; } root=gmul(root,2); } return r; };
+    const rsRem=(data,div)=>{ const r=div.map(()=>0); for(const b of data){ const f=b^r.shift(); r.push(0); div.forEach((c,i)=>{ r[i]^=gmul(c,f); }); } return r; };
+    const MASKS=[(x,y)=>(x+y)%2===0,(x,y)=>y%2===0,(x,y)=>x%3===0,(x,y)=>(x+y)%3===0,(x,y)=>(Math.floor(x/3)+Math.floor(y/2))%2===0,(x,y)=>x*y%2+x*y%3===0,(x,y)=>(x*y%2+x*y%3)%2===0,(x,y)=>((x+y)%2+x*y%3)%2===0];
+    return (text,forceMask)=>{
+      const bytes=Array.from(new TextEncoder().encode(text));
+      let v=1; while(v<=10&&4+(v<10?8:16)+bytes.length*8>dataCw(v)*8) v++;
+      if(v>10) throw new Error('網址太長，QR code 放不下');
+      const cap=dataCw(v)*8, bits=[], put=(val,len)=>{ for(let i=len-1;i>=0;i--) bits.push((val>>>i)&1); };
+      put(4,4); put(bytes.length,v<10?8:16); bytes.forEach((b)=>put(b,8));
+      put(0,Math.min(4,cap-bits.length)); put(0,(8-bits.length%8)%8);
+      for(let p=0xEC;bits.length<cap;p^=0xEC^0x11) put(p,8);
+      const data=[]; for(let i=0;i<bits.length;i+=8){ let b=0; for(let j=0;j<8;j++) b=(b<<1)|bits[i+j]; data.push(b); }
+      const nb=NB[v], ecl=EC[v], raw=Math.floor(rawBits(v)/8), nShort=nb-raw%nb, shortLen=Math.floor(raw/nb), div=rsDiv(ecl), blocks=[];
+      for(let i=0,k=0;i<nb;i++){ const d=data.slice(k,k+shortLen-ecl+(i<nShort?0:1)); k+=d.length; const e=rsRem(d,div); if(i<nShort) d.push(0); blocks.push(d.concat(e)); }
+      const cw=[]; for(let i=0;i<blocks[0].length;i++) blocks.forEach((b,j)=>{ if(i!==shortLen-ecl||j>=nShort) cw.push(b[i]); });
+      const n=v*4+17, M=[], F=[];
+      for(let i=0;i<n;i++){ M.push(new Array(n).fill(false)); F.push(new Array(n).fill(false)); }
+      const set=(x,y,d)=>{ M[y][x]=d; F[y][x]=true; };
+      for(let i=0;i<n;i++){ set(6,i,i%2===0); set(i,6,i%2===0); }
+      [[3,3],[n-4,3],[3,n-4]].forEach(([cx,cy])=>{ for(let dy=-4;dy<=4;dy++) for(let dx=-4;dx<=4;dx++){ const x=cx+dx, y=cy+dy, r=Math.max(Math.abs(dx),Math.abs(dy)); if(x>=0&&x<n&&y>=0&&y<n) set(x,y,r!==2&&r!==4); } });
+      if(v>1){ const na=Math.floor(v/7)+2, step=Math.ceil((v*4+4)/(na*2-2))*2, pos=[6]; for(let p=n-7;pos.length<na;p-=step) pos.splice(1,0,p);
+        pos.forEach((ax,i)=>pos.forEach((ay,j)=>{ if((i===0&&j===0)||(i===0&&j===na-1)||(i===na-1&&j===0)) return; for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++) set(ax+dx,ay+dy,Math.max(Math.abs(dx),Math.abs(dy))!==1); })); }
+      // 糾錯 M 的格式碼前兩位是 00，所以資料位就是遮罩編號
+      const fmt=(mask)=>{ let r=mask; for(let i=0;i<10;i++) r=(r<<1)^((r>>>9)*0x537); const b=((mask<<10)|r)^0x5412, bit=(k)=>((b>>>k)&1)===1;
+        for(let i=0;i<=5;i++) set(8,i,bit(i)); set(8,7,bit(6)); set(8,8,bit(7)); set(7,8,bit(8)); for(let i=9;i<15;i++) set(14-i,8,bit(i));
+        for(let i=0;i<8;i++) set(n-1-i,8,bit(i)); for(let i=8;i<15;i++) set(8,n-15+i,bit(i)); set(8,n-8,true); };
+      fmt(0);
+      if(v>=7){ let r=v; for(let i=0;i<12;i++) r=(r<<1)^((r>>>11)*0x1F25); const b=(v<<12)|r; for(let i=0;i<18;i++){ const d=((b>>>i)&1)===1, a=n-11+i%3, c=Math.floor(i/3); set(a,c,d); set(c,a,d); } }
+      let bi=0; for(let right=n-1;right>=1;right-=2){ if(right===6) right=5; for(let vert=0;vert<n;vert++) for(let j=0;j<2;j++){ const x=right-j, y=((right+1)&2)===0?n-1-vert:vert; if(!F[y][x]&&bi<cw.length*8){ M[y][x]=((cw[bi>>>3]>>>(7-(bi&7)))&1)===1; bi++; } } }
+      const flip=(k)=>{ for(let y=0;y<n;y++) for(let x=0;x<n;x++) if(!F[y][x]&&MASKS[k](x,y)) M[y][x]=!M[y][x]; };
+      const penalty=()=>{
+        let s=0;
+        const line=(get)=>{ let color=false, run=0; const h=[0,0,0,0,0,0,0];
+          const add=(len)=>{ if(h[0]===0) len+=n; h.pop(); h.unshift(len); };
+          const finder=()=>{ const k=h[1], core=k>0&&h[2]===k&&h[3]===k*3&&h[4]===k&&h[5]===k; return (core&&h[0]>=k*4&&h[6]>=k?1:0)+(core&&h[6]>=k*4&&h[0]>=k?1:0); };
+          for(let i=0;i<n;i++){ const c=get(i); if(c===color){ run++; if(run===5) s+=3; else if(run>5) s++; } else { add(run); if(!color) s+=finder()*40; color=c; run=1; } }
+          if(color){ add(run); run=0; } add(run+n); s+=finder()*40; };
+        for(let y=0;y<n;y++) line((x)=>M[y][x]);
+        for(let x=0;x<n;x++) line((y)=>M[y][x]);
+        let dark=0;
+        for(let y=0;y<n;y++) for(let x=0;x<n;x++){ if(M[y][x]) dark++; if(y<n-1&&x<n-1){ const c=M[y][x]; if(c===M[y][x+1]&&c===M[y+1][x]&&c===M[y+1][x+1]) s+=3; } }
+        return s+(Math.ceil(Math.abs(dark*20-n*n*10)/(n*n))-1)*10;
+      };
+      let best=forceMask;
+      if(best==null){ let min=Infinity; for(let k=0;k<8;k++){ flip(k); fmt(k); const p=penalty(); if(p<min){ min=p; best=k; } flip(k); } }
+      flip(best); fmt(best);
+      return M;
+    };
+  })();
+  const qrSvg=(text)=>{
+    const m=qrMatrix(text), n=m.length, q=4; let d='';
+    for(let y=0;y<n;y++) for(let x=0;x<n;){ if(!m[y][x]){ x++; continue; } let w=1; while(x+w<n&&m[y][x+w]) w++; d+='M'+(x+q)+' '+(y+q)+'h'+w+'v1h-'+w+'z'; x+=w; }
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+(n+q*2)+' '+(n+q*2)+'" shape-rendering="crispEdges" role="img" aria-label="結帳網址 QR code"><rect width="100%" height="100%" fill="#fff"/><path d="'+d+'" fill="#151731"/></svg>';
+  };
+  // 用 utm 不用自訂參數：客人先去登入（可能經過 Google）再回到結帳頁時，GA 會照網址上的 utm 把這次結帳歸到 onsite / qr
+  const onsiteUrl=(id)=>'https://skybraining.com/checkout.html?course='+encodeURIComponent(id)+'&utm_source=onsite&utm_medium=qr';
+  const fmtNT=(p)=>'NT$'+Number(p).toLocaleString('en-US');
+  let qrBack=null;
+  const openQR=(c,btn)=>{
+    if(!c) return;
+    try{ $('qrImg').innerHTML=qrSvg(onsiteUrl(c.id)); }catch(e){ alert(e.message); return; }
+    $('qrName').textContent=c.name; $('qrPrice').textContent=fmtNT(c.price);
+    qrBack=btn||null; $('qrmodal').classList.add('show'); document.body.style.overflow='hidden'; $('qrClose').focus({preventScroll:true}); $('qrmodal').scrollTop=0;
+  };
+  const closeQR=()=>{ $('qrmodal').classList.remove('show'); document.body.style.overflow=''; $('qrImg').innerHTML=''; if(qrBack) qrBack.focus(); qrBack=null; };
+  $('qrClose').onclick=closeQR;
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'&&$('qrmodal').classList.contains('show')) closeQR(); });
 
   async function fetchVimeo(idOrUrl){
     const id=vimeoId(idOrUrl);
@@ -174,6 +267,7 @@
         <div class="sub">新增、編輯、上下架課程與章節影片。<b>存檔即生效、不用部署</b>——前台 30 秒內就會反映。</div>
         <div class="subtabs">
           <button class="subtab active" id="tabList">📚 課程列表</button>
+          <button class="subtab" id="tabOnsite">📱 現場收款</button>
           <button class="subtab" id="tabSop">📖 操作說明</button>
         </div>
 
@@ -228,6 +322,14 @@
           </div>
         </div>
 
+        <div id="paneOnsite" class="onsite">
+          <div class="card">
+            <h2><span class="bar"></span>現場收款</h2>
+            <div class="sub" style="margin:8px 0 16px;">現場有人要報名：按那門課的「現場掃碼刷卡」，把螢幕轉給對方用手機相機掃。對方會開到這門課的結帳頁，登入會員後自己選付款方式刷卡。<br><small>只列出上架中、有標價的課（草稿課的結帳頁打不開，所以不列）。</small></div>
+            <div id="onsiteWrap"><div class="state"><div class="spin"></div>載入課程中…</div></div>
+          </div>
+        </div>
+
         <div id="paneSop" class="sop">
           <div class="tipbox"><b>這一頁是你的說明書。</b>照著走，一門新課從 Vimeo 到上線大約 5 分鐘，全程不用找工程師、不用部署。</div>
           <div class="step"><div class="sn">1</div><div><b>影片先上 Vimeo，開兩個開關</b><p>影片上傳到 Vimeo 後，進 Manage video：右上隱私改成 <code>Public</code>；再到 Share → Embed → Where can this be embedded 選 <code>Anywhere</code>。<br>💡 忘記開也沒關係——在這裡貼網址按「抓取」時，抓不到就會直接提醒你。</p></div></div>
@@ -247,8 +349,13 @@
     const clearMsg=()=>{ $('edMsg').className='msg'; };
 
     // ── 子分頁切換 ──
-    $('tabList').onclick=()=>{ $('tabList').classList.add('active'); $('tabSop').classList.remove('active'); $('paneList').style.display=''; $('paneSop').classList.remove('show'); };
-    $('tabSop').onclick=()=>{ $('tabSop').classList.add('active'); $('tabList').classList.remove('active'); $('paneList').style.display='none'; $('paneSop').classList.add('show'); };
+    const showPane=(k)=>{
+      $('tabList').classList.toggle('active',k==='list'); $('tabOnsite').classList.toggle('active',k==='onsite'); $('tabSop').classList.toggle('active',k==='sop');
+      $('paneList').style.display=k==='list'?'':'none'; $('paneOnsite').classList.toggle('show',k==='onsite'); $('paneSop').classList.toggle('show',k==='sop');
+    };
+    $('tabList').onclick=()=>showPane('list');
+    $('tabOnsite').onclick=()=>showPane('onsite');
+    $('tabSop').onclick=()=>showPane('sop');
 
     // ── 色票 ──
     let selAccent='amber';
@@ -276,6 +383,20 @@
         </tr>`).join('')}</tbody></table></div>`;
       box.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>rowAction(b.dataset.act,b.dataset.id));
       box.querySelectorAll('[data-mv]').forEach(b=>b.onclick=()=>moveRow(b.dataset.id,b.dataset.mv));
+    };
+
+    // ── 現場收款 ──
+    const renderOnsite=()=>{
+      const pin=['onsite-basic','onsite-advanced'], rank=(c)=>{ const i=pin.indexOf(c.id); return i<0?pin.length:i; };
+      const list=courses.map((c,i)=>[c,i]).filter(([c])=>c.is_published&&c.category!=='career'&&Number(c.price)>0).sort((a,b)=>rank(a[0])-rank(b[0])||a[1]-b[1]).map(([c])=>c);
+      const box=$('onsiteWrap');
+      if(!list.length){ box.innerHTML='<div class="empty">目前沒有可以現場收款的課程（要上架中、有標價）。</div>'; return; }
+      box.innerHTML='<div class="os-list">'+list.map((c)=>`<div class="os-item">
+          <div class="os-info"><div class="cname">${esc(c.name)}</div><div class="cid">${esc(c.id)}</div></div>
+          <div class="os-price">${fmtNT(c.price)}</div>
+          <button class="btn btn-orange os-btn" data-qr="${esc(c.id)}">現場掃碼刷卡</button>
+        </div>`).join('')+'</div>';
+      box.querySelectorAll('[data-qr]').forEach((b)=>b.onclick=()=>openQR(courses.find((x)=>x.id===b.dataset.qr),b));
     };
 
     const payloadOf=(c)=>({ id:c.id,name:c.name,subtitle:c.subtitle,description:c.description,price:c.price,level:c.level,accent:c.accent,note:c.note,vimeo_id:c.vimeo_id,episodes:c.episodes,is_published:c.is_published,sort_order:c.sort_order,intro_url:c.intro_url,default_ratio:c.default_ratio,category:c.category });
@@ -431,9 +552,10 @@
     const load=async (resetEditor=true)=>{
       $('listWrap').innerHTML='<div class="state"><div class="spin"></div>載入課程中…</div>';
       const { data, error } = await supabase.rpc('admin_list_courses');
-      if(error){ $('listWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'</div>'; return; }
+      if(error){ const t='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'</div>'; $('listWrap').innerHTML=t; $('onsiteWrap').innerHTML=t; return; }
       courses=data||[];
       renderList();
+      renderOnsite();
       if(resetEditor) $('editorCard').classList.remove('show');
     };
     load();

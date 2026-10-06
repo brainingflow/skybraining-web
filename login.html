@@ -225,7 +225,13 @@
       const res = await fetch(`${LINE_FN}?action=start&mode=login&redirect_uri=${encodeURIComponent(redirect)}`,
                               { headers:{ apikey: SUPABASE_ANON } });
       const j = await res.json();
-      if(j && j.ok && j.url){ location.href = j.url; return; }
+      if(j && j.ok && j.url){
+        // LINE 授權回來落在 line-callback.html，網址上帶不回 next，先記在這個分頁（AFTER_LOGIN 已限同網域）；
+        // 手機 LINE App 授權完可能開新分頁回來（sessionStorage 不跨分頁），另記一份帶時間的在 localStorage
+        try{ sessionStorage.setItem('sb_after_login', AFTER_LOGIN); }catch(e){}
+        try{ localStorage.setItem('sb_after_login', JSON.stringify({ u: AFTER_LOGIN, t: Date.now() })); }catch(e){}
+        location.href = j.url; return;
+      }
       show('LINE 登入暫時無法使用，請先用 Google 或 Email 登入。','error');
     }catch(e){
       show('LINE 登入暫時無法使用，請先用 Google 或 Email 登入。','error');
