@@ -144,6 +144,8 @@
     // 金流開通狀態
     let cfg={stripe:false,payuni:false};
     try{ const r=await fetch(FN+'?action=config'); cfg=await r.json(); }catch(e){}
+    // PAYUNi 只在正式環境（payuni_env 為 prod）才開放
+    const payuniOn=!!cfg.payuni && cfg.payuni_env==='prod';
 
     const color=['amber','teal','violet','indigo','rose','gold','grape','free'].includes(course.accent)?course.accent:'amber';
     const priceTxt='NT$'+Number(course.price).toLocaleString();
@@ -252,12 +254,12 @@
           <div class="h2">你買到的是什麼</div>
           <div class="brief">${briefHtml}</div>
 
-          ${rcptHtml}<div class="h2">選擇付款方式</div>
-          <button class="pay-btn" id="btnPayuni" ${cfg.payuni?'':'disabled'}>
+          ${rcptHtml}<div class="h2">${payuniOn?'選擇付款方式':'付款方式'}</div>
+          ${payuniOn?`<button class="pay-btn" id="btnPayuni">
             <span class="ic tw">💳</span>
             <span><b>統一金流 PAYUNi</b><small>信用卡・ATM 轉帳・超商代碼・行動支付</small></span>
-            ${cfg.payuni?'<span class="go">→</span>':'<span class="soon">申請開通中</span>'}
-          </button>
+            <span class="go">→</span>
+          </button>`:''}
           <button class="pay-btn" id="btnStripe" ${cfg.stripe?'':'disabled'}>
             <span class="ic gl">🌍</span>
             <span><b>VISA・APPLE&nbsp;PAY</b></span>
@@ -281,6 +283,7 @@
 
     const pay=async (provider,btn)=>{
       const m=$('payMsg'); m.className='msg';
+      if(provider==='payuni' && !payuniOn){ m.className='msg show info'; m.textContent='申請開通中'; return; }
       const body={ course_id:courseId, provider };
       if(needRcpt){
         const inp=$('rcptEmail'), hint=$('rcptHint'), v=inp.value.trim(), err=rcptErr(v);
@@ -310,7 +313,7 @@
         m.className='msg show error'; m.textContent='✗ '+e.message;
       }
     };
-    if(cfg.payuni) $('btnPayuni').onclick=()=>pay('payuni',$('btnPayuni'));
+    if(payuniOn) $('btnPayuni').onclick=()=>pay('payuni',$('btnPayuni'));
     if(cfg.stripe) $('btnStripe').onclick=()=>pay('stripe',$('btnStripe'));
   })();
 </script>
