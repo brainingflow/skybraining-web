@@ -71,12 +71,31 @@
 
 > 協同原則同樣遵守「人決定、AI 執行」:agent 之間可互相彙整資訊,但對外上線與金流動作一律等老闆授權。
 
+### 6.1 團隊的記憶實際放在哪裡(2026-10-13 盤點)
+
+**整個 AI 團隊的大本營在老闆的 Windows 電腦,不在雲端、也不在這個 repo。** 雲端階段(含本檔的讀者)碰不到那台電腦的硬碟。
+
+- **根目錄:** `G:\SKY強腦力網頁專案Claude\`。那裡有一份更完整的 `CLAUDE.md`(含「指揮部」一節:派工與討論協定、模型規則、「阿強」命名等)。本 repo = 其中的 `網頁專案/` 子資料夾。
+- **Agent 角色檔:** `G:\...\.claude\agents\*.md`(已知有 cfo、web-developer、brand-guardian、qa-inspector、content-factory、seo-ranker、sales-funnel、ops-admin、student-success、product-rd、partnership-pr、finance-coach、找房員)。
+- **標準流程:** `G:\...\.claude\skills\*\SKILL.md`。
+- **總指揮記憶:** `指揮部/AI群/memory/總指揮/`(`MEMORY.md`、`決策簿.md`、`數據鏈.md`、`工作日誌/YYYY-MM-DD.md`)。決策簿是所有老闆授權的正本。
+- **各 Agent 記憶:** `指揮部/AI群/memory/agents/<名字>/`(`MEMORY.md` + `log/`)。
+- **工作流資料:** `指揮部/AI群/inbox|outbox|data|reports`、`指揮部/人類群/任務清單.md`、`計分板.md`;指揮台為本機 HTML 控制台。
+- **三個排程任務:** `C:\Users\andy\.claude\scheduled-tasks\{skybraining-dispatch-poll, skybraining-morning-brief, skybraining-weekly-report}\SKILL.md`。**只在那台電腦開著 Claude Code 時才會跑。**
+- **雲端排程只有一個:** Routine「每日貼文草稿:學習×大腦×聖經體會」(每天台北 12:00),與指揮部無關,運作正常。
+
+**雲端階段的記憶只有兩層:** 本檔(所有階段共用)+ 各階段自己的對話紀錄(階段歸檔或 context 爆掉就沒了)。
+
+**紅線:** `指揮部/` 內有學員名單、廣告帳本等個資與商業資料,**絕對不可放進這個公開 repo**。要搬上雲端只能用私有 repo,且個資檔先排除。
+
 ## 7. 待辦 / 已知狀態
 
 - 會員登入已接 Supabase Auth + LINE 登入。
 - 課程總覽頁已拿掉實體課,線上課為主。
 - hero 統計、創辦人照片、見證影片等素材部分仍為預留,待補齊。
 - 排程型 agent(收單 / 早報 / 週報)跑在老闆電腦上,近期顯示電腦離線(computer_unreachable),要這些 agent 恢復需確認該電腦的 Claude Code 連線。
+- 2026-10-13 已歸檔三個壞掉的雲端階段(舊阿強CEO、一個授權轉移、Master);另兩個「阿強CEO授權轉移」階段需老闆在操控台手動歸檔。
+- 站內資料不一致待處理:記憶力課價格(本檔 NT$3,600 vs `llms.txt` NT$4,200)、`llms.txt` 仍列高雄實體班與大補包、`README.md` 金流仍寫綠界。
 
 ---
 
