@@ -18,7 +18,7 @@
 
 ## 名單漏斗
 
-短影片 / YouTube → 加入 LINE 官方帳號領免費資源（腦力測驗 / 思維模板 PDF / 示範影片）→ webinar 邀約 → 綠界結帳。
+短影片 / YouTube → 加入 LINE 官方帳號領免費資源（腦力測驗 / 思維模板 PDF / 示範影片）→ webinar 邀約 → Stripe 線上結帳。
 LINE 官方帳號：https://lin.ee/9EGO8IT
 
 ## 部署
@@ -33,7 +33,7 @@ LINE 官方帳號：https://lin.ee/9EGO8IT
 - [ ] 三頁法遵中標為〔…〕的欄位（公司名稱、統一編號、客服信箱、管轄法院等）填實際資料，並請法律顧問審閱（七天鑑賞期排除涉及消保法）。
 - [ ] 首頁「會員登入」目前為佔位連結（`#`），需接 Supabase Auth 才能真正登入。
 - [ ] hero 統計、創辦人照片、見證影片為預留內容，待素材補齊。
-- [ ] 後續完整站台：Next.js（App Router, TypeScript）+ Tailwind + Supabase + 綠界/Stripe 金流 + Vimeo 觀看頁（見專案「網站需求規格」）。
+- [ ] 後續完整站台：Next.js（App Router, TypeScript）+ Tailwind + Supabase + Stripe 金流 + Vimeo 觀看頁（見專案「網站需求規格」）。
 
 ## 技術備註
 

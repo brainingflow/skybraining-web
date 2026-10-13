@@ -18,7 +18,7 @@
 ## 2. 商業模式
 
 - **線上課程(買斷,永久觀看):**
-  - 過目不忘 — 超級記憶力(記憶力・Level 1)NT$3,600
+  - 過目不忘 — 超級記憶力(記憶力・Level 1)NT$4,200(2026-10-13 依 course-memory.html 實際售價更正,原記 3,600 有誤)
   - 10 倍聯想力 — 超級思考(思考力・Level 2)NT$7,800
 - **名單漏斗:** 短影片 / YouTube → 加入官方 LINE 領免費資源(腦力測驗、思維模板 PDF、示範影片)→ webinar 邀約 → 線上結帳。
 - **官方 LINE:** https://lin.ee/9EGO8IT
@@ -95,7 +95,7 @@
 - hero 統計、創辦人照片、見證影片等素材部分仍為預留,待補齊。
 - 排程型 agent(收單 / 早報 / 週報)跑在老闆電腦上,近期顯示電腦離線(computer_unreachable),要這些 agent 恢復需確認該電腦的 Claude Code 連線。
 - 2026-10-13 已歸檔三個壞掉的雲端階段(舊阿強CEO、一個授權轉移、Master);另兩個「阿強CEO授權轉移」階段需老闆在操控台手動歸檔。
-- 站內資料不一致待處理:記憶力課價格(本檔 NT$3,600 vs `llms.txt` NT$4,200)、`llms.txt` 仍列高雄實體班與大補包、`README.md` 金流仍寫綠界。
+- 2026-10-13 已修:本檔記憶力課價格改 4,200(對齊 course-memory.html)、README 金流改 Stripe。`llms.txt` 列的高雄實體班頁仍存在且全站 30～68 處連結,不是錯誤;但 `course-bundle.html`、`course-strong-thinking.html` 已無任何站內連結(孤兒頁),要不要下架待老闆決定。
 
 ---
 
