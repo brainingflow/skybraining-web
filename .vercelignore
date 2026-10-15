@@ -1,1 +1,5 @@
 supabase
+
+# 不要把 Markdown（含 CLAUDE.md）部署到網站根目錄，避免外部直接讀取
+*.md
+**/*.md
