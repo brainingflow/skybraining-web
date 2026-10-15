@@ -137,6 +137,13 @@
 - 排程型 agent(收單 / 早報 / 週報)跑在老闆電腦上,近期顯示電腦離線(computer_unreachable),要這些 agent 恢復需確認該電腦的 Claude Code 連線。
 - 2026-10-13 已歸檔三個壞掉的雲端階段(舊阿強CEO、一個授權轉移、Master);另兩個「阿強CEO授權轉移」階段需老闆在操控台手動歸檔。
 - 2026-10-13 已修:本檔記憶力課價格改 4,200(對齊 course-memory.html)、README 金流改 Stripe。`llms.txt` 列的高雄實體班頁仍存在且全站 30～68 處連結,不是錯誤;但 `course-bundle.html`、`course-strong-thinking.html` 已無任何站內連結(孤兒頁),要不要下架待老闆決定。
+- 2026-10-15 資安止血(PR #5):CLAUDE.md 移除本機路徑/使用者名稱,`.vercelignore` 擋 `*.md`,線上 `CLAUDE.md` 已 404。
+- **Q190 進行中**:repo 由公開改私人。改可見度是帳號設定,老闆本人按(GitHub → Settings → Danger Zone → Make private);改前先確認 Vercel 的 GitHub App 授權範圍含本 repo。改完阿天推小 commit 驗 Vercel 仍自動部署;**注意改私人可能切斷本 session 的 git 存取,屆時需在 session 重新授權**。清 git 歷史裡舊 CLAUDE.md 路徑→轉私人後急迫性低,緩辦。
+- **工作區盤點(2026-10-15,阿強)**:316 檔中 192 相同、53 僅差換行、71 內容不同(約 65 檔本機落後線上,本機以 origin/main 覆蓋即可,非重做)。真正未上線僅 3 組:
+  1. **LINE 收訊 webhook**(`supabase/functions/line-webhook/`＋`line_messages.sql`,只收不答):因 service role 授權未定,刻意排除一個多月。是否進 repo 待老闆定;**進了也不自動生效**(要另外部署 Edge Function 並跑 SQL)。碰 service role,屬敏感,金鑰絕不進 repo。
+  2. **三個 Supabase GRANT SQL 補丁**(2026-10-06,Data API 權限):待地端核對 Supabase 是否已手動跑過;SQL 本身是 DDL 無秘密,可補檔入 repo 當紀錄。
+  3. **`article-mindmap.html` 孤立 CSS**(用途不明):建議放棄,阿天下次清理該檔時順手移除。
+  - 本機 `網頁專案/` 將以 `origin/main` 覆蓋(先 commit 快照),之後本機只當鏡像+驗收,**網站程式碼唯一正本=雲端 repo**。
 
 ---
 
