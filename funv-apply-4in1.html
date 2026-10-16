@@ -214,7 +214,7 @@ fieldset.f legend{padding:0;}
       <fieldset class="f" data-name="course_choice" data-kind="radio" data-req="1" data-msg="請選一堂課。">
         <legend class="q">【選擇課程】<span class="req">*</span></legend>
         <div class="opts">
-          <label class="opt"><input type="radio" name="course_choice" value="Sky【心智圖講師班】"><span>Sky【心智圖講師班】</span></label>
+          <label class="opt"><input type="radio" name="course_choice" value="Sky【心智圖講師班】" checked><span>Sky【心智圖講師班】</span></label>
           <label class="opt"><input type="radio" name="course_choice" value="小語【AI 短影音實戰班】"><span>小語【AI 短影音實戰班】</span></label>
           <label class="opt"><input type="radio" name="course_choice" value="信廷【百億品牌成交技術】"><span>信廷【百億品牌成交技術】</span></label>
           <label class="opt"><input type="radio" name="course_choice" value="華君【整體造型設計】"><span>華君【整體造型設計】</span></label>
@@ -646,6 +646,8 @@ fieldset.f legend{padding:0;}
 
     if(kind === 'radio'){
       var r = f.querySelector('input[type=radio]:checked');
+      // 2026-10-16 老闆：課程群組題選項沒顯示出來時不擋，讓人按得下去（送出時補「未填」）
+      if(!r && f.querySelector('.tj-group') && !f.querySelector('.tj-group:not([hidden])')) return true;
       if(!r) return req ? setErr(f, msg) : true;
       if(r.getAttribute('data-other') === '1'){
         var o = f.querySelector('.other-in');
@@ -871,7 +873,7 @@ fieldset.f legend{padding:0;}
       if(kind === 'file') return;
       if(kind === 'radio'){
         var r = f.querySelector('input[type=radio]:checked');
-        if(!r) return;
+        if(!r){ if(f.querySelector('.tj-group')) fd.append(name, '未填'); return; }
         var v = r.value;
         if(r.getAttribute('data-other') === '1'){
           var o = f.querySelector('.other-in');
@@ -1009,6 +1011,13 @@ fieldset.f legend{padding:0;}
   ccInputs.forEach(function(r){
     r.addEventListener('change', function(){ applyCourse(r.value); });
   });
+  // 2026-10-16 修：載入時先依已選（或預選）課程顯示對應選項群組
+  function syncNow(){
+    var cur = document.querySelector('input[name="course_choice"]:checked');
+    if(cur) applyCourse(cur.value);
+  }
+  syncNow();
+  window.addEventListener('pageshow', syncNow);
 })();
 </script>
 </body>
