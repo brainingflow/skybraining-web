@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+<script>(function(){try{var u=navigator.userAgent||'';if(/\bLine\//i.test(u)&&!/[?&]openExternalBrowser=1/.test(location.search)){var s=location.search?location.search+'&openExternalBrowser=1':'?openExternalBrowser=1';location.replace(location.pathname+s+location.hash);}}catch(e){}})();</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4"></script>
 <script>
@@ -729,6 +730,7 @@ fieldset.f legend{padding:0;}
         // 「拍\u2060照」夾不換行字元：375 寬時這兩字剛好落在行尾，會被拆成兩行
         if(!b){ fail('這張照片格式讀不到，請改用手機「拍\u2060照」或先截圖再選。'); return; }
         if(b.size > 10 * 1024 * 1024){ fail('這張圖超過 10MB，請重拍一張或選小一點的檔案。'); return; }
+        if(!/^image\//.test(b.type || '')) b = new Blob([b], { type:'image/jpeg' });
         picked[key] = b;
         clearErr(f);
         nm.textContent = '已選好：' + file.name;
@@ -768,7 +770,7 @@ fieldset.f legend{padding:0;}
           ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
           ctx.drawImage(img, 0, 0, w, h);
           if(c.toBlob) c.toBlob(function(b){ res(b); }, 'image/jpeg', 0.85);
-          else res(file);
+          else res(/^image\//.test(file.type || '') ? file : new Blob([file], { type:'image/jpeg' }));
         };
         img.src = r.result;
       };
@@ -904,6 +906,7 @@ fieldset.f legend{padding:0;}
     if(DEMO){ setTimeout(function(){ finish(true); }, 600); return; }
     Promise.resolve().then(function(){
       var fd = collect();
+      ['front', 'back', 'passbook'].forEach(function(k){ if(picked[k] && !/^image\//.test(picked[k].type || '')) picked[k] = new Blob([picked[k]], { type:'image/jpeg' }); });
       fd.append('id_front', picked.front, 'front.jpg');
       fd.append('id_back',  picked.back,  'back.jpg');
       if(picked.passbook) fd.append('passbook', picked.passbook, 'passbook.jpg');

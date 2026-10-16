@@ -268,7 +268,8 @@
     { key:'mindmap', kw:'心智圖講師班',     name:'Sky【心智圖講師班】',     file:'admin-funv-mindmap.html' },
     { key:'sales',   kw:'百億品牌成交技術', name:'信廷【百億品牌成交技術】', file:'admin-funv-sales.html' },
     { key:'aivideo', kw:'短影音實戰班',     name:'小語【AI 短影音實戰班】', file:'admin-funv-aivideo.html' }, /* 舊報名的課名 AI 後面沒空格、新報名有空格，kw 去掉 AI 兩種都比對得到 */
-    { key:'rental',  kw:'包租代管實戰班',   name:'育誠【包租代管實戰班】', file:'admin-funv-rental.html' }
+    { key:'rental',  kw:'包租代管實戰班',   name:'育誠【包租代管實戰班】', file:'admin-funv-rental.html' },
+    { key:'cupping', kw:'溫罐調理實戰班',   name:'張玉諳【溫罐調理實戰班】', file:'admin-funv-cupping.html' }
   ];
   const COURSE=COURSE_LIST.filter(c=>c.key===COURSE_KEY)[0]||null;
   const inCourse=(r)=>!COURSE||String(r.course_choice||'').indexOf(COURSE.kw)>=0;
