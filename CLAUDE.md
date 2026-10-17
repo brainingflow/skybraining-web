@@ -146,7 +146,8 @@
   - 本機 `網頁專案/` 將以 `origin/main` 覆蓋(先 commit 快照),之後本機只當鏡像+驗收,**網站程式碼唯一正本=雲端 repo**。
 - **2026-10-16 阿強推上 main 三個 commit(老闆通過)**:`f47744a`(R081/R082/R083:全站 89 頁 LINE 內建瀏覽器自動帶 `openExternalBrowser=1`、14 個 funv-apply 照片 Blob 補型別、新頁 funv-apply-cupping＋admin-funv-cupping＋八頁課程清單加溫罐、新頁 funv-apply-meili、後台廣告頁兩列)、`a3a9083`(溫罐海報換新版)、`befb40e`(急修五個多課程頁 lhw/g4/pyy/zz/4in1:預選第一門課、同步選項群組、群組未顯示不擋送出)。
 - **2026-10-17 報名表上傳失敗已解(後端同步)**:Android LINE 內建瀏覽器送出的照片 Blob 沒有 MIME type,後端原本用 `f.type.startsWith("image/")` 擋掉而送出失敗。新版改用檔頭嗅探(`sniffImage`:JPEG/PNG/WebP magic bytes)判定型別。線上 Supabase 老闆 10-16 已部署;repo 此前落後,阿天 2026-10-17 同步進 repo(`supabase/functions/funv-submit/index.ts`,md5 `3bd14a55…` 與線上一致)。
-- **緹林泰式按摩報名表 + 海報(進行中)**:參照 funv-apply-massage 框架。待阿強提供:泰式按摩簡介、緹林正式名與課程顯示名、關鍵合規題(婦女再就業補助核定課程 or 緹林一般招生,決定要不要保留身分證上傳與資格文字)。阿天收到後在 preview 分支做 `funv-apply-tilin.html`;阿強用 GPT 依簡介做海報。
+- **緹林初階泰式高床按摩報名表(已上線 2026-10-18,commit `4f31925`)**:走婦女再就業補助框架(以 funv-apply-cupping 為底),固定課程「緹林【初階泰式高床按摩】」。`funv-apply-tilin.html`＋海報 `img-funv-tilin-poster.jpg`(阿強產,1024×1536)＋`admin-funv-tilin.html` 後台＋十頁課程清單加緹林分頁＋admin-landings 登記列(已改 live)。職業方向/關聯性/專長例子/自我提升改按摩情境(老闆選 A),補助資格/身分證/法遵未動;禁字(療效/治療/保證)=0。單位三行:辦訓=緹林泰式按摩專業培訓學校、合作=沐氧人、協辦=強腦力文化有限公司;據點=高雄市鼓山區美術東六街223號。阿強由指揮台老闆核准後以 worktree 推 main 收尾,PR #8 已關(內容已進 main)。
+- **跨階段協作規則(老闆 2026-10-17 定)**:① 同一檔同一時段只有一人動,要改先喊「我來改 X」,對方不碰;② 老闆在哪邊下指令那邊負責做、另一邊配合,做完互報 commit。
 
 ---
 
