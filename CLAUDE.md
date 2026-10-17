@@ -148,6 +148,7 @@
 - **2026-10-17 報名表上傳失敗已解(後端同步)**:Android LINE 內建瀏覽器送出的照片 Blob 沒有 MIME type,後端原本用 `f.type.startsWith("image/")` 擋掉而送出失敗。新版改用檔頭嗅探(`sniffImage`:JPEG/PNG/WebP magic bytes)判定型別。線上 Supabase 老闆 10-16 已部署;repo 此前落後,阿天 2026-10-17 同步進 repo(`supabase/functions/funv-submit/index.ts`,md5 `3bd14a55…` 與線上一致)。
 - **緹林初階泰式高床按摩報名表(已上線 2026-10-18,commit `4f31925`)**:走婦女再就業補助框架(以 funv-apply-cupping 為底),固定課程「緹林【初階泰式高床按摩】」。`funv-apply-tilin.html`＋海報 `img-funv-tilin-poster.jpg`(阿強產,1024×1536)＋`admin-funv-tilin.html` 後台＋十頁課程清單加緹林分頁＋admin-landings 登記列(已改 live)。職業方向/關聯性/專長例子/自我提升改按摩情境(老闆選 A),補助資格/身分證/法遵未動;禁字(療效/治療/保證)=0。單位三行:辦訓=緹林泰式按摩專業培訓學校、合作=沐氧人、協辦=強腦力文化有限公司;據點=高雄市鼓山區美術東六街223號。阿強由指揮台老闆核准後以 worktree 推 main 收尾,PR #8 已關(內容已進 main)。
 - **跨階段協作規則(老闆 2026-10-17 定)**:① 同一檔同一時段只有一人動,要改先喊「我來改 X」,對方不碰;② 老闆在哪邊下指令那邊負責做、另一邊配合,做完互報 commit。
+- **緹林全案收尾(阿強 2026-10-18 推 main 六 commit)**:`f76d226`(總覽頁加溫罐、緹林兩卡,八門→十門;緹林表單補「其他」選項)、`f5ceee1`(緹林表單第一頁加師資陣容＋粉專 QR 兩圖＋專屬 og)、`ac369ac`(課程介紹頁 `course-pro-tilin.html`＋pro/courses 加卡,法遵 T291 改後通過)、`076484a`(緹林 og 換 GPT 大字版)、`5cd024d`(溫罐/牛角/AI 短影音 LINE 分享圖大字版,蘇姐/羅總/美莉團隊頁共用)、`cae3a0b`(緹林表單開頭實拍圖、課程說明放第一頁、QR 移到成功畫面;介紹頁同步;法遵 T298 改後通過)。新增檔:`og-funv-{tilin,cupping,massage,aivideo}.jpg`、`img-funv-tilin-{table,teachers,contact}.jpg`、`course-pro-tilin.html`。緹林全案已上線完成。
 
 ---
 
