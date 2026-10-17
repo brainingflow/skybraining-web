@@ -83,30 +83,36 @@ Deno.serve(async (req) => {
 
     const front = fd.get("id_front");
     const back  = fd.get("id_back");
+    const types: Record<string, string> = {};
     for (const [label, f] of [["身分證正面", front], ["身分證背面", back]] as [string, unknown][]) {
       if (!(f instanceof File) || f.size === 0) return J({ ok: false, error: `請上傳${label}照片` }, 400);
-      if (!f.type.startsWith("image/")) return J({ ok: false, error: `${label}請上傳圖片檔` }, 400);
+      // Android LINE 內建瀏覽器送出的 Blob type 是空字串或 application/octet-stream，改看檔頭
+      const type = f.type.startsWith("image/") ? f.type : (await sniffImage(f)) ?? "";
+      if (!type) return J({ ok: false, error: `${label}請上傳圖片檔` }, 400);
+      types[label] = type;
       if (f.size > MAX_BYTES) return J({ ok: false, error: `${label}超過 10MB` }, 400);
     }
 
     // 匯款帳簿封面照片：選填，前端有選才會附這個欄位
     const passbookRaw = fd.get("passbook");
     const passbook = passbookRaw instanceof File && passbookRaw.size > 0 ? passbookRaw : null;
+    let passbookType = "";
     if (passbook) {
-      if (!passbook.type.startsWith("image/")) return J({ ok: false, error: "匯款帳簿封面請上傳圖片檔" }, 400);
+      passbookType = passbook.type.startsWith("image/") ? passbook.type : (await sniffImage(passbook)) ?? "";
+      if (!passbookType) return J({ ok: false, error: "匯款帳簿封面請上傳圖片檔" }, 400);
       if (passbook.size > MAX_BYTES) return J({ ok: false, error: "匯款帳簿封面超過 10MB" }, 400);
     }
 
     // ── 先產 id，圖片放在 <申請id>/ 底下，再連同路徑寫進資料表 ──
     const id = crypto.randomUUID();
-    for (const [name, f] of [["front", front as File], ["back", back as File]] as [string, File][]) {
+    for (const [name, f, type] of [["front", front as File, types["身分證正面"]], ["back", back as File, types["身分證背面"]]] as [string, File, string][]) {
       const { error } = await admin.storage.from(BUCKET)
-        .upload(`${id}/${name}.jpg`, f, { contentType: f.type || "image/jpeg", upsert: true });
+        .upload(`${id}/${name}.jpg`, f, { contentType: type, upsert: true });
       if (error) return J({ ok: false, error: "照片上傳失敗：" + error.message }, 500);
     }
     if (passbook) {
       const { error } = await admin.storage.from(BUCKET)
-        .upload(`${id}/passbook.jpg`, passbook, { contentType: passbook.type || "image/jpeg", upsert: true });
+        .upload(`${id}/passbook.jpg`, passbook, { contentType: passbookType, upsert: true });
       if (error) return J({ ok: false, error: "匯款帳簿封面上傳失敗：" + error.message }, 500);
     }
 
@@ -137,4 +143,13 @@ function validTwId(s: string): boolean {
   for (let i = 1; i <= 8; i++) sum += Number(s.charAt(i)) * (9 - i);
   sum += Number(s.charAt(9));
   return sum % 10 === 0;
+}
+
+async function sniffImage(f: File): Promise<string | null> {
+  const b = new Uint8Array(await f.slice(0, 16).arrayBuffer());
+  if (b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b.length >= 4 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "image/png";
+  if (b.length >= 12 && String.fromCharCode(...b.slice(0, 4)) === "RIFF" && String.fromCharCode(...b.slice(8, 12)) === "WEBP")
+    return "image/webp";
+  return null;
 }
