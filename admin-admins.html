@@ -41,8 +41,8 @@
   .card h2 .bar{width:5px;height:19px;border-radius:3px;background:linear-gradient(var(--amber),var(--orange));}
   .form-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
   .fld{flex:1;min-width:210px;}
-  input{width:100%;padding:11px 13px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:14.5px;color:var(--ink);background:var(--paper);}
-  input:focus{outline:none;border-color:var(--orange);}
+  input,select{width:100%;padding:11px 13px;border:1.5px solid var(--hair);border-radius:11px;font-family:var(--sans);font-size:14.5px;color:var(--ink);background:var(--paper);}
+  input:focus,select:focus{outline:none;border-color:var(--orange);}
   label{display:block;font-weight:700;font-size:13px;color:var(--indigo);margin:0 0 6px;font-family:var(--round);}
   .btn{font-family:var(--round);font-weight:700;font-size:14px;padding:10px 18px;border-radius:24px;border:none;cursor:pointer;transition:transform .15s;white-space:nowrap;}
   .btn:hover{transform:translateY(-2px);}
@@ -97,11 +97,39 @@
   const $=(id)=>document.getElementById(id);
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmtDate=(s)=> s ? String(s).slice(0,10) : '';
+  const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','君蓉'];
+
+  /* #demo=1：給老闆看版面用。不登入、不打 Supabase，資料全是假的（本機 npx serve 會丟掉 ?query，所以用 hash） */
+  const DEMO=/(^|[#&])demo=?1?([&]|$)/.test(location.hash);
+  if(DEMO){
+    const demo={
+      admins:[{ email:'demo-admin@example.com', is_owner:false, is_me:true, has_account:true, note:'（示範）', added_by:'（示範）', created_at:'2026-09-14T00:00:00Z' },
+              { email:'demo-helper@example.com', is_owner:false, is_me:false, has_account:false, note:'（示範）助教', added_by:'（示範）', created_at:'2026-10-01T00:00:00Z' }],
+      leads:[{ user_id:'demo-u1', team:'蘇姐團隊', note:'（示範）', display_name:'示範負責人一', member_no:'SB00001', created_at:'2026-10-18T02:00:00Z' },
+             { user_id:'demo-u2', team:'珠珠姐', note:'', display_name:null, member_no:'SB00002', created_at:'2026-10-18T03:00:00Z' }]
+    };
+    supabase.rpc=async (fn,args)=>{
+      if(fn==='admin_admins_list') return { data:demo.admins, error:null };
+      if(fn==='funv_team_leads_admin_list') return { data:demo.leads.slice(), error:null };
+      if(fn==='funv_team_lead_bind'){
+        const no=String(args.p_member_no||'').trim().toUpperCase(), team=String(args.p_team||'').trim();
+        if(!/^SB\d{5}$/.test(no)) return { data:null, error:{ message:'找不到會員編號 '+no+'（示範模式只認 SB 加 5 碼）' } };
+        demo.leads=demo.leads.filter(l=>!(l.member_no===no&&l.team===team));
+        demo.leads.push({ user_id:'demo-'+no, team, note:args.p_note||'', display_name:'（示範）', member_no:no, created_at:new Date().toISOString() });
+        return { data:{ ok:true, member_no:no, team, display_name:'（示範）' }, error:null };
+      }
+      if(fn==='funv_team_lead_unbind'){
+        const n=demo.leads.length; demo.leads=demo.leads.filter(l=>!(l.user_id===args.p_user_id&&l.team===args.p_team));
+        return { data:{ ok:true, removed:n-demo.leads.length }, error:null };
+      }
+      return { data:null, error:{ message:'示範模式不連資料庫' } };
+    };
+  }
 
   (async ()=>{
-    const { data:{ session } } = await supabase.auth.getSession();
+    const { data:{ session } } = DEMO ? { data:{ session:{ user:{ email:'demo-admin@example.com' } } } } : await supabase.auth.getSession();
     if(!session){ location.href='login.html?next='+encodeURIComponent(location.href); return; }
-    const { data:isAdm } = await supabase.rpc('is_admin');
+    const { data:isAdm } = DEMO ? { data:true } : await supabase.rpc('is_admin');
     if(isAdm!==true){
       $('content').innerHTML=`<div class="gate"><h2>非管理員帳號</h2><p>這個頁面僅限管理員使用。你目前登入的是 ${esc(session.user.email)}。</p><p><a href="member.html">← 回會員中心</a></p></div>`;
       return;
@@ -133,6 +161,29 @@
             <button class="btn btn-ghost btn-sm" id="btnReload">重新整理</button>
           </div>
           <div id="listWrap"><div class="state"><div class="spin"></div>載入中…</div></div>
+        </div>
+
+        <div class="card">
+          <div class="row-top">
+            <h2><span class="bar"></span>團隊負責人（<span id="tlCnt">0</span>）</h2>
+            <button class="btn btn-ghost btn-sm" id="btnTlReload">重新整理</button>
+          </div>
+          <div class="sub" style="margin-bottom:12px;">
+            婦女再就業各團隊的負責人綁在這裡。綁好後，對方用 LINE 登入 <a href="funv-team.html" target="_blank" rel="noopener">funv-team.html</a>，
+            只看得到<b>自己團隊</b>報名者的名字、推薦人、顏色標記，看不到手機、身分證等其他資料。
+            會員編號：請對方先用 LINE 登入一次，打開那一頁就會顯示他的會員編號（會員中心最上面也有）。
+            團隊比對的是報名表「邀請人」欄，要一字不差。
+          </div>
+          <div class="form-row">
+            <div class="fld" style="min-width:150px;"><label for="tlNo">會員編號</label><input id="tlNo" type="text" placeholder="SB00012" autocomplete="off"></div>
+            <div class="fld" style="min-width:160px;"><label for="tlTeam">團隊</label>
+              <select id="tlTeam">${TEAMS.map(t=>`<option>${esc(t)}</option>`).join('')}<option value="__other">其他（自填）</option></select></div>
+            <div class="fld" id="tlOtherWrap" style="display:none;min-width:160px;"><label for="tlOther">團隊名（自填）</label><input id="tlOther" type="text" autocomplete="off"></div>
+            <div class="fld" style="min-width:160px;"><label for="tlNote">備註（選填）</label><input id="tlNote" type="text" placeholder="例如：蘇姐本人"></div>
+            <div><button class="btn btn-orange" id="btnTlAdd">＋ 綁定</button></div>
+          </div>
+          <div class="msg" id="tlMsg"></div>
+          <div id="tlWrap" style="margin-top:16px;"><div class="state"><div class="spin"></div>載入中…</div></div>
         </div>
 
         <div class="card">
@@ -232,7 +283,62 @@
       renderDup(data||[]);
     };
 
+    // ── 團隊負責人 ─────────────────────────────
+    let leads=[];
+    const tlMsg=(t,type)=>{ const m=$('tlMsg'); m.className='msg show '+type; m.textContent=t; };
+    const tlRender=()=>{
+      $('tlCnt').textContent=leads.length;
+      const box=$('tlWrap');
+      if(!leads.length){ box.innerHTML='<div class="empty">還沒有綁定任何團隊負責人。</div>'; return; }
+      box.innerHTML=`<div class="tbl-scroll"><table>
+        <thead><tr><th>LINE 名稱</th><th>會員編號</th><th>團隊</th><th>備註</th><th>綁定日期</th><th>操作</th></tr></thead>
+        <tbody>${leads.map((l,i)=>`<tr>
+          <td>${l.display_name?`<div class="em">${esc(l.display_name)}</div>`:'<span class="sm">（沒綁 LINE）</span>'}</td>
+          <td><div class="em">${esc(l.member_no||'—')}</div></td>
+          <td>${esc(l.team)}</td>
+          <td class="sm">${esc(l.note||'')}</td>
+          <td class="sm">${esc(fmtDate(l.created_at))}</td>
+          <td><button class="btn btn-sm btn-del" data-tl="${i}">解除</button></td>
+        </tr>`).join('')}</tbody></table></div>`;
+      box.querySelectorAll('[data-tl]').forEach(b=>b.onclick=()=>tlUnbind(leads[+b.getAttribute('data-tl')], b));
+    };
+    const tlLoad=async ()=>{
+      $('tlWrap').innerHTML='<div class="state"><div class="spin"></div>載入中…</div>';
+      const { data, error } = await supabase.rpc('funv_team_leads_admin_list');
+      if(error){ $('tlWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'<br><span class="sm">如果訊息是找不到函式，代表 2026-10-18_funv_team_leads.sql 還沒在 Supabase 執行。</span></div>'; return; }
+      leads=data||[]; tlRender();
+    };
+    const tlUnbind=async (l, btn)=>{
+      if(btn.getAttribute('data-armed')!=='1'){
+        btn.setAttribute('data-armed','1'); btn.textContent='確認解除';
+        setTimeout(()=>{ if(btn.isConnected){ btn.setAttribute('data-armed','0'); btn.textContent='解除'; } },3500);
+        return;
+      }
+      btn.disabled=true;
+      const { error } = await supabase.rpc('funv_team_lead_unbind',{ p_user_id:l.user_id, p_team:l.team });
+      if(error){ btn.disabled=false; tlMsg('解除失敗：'+error.message,'error'); return; }
+      tlMsg('已解除：'+(l.display_name||l.member_no||'')+'・'+l.team,'ok');
+      await tlLoad();
+    };
+    $('tlTeam').onchange=()=>{ $('tlOtherWrap').style.display=$('tlTeam').value==='__other'?'':'none'; };
+    $('btnTlAdd').onclick=async ()=>{
+      const no=$('tlNo').value.trim().toUpperCase();
+      const team=$('tlTeam').value==='__other' ? $('tlOther').value.trim() : $('tlTeam').value;
+      const note=$('tlNote').value.trim();
+      if(!no){ tlMsg('請輸入會員編號。','error'); return; }
+      if(!team){ tlMsg('請填團隊名。','error'); return; }
+      $('btnTlAdd').disabled=true; tlMsg('綁定中…','ok');
+      const { data, error } = await supabase.rpc('funv_team_lead_bind',{ p_member_no:no, p_team:team, p_note:note||null });
+      $('btnTlAdd').disabled=false;
+      if(error){ tlMsg('綁定失敗：'+error.message,'error'); return; }
+      tlMsg(`✓ 已綁定：${(data&&data.display_name)||no}・${team}\n請對方用 LINE 登入 skybraining.com/funv-team.html 查看。`,'ok');
+      $('tlNo').value=''; $('tlNote').value=''; $('tlOther').value='';
+      await tlLoad();
+    };
+    $('btnTlReload').onclick=()=>tlLoad();
+
     load();
+    tlLoad();
   })();
 </script>
 <div style="text-align:center;padding:26px 14px 30px;font-size:12.5px;color:#8b90a5;">© 2021 強腦力 SkyBraining LLC・skybraining.com・Sky強腦力media</div>
