@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>婦女再就業報名｜專業美容實務班 — 強腦力 後台</title>
+<title>婦女再就業報名｜中餐料理實作班 — 強腦力 後台</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
@@ -271,7 +271,7 @@
     { key:'rental',  kw:'包租代管實戰班',   name:'育誠【包租代管實戰班】', file:'admin-funv-rental.html' },
     { key:'cupping', kw:'溫罐調理實戰班',   name:'張玉諳【溫罐調理實戰班】', file:'admin-funv-cupping.html' },
     { key:'tilin',   kw:'初階泰式高床按摩', name:'緹林【初階泰式高床按摩】', file:'admin-funv-tilin.html' },
-    { key:'miaozhu', kw:'專業美容實務班',   name:'妙珠【專業美容實務班】', file:'admin-funv-miaozhu.html' }
+    { key:'miaozhu', kw:'妙珠【',           name:'妙珠【中餐料理實作班】', file:'admin-funv-miaozhu.html' } /* 10/21 改過課名，舊報名存的是舊課名，kw 只比對「妙珠【」讓新舊報名都歸這一門 */
   ];
   const COURSE=COURSE_LIST.filter(c=>c.key===COURSE_KEY)[0]||null;
   const inCourse=(r)=>!COURSE||String(r.course_choice||'').indexOf(COURSE.kw)>=0;
