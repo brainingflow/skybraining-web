@@ -662,7 +662,7 @@
       const t=tagOf(cur); sel.style.borderColor=t?t.color:'';
     };
     /* 團隊沒有獨立欄位，靠第 18 題邀請人：團隊專屬報名頁把它鎖成固定值；其他頁自由填的一律歸「未填／其他」 */
-    const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','君蓉'];
+    const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉'];
     const TEAM_NONE='__none__';
     const teamKey=(r)=>TEAMS.indexOf(teamOf(r))>=0?teamOf(r):TEAM_NONE;
     const fillTeamSel=(base)=>{
