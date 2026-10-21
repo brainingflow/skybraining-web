@@ -44,6 +44,7 @@
 - 「大師的那張圖」視覺思考系列：達文西、達爾文、費曼、門得列夫、柏納李、迪士尼、石川馨、愛因斯坦、特斯拉（各篇網址為 https://skybraining.com/article-master-<姓氏>.html，姓氏用 davinci、darwin、feynman、mendeleev、berners-lee、disney、ishikawa、einstein、tesla）
 
 ## 記憶與學習方法文章
+- [記憶方法有哪些？你今晚就能陪孩子試的 7 種方法](https://skybraining.com/article-memory-methods.html)：圖像記憶、記憶宮殿、聯想、考自己、間隔複習、分散學習、心智圖，每種附研究出處與今晚 3 個步驟
 - [國小背課文技巧：孩子背不起來，先改這 2 件事](https://skybraining.com/article-memorize-textbook.html)：唸出聲與讀完考自己，附國小到國中的分齡做法
 - [國中背書方法：同一本課本，六個班只差一件事](https://skybraining.com/article-junior-high-study-method.html)：課堂小考與重讀的比較，在家五個動作與研究限制
 - [國小記憶力訓練方法：75 篇兒童實驗找出的三種做法](https://skybraining.com/article-elementary-memory-training.html)：分開幾天學、闔上書考自己、記的時候多開幾條路
