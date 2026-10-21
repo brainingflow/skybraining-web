@@ -272,7 +272,8 @@
     { key:'cupping', kw:'溫罐調理實戰班',   name:'張玉諳【溫罐調理實戰班】', file:'admin-funv-cupping.html' },
     { key:'tilin',   kw:'初階泰式高床按摩', name:'緹林【初階泰式高床按摩】', file:'admin-funv-tilin.html' },
     { key:'miaozhu', kw:'美容',             name:'妙珠【美容講座】', file:'admin-funv-miaozhu.html' }, /* 10/20 舊課名也含「美容」，kw 用「美容」新舊報名都歸這一門；其他課名沒有「美容」 */
-    { key:'cooking', kw:'中餐料理實作班',   name:'妙珠【中餐料理實作班】', file:'admin-funv-cooking.html' }
+    { key:'cooking', kw:'中餐料理實作班',   name:'妙珠【中餐料理實作班】', file:'admin-funv-cooking.html' },
+    { key:'singingbowl', kw:'缽動筋膜調理', name:'史麗仙【缽動筋膜調理】', file:'admin-funv-singingbowl.html' }
   ];
   const COURSE=COURSE_LIST.filter(c=>c.key===COURSE_KEY)[0]||null;
   const inCourse=(r)=>!COURSE||String(r.course_choice||'').indexOf(COURSE.kw)>=0;
