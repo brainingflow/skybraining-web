@@ -143,9 +143,10 @@
 #doneBox h2,#doneBox p{word-break:keep-all;overflow-wrap:anywhere;}
 .lgq{margin:18px 0 0;padding:20px 16px;border:1px dashed rgba(6,199,85,.5);border-radius:18px;background:#f3fbf6;text-align:center;}
 .lgq-t{font-weight:800;font-size:18px;color:var(--indigo);line-height:1.5;margin:0 0 6px;}
-.lgq p,.done .lgq p{font-size:15.5px;color:var(--ink-soft);line-height:1.8;margin:0 0 12px;}
-.lgq img{display:block;width:100%;max-width:220px;height:auto;margin:0 auto 14px;border-radius:10px;background:#fff;}
-.lgq-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:40px;font-family:var(--round);font-weight:700;font-size:16px;color:#fff;background:#06C755;text-decoration:none;box-shadow:0 8px 20px rgba(6,199,85,.28);}
+.lgq p.lgq-s,.done .lgq p.lgq-s{font-size:14px;color:var(--ink-soft);line-height:1.7;margin:12px 0 10px;text-wrap:balance;}
+.lgq img{display:block;width:100%;max-width:220px;height:auto;margin:0 auto;border-radius:10px;background:#fff;}
+.lgq-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;min-height:56px;margin:8px auto 0;padding:0 14px;border-radius:40px;font-family:var(--round);font-weight:700;font-size:clamp(15px,4.4vw,18px);line-height:1.4;text-wrap:balance;color:#fff;background:#06C755;text-decoration:none;box-shadow:0 10px 24px rgba(6,199,85,.34);}
+.lgq-btn svg{width:22px;height:22px;flex:none;fill:#fff;}
 .lgq-btn:hover{background:#05A648;}
 
 @media(max-width:420px){.btn{font-size:16px;}.btn-prev{flex:0 0 36%;}}
@@ -198,9 +199,9 @@ fieldset.f legend{padding:0;}
       </div>
       <div class="lgq">
         <h4 class="lgq-t">課程 LINE 群組</h4>
-        <p>用手機 LINE 掃描加入，開課通知與教材都在這裡。</p>
+        <a class="lgq-btn" href="https://line.me/ti/g/GgP_ScKnEv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>點我加入頌缽課程 LINE 群組</a>
+        <p class="lgq-s">或直接用手機 LINE 掃描下方 QR code 加入</p>
         <img src="img-funv-singingbowl-line-qr.jpg" alt="頌缽課程 LINE 群組 QR code，用手機 LINE 掃描加入" width="600" height="600" loading="lazy" decoding="async">
-        <a class="lgq-btn" href="https://line.me/ti/g/GgP_ScKnEv" target="_blank" rel="noopener">用 LINE 開啟群組</a>
       </div>
     </div>
 
@@ -577,9 +578,9 @@ fieldset.f legend{padding:0;}
       <a class="btn btn-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">加入 LINE，傳「名字＋電話」給我們</a>
       <div class="lgq">
         <h3 class="lgq-t">加入頌缽課程 LINE 群組</h3>
-        <p>報名後請加入群組，開課通知與教材都在這裡。</p>
+        <a class="lgq-btn" href="https://line.me/ti/g/GgP_ScKnEv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 10.3C24 4.9 18.6.6 12 .6S0 4.9 0 10.3c0 4.8 4.3 8.9 10 9.7.4.1.9.3 1.1.6.1.3.1.7.1 1l-.2 1.1c0 .3-.3 1.3 1.1.7 1.4-.6 7.4-4.4 10.1-7.5 1.8-2 2.7-4 2.7-6.2z"/></svg>點我加入頌缽課程 LINE 群組</a>
+        <p class="lgq-s">或直接用手機 LINE 掃描下方 QR code 加入</p>
         <img src="img-funv-singingbowl-line-qr.jpg" alt="頌缽課程 LINE 群組 QR code，用手機 LINE 掃描加入" width="600" height="600" loading="lazy" decoding="async">
-        <a class="lgq-btn" href="https://line.me/ti/g/GgP_ScKnEv" target="_blank" rel="noopener">用 LINE 開啟群組</a>
       </div>
     </div>
   </div>
