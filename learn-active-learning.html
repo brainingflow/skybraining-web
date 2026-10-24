@@ -47,7 +47,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://skybraining.com/"},{"@type":"ListItem","position":2,"name":"頂尖論文期刊","item":"https://skybraining.com/learning.html"},{"@type":"ListItem","position":3,"name":"主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少","item":"https://skybraining.com/learn-active-learning.html"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"孩子說新方法比較累，可以換回去嗎？","acceptedAnswer":{"@type":"Answer","text":"我建議你先問「卡在哪一步」，別先問「要不要換」。你家孩子如果卡在題目太難，那是調難度，不是換方法。"}},{"@type":"Question","name":"那是不是都不要講解，讓孩子自己想就好？","acceptedAnswer":{"@type":"Answer","text":"不是。研究裡動手那堂，大約一半時間仍是講師在小組活動後做針對性的回饋講解。差別在順序：先自己試，再拿解答。"}},{"@type":"Question","name":"怎麼知道孩子是真的學會，還是只是覺得順？","acceptedAnswer":{"@type":"Answer","text":"你讓他闔上課本考一次，5 題、不計分，答不出來的就是明天要看的。把課文變成畫面怎麼練，在記憶力課程《過目不忘》；你住南部，可以看高雄心智圖・記憶力課程的實體小班。"}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"孩子說新方法比較累，可以換回去嗎？","acceptedAnswer":{"@type":"Answer","text":"先別換，先問「卡在哪一步」。卡在題目太難，那是調難度，不是換方法。"}},{"@type":"Question","name":"那是不是都不要講解，讓孩子自己想就好？","acceptedAnswer":{"@type":"Answer","text":"不是。研究裡動手那堂，大約一半時間仍是講師在小組活動後做針對性的回饋講解。差別在順序：先自己試，再拿解答。"}},{"@type":"Question","name":"怎麼知道孩子是真的學會，還是只是覺得順？","acceptedAnswer":{"@type":"Answer","text":"闔上課本考一次就知道。5 題、不計分，答不出來的就是明天要看的。把課文變成畫面怎麼練，在記憶力課程《過目不忘》；你住南部，可以看高雄心智圖・記憶力課程的實體小班。"}}]}
 </script>
 <style>
   :root{--indigo:#141631;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;--ink:#191b30;--ink-soft:#5a5e79;--amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--violet-deep:#4B37D8;--hair:rgba(20,22,49,.09);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;--sh-1:0 4px 14px rgba(20,22,49,.05);--sh-2:0 12px 30px rgba(20,22,49,.09);}
@@ -137,6 +137,7 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 .refs ol{margin:8px 0 0;padding-left:1.2em;}
 .refs li{font-size:13.5px;line-height:1.85;color:var(--ink-soft);margin:5px 0;}
 .refs a{color:var(--ink-soft);text-decoration:underline;word-break:break-all;}
+article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-underline-offset:2px;}
 
 /* ── 導覽改版 2026-09-03：兩個重點連結 ＋ 三條線選單 ── */
 .nav-quick{display:flex;align-items:center;gap:24px;margin-left:auto;margin-right:18px;font-weight:500;font-size:15px;}
@@ -199,80 +200,86 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
     <h1>主動學習比聽講累？<br>哈佛的一項研究發現：學得多，卻覺得學得少</h1>
     <figure class="banner"><img src="cover-learn-active-learning.webp" width="1600" height="840" alt="主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少" loading="lazy" decoding="async"></figure>
     <div class="meta"><span>強腦力 SkyBraining 編輯部</span><span>・</span><time datetime="2026-09-14">2026/09/14</time><span>・</span><span>閱讀約 7 分鐘</span></div>
-    <p class="lede">你有沒有遇過這一幕？你家孩子用新方法讀了一晚，抬頭說：「好累，我覺得什麼都沒記住。」你差點就回他「那換回原來的吧」。</p>
+    <p class="lede">你有沒有遇過這一幕？<br>你家孩子用新方法讀了一晚，抬頭說：「好累，我覺得什麼都沒記住。」<br>你差點就回他「那換回原來的吧」。</p>
   </div>
   <article>
 
     <div class="cover" style="background:linear-gradient(135deg,#FFB020,#FF8A3D);"><div class="big">你先別急著換。哈佛的研究量過：學得多的那堂課，學生反而覺得學得少。</div></div>
 
-    <h2>帶你看哈佛研究：同一份講義，兩種上法</h2>
+    <h2>哈佛研究：同一份講義，「自己動手解」的那堂學得多</h2>
 
-    <p>2019 年，哈佛大學物理系團隊的一篇研究刊在美國國家科學院院刊上（出處：Deslauriers 等人（2019），PNAS）。</p>
+    <p>先跟你交代出處：哈佛大學物理系團隊，2019 年刊在美國國家科學院院刊（<a href="https://doi.org/10.1073/pnas.1821936116" target="_blank" rel="nofollow noopener">Deslauriers 等人（2019），PNAS</a>），受試者是 149 名入門物理課的大學生。<br>他們把學生隨機分到兩間教室，講義、例題都一樣，講師受過同樣訓練。<br>一學期 15 週，前 11 週照常上課，第 12 週的連續兩堂課才開始實驗。</p>
 
-    <p>他們把 149 名入門物理課的學生隨機分到兩間教室。一學期 15 週，前 11 週照常上課，第 12 週的連續兩堂課才開始實驗。</p>
-
-    <p>兩間教室講義、例題都一樣，講師受過同樣訓練。差別只在：一間講師流暢講完，學生聽、填答案；另一間學生先分小組動手解，講師走動、提問、給提示，之後才給完整解答。</p>
-
-    <p>第二堂課兩間對調，每人兩種上法都經歷一次。每堂下課，學生先填感受問卷，再考 12 題選擇題。</p>
-
-    <p>你要先知道：受試者是哈佛的大學生，是成年人；後面是我把原理搬回你家的建議。</p>
-
-    <h2>你猜結果？考卷和感覺反著走</h2>
-
-    <p>你先看考卷：自己動手那堂，測驗分數高了 0.46 個標準差，兩個主題、兩個學期都一樣。</p>
-
-    <p>你再看感受，剛好相反。「我覺得我從這堂課學到很多」這題，自己動手那堂低了 0.56 個標準差；連同「喜歡這堂課」在內，4 題感受全是聽講那堂比較高。</p>
-
-    <p>論文摘要裡有一句（中譯）：「我們發現主動教室裡的學生學得更多，但他們覺得自己學得比較少。」</p>
-
-    <p>你一定想問為什麼。研究團隊後來訪談 17 位學生：15 位覺得動手那堂零碎、不流暢；16 位覺得聽講那堂比較愉快、容易跟上。</p>
-
-    <p>作者的解讀是：新手不太會判斷自己學了多少，只好拿「聽起來順不順」當線索，卡住、費力就被讀成「我沒學到」。</p>
-
-    <h2>你是家長？今晚做 3 個動作</h2>
-
-    <p>下面 3 個動作是我依教學經驗排的，論文沒規定。</p>
+    <p>差別只在上法：</p>
 
     <ol>
-      <li><strong>先做題，再看解答。</strong> 訂正時你把解答遮起來，照著念：「你先自己寫，卡住再看下一行。」他卡住那幾分鐘，就是研究裡那間教室的事。</li>
-      <li><strong>孩子喊累，先問一句再決定。</strong> 你照著念：「你現在卡在哪一步？」累和沒學到是兩件事，先找卡點，再決定換不換。</li>
+      <li>一間：講師流暢講完，學生聽、填答案。</li>
+      <li>另一間：學生先分小組動手解，講師走動、提問、給提示，之後才給完整解答。</li>
+    </ol>
+
+    <p>第二堂課兩間對調，每人兩種上法都經歷一次。<br>每堂下課，學生先填感受問卷，再考 12 題選擇題。<br>受試者是成年人，後面是我把原理搬回你家的建議。<br>同一份講義，差別只在誰先動手。</p>
+
+    <h2>結果：考卷和感覺反著走</h2>
+
+    <p>自己動手那堂，考得比較好，感覺卻比較差。</p>
+
+    <ol>
+      <li>考卷：測驗分數高了 0.46 個標準差，兩個主題、兩個學期都一樣。</li>
+      <li>感覺：「我覺得我從這堂課學到很多」這題，低了 0.56 個標準差；連同「喜歡這堂課」在內，4 題感受全是聽講那堂比較高。</li>
+    </ol>
+
+    <p>這兩個數字是標準差，不是百分比，論文也沒有換成滿分 100 的分數，所以這裡不硬換成「差幾分」。<br>論文摘要這一句（中譯）：「我們發現主動教室裡的學生學得更多，但他們覺得自己學得比較少。」</p>
+
+    <p>為什麼會這樣？<br>研究團隊後來訪談 17 位學生：15 位覺得動手那堂零碎、不流暢；16 位覺得聽講那堂比較愉快、容易跟上。<br>作者的解讀是：新手拿「聽起來順不順」判斷自己學了多少，卡住、費力就被讀成「我沒學到」。<br>順，不等於會；卡，不等於沒學到。</p>
+
+    <h2>家長今晚 3 個動作：先做題，再看解答</h2>
+
+    <p>你家孩子喊累，你先別急著換方法。<br>下面 3 個動作是我依教學經驗排的，論文沒規定。</p>
+
+    <ol>
+      <li><strong>先做題，再看解答。</strong> 訂正時你把解答遮起來，照著念：「你先自己寫，卡住再看下一行。」</li>
+      <li><strong>孩子喊累，先問一句再決定。</strong> 你照著念：「你現在卡在哪一步？」先找卡點，再決定換不換。</li>
       <li><strong>每週一次不看課本的小考，5 題就好。</strong> 作者也建議老師盡早考一次，讓學生用實際結果校正感覺。</li>
     </ol>
 
-    <p>自己考自己這招，你在<a href="learn-study-strategies.html">十種讀書方法總表</a>裡也看得到。</p>
+    <p>自己考自己這招，你在<a href="learn-study-strategies.html">十種讀書方法總表</a>裡也看得到。<br>你家孩子卡住的那幾分鐘，就是研究裡那間教室發生的事。</p>
 
-    <h2>你是上班族？今晚做 3 個動作</h2>
+    <h2>上班族今晚 3 個動作：聽得順不算，做得出來才算</h2>
+
+    <p>你也一樣，別拿「聽懂了」當「學會了」。</p>
 
     <ol>
       <li><strong>線上課先暫停，再看解法。</strong> 講解前先按暫停，在紙上做一次。</li>
-      <li><strong>把「聽得順」和「做得出」分開驗。</strong> 你開空白檔案重做一次流程就知道。</li>
-      <li><strong>學完一個工具，當天做一個交得出去的小東西。</strong> 做出來才知道會不會。</li>
+      <li><strong>把「聽得順」和「做得出」分開驗。</strong> 開空白檔案重做一次流程。</li>
+      <li><strong>學完一個工具，當天做一個交得出去的小東西。</strong></li>
     </ol>
 
-    <h2>這個研究沒說的事，也要跟你講</h2>
+    <p>做出來，才知道會不會。</p>
 
-    <p>你還記得嗎？受試者是成年大學生，國小、國中的孩子會不會一樣，這篇沒回答。</p>
+    <h2>研究的限制：成年大學生、一堂課、下課立刻考</h2>
 
-    <p>它量的是一堂課：下課立刻考、只有 12 題，沒測一週或一個月後。</p>
+    <p>這篇只量了成年大學生的一堂課。</p>
 
-    <p>這次樣本是準備度較高的學生；作者預期準備度較低的學生落差可能更大，也預期能推到其他科目，但那是推論，不是這次量到的數據。</p>
+    <ol>
+      <li>受試者是成年大學生，國小、國中的孩子會不會一樣，這篇沒回答。</li>
+      <li>下課立刻考、只有 12 題，沒測一週或一個月後。</li>
+      <li>樣本是準備度較高的學生；作者預期準備度較低的學生落差可能更大，也預期能推到其他科目，但那是推論，不是量到的數據。</li>
+      <li>研究比的是「小組先解題再聽講」對「講師流暢講完」，不是記憶法、心智圖或任何一家的課程。</li>
+    </ol>
 
-    <p>研究比的是「小組先解題再聽講」對「講師流暢講完」，不是記憶法、心智圖或任何一家的課程。這是研究結果，不是任何課程的承諾。</p>
-
-    <p>你也別讀成「越累越有效」，差別在你家孩子有沒有自己動手解過一次。</p>
+    <p>上面的數字是研究結果，不是任何課程的承諾。<br>別讀成「越累越有效」，差別在你家孩子有沒有自己動手解過一次。</p>
 
     <div class="faq">
       <h2>你可能也想問</h2>
-      <details open><summary>孩子說新方法比較累，可以換回去嗎？</summary><div class="ans">我建議你先問「卡在哪一步」，別先問「要不要換」。你家孩子如果卡在題目太難，那是調難度，不是換方法。</div></details>
-      <details><summary>那是不是都不要講解，讓孩子自己想就好？</summary><div class="ans">不是。研究裡動手那堂，大約一半時間仍是講師在小組活動後做針對性的回饋講解。差別在順序：先自己試，再拿解答。</div></details>
-      <details><summary>怎麼知道孩子是真的學會，還是只是覺得順？</summary><div class="ans">你讓他闔上課本考一次，5 題、不計分，答不出來的就是明天要看的。把課文變成畫面怎麼練，在<a href="course-memory.html">記憶力課程《過目不忘》</a>；你住南部，可以看<a href="kaohsiung.html">高雄心智圖・記憶力課程</a>的實體小班。</div></details>
+      <details open><summary>孩子說新方法比較累，可以換回去嗎？</summary><div class="ans">先別換，先問「卡在哪一步」。<br>卡在題目太難，那是調難度，不是換方法。</div></details>
+      <details><summary>那是不是都不要講解，讓孩子自己想就好？</summary><div class="ans">不是。<br>研究裡動手那堂，大約一半時間仍是講師在小組活動後做針對性的回饋講解。<br>差別在順序：先自己試，再拿解答。</div></details>
+      <details><summary>怎麼知道孩子是真的學會，還是只是覺得順？</summary><div class="ans">闔上課本考一次就知道。<br>5 題、不計分，答不出來的就是明天要看的。<br>把課文變成畫面怎麼練，在<a href="course-memory.html">記憶力課程《過目不忘》</a>；你住南部，可以看<a href="kaohsiung.html">高雄心智圖・記憶力課程</a>的實體小班。</div></details>
     </div>
 
     <div class="cta">
       <h2>一句話結論</h2>
-      <p>讀得累，不等於沒學到：在哈佛的大學生研究裡，學得多的那堂課，學生反而覺得學得少。所以你家孩子喊累時，先別換方法，先問他卡在哪一步；今晚就把解答遮起來，陪他自己做完一題，再一起對答案。其實你不是記性差，只是沒學過記憶的方法，你家孩子也一樣。</p>
-      <p>考前一週怎麼排，你可以看<a href="article-exam-prep.html">考前複習方法</a>；同單元其他篇在<a href="learning.html">頂尖論文期刊</a>。</p>
-      <p>想看「把字變成畫面」怎麼上？來上一堂免費體驗課「10 倍聯想力」：</p>
+      <p>讀得累，不等於沒學到：在哈佛的大學生研究裡，學得多的那堂課，學生反而覺得學得少。<br>所以你家孩子喊累時，先別換方法，先問他卡在哪一步。<br>今晚就把解答遮起來，陪他自己做完一題，再一起對答案。<br>其實你不是記性差，只是沒學過記憶的方法，你家孩子也一樣。</p>
+      <p>考前一週怎麼排，你可以看<a href="article-exam-prep.html">考前複習方法</a>；同單元其他篇在<a href="learning.html">頂尖論文期刊</a>。<br>想看「把字變成畫面」怎麼上？來上一堂免費體驗課「10 倍聯想力」：</p>
       <a href="free.html">免費體驗課「10 倍聯想力」</a>
     </div>
 
@@ -285,7 +292,7 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 
     <div class="guar"><span class="gk">零風險嘗試</span><a href="kaohsiung.html">高雄心智圖實體班</a>的<a href="course-onsite-basic.html">初階班</a>與<a href="course-onsite-advanced.html">進階班</a>提供<strong>無效退費</strong>：上完第一堂課的當天，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期——所以我們更建議先免費上一堂體驗課再決定。</div>
 
-    <div class="refs"><strong>參考文獻</strong><ol><li>Deslauriers, L., McCarty, L. S., Miller, K., Callaghan, K., &amp; Kestin, G. (2019). Measuring actual learning versus feeling of learning in response to being actively engaged in the classroom. <i>Proceedings of the National Academy of Sciences</i>, 116(39), 19251–19257. <a href="https://doi.org/10.1073/pnas.1821936116" rel="nofollow noopener" target="_blank">https://doi.org/10.1073/pnas.1821936116</a> （開放全文 PMC6765278）</li></ol></div>
+    <div class="refs"><strong>參考文獻</strong><ol><li>Deslauriers, L., McCarty, L. S., Miller, K., Callaghan, K., &amp; Kestin, G. (2019). Measuring actual learning versus feeling of learning in response to being actively engaged in the classroom. <i>Proceedings of the National Academy of Sciences</i>, 116(39), 19251–19257. <a href="https://doi.org/10.1073/pnas.1821936116" rel="nofollow noopener" target="_blank">https://doi.org/10.1073/pnas.1821936116</a> （開放全文 <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6765278/" rel="nofollow noopener" target="_blank">PMC6765278</a>）</li></ol></div>
   </article>
   <div class="more"><a href="learning.html">← 回頂尖論文期刊</a></div>
 </div>
