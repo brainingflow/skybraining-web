@@ -161,6 +161,7 @@
 <div class="wrap">
   <div class="hero">
     <div class="crumb"><a href="index.html">首頁</a> ／ <a href="articles.html">學習力文章</a> ／ 心智圖</div>
+    <figure class="mm-hero"><img src="hero-mindmap-text.webp" srcset="hero-mindmap-text.webp 1x, hero-mindmap-text@2x.webp 2x" width="1200" height="500" alt="心智圖：把想法畫出來，大腦就記得住" loading="eager" fetchpriority="high" decoding="async"></figure>
     <span class="tag" style="color:#0d8a83;background:rgba(22,176,168,.14);">主題總覽・心智圖</span>
     <h1>心智圖完整指南<br>是什麼、怎麼畫、怎麼用</h1>
     <div class="meta"><span>強腦力 SkyBraining 編輯部</span><span>・</span><span>持續更新</span></div>
@@ -375,6 +376,9 @@
   .sb-tt:hover{box-shadow:0 8px 20px rgba(0,0,0,.22),inset 0 0 0 1.5px rgba(255,255,255,.45);}
   @media(max-width:520px){.sb-so{padding:10px 14px;font-size:13.5px;}.sb-so svg{width:17px;height:17px;}.sb-social{padding:0 14px 20px;}}
 
+.mm-hero{position:relative;left:50%;transform:translateX(-50%);width:min(1000px,calc(100vw - 40px));margin:0 0 26px;border-radius:22px;overflow:hidden;background:#14131f;box-shadow:0 18px 40px rgba(20,22,49,.18)}
+.mm-hero img{display:block;width:100%;height:auto}
+@media(max-width:520px){.mm-hero{border-radius:16px}.mm-hero img{aspect-ratio:8/5;object-fit:cover;object-position:0 50%}}
 .card.mc{padding:0;overflow:hidden}
 .card.mc .mc-img{display:block;width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;background:#1d1b2b;transition:transform .35s ease}
 .card.mc:hover .mc-img{transform:scale(1.045)}
