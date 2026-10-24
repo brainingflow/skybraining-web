@@ -77,18 +77,18 @@ drop trigger if exists announcements_touch on public.announcements;
 create trigger announcements_touch before update on public.announcements
   for each row execute function public.announcements_touch();
 
--- 第一筆公告：10/31 體驗場。結束時間台灣時間 10/31 23:59，之後在後台改。
+-- 第一筆公告：10/31 體驗場。報名 10/28 23:59 截止，公告同時結束；額滿提早關時到後台把這則停用。
 insert into public.announcements (title, body, btn_text, link, starts_at, ends_at, placement, active)
 select '10/31（六）高雄 3 小時體驗場 限時免費',
        '3 小時實體實戰，現場帶你練圖像記憶與心智圖。',
        '免費報名',
        'ad-live.html',
        now(),
-       timestamptz '2026-10-31 23:59:00+08',
+       timestamptz '2026-10-28 23:59:00+08',
        'both',
        true
 where not exists (select 1 from public.announcements where title = '10/31（六）高雄 3 小時體驗場 限時免費')
-  and now() < timestamptz '2026-10-31 23:59:00+08';
+  and now() < timestamptz '2026-10-28 23:59:00+08';
 
 -- 檢查：應該看到 10/31 那一筆
 select title, placement, active, starts_at, ends_at from public.announcements order by created_at desc;
