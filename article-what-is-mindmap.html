@@ -48,7 +48,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://skybraining.com/"},{"@type":"ListItem","position":2,"name":"學習力文章","item":"https://skybraining.com/articles.html"},{"@type":"ListItem","position":3,"name":"心智圖是什麼？從零開始畫出你的第一張心智圖","item":"https://skybraining.com/article-what-is-mindmap.html"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"心智圖幾歲可以開始學？","acceptedAnswer":{"@type":"Answer","text":"如果你家孩子 10 歲以上、能自己抓重點，通常最容易上手；年紀更小，可以先從「畫圖聯想」的簡化版開始。"}},{"@type":"Question","name":"一定要用電腦軟體嗎？","acceptedAnswer":{"@type":"Answer","text":"不用。入門最推薦你用手繪，因為畫的過程本身就是在整理思路；等你熟悉了，再用 XMind、MindMeister 等數位工具處理較大的專題。"}},{"@type":"Question","name":"心智圖和一般筆記，只能選一種嗎？","acceptedAnswer":{"@type":"Answer","text":"不衝突。你可以用心智圖抓整體架構、用條列筆記記細節，兩者搭配起來效果更好。"}},{"@type":"Question","name":"心智圖和康乃爾筆記法差在哪？","acceptedAnswer":{"@type":"Answer","text":"康乃爾筆記法是把一頁紙切成三區（筆記區、關鍵字區、總結區），強項是課堂即時記錄與事後自我提問；心智圖是放射狀結構，強項是把整個單元的層次一眼攤開。你可以上課當下用康乃爾記，複習時再把它整理成一張心智圖，兩者其實是接力，不是二選一。"}},{"@type":"Question","name":"一張心智圖大概要畫多久？","acceptedAnswer":{"@type":"Answer","text":"你剛開始畫一個單元，大約要 20～30 分鐘，熟練後 10 分鐘就能收一課。如果你發現自己畫超過 40 分鐘，多半是把整句課文抄上去了——心智圖只放關鍵字，字少才畫得快、也才記得住。"}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"心智圖幾歲可以開始學？","acceptedAnswer":{"@type":"Answer","text":"你家孩子 10 歲以上、能自己抓重點，通常比較容易上手；更小可以從「畫圖聯想」的簡化版開始。"}},{"@type":"Question","name":"一定要用電腦軟體嗎？","acceptedAnswer":{"@type":"Answer","text":"不用。入門建議手繪，畫的過程就是在整理思路；熟了再用 XMind、MindMeister 等工具處理大專題。"}},{"@type":"Question","name":"心智圖和一般筆記，只能選一種嗎？","acceptedAnswer":{"@type":"Answer","text":"不衝突。心智圖抓架構、條列筆記記細節，搭配起來更好。"}},{"@type":"Question","name":"心智圖和康乃爾筆記法差在哪？","acceptedAnswer":{"@type":"Answer","text":"康乃爾把一頁切成三區，強項是課堂記錄與事後自我提問；心智圖的強項是把整個單元的層次一眼攤開。上課用康乃爾，複習整理成心智圖，兩者是接力。"}},{"@type":"Question","name":"一張心智圖大概要畫多久？","acceptedAnswer":{"@type":"Answer","text":"剛開始畫一個單元大約 20～30 分鐘，熟練後 10 分鐘就能收一課。畫超過 40 分鐘，多半是把整句課文抄上去了。"}}]}
 </script>
 <style>
   :root{--indigo:#141631;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;--ink:#191b30;--ink-soft:#5a5e79;--amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--violet-deep:#4B37D8;--hair:rgba(20,22,49,.09);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;--sh-1:0 4px 14px rgba(20,22,49,.05);--sh-2:0 12px 30px rgba(20,22,49,.09);}
@@ -138,6 +138,7 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 .refs ol{margin:8px 0 0;padding-left:1.2em;}
 .refs li{font-size:13.5px;line-height:1.85;color:var(--ink-soft);margin:5px 0;}
 .refs a{color:var(--ink-soft);text-decoration:underline;word-break:break-all;}
+article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-underline-offset:2px;}
 
 /* ── 導覽改版 2026-09-03：兩個重點連結 ＋ 三條線選單 ── */
 .nav-quick{display:flex;align-items:center;gap:24px;margin-left:auto;margin-right:18px;font-weight:500;font-size:15px;}
@@ -190,11 +191,11 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
     <h1 class="sr-only">心智圖是什麼？<br>從零開始畫出你的第一張心智圖</h1>
     <figure class="banner"><img src="img-article-banner-what-is-mindmap.jpg" srcset="img-article-banner-what-is-mindmap-800.jpg 800w, img-article-banner-what-is-mindmap.jpg 1600w" sizes="(max-width:760px) 100vw, 760px" width="1600" height="800" alt="心智圖是什麼？從零開始畫出你的第一張心智圖" fetchpriority="high"></figure>
     <div class="meta"><span>強腦力 SkyBraining 編輯部</span><span>・</span><time datetime="2026-03-25">2026/03/25</time><span>・</span><span>閱讀約 8 分鐘</span></div>
-    <p class="lede">你是不是以為心智圖要畫得很漂亮？它其實不是美術作業，是把一整課收成一張圖的工具。這篇用最白話的方式跟你講清楚它是什麼、為什麼有效，再帶你用 5 個步驟畫出第一張——連新手最常犯的 3 個錯，也先幫你挑出來。</p>
+    <p class="lede">你是不是以為心智圖要畫得很漂亮？<br>它不是美術作業，是把一整課收成一張圖的工具。</p>
   </div>
-  <div class="cover" style="background:linear-gradient(135deg,#16B0A8,#0d8a83);"><div class="big">你畫的心智圖不是把課文換個排版，<br>是把「一行行的字」翻成「一眼看懂的圖」。</div></div>
+  <div class="cover" style="background:linear-gradient(135deg,#16B0A8,#0d8a83);"><div class="big">心智圖是把「一行行的字」翻成「一眼看懂的圖」。</div></div>
   <article>
-    <p>你有沒有這種經驗？課本畫滿螢光筆，重點卻好像永遠讀不完；筆記抄了滿滿一頁，考前翻開還是一團亂。你家孩子如果也這樣，問題往往不是不夠用功，而是<strong>用「一行一行的文字」在對抗「一張一張的畫面」——而你的大腦，天生更記得住畫面。</strong></p>
+    <p>你有沒有這種經驗？課本畫滿螢光筆，考前翻開還是一團亂。</p>
 
     <figure class="fig"><svg class="illus" viewBox="0 0 640 300" role="img" xmlns="http://www.w3.org/2000/svg"><defs>
 <filter id="rgh" x="-8%" y="-8%" width="116%" height="116%">
@@ -207,70 +208,91 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 </filter>
 </defs><g filter="url(#rgh)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M320 150 C 268 150 250 108 208 100" stroke="#FF8A3D" stroke-width="5"/><path d="M320 150 C 268 152 246 190 206 202" stroke="#16B0A8" stroke-width="5"/><path d="M320 150 C 374 148 396 106 438 98" stroke="#7C6CF0" stroke-width="5"/><path d="M320 150 C 374 152 398 192 440 204" stroke="#FFB020" stroke-width="5"/><path d="M208 100 C 180 88 160 84 138 82" stroke="#FF8A3D" stroke-width="3"/><path d="M208 100 C 182 104 168 116 150 124" stroke="#FF8A3D" stroke-width="3"/><path d="M206 202 C 180 208 166 218 148 230" stroke="#16B0A8" stroke-width="3"/><path d="M438 98 C 466 86 486 82 508 80" stroke="#7C6CF0" stroke-width="3"/><path d="M440 204 C 466 210 482 220 500 232" stroke="#FFB020" stroke-width="3"/></g><g filter="url(#rgh2)"><ellipse cx="320" cy="150" rx="62" ry="40" fill="#151731"/><ellipse cx="320" cy="150" rx="62" ry="40" fill="none" stroke="#FFB020" stroke-width="3"/></g><text x="320" y="157" text-anchor="middle" fill="#FAF9F5" font-family="Baloo 2,Noto Sans TC,sans-serif" font-size="21" font-weight="800">主題</text><g filter="url(#rgh2)"><ellipse cx="196" cy="96" rx="42" ry="25" fill="#fff" stroke="#FF8A3D" stroke-width="3.4"/></g><text x="196" y="102" text-anchor="middle" fill="#151731" font-family="Noto Sans TC,sans-serif" font-size="15" font-weight="700">分類</text><g filter="url(#rgh2)"><ellipse cx="196" cy="204" rx="42" ry="25" fill="#fff" stroke="#16B0A8" stroke-width="3.4"/></g><text x="196" y="210" text-anchor="middle" fill="#151731" font-family="Noto Sans TC,sans-serif" font-size="15" font-weight="700">分類</text><g filter="url(#rgh2)"><ellipse cx="450" cy="94" rx="42" ry="25" fill="#fff" stroke="#7C6CF0" stroke-width="3.4"/></g><text x="450" y="100" text-anchor="middle" fill="#151731" font-family="Noto Sans TC,sans-serif" font-size="15" font-weight="700">分類</text><g filter="url(#rgh2)"><ellipse cx="452" cy="206" rx="42" ry="25" fill="#fff" stroke="#FFB020" stroke-width="3.4"/></g><text x="452" y="212" text-anchor="middle" fill="#151731" font-family="Noto Sans TC,sans-serif" font-size="15" font-weight="700">分類</text></svg><figcaption>心智圖的基本結構：中心主題往外長出主幹，主幹再長出分支——你一眼就看見層次。</figcaption></figure>
 
-    <p>心智圖，就是幫你把這件事翻過來的工具。跟著往下看，你會搞懂它是什麼、為什麼有效，以及最重要的——<strong>你自己怎麼畫出第一張</strong>。</p>
+    <p>問題往往不是不夠用功，是<strong>用一行一行的文字，在對抗大腦天生更記得住的畫面</strong>。</p>
 
-    <h2><span class="n">01</span>心智圖是什麼？先講給你聽</h2>
+    <h2><span class="n">01</span>心智圖是什麼？一句話：把一整課收成「一張放射狀的圖」</h2>
 
-    <p>先給你定義：心智圖（Mind Map）是一種<strong>放射狀的圖像式筆記</strong>，由英國學者 Tony Buzan 在 1970 年代提出並推廣。它的做法很單純：你把主題放在中央，像樹枝一樣往外延伸出「主幹」與「分支」，用<strong>關鍵字、線條、顏色和圖像</strong>取代整段整段的文字。</p>
+    <p>心智圖（Mind Map）是一種<strong>放射狀的圖像式筆記</strong>，由英國學者 Tony Buzan 在 1970 年代提出並推廣。</p>
 
-    <p>拿你平常的條列式筆記來比，最大的差別是：</p>
+    <p>主題放中央，像樹枝一樣往外長出主幹與分支，用<strong>關鍵字、線條、顏色和圖像</strong>取代整段文字。</p>
 
-    <ul><li><strong>傳統筆記</strong>是線性的，一行接一行，重點藏在字海裡，你得自己挖。</li><li><strong>心智圖</strong>是結構性的，你一眼就能看見「主題和細節之間怎麼連」，也更貼近大腦聯想的方式。</li></ul>
+    <p>跟條列式筆記比：</p>
 
-    <p>一句話跟你說：<strong>傳統筆記是「記下來」，心智圖是「看得懂、想得通」。</strong></p>
+    <ol>
+      <li><strong>傳統筆記</strong>是線性的，一行接一行，重點藏在字海裡。</li>
+      <li><strong>心智圖</strong>是結構性的，一眼看見主題和細節怎麼連，也更貼近大腦聯想的方式。</li>
+    </ol>
 
-    <h2><span class="n">02</span>為什麼心智圖對你的學習有幫助？</h2>
+    <p>想看完整版，看<a href="mindmap.html">心智圖完整指南</a>。</p>
 
-    <p>你可能會問：它憑什麼好用？答案是 3 個很直覺的原理：</p>
+    <p><strong>傳統筆記是「記下來」，心智圖是「看得懂、想得通」。</strong></p>
 
-    <p><strong>一、大腦記畫面比記文字省力。</strong> 顏色、圖像、空間位置都是大腦擅長的線索，你把文字轉成畫面，回想時就多了好幾條「線索」可以抓。</p>
+    <h2><span class="n">02</span>心智圖有幫助，靠 3 個原理：畫面好記、結構看得見、一張收一段</h2>
 
-    <p><strong>二、看得見結構，就記得住邏輯。</strong> 心智圖把「主題→分類→細節」的層次攤在同一張圖上，你背到的不只是內容，也理解了它們之間的關係。</p>
+    <ol>
+      <li><strong>大腦記畫面比記文字省力。</strong> 顏色、圖像、位置都是好抓的線索。</li>
+      <li><strong>看得見結構，就記得住邏輯。</strong> 「主題→分類→細節」攤在同一張圖上，你背到的不只是內容，還有它們的關係。</li>
+      <li><strong>一張圖收攏一整段。</strong> 複習時看著結構就能回想，不必從頭讀。</li>
+    </ol>
 
-    <p><strong>三、一張圖收攏一整段。</strong> 一頁課文濃縮成一張圖，你複習時不必從頭讀到尾，看著結構就能把內容「回想」出來。</p>
+    <div class="callout"><span class="k">一句話重點</span>老實說：學習成效會因人、因科目、因練習程度而不同，心智圖是一種幫你整理與回想的方法，不是速成法。</div>
 
-    <div class="callout"><span class="k">一句話重點</span>老實說：學習成效會因人、因科目、因練習程度而不同，心智圖是一種幫你整理與回想的方法，而不是速成的保證。</div>
-
-    <h2><span class="n">03</span>心智圖怎麼畫？拿張紙跟著 5 步驟</h2>
+    <h2><span class="n">03</span>心智圖怎麼畫？拿張紙，5 步驟畫出你的第一張</h2>
 
     <h3>步驟 1：把「中心主題」放中間</h3>
 
-    <p>先拿一張白紙橫放，在正中央寫下你這次要整理的主題——可以是一個單元名稱（例如「光合作用」）、一課課文，或一個要準備的考試範圍。中央配一個小圖，讓你的大腦一眼記住。</p>
+    <p>白紙橫放，正中央寫主題（例如「光合作用」），配一個小圖。</p>
 
     <h3>步驟 2：拉出「主幹」，也就是大分類</h3>
 
-    <p>從中心往外拉幾條粗線，每一條代表一個大分類。拿「光合作用」來試，你的主幹可能是「發生位置」「需要的原料」「產生的東西」「影響因素」。<strong>主幹數量建議控制在 3～7 條</strong>，太多就失去了「一眼看懂」的意義。</p>
+    <p>從中心拉幾條粗線，每條一個大分類，例如「發生位置」「需要的原料」「產生的東西」「影響因素」。<strong>主幹控制在 3～7 條</strong>。</p>
 
     <h3>步驟 3：每條線上只放「關鍵字」</h3>
 
-    <p>這一步最關鍵，你一定要記住：<strong>線條上寫關鍵字，不要寫整句話。</strong> 一條線一個詞，畫面才乾淨、回想才快。你試試看，把「植物利用陽光製造養分」濃縮成「陽光→養分」這種關鍵字，反而記得更牢。</p>
+    <p><strong>線上寫關鍵字，不寫整句話</strong>。把「植物利用陽光製造養分」濃縮成「陽光→養分」，畫面乾淨、回想才快。</p>
 
     <h3>步驟 4：往外長出「分支」，細節掛上去</h3>
 
-    <p>接著從每個主幹延伸出更細的分支，把細節掛上去，你就有了「主題→分類→細節」的層次。記得分支要<strong>由粗到細、由近到遠</strong>，越靠中心越重要。</p>
+    <p>每條主幹延伸更細的分支，<strong>由粗到細、由近到遠</strong>，越靠中心越重要。</p>
 
     <h3>步驟 5：加上顏色與圖像</h3>
 
-    <p>最後，同一條主幹用同一個顏色，重點處畫個小圖示。顏色幫你分區，圖像幫你記憶——這一步不是美化，而是讓你的大腦多抓幾條線索。<strong>你畫得不漂亮沒關係，畫得清楚、自己看得懂最重要。</strong></p>
+    <p>同一條主幹同一個顏色，重點處畫小圖示：顏色幫你分區，圖像幫你記憶。</p>
 
-    <h2><span class="n">04</span>這 3 個新手錯，你中了嗎？</h2>
+    <p><strong>畫得不漂亮沒關係，清楚、自己看得懂就好。</strong></p>
 
-    <ol><li><strong>在線上寫整句話</strong>——你不是在把課文換個排版，關鍵字才是靈魂。</li><li><strong>主幹一口氣拉十幾條</strong>——分類太多等於沒分類，你先收斂成幾個大類。</li><li><strong>追求好看，畫到停不下來</strong>——你畫它是為了學習，不是交美術作業。</li></ol>
+    <h2><span class="n">04</span>新手 3 個錯：寫整句、主幹太多、畫太久</h2>
 
-    <h2><span class="n">05</span>你可以把心智圖用在哪裡？</h2>
+    <ol>
+      <li><strong>在線上寫整句話</strong>：關鍵字才是靈魂。</li>
+      <li><strong>主幹一口氣拉十幾條</strong>：分類太多等於沒分類，先收斂成幾個大類。</li>
+      <li><strong>追求好看，畫到停不下來</strong>：你畫它是為了學習，不是交美術作業。</li>
+    </ol>
 
-    <ul><li><strong>做筆記</strong>：把一課課文整理成一張圖，你複習時一目了然。</li><li><strong>寫作文</strong>：先用心智圖把想法發散、再收斂成段落結構，你面對題目不再一片空白。</li><li><strong>考前複習</strong>：用一張圖總覽整科架構，快速回想、找出你還沒讀熟的地方。</li></ul>
+    <p><strong>少寫字、少分類、少裝飾，心智圖才好用。</strong></p>
 
-    <p>（你想看每一種用法的實作，可以參考<a href="article-memory-palace.html">記憶宮殿是什麼</a>、<a href="article-image-memory.html">圖像記憶法是什麼</a>兩篇文章）</p>
+    <h2><span class="n">05</span>心智圖用在 3 個地方很有感：筆記、作文、考前複習</h2>
+
+    <ol>
+      <li><strong>做筆記</strong>：一課整理成一張圖，複習一目了然。</li>
+      <li><strong>寫作文</strong>：先發散想法、再收成段落，面對題目不再空白。</li>
+      <li><strong>考前複習</strong>：一張圖總覽整科，快速回想、找出還沒讀熟的地方。</li>
+    </ol>
+
+    <p>相關做法看<a href="article-memory-palace.html">記憶宮殿是什麼</a>、<a href="article-image-memory.html">圖像記憶法是什麼</a>。</p>
+
+    <p><strong>一張圖，筆記、作文、複習都用得上。</strong></p>
 
     <div class="faq">
       <h2>你可能還想問</h2>
-      <details open><summary>心智圖幾歲可以開始學？</summary><div class="ans">如果你家孩子 10 歲以上、能自己抓重點，通常最容易上手；年紀更小，可以先從「畫圖聯想」的簡化版開始。</div></details>
-      <details><summary>一定要用電腦軟體嗎？</summary><div class="ans">不用。入門最推薦你用手繪，因為畫的過程本身就是在整理思路；等你熟悉了，再用 XMind、MindMeister 等數位工具處理較大的專題。</div></details>
-      <details><summary>心智圖和一般筆記，只能選一種嗎？</summary><div class="ans">不衝突。你可以用心智圖抓整體架構、用條列筆記記細節，兩者搭配起來效果更好。</div></details>
-      <details><summary>心智圖和康乃爾筆記法差在哪？</summary><div class="ans">康乃爾筆記法是把一頁紙切成三區（筆記區、關鍵字區、總結區），強項是課堂即時記錄與事後自我提問；心智圖是放射狀結構，強項是把整個單元的層次一眼攤開。你可以上課當下用康乃爾記，複習時再把它整理成一張心智圖，兩者其實是接力，不是二選一。</div></details>
-      <details><summary>一張心智圖大概要畫多久？</summary><div class="ans">你剛開始畫一個單元，大約要 20～30 分鐘，熟練後 10 分鐘就能收一課。如果你發現自己畫超過 40 分鐘，多半是把整句課文抄上去了——心智圖只放關鍵字，字少才畫得快、也才記得住。</div></details>
-      </div>
+      <details open><summary>心智圖幾歲可以開始學？</summary><div class="ans">你家孩子 10 歲以上、能自己抓重點，通常比較容易上手；更小可以從「畫圖聯想」的簡化版開始。</div></details>
+      <details><summary>一定要用電腦軟體嗎？</summary><div class="ans">不用。入門建議手繪，畫的過程就是在整理思路；熟了再用 XMind、MindMeister 等工具處理大專題。</div></details>
+      <details><summary>心智圖和一般筆記，只能選一種嗎？</summary><div class="ans">不衝突。心智圖抓架構、條列筆記記細節，搭配起來更好。</div></details>
+      <details><summary>心智圖和康乃爾筆記法差在哪？</summary><div class="ans">康乃爾把一頁切成三區，強項是課堂記錄與事後自我提問；心智圖的強項是把整個單元的層次一眼攤開。上課用康乃爾，複習整理成心智圖，兩者是接力。</div></details>
+      <details><summary>一張心智圖大概要畫多久？</summary><div class="ans">剛開始畫一個單元大約 20～30 分鐘，熟練後 10 分鐘就能收一課。畫超過 40 分鐘，多半是把整句課文抄上去了。</div></details>
+    </div>
+
+    <div class="callout"><span class="k">一句話講完</span>心智圖不是美術作業，是把一整課收成一張圖、逼你想清楚關係的工具。<br>今晚就做一件：拿一張白紙，把今天的一課畫成 3 條主幹，每條只寫一個詞。</div>
 
     <div class="rel">
       <h2>你可以接著讀</h2>
@@ -283,11 +305,11 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 
     <div class="cta">
       <h3>想讓你家孩子把心智圖練成預設思考？</h3>
-      <p>《瘋狂心智圖・超級思考》：聯想力訓練＋思考模板＋寫作解題實戰，帶你家孩子從「會背」進化到「會想」。線上授課、買斷後於服務存續期間可反覆回看。</p>
+      <p>《瘋狂心智圖》：聯想力訓練＋思考模板＋寫作解題實戰，帶你家孩子從「會背」進化到「會想」。線上授課、買斷後於服務存續期間可反覆回看。</p>
       <a href="course-thinking.html">了解瘋狂心智圖 →</a>
       <a class="cta2" href="lp.html?p=free-course">先免費上一堂《10 倍聯想力》體驗課</a>
     </div>
-    <div class="guar"><span class="gk">零風險嘗試</span><a href="kaohsiung.html">高雄心智圖實體班</a>的<a href="course-onsite-basic.html">初階班</a>與<a href="course-onsite-advanced.html">進階班</a>提供<strong>無效退費</strong>：上完第一堂課的當天，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期——所以我們更建議先免費上一堂體驗課再決定。</div>
+    <div class="guar"><span class="gk">零風險嘗試</span><a href="kaohsiung.html">高雄心智圖實體班</a>的<a href="course-onsite-basic.html">初階班</a>與<a href="course-onsite-advanced.html">進階班</a>提供<strong>無效退費</strong>：上完第一堂課的當天，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課不退費，屬數位內容，完成付款即表示同意排除七天鑑賞期；現場課上課當天不滿意可全額退費，改期以外不提供退費。</div>
 
     <div class="refs">延伸參考：放射性思考與心智圖法（Tony Buzan）、雙重編碼理論（Dual-coding Theory）、提取練習（Retrieval Practice）。本文為科普整理與教學經驗分享。</div>
   </article>
