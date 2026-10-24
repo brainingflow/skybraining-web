@@ -194,6 +194,15 @@
   .step:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
   .step-img{margin:0;}
   .lead-seg{display:inline-block;}
+  #why{background:var(--indigo);overflow:hidden;padding-top:clamp(40px,5vw,64px);}
+  #why::before{content:"";position:absolute;right:-90px;top:-180px;width:320px;height:320px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(22,176,168,.22),transparent 70%);}
+  .why-stars{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;}
+  #why .wrap{position:relative;}
+  #why .eyebrow{color:#5fd6cf;}
+  #why .sec-title{color:#fff;}
+  #why .sec-lead{color:rgba(255,255,255,.76);}
+  #why .step-img{background:var(--indigo-2);border-color:rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(0,0,0,.42);}
+  #why .step-img:hover{box-shadow:0 20px 44px rgba(0,0,0,.55);}
   .step-img img{display:block;width:100%;height:auto;aspect-ratio:4/3;}
   .step .num{font-family:var(--round);font-weight:800;font-size:13px;flex:none;line-height:1;opacity:.6;}
   .ic-chip{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;}
@@ -461,6 +470,7 @@
 
 <!-- WHY -->
 <section class="block" id="why">
+  <canvas class="why-stars" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">為什麼有效</div>
@@ -739,6 +749,55 @@
   toggle.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');document.body.classList.toggle('menu-open',o);toggle.setAttribute('aria-expanded',o);});
   navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded',false);}));
   document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const f=q.parentElement,a=f.querySelector('.faq-a'),o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});if(!o){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});});
+</script>
+<script>
+(()=>{
+  const sec=document.getElementById('why'),cv=sec&&sec.querySelector('.why-stars');
+  if(!cv||!cv.getContext)return;
+  const ctx=cv.getContext('2d'),rm=matchMedia('(prefers-reduced-motion: reduce)');
+  const COLORS=['#ffffff','#ffe2aa'];
+  let W=0,H=0,stars=[],raf=0,last=0,vis=false;
+  function build(){
+    const w=sec.clientWidth,h=sec.clientHeight;
+    if(!w||!h||(w===W&&Math.abs(h-H)<40&&stars.length))return;
+    W=w;H=h;
+    const d=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(w*d);cv.height=Math.round(h*d);
+    ctx.setTransform(d,0,0,d,0,0);
+    // 手機省電：每顆星分到的面積較大，總數也封頂
+    const n=Math.min(1400,Math.round(w*h/(w<600?1500:900)));
+    stars=[];
+    for(let i=0;i<n;i++){
+      const big=Math.random()>.85;
+      stars.push({x:Math.random()*w,y:Math.random()*h,s:big?1.1+Math.random()*.7:.6+Math.random()*.5,
+        a:.3+Math.random()*.6,p:3000+Math.random()*5000,o:Math.random()*6.283,c:Math.random()<.18?1:0});
+    }
+    stars.sort((a,b)=>a.c-b.c);
+    draw(performance.now());
+  }
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    let c=-1;
+    for(const st of stars){
+      if(st.c!==c){c=st.c;ctx.fillStyle=COLORS[c];}
+      const k=rm.matches?.75:.15+.85*(.5+.5*Math.sin(t/st.p*6.283+st.o));
+      ctx.globalAlpha=st.a*k;
+      if(st.s>1){ctx.beginPath();ctx.arc(st.x,st.y,st.s/2,0,6.283);ctx.fill();}
+      else ctx.fillRect(st.x,st.y,st.s,st.s);
+    }
+    ctx.globalAlpha=1;
+  }
+  // 緩慢閃爍不需要 60fps，約 15fps 重畫就夠順，省電
+  function loop(t){raf=requestAnimationFrame(loop);if(t-last<66)return;last=t;draw(t);}
+  function start(){if(!raf&&vis&&!rm.matches&&!document.hidden)raf=requestAnimationFrame(loop);}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop();}).observe(sec);
+  document.addEventListener('visibilitychange',()=>{document.hidden?stop():start();});
+  const onRm=()=>{stop();draw(performance.now());start();};
+  rm.addEventListener?rm.addEventListener('change',onRm):rm.addListener(onRm);
+  window.ResizeObserver?new ResizeObserver(build).observe(sec):window.addEventListener('resize',build);
+  build();
+})();
 </script>
 <!-- 燈寶 mascot -->
 <div id="naobao">
