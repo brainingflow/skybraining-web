@@ -61,6 +61,7 @@
   @media(max-width:680px){.grid{grid-template-columns:1fr;}}
   .course{background:#fff;border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
   .course:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+  .course-cover{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:#141330;}
   .course-top{padding:22px 22px;color:#fff;position:relative;overflow:hidden;min-height:150px;box-sizing:border-box;}
   .course-top.amber{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .course-top.teal{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
@@ -455,6 +456,8 @@
     const intro = c.id==='super-memory' ? '課程介紹-過目不忘' : (c.id==='super-thinking' ? '課程介紹-瘋狂心智圖' : '');
     const INTRO_MAP = {'super-memory':'course-memory.html','super-thinking':'course-thinking.html','strong-thinking-basic':'course-strong-thinking.html','onsite-basic':'course-onsite-basic.html','onsite-advanced':'course-onsite-advanced.html','bundle-all':'course-bundle.html'};
     const introHref = INTRO_MAP[c.id] || 'courses.html';
+    const COVER = { 'free-warmup':'cover-free.webp', 'super-memory':'cover-course-memory.webp', 'super-thinking':'cover-course-thinking.webp', 'strong-thinking-basic':'cover-course-strong-thinking.webp', 'onsite-basic':'cover-course-onsite-basic.webp', 'onsite-advanced':'cover-course-onsite-advanced.webp', 'bundle-all':'cover-course-bundle.webp' };
+    const cover = COVER[c.id];
     const isFree = (c.price||0)===0;
     const action = owned
       ? `<a class="btn btn-watch ${color}" href="watch.html?course=${encodeURIComponent(c.id)}">▶ 開始觀看</a>`
@@ -467,6 +470,7 @@
           ? `<span class="status owned"><span class="dot"></span>免費・登入就能看</span>`
           : `<span class="status locked"><span class="dot"></span>尚未購買</span>`);
     return `<div class="course ${owned?'is-owned':'is-locked'}">
+      ${cover ? `<img class="course-cover" src="${cover}" width="1600" height="840" alt="${esc(c.name)}" loading="lazy" decoding="async">` : ''}
       <div class="course-top ${color}">
         <span class="course-lv">Level ${c.level}</span>
         <div class="course-name ${(c.name||'').length>=9?'sm':''}">${c.name}</div>
