@@ -209,7 +209,9 @@
   @media(max-width:980px){.course-grid{grid-template-columns:1fr;}}
   .course{background:var(--card);border:1px solid var(--hair);border-radius:26px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
   .course:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .course-media{position:relative;flex:none;}
   .course-cover{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:#141330;}
+  .course-media .free-tag{top:14px;right:14px;font-size:12px;padding:4px 11px;box-shadow:0 4px 12px rgba(0,0,0,.25);}
   .course-top{padding:30px 30px 24px;color:#fff;position:relative;overflow:hidden;}
   .course-top.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .course-top.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
@@ -483,15 +485,8 @@
       <p class="sec-lead">你先免費上一堂 10 倍聯想力，覺得有用，再選記憶力、思考力兩門完整課程。付費課買斷、永久觀看，你和孩子能反覆看到會為止。</p>
     </div>
     <div class="course-grid">
-      <div class="course reveal">
-        <img class="course-cover" src="cover-free.webp" width="1600" height="840" alt="10 倍聯想力" loading="lazy" decoding="async">
-        <div class="course-top free">
-          <span class="free-tag">免費</span>
-          
-          <span class="course-lv">免費・登入就能看</span>
-          <div class="course-name">10 倍聯想力</div>
-          <div class="course-en">免費體驗・登入就能看</div>
-        </div>
+      <div class="course reveal" role="group" aria-label="10 倍聯想力">
+        <div class="course-media"><img class="course-cover" src="cover-free.webp" width="1600" height="840" alt="10 倍聯想力" loading="lazy" decoding="async"><span class="free-tag">免費</span></div>
         <div class="course-body">
           <p class="course-intro">你不用先付費。註冊會員登入後立刻就能看，親眼看看強腦力的方法怎麼運作，喜歡再上完整課程。</p>
           <ul class="learn">
@@ -505,14 +500,8 @@
           </div>
         </div>
       </div>
-      <div class="course reveal">
-        <img class="course-cover" src="cover-course-memory.webp" width="1600" height="840" alt="過目不忘" loading="lazy" decoding="async">
-        <div class="course-top mem">
-          
-          <span class="course-lv">記憶力・Level 1・入門首選</span>
-          <div class="course-name">過目不忘</div>
-          <div class="course-en">過目不忘・記憶力課程</div>
-        </div>
+      <div class="course reveal" role="group" aria-label="過目不忘">
+        <div class="course-media"><img class="course-cover" src="cover-course-memory.webp" width="1600" height="840" alt="過目不忘" loading="lazy" decoding="async"></div>
         <div class="course-body">
           <p class="course-intro">其實你不是記性差，只是沒學過記憶的方法。這堂課帶你從「反覆死背」轉換成「用畫面與聯想記住一切」——單字、課文、公式、歷史年代，記得又快又牢。學一次，用一輩子。</p>
           <ul class="learn">
@@ -526,14 +515,8 @@
           </div>
         </div>
       </div>
-      <div class="course reveal">
-        <img class="course-cover" src="cover-course-thinking.webp" width="1600" height="840" alt="瘋狂心智圖" loading="lazy" decoding="async">
-        <div class="course-top think">
-          
-          <span class="course-lv">思考力・Level 2・進階整合</span>
-          <div class="course-name">瘋狂心智圖</div>
-          <div class="course-en">瘋狂心智圖・心智圖課程</div>
-        </div>
+      <div class="course reveal" role="group" aria-label="瘋狂心智圖">
+        <div class="course-media"><img class="course-cover" src="cover-course-thinking.webp" width="1600" height="840" alt="瘋狂心智圖" loading="lazy" decoding="async"></div>
         <div class="course-body">
           <p class="course-intro">記得住只是起點；你能靈活運用、舉一反三，才是真正的競爭力。這堂課給你一套思考模板，拆解問題、串連知識、產生想法，從被動接收，變成主動思考的人。</p>
           <ul class="learn">
