@@ -47,7 +47,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://skybraining.com/"},{"@type":"ListItem","position":2,"name":"頂尖論文期刊","item":"https://skybraining.com/learning.html"},{"@type":"ListItem","position":3,"name":"分散式學習：同樣的總時數，為什麼每天二十分鐘記得比較久","item":"https://skybraining.com/learn-distributed-practice.html"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"我下週就要考，現在切還來得及嗎？","acceptedAnswer":{"@type":"Answer","text":"老實說，一週補不回一個月的分散。我建議你把每天的讀書時間切成兩到三段，每段開始前先自己考自己，剩下的時間就花在想不起來的部分。"}},{"@type":"Question","name":"每天二十分鐘會不會太少？","acceptedAnswer":{"@type":"Answer","text":"別誤會，研究比較的是同樣總時數的兩種排法，不是叫你讀得更少。你原本要花的時間還是要花，只是分佈不同。"}},{"@type":"Question","name":"通勤時用聽的算不算分散學習？","acceptedAnswer":{"@type":"Answer","text":"聽是接觸，回想才是練習。你可以聽，但下車前請關掉音檔，自己講出剛剛那三個重點，這一步不做，時間切得再細也只是多聽幾遍。"}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"我下週就要考，現在切還來得及嗎？","acceptedAnswer":{"@type":"Answer","text":"一週補不回一個月的分散。你把每天的讀書時間切成 2 到 3 段，每段先考自己，剩下的時間花在想不起來的部分。"}},{"@type":"Question","name":"每天二十分鐘會不會太少？","acceptedAnswer":{"@type":"Answer","text":"研究比的是同樣總時數的兩種排法，不是叫你讀更少。你原本的時間照花，只是分佈不同。"}},{"@type":"Question","name":"通勤時用聽的算不算分散學習？","acceptedAnswer":{"@type":"Answer","text":"聽是接觸，回想才是練習。你下車前關掉音檔，自己講出剛剛那 3 個重點；這步不做，切得再細也只是多聽幾遍。"}}]}
 </script>
 <style>
   :root{--indigo:#141631;--paper:#FBFAF6;--paper-2:#F1EFE7;--card:#fff;--ink:#191b30;--ink-soft:#5a5e79;--amber:#FFB020;--orange:#FF8A3D;--teal:#16B0A8;--teal-deep:#0d8a83;--violet:#7C6CF0;--violet-deep:#4B37D8;--hair:rgba(20,22,49,.09);--sans:"Noto Sans TC",sans-serif;--round:"Baloo 2","Noto Sans TC",sans-serif;--sh-1:0 4px 14px rgba(20,22,49,.05);--sh-2:0 12px 30px rgba(20,22,49,.09);}
@@ -137,6 +137,7 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 .refs ol{margin:8px 0 0;padding-left:1.2em;}
 .refs li{font-size:13.5px;line-height:1.85;color:var(--ink-soft);margin:5px 0;}
 .refs a{color:var(--ink-soft);text-decoration:underline;word-break:break-all;}
+article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-underline-offset:2px;}
 
 /* ── 導覽改版 2026-09-03：兩個重點連結 ＋ 三條線選單 ── */
 .nav-quick{display:flex;align-items:center;gap:24px;margin-left:auto;margin-right:18px;font-weight:500;font-size:15px;}
@@ -199,86 +200,96 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
     <h1>分散式學習：<br>同樣的總時數，為什麼每天二十分鐘記得比較久</h1>
     <figure class="banner"><img src="cover-learn-distributed-practice.webp" width="1600" height="840" alt="分散式學習：同樣的總時數，為什麼每天二十分鐘記得比較久" loading="lazy" decoding="async"></figure>
     <div class="meta"><span>強腦力 SkyBraining 編輯部</span><span>・</span><time datetime="2026-09-14">2026/09/14</time><span>・</span><span>閱讀約 7 分鐘</span></div>
-    <p class="lede">你是不是也這樣？報名了年底的證照考試，就打算週末一次讀八小時。週日晚上闔上書的那一刻，你覺得整章都懂了。</p>
+    <p class="lede">你是不是也這樣？年底要考證照，就打算週末一次讀 8 小時。週日闔上書，你覺得整章都懂了。</p>
   </div>
   <article>
 
     <div class="cover" style="background:linear-gradient(135deg,#16B0A8,#0d8a83);"><div class="big">下個週末你再翻開同一章，像沒讀過。</div></div>
 
-    <h2>我們讀了哪一篇？一篇書摘，加上我們替你接回去的研究</h2>
+    <h2>先跟你交代出處：一篇 HBR 書摘，加上我們接回去的兩條研究</h2>
 
-    <p>先跟你交代來源：我們讀了《哈佛商業評論》繁體中文版 2020 年 11 月刊出的一篇書摘，談的是分散式學習。它的標題本身就是結論：「不會讓你讀得更辛苦，卻讓記憶更持久」（HBR 繁中，2020）。</p>
+    <p>先跟你交代出處：底稿是<a href="https://www.hbrtaiwan.com/article/19992/distributed-learning-make-your-memory-longer" target="_blank" rel="nofollow noopener">《哈佛商業評論》繁體中文版 2020 年 11 月的一篇書摘</a>，標題就是結論：「不會讓你讀得更辛苦，卻讓記憶更持久」（HBR 繁中，2020）。</p>
 
-    <p>那篇很短，而且沒有標研究者、年份與期刊，只說這件事心理學界已經知道超過一百年。所以我們多做了一件事：把出處自己接回去，你才有東西可以查。</p>
-
-    <p>最早的一條線你可能聽過，是 Ebbinghaus（1885）的遺忘曲線：記憶會隨時間往下掉，這是預設值。</p>
-
-    <p>第二條線是 Dunlosky 等人（2013）發表在 Psychological Science in the Public Interest 的回顧，他們把十種常見讀書法放在一起比，分散練習被評為證據最強的兩種之一，因為它跨年齡、跨科目、跨考法都看得到。</p>
-
-    <p>如果你想看十種方法各自排在哪裡，可以看<a href="learn-study-strategies.html">我們整理的十種讀書法評比</a>。</p>
-
-    <h2>分散式學習是什麼？你的總時數不變，只是換排法</h2>
-
-    <p>你先別把它想成「多讀一點」。分散式學習不是叫你增加時數，是把同樣的時數切開。</p>
-
-    <p>你的八小時，可以是週六一次坐完，也可以是平日五天各四十分鐘、週末補一小時。前者一天結束，後者橫跨一週。花的時間一樣，中間多了五次「重新把它想起來」的動作。</p>
-
-    <p>那五次才是重點。每一次你重新打開那一章，腦袋要先把上次的東西找回來，這個「找回來」的動作本身就是練習。一次讀完，你只找了一次。</p>
-
-    <h2>為什麼你開夜車隔天有效、一個學期後就不見</h2>
-
-    <p>你也開過夜車吧？它不是完全沒有效果，在隔天的考試上看起來是有用的，這也是為什麼那麼多人一路用到出社會。</p>
-
-    <p>可是你看，落差出現在後面。同樣的內容，一次讀完的那種讀法，隔幾週再看就所剩不多；切開讀的那種，掉得比較慢。</p>
-
-    <p>如果你是上班族，意思很直接：與其週末補八小時，不如每天二十分鐘。你要的是三個月後還在腦袋裡的東西，不是明天早上的安心感。</p>
-
-    <p>你大概也遇過這種情形：考完那一週講得頭頭是道，三個月後同事問起同一個概念，只剩下幾個名詞。</p>
-
-    <h2>你這週能做：上班族的四個動作</h2>
+    <p>它沒標研究者與期刊，所以我們把出處接回去：</p>
 
     <ol>
-      <li><strong>先切時間，不要先加時間。</strong> 把週末那八小時改成平日每天二十分鐘、週末一小時。今晚你就打開行事曆，把五個時段標出來。</li>
-      <li><strong>每次開始前先花三分鐘回想。</strong> 闔上書，講出上一次讀到的三個重點，再翻開對。想不起來的那一個，就是你今天要先看的。</li>
-      <li><strong>把時段黏在你既有的習慣後面。</strong> 通勤下車前十分鐘、午休最後十五分鐘、睡前刷完牙那一段。固定的錨點比你的意志力可靠。</li>
-      <li><strong>一個月後回頭考一次舊章節。</strong> 不是重讀，是把上個月的題目再做一次。做不出來的部分才值得你重讀。</li>
+      <li>Ebbinghaus（1885）的遺忘曲線：記憶會隨時間往下掉，這是預設值。</li>
+      <li><a href="https://doi.org/10.1177/1529100612453266" target="_blank" rel="nofollow noopener">Dunlosky 等人（2013），Psychological Science in the Public Interest</a>：10 種常見讀書法放在一起比，分散練習被評為證據最強的兩種之一，跨年齡、跨科目、跨考法都看得到。</li>
     </ol>
 
-    <p>你整理章節架構的時候，可以用一張<a href="mindmap.html">心智圖</a>把整章收成一頁，之後每次二十分鐘先看那一頁，再展開細節。</p>
+    <p>10 種各排在哪，你可以看<a href="learn-study-strategies.html">我們整理的十種讀書法評比</a>。</p>
 
-    <h2>家長版：那你家孩子的複習呢？</h2>
+    <p><strong>忘記是預設值，怎麼排才是你改得了的。</strong></p>
 
-    <p>同樣的道理搬回你家，就是別把複習都堆在考前那個週末。</p>
+    <h2>分散式學習不是多讀，是把同樣的時數「切開」</h2>
 
-    <p>你可以試試晚餐後那十分鐘，我的經驗是它最容易固定下來：碗還沒收，孩子也還沒回房間，問三題就結束。</p>
+    <p>分散式學習不加時數，只換排法。</p>
 
-    <p>一課的內容，你與其週日晚上陪他一次坐一小時，不如拆成平日每天晚上十分鐘、問三個問題。其實你不是記性差，只是沒學過記憶的方法，你家孩子也一樣。而複習怎麼排，本來就是方法的一部分。</p>
+    <p>同樣 8 小時，可以週六一次坐完，也可以平日 5 天各 40 分鐘、週末補 1 小時。</p>
 
-    <p>你想看完整的家長版做法，可以從<a href="course-memory.html">記憶力課程《過目不忘》</a>往下看，或翻<a href="learning.html">頂尖論文期刊</a>這個單元的其他幾篇。</p>
+    <p>後者多了 5 次「重新把它想起來」，每一次都是練習。</p>
 
-    <h2>這篇沒說的事，你也該知道</h2>
+    <p><strong>一次讀完，你只找回一次。</strong></p>
 
-    <p>先提醒你，我們讀的那篇是書摘，不是研究報告。它沒有標研究者與期刊，本篇的出處是我們自己接回去的，不是原文寫的。</p>
+    <h2>開夜車「只撐得過隔天」，一個學期後就不見</h2>
 
-    <p>原文裡另外有一個關於記憶量變化的說法，我們查不到原始研究，所以這篇沒有寫。查不到出處的數字，我們一律不用。</p>
+    <p>開夜車隔天有用，落差在後面。</p>
 
-    <p>Ebbinghaus（1885）是十九世紀末的實驗，受試者只有他自己一個成年人，材料和你手上的專業講義完全不同，不能拿來預測你哪一天會忘掉哪一章。</p>
+    <p>一次讀完的，隔幾週再看所剩不多；切開讀的，掉得比較慢。</p>
 
-    <p>Dunlosky 等人（2013）的回顧涵蓋很多研究，結論是分散練習在多數情況下划算，不是說每個人、每個科目的結果都一樣。</p>
+    <p>差多少？那篇書摘的說法查不到原始研究，我們不替它補數字。</p>
 
-    <p>還有一句話跟你講清楚：這是研究結果，不是任何課程的承諾。我們的免費體驗課教的是把字變成畫面，和這篇講的時間安排是兩件事。</p>
+    <p><strong>你要的是 3 個月後還在腦袋裡的東西，不是明天早上的安心感。</strong></p>
+
+    <h2>上班族這週就做 4 件事：先切時間，不要先加時間</h2>
+
+    <ol>
+      <li>週末 8 小時改成平日每天 20 分鐘、週末 1 小時。</li>
+      <li>每次開始前花 3 分鐘回想：闔上書講出上次的 3 個重點，想不起來的先看。</li>
+      <li>把時段黏在既有習慣後面：通勤下車前 10 分鐘、午休最後 15 分鐘、睡前刷完牙。</li>
+      <li>1 個月後回頭考一次舊章節，做不出來的才值得重讀。</li>
+    </ol>
+
+    <p>你可以用一張<a href="mindmap.html">心智圖</a>把整章收成一頁，每次先看那一頁。</p>
+
+    <p><strong>固定的錨點，比你的意志力可靠。</strong></p>
+
+    <h2>家長版：你家孩子的複習，別全堆在考前週末</h2>
+
+    <p>一課的內容，與其週日陪你家孩子坐 1 小時，不如拆成平日每晚 10 分鐘、問 3 個問題。</p>
+
+    <p>我的經驗是晚餐後那 10 分鐘比較容易固定：碗還沒收，他也還沒回房間。</p>
+
+    <p>其實你不是記性差，只是沒學過記憶的方法，你家孩子也一樣。</p>
+
+    <p>完整做法可以從<a href="course-memory.html">記憶力課程《過目不忘》</a>往下看，或翻<a href="learning.html">頂尖論文期刊</a>這個單元的其他幾篇。</p>
+
+    <p><strong>複習怎麼排，本來就是方法的一部分。</strong></p>
+
+    <h2>這篇「沒說」的事：它是書摘，不是研究報告</h2>
+
+    <p>你讀的底稿是書摘，出處是我們接回去的；原文另一個記憶量變化的說法查不到原始研究，所以沒寫。</p>
+
+    <ol>
+      <li>Ebbinghaus（1885）的受試者只有他自己一個成年人，不能拿來預測你哪天會忘掉哪一章。</li>
+      <li>Dunlosky 等人（2013）的結論是分散練習在多數情況下划算，不代表你每一科都一樣。</li>
+      <li>我們的免費體驗課教的是把字變成畫面，跟時間安排是兩件事。</li>
+    </ol>
+
+    <p><strong>這是研究結果，不是任何課程的承諾。</strong></p>
 
     <div class="faq">
       <h2>你也想問：分散式學習的 3 個問題</h2>
-      <details open><summary>我下週就要考，現在切還來得及嗎？</summary><div class="ans">老實說，一週補不回一個月的分散。我建議你把每天的讀書時間切成兩到三段，每段開始前先自己考自己，剩下的時間就花在想不起來的部分。</div></details>
-      <details><summary>每天二十分鐘會不會太少？</summary><div class="ans">別誤會，研究比較的是同樣總時數的兩種排法，不是叫你讀得更少。你原本要花的時間還是要花，只是分佈不同。</div></details>
-      <details><summary>通勤時用聽的算不算分散學習？</summary><div class="ans">聽是接觸，回想才是練習。你可以聽，但下車前請關掉音檔，自己講出剛剛那三個重點，這一步不做，時間切得再細也只是多聽幾遍。</div></details>
+      <details open><summary>我下週就要考，現在切還來得及嗎？</summary><div class="ans">一週補不回一個月的分散。你把每天的讀書時間切成 2 到 3 段，每段先考自己，剩下的時間花在想不起來的部分。</div></details>
+      <details><summary>每天二十分鐘會不會太少？</summary><div class="ans">研究比的是同樣總時數的兩種排法，不是叫你讀更少。你原本的時間照花，只是分佈不同。</div></details>
+      <details><summary>通勤時用聽的算不算分散學習？</summary><div class="ans">聽是接觸，回想才是練習。你下車前關掉音檔，自己講出剛剛那 3 個重點；這步不做，切得再細也只是多聽幾遍。</div></details>
     </div>
 
+    <div class="callout"><span class="k">結論：總時數不用加，切開就好。</span>同樣的時數拆成好幾天，每次先回想，比一次讀完掉得慢。</div>
+
     <div class="cta">
-      <h2>你這週先做這一件事</h2>
-      <p>你現在打開行事曆，把這週五個二十分鐘標上去，每一段開始前先回想三個重點。</p>
-      <p>不確定你的進度該怎麼切？加 LINE 問我：</p>
+      <h2>你這週先做這一件：把 5 個時段標進行事曆</h2>
+      <p>標好了，還不確定進度怎麼切？加 LINE 問我：</p>
       <a href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener">LINE 諮詢</a>
     </div>
 
@@ -291,7 +302,7 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
 
     <div class="guar"><span class="gk">零風險嘗試</span><a href="kaohsiung.html">高雄心智圖實體班</a>的<a href="course-onsite-basic.html">初階班</a>與<a href="course-onsite-advanced.html">進階班</a>提供<strong>無效退費</strong>：上完第一堂課的當天，若你覺得對孩子沒有幫助，可依<a href="refund.html">退費政策</a>申請全額退費。線上課程屬數位內容，依消費者保護法不適用七天鑑賞期——所以我們更建議先免費上一堂體驗課再決定。</div>
 
-    <div class="refs"><strong>參考文獻</strong><ol><li>HBR 好讀（2020-11-12）。〈「分散式學習」不會讓你讀得更辛苦，卻讓記憶更持久〉，《哈佛商業評論》繁體中文版。<a href="https://www.hbrtaiwan.com/article/19992/distributed-learning-make-your-memory-longer" rel="nofollow noopener" target="_blank">https://www.hbrtaiwan.com/article/19992/distributed-learning-make-your-memory-longer</a> （書摘，原文未標研究出處）</li><li>Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., &amp; Willingham, D. T. (2013). <i>Psychological Science in the Public Interest</i>, 14(1), 4–58. <a href="https://doi.org/10.1177/1529100612453266" rel="nofollow noopener" target="_blank">https://doi.org/10.1177/1529100612453266</a></li><li>Ebbinghaus, H. (1885). <i>Über das Gedächtnis</i>（遺忘曲線原始研究）（受試者為作者本人（成年人））</li></ol></div>
+    <div class="refs"><strong>參考文獻</strong><ol><li>HBR 好讀（2020-11-12）。〈「分散式學習」不會讓你讀得更辛苦，卻讓記憶更持久〉，《哈佛商業評論》繁體中文版。<a href="https://www.hbrtaiwan.com/article/19992/distributed-learning-make-your-memory-longer" rel="nofollow noopener" target="_blank">https://www.hbrtaiwan.com/article/19992/distributed-learning-make-your-memory-longer</a> （書摘，原文未標研究出處）</li><li>Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., &amp; Willingham, D. T. (2013). <i>Psychological Science in the Public Interest</i>, 14(1), 4–58. <a href="https://doi.org/10.1177/1529100612453266" rel="nofollow noopener" target="_blank">https://doi.org/10.1177/1529100612453266</a></li><li>Ebbinghaus, H. (1885). <i>Über das Gedächtnis</i>（遺忘曲線原始研究）（受試者為作者本人（成年人））。<a href="https://psychclassics.yorku.ca/Ebbinghaus/index.htm" rel="nofollow noopener" target="_blank">https://psychclassics.yorku.ca/Ebbinghaus/index.htm</a>（1913 英譯本）</li></ol></div>
   </article>
   <div class="more"><a href="learning.html">← 回頂尖論文期刊</a></div>
 </div>
