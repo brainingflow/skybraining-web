@@ -192,6 +192,19 @@
   @media(max-width:560px){.steps{grid-template-columns:1fr;}}
   .step{background:var(--card);border:1px solid var(--hair);border-radius:22px;box-shadow:var(--sh-1);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;display:flex;flex-direction:column;}
   .step:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .step-img{margin:0;}
+  .lead-seg{display:inline-block;}
+  #why{background:var(--indigo);overflow:hidden;padding-top:clamp(40px,5vw,64px);}
+  #why::before{content:"";position:absolute;right:-90px;top:-180px;width:320px;height:320px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(22,176,168,.22),transparent 70%);}
+  .why-stars{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;}
+  #why .wrap{position:relative;}
+  #why .eyebrow{color:#5fd6cf;}
+  #why .sec-title{color:#fff;}
+  #why .why-sub{display:block;margin-top:.12em;font-size:.86em;color:var(--orange);}
+  #why .sec-lead{color:rgba(255,255,255,.76);}
+  #why .step-img{background:var(--indigo-2);border-color:rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(0,0,0,.42);}
+  #why .step-img:hover{box-shadow:0 20px 44px rgba(0,0,0,.55);}
+  .step-img img{display:block;width:100%;height:auto;aspect-ratio:4/3;}
   .step .num{font-family:var(--round);font-weight:800;font-size:13px;flex:none;line-height:1;opacity:.6;}
   .ic-chip{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;}
   .ic-chip svg{width:28px;height:28px;}
@@ -409,7 +422,7 @@
     <div>
       <span class="pill reveal"><span class="d"></span>適合 10～35 歲・家長信賴</span>
       <h1 class="reveal">其實你不是<span class="hl">記性差</span><br>只是沒學過<br><span class="grad">記憶的方法</span></h1>
-      <p class="hero-sub reveal">你是不是也還在「反覆死背」？換個方式，用畫面與聯想記住一切。圖像記憶、聯想力加上思考模板，讓你記得快、想得廣——學一次，用一輩子。</p>
+      <p class="hero-sub reveal">你是不是也還在「反覆死背」？換個方式，用畫面與聯想記住一切。圖像記憶、聯想力加上思考模板，讓你記得快、想得廣——<strong>學一次，用一輩子。</strong></p>
       <div class="hero-actions reveal">
         <a href="lp.html?p=free-course" class="btn btn-primary">你該學的理由
           <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -461,17 +474,18 @@
 
 <!-- WHY -->
 <section class="block" id="why">
+  <canvas class="why-stars" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">為什麼有效</div>
-      <div class="sec-title">用你大腦本來就擅長的方式<br>去記、去想</div>
-      <p class="sec-lead">你死背的時候，其實是在跟大腦作對；畫面與聯想，才是它的母語。跟著下面四步走，你也能把「記不住、想不出」，練成「記得住、想得到」。</p>
+      <div class="sec-title"><span class="lead-seg">找回大腦 80%</span> <span class="lead-seg">沒開發的潛力</span><span class="why-sub">去記、去想、去思考</span></div>
+      <p class="sec-lead"><span class="lead-seg">死背＝跟大腦打架；</span><span class="lead-seg">畫面與聯想，大腦神經語言。</span><span class="lead-seg">四大絕招，成為超級學霸</span></p>
     </div>
     <div class="steps">
-      <div class="step reveal s-amber"><div class="stp-top"><div class="ic-chip ic-amber"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></svg></div><h3>把文字變畫面</h3><span class="num">01</span></div><div class="stp-body"><p>你要背的單字、課文、年代，轉成看得見、記得住的圖像，大腦一秒就抓住。</p></div></div>
-      <div class="step reveal s-orange"><div class="stp-top"><div class="ic-chip ic-orange"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/></svg></div><h3>記憶宮殿</h3><span class="num">02</span></div><div class="stp-body"><p>拿你最熟悉的空間來收納資訊，一次記住整份清單也不會亂、不會忘。</p></div></div>
-      <div class="step reveal s-teal"><div class="stp-top"><div class="ic-chip ic-teal"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="9" r="2.3"/><circle cx="9" cy="18" r="2.3"/><path d="M8.1 7.1l7.8 1.1M7.6 8.2l1.1 7.6"/></svg></div><h3>聯想式思考</h3><span class="num">03</span></div><div class="stp-body"><p>讓你學過的東西彼此連結、舉一反三；下次遇到新問題，你腦中有框架，不再一片空白。</p></div></div>
-      <div class="step reveal s-indigo"><div class="stp-top"><div class="ic-chip ic-indigo"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/></svg></div><h3>用回功課上</h3><span class="num">04</span></div><div class="stp-body"><p>把方法接回你的考試與複習，成績有感進步，你也會更有信心。</p></div></div>
+      <figure class="step step-img reveal"><img src="home-block-01.webp" srcset="home-block-01.webp 1200w, home-block-01@2x.webp 2400w" sizes="(max-width:560px) calc(100vw - 40px), (max-width:980px) calc(50vw - 50px), 270px" width="1200" height="900" alt="文字→畫面：強迫大腦 1 秒記住：單字、課文、年代" loading="lazy" decoding="async"></figure>
+      <figure class="step step-img reveal"><img src="home-block-02.webp" srcset="home-block-02.webp 1200w, home-block-02@2x.webp 2400w" sizes="(max-width:560px) calc(100vw - 40px), (max-width:980px) calc(50vw - 50px), 270px" width="1200" height="900" alt="記憶宮殿：記憶大師的方法：↑10 倍學習力" loading="lazy" decoding="async"></figure>
+      <figure class="step step-img reveal"><img src="home-block-03.webp" srcset="home-block-03.webp 1200w, home-block-03@2x.webp 2400w" sizes="(max-width:560px) calc(100vw - 40px), (max-width:980px) calc(50vw - 50px), 270px" width="1200" height="900" alt="聯想式思考：6 大絕招：舉一反三；數學↑ 邏輯↑ 智商↑" loading="lazy" decoding="async"></figure>
+      <figure class="step step-img reveal"><img src="home-block-04.webp" srcset="home-block-04.webp 1200w, home-block-04@2x.webp 2400w" sizes="(max-width:560px) calc(100vw - 40px), (max-width:980px) calc(50vw - 50px), 270px" width="1200" height="900" alt="增強考試力：國考、段考、思考：一次練到位" loading="lazy" decoding="async"></figure>
     </div>
   </div>
 </section>
@@ -506,8 +520,8 @@
           <p class="course-intro">其實你不是記性差，只是沒學過記憶的方法。這堂課帶你從「反覆死背」轉換成「用畫面與聯想記住一切」——單字、課文、公式、歷史年代，記得又快又牢。學一次，用一輩子。</p>
           <ul class="learn">
             <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>圖像記憶法：把抽象文字變成記得住的畫面</li>
-            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>記憶宮殿：一次記住整份清單也不亂</li>
-            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>把方法用到功課上，考試複習更輕鬆</li>
+            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>記憶宮殿：學會記憶大師的方法</li>
+            <li><span class="ck mem"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>增強考試力：段考、國考一次練到位</li>
           </ul>
           <div class="course-foot">
             <div class="price"><div class="lbl">買斷・永久觀看</div><div class="val">NT$4,200</div></div>
@@ -520,7 +534,7 @@
         <div class="course-body">
           <p class="course-intro">記得住只是起點；你能靈活運用、舉一反三，才是真正的競爭力。這堂課給你一套思考模板，拆解問題、串連知識、產生想法，從被動接收，變成主動思考的人。</p>
           <ul class="learn">
-            <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>聯想力訓練：讓知識彼此連結、越學越快</li>
+            <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>聯想力訓練：讓知識彼此連結、舉一反三</li>
             <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>思考模板：面對新問題有框架、不再空白</li>
             <li><span class="ck think"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>創意與邏輯並進，寫作、解題都用得上</li>
           </ul>
@@ -723,6 +737,55 @@
   toggle.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');document.body.classList.toggle('menu-open',o);toggle.setAttribute('aria-expanded',o);});
   navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded',false);}));
   document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const f=q.parentElement,a=f.querySelector('.faq-a'),o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});if(!o){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});});
+</script>
+<script>
+(()=>{
+  const sec=document.getElementById('why'),cv=sec&&sec.querySelector('.why-stars');
+  if(!cv||!cv.getContext)return;
+  const ctx=cv.getContext('2d'),rm=matchMedia('(prefers-reduced-motion: reduce)');
+  const COLORS=['#ffffff','#ffe2aa'];
+  let W=0,H=0,stars=[],raf=0,last=0,vis=false;
+  function build(){
+    const w=sec.clientWidth,h=sec.clientHeight;
+    if(!w||!h||(w===W&&Math.abs(h-H)<40&&stars.length))return;
+    W=w;H=h;
+    const d=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(w*d);cv.height=Math.round(h*d);
+    ctx.setTransform(d,0,0,d,0,0);
+    // 手機省電：每顆星分到的面積較大，總數也封頂
+    const n=Math.min(1400,Math.round(w*h/(w<600?1500:900)));
+    stars=[];
+    for(let i=0;i<n;i++){
+      const big=Math.random()>.85;
+      stars.push({x:Math.random()*w,y:Math.random()*h,s:big?1.1+Math.random()*.7:.6+Math.random()*.5,
+        a:.3+Math.random()*.6,p:3000+Math.random()*5000,o:Math.random()*6.283,c:Math.random()<.18?1:0});
+    }
+    stars.sort((a,b)=>a.c-b.c);
+    draw(performance.now());
+  }
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    let c=-1;
+    for(const st of stars){
+      if(st.c!==c){c=st.c;ctx.fillStyle=COLORS[c];}
+      const k=rm.matches?.75:.15+.85*(.5+.5*Math.sin(t/st.p*6.283+st.o));
+      ctx.globalAlpha=st.a*k;
+      if(st.s>1){ctx.beginPath();ctx.arc(st.x,st.y,st.s/2,0,6.283);ctx.fill();}
+      else ctx.fillRect(st.x,st.y,st.s,st.s);
+    }
+    ctx.globalAlpha=1;
+  }
+  // 緩慢閃爍不需要 60fps，約 15fps 重畫就夠順，省電
+  function loop(t){raf=requestAnimationFrame(loop);if(t-last<66)return;last=t;draw(t);}
+  function start(){if(!raf&&vis&&!rm.matches&&!document.hidden)raf=requestAnimationFrame(loop);}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop();}).observe(sec);
+  document.addEventListener('visibilitychange',()=>{document.hidden?stop():start();});
+  const onRm=()=>{stop();draw(performance.now());start();};
+  rm.addEventListener?rm.addEventListener('change',onRm):rm.addListener(onRm);
+  window.ResizeObserver?new ResizeObserver(build).observe(sec):window.addEventListener('resize',build);
+  build();
+})();
 </script>
 <!-- 燈寶 mascot -->
 <div id="naobao">
