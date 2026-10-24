@@ -163,6 +163,9 @@
   .hx{width:clamp(92px,12vw,130px);aspect-ratio:8/7;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:#fff;display:grid;place-items:center;text-align:center;filter:drop-shadow(0 10px 20px rgba(20,22,49,.13));opacity:0;animation:hxfade .7s ease calc(var(--i,0) * .13s) both,hxfloat 5.4s ease-in-out calc(var(--i,0) * -.9s) infinite;}
   .hx i{font-style:normal;font-size:clamp(17px,2.2vw,23px);display:block;line-height:1.2;}
   .hx b{display:block;font-family:var(--round);font-weight:800;font-size:clamp(11.5px,1.5vw,14px);color:var(--indigo);margin-top:2px;}
+  .hx.hx-pic{background:none;clip-path:none;aspect-ratio:600/520;position:relative;filter:drop-shadow(0 10px 22px rgba(20,22,49,.28));}
+  .hx-img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .hx.hx-pic b{position:absolute;left:0;right:0;bottom:13%;margin:0;color:#FFD36A;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.6);}
   .hx-core .hx{background:linear-gradient(135deg,#FFB020,#FF8A3D);width:clamp(104px,13.5vw,146px);filter:drop-shadow(0 14px 30px rgba(255,138,61,.45));animation:hxfade .7s ease both,hxfloat 6s ease-in-out infinite,hxglow 3.6s ease-in-out infinite;}
   .hx-core .hx b{color:#fff;font-size:clamp(15px,2vw,19px);letter-spacing:1px;margin-top:0;}
   @keyframes hxfade{from{opacity:0;}to{opacity:1;}}
@@ -438,12 +441,13 @@
       <div class="brain-card" id="hexCard">
         <div class="hx-blobs"></div>
         <div class="hxw hx-core" style="--x:50%;--y:50%;--p:0"><div class="hx"><b>強腦力</b></div></div>
-        <div class="hxw" style="--x:50%;--y:15%;--p:-.10;--i:1"><div class="hx"><div><i>🖼</i><b>圖像記憶</b></div></div></div>
-        <div class="hxw" style="--x:77.5%;--y:32.5%;--p:.08;--i:2"><div class="hx"><div><i>🔗</i><b>聯想思考</b></div></div></div>
-        <div class="hxw" style="--x:77.5%;--y:67.5%;--p:-.07;--i:3"><div class="hx"><div><i>📈</i><b>成績有感</b></div></div></div>
-        <div class="hxw" style="--x:50%;--y:85%;--p:.10;--i:4"><div class="hx"><div><i>🔬</i><b>科學方法</b></div></div></div>
-        <div class="hxw" style="--x:22.5%;--y:67.5%;--p:-.09;--i:5"><div class="hx"><div><i>🏆</i><b>冠軍系統</b></div></div></div>
-        <div class="hxw" style="--x:22.5%;--y:32.5%;--p:.07;--i:6"><div class="hx"><div><i>💬</i><b>見證無數</b></div></div></div>
+        <!-- 六角圖配色老闆還在討論：換一套圖只要把下面六行的 -hexagon-nolabel 換成新套的字尾 -->
+        <div class="hxw" style="--x:50%;--y:15%;--p:-.10;--i:1"><div class="hx hx-pic"><img class="hx-img" src="skybraining-image-memory-hexagon-nolabel.webp" width="600" height="520" alt="圖像記憶" decoding="async"><b>圖像記憶</b></div></div>
+        <div class="hxw" style="--x:77.5%;--y:32.5%;--p:.08;--i:2"><div class="hx hx-pic"><img class="hx-img" src="skybraining-association-thinking-hexagon-nolabel.webp" width="600" height="520" alt="聯想思考" decoding="async"><b>聯想思考</b></div></div>
+        <div class="hxw" style="--x:77.5%;--y:67.5%;--p:-.07;--i:3"><div class="hx hx-pic"><img class="hx-img" src="skybraining-grade-improvement-hexagon-nolabel.webp" width="600" height="520" alt="成績有感" decoding="async"><b>成績有感</b></div></div>
+        <div class="hxw" style="--x:50%;--y:85%;--p:.10;--i:4"><div class="hx hx-pic"><img class="hx-img" src="skybraining-scientific-method-hexagon-nolabel.webp" width="600" height="520" alt="科學方法" decoding="async"><b>科學方法</b></div></div>
+        <div class="hxw" style="--x:22.5%;--y:67.5%;--p:-.09;--i:5"><div class="hx hx-pic"><img class="hx-img" src="skybraining-champion-system-hexagon-nolabel.webp" width="600" height="520" alt="冠軍系統" decoding="async"><b>冠軍系統</b></div></div>
+        <div class="hxw" style="--x:22.5%;--y:32.5%;--p:.07;--i:6"><div class="hx hx-pic"><img class="hx-img" src="skybraining-testimonials-hexagon-nolabel.webp" width="600" height="520" alt="見證無數" decoding="async"><b>見證無數</b></div></div>
       </div>
     </div>
   </div>
