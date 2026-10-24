@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>心智圖免費課 — 強腦力 SkyBraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --paper:#F4F5F8; --ink:#1F2A44; --text:#2B2F36; --muted:#6B7280; --line:#DDE1E7;
+  --c1:#D64545; --c2:#E8902A; --c3:#3C9A5F; --c4:#2F6FD6; --c5:#7A4FBF; --c6:#1F9E9E;
+  --accent:#D64545;
+}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;overflow:hidden;line-height:1.5}
+.deck{position:relative;height:100%;width:100%}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding-block:5vh 9vh;padding-inline:clamp(16px,6vw,100px);box-sizing:border-box;background:var(--bg)}
+.slide.on{display:flex}
+.slide.part{background:var(--ink);color:#fff}
+.slide.part h1,.slide.part .lead,.slide.part h2{color:#fff}
+.slide.part .eyebrow{color:rgba(255,255,255,.6)}
+.slide.full{padding:0}
+.slide.full img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide.full .cap{position:absolute;left:0;right:0;bottom:0;padding:3vh clamp(16px,6vw,100px) 9vh;background:linear-gradient(transparent,rgba(31,42,68,.85));color:#fff}
+.slide.full .cap h2{color:#fff;margin:0 0 .5vh}
+.slide.full .cap p{margin:0;color:rgba(255,255,255,.85)}
+.slide.full .cap.top{top:0;bottom:auto;padding:4vh clamp(16px,6vw,100px) 3vh;background:linear-gradient(rgba(31,42,68,.85),transparent)}
+.eyebrow{font-size:clamp(12px,1.3vw,16px);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:1.2vh}
+h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(34px,6.5vw,88px);line-height:1.15;color:var(--ink);margin:0;text-wrap:balance}
+h2{font-family:"Noto Serif TC",serif;font-weight:700;font-size:clamp(24px,4vw,58px);line-height:1.2;color:var(--ink);margin:0 0 2.5vh;text-wrap:balance}
+h2 .n{color:var(--k,var(--accent));margin-right:.3em}
+p,li{font-size:clamp(16px,2vw,28px)}
+.lead{font-size:clamp(18px,2.6vw,38px);color:var(--muted);margin:1vh 0 0}
+ul{margin:0;padding-left:1.1em}li{margin:.45em 0}li::marker{color:var(--k,var(--accent))}
+.big{font-family:"Noto Serif TC",serif;font-size:clamp(28px,4.2vw,58px);line-height:1.4;color:var(--ink);text-wrap:balance;max-width:22ch;margin:0}
+.by{font-size:clamp(16px,1.8vw,24px);color:var(--muted);margin-top:3vh}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
+.two.img img{width:100%;height:auto;border-radius:12px;max-height:78vh;object-fit:cover}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:2vw}
+.five{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5vw}
+@media(max-width:760px){.two,.three,.four,.five{grid-template-columns:1fr}}
+.card{background:var(--paper);border-radius:12px;padding:2.5vh 2.2vw}
+.card h3{margin:0 0 .8vh;font-size:clamp(17px,2.2vw,30px);color:var(--k,var(--ink))}
+.card p{margin:0;font-size:clamp(14px,1.7vw,23px);color:var(--muted)}
+.card .num{font-family:"Noto Serif TC",serif;font-size:clamp(30px,4.5vw,64px);font-weight:900;color:var(--k,var(--ink));line-height:1;margin-bottom:1vh;font-variant-numeric:tabular-nums}
+.card.dark{background:rgba(255,255,255,.1)}.card.dark h3{color:#fff}.card.dark p{color:rgba(255,255,255,.8)}
+.bar{display:flex;height:clamp(40px,7vh,70px);border-radius:6px;overflow:hidden;margin:2.5vh 0 1vh}
+.bar div{display:flex;align-items:center;justify-content:center;font-size:clamp(11px,1.4vw,20px);color:#fff;font-weight:500;white-space:nowrap;overflow:hidden;border-right:2px solid var(--bg)}
+.ticks{display:flex;justify-content:space-between;font-size:clamp(11px,1.3vw,18px);color:var(--muted);font-variant-numeric:tabular-nums}
+@media(max-width:760px){.bar{height:auto;min-height:64px}.bar div{white-space:normal;font-size:11px;line-height:1.25;padding:4px 3px;text-align:center}}
+.article{background:var(--paper);border-radius:12px;padding:2.5vh 3vw;font-size:clamp(15px,1.8vw,25px);line-height:1.75;max-height:64vh;overflow:auto}
+.article h3{margin:0 0 1vh;font-family:"Noto Serif TC",serif;color:var(--ink);font-size:1.2em}
+.article p{margin:0 0 .8em;font-size:inherit}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:3vw;align-items:center}
+.vs .x{font-family:"Noto Serif TC",serif;font-size:clamp(24px,4vw,56px);color:var(--muted)}
+.vs pre{margin:0;font-family:inherit;white-space:pre-wrap;font-size:clamp(14px,1.8vw,25px);background:var(--paper);border-radius:10px;padding:2.5vh 2vw;line-height:1.7}
+@media(max-width:760px){.vs{grid-template-columns:1fr}.vs .x{text-align:center}}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:"Noto Sans TC",sans-serif;fill:var(--text)}
+.hist{display:grid;grid-template-columns:repeat(4,1fr);gap:2vw;border-top:3px solid var(--line);padding-top:2vh;margin-top:2vh}
+.hist div{position:relative;padding-top:1.5vh}
+.hist div::before{content:"";position:absolute;top:-3px;left:0;width:40px;height:3px;background:var(--k)}
+.hist b{display:block;font-size:clamp(15px,1.9vw,26px);color:var(--k);font-variant-numeric:tabular-nums}
+.hist strong{display:block;font-size:clamp(15px,1.9vw,25px);color:var(--ink);margin:.3em 0}
+.hist p{margin:0;font-size:clamp(13px,1.4vw,19px);color:var(--muted)}
+@media(max-width:760px){.hist{grid-template-columns:1fr 1fr}}
+.rule{display:grid;grid-template-columns:1.1fr 1fr;gap:4vw;align-items:center}
+@media(max-width:760px){.rule{grid-template-columns:1fr}}
+.tag{display:inline-block;font-size:clamp(12px,1.3vw,16px);letter-spacing:.15em;color:#fff;background:var(--k,var(--ink));padding:.25em .8em;border-radius:999px;margin-bottom:1.5vh}
+table{width:100%;border-collapse:collapse;font-size:clamp(14px,1.8vw,25px)}
+th{text-align:left;font-weight:500;color:var(--muted);font-size:.7em;letter-spacing:.1em;padding:.5em;border-bottom:2px solid var(--line)}
+td{padding:.5em;border-bottom:1px solid var(--line);vertical-align:top}
+.err td:first-child{color:var(--c1);font-weight:700;white-space:nowrap}
+.err td:last-child{color:var(--c3)}
+.tbl{overflow:auto;max-height:70vh}
+.check{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1.5vh 3vw}
+.check li{display:flex;gap:.6em;align-items:flex-start;margin:0}
+.check li::before{content:"☐";color:var(--k);font-size:1.2em;line-height:1.2}
+@media(max-width:760px){.check{grid-template-columns:1fr}}
+.poem{font-family:"Noto Serif TC",serif;font-size:clamp(20px,3vw,44px);line-height:1.7;color:var(--ink);margin:0}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:1.2vh}
+.steps li{display:flex;gap:1em;align-items:baseline;margin:0}
+.steps li::before{counter-increment:s;content:counter(s);font-family:"Noto Serif TC",serif;font-weight:900;color:var(--k,var(--accent));font-size:1.4em;min-width:1.2em}
+.curve{background:var(--paper);border-radius:12px;padding:2vh 1.5vw}
+.src{font-size:clamp(11px,1.2vw,15px);color:var(--muted);margin-top:2vh}
+.kp{display:inline-block;background:var(--c5);color:#fff;font-size:clamp(11px,1.2vw,15px);letter-spacing:.12em;padding:.2em .7em;border-radius:4px;margin-bottom:1vh}
+.blank{border:2px dashed var(--line);border-radius:12px;padding:3vh 2vw;min-height:22vh;color:var(--muted);font-size:clamp(14px,1.7vw,22px)}
+.blank b{display:block;color:var(--ink);font-size:1.15em;margin-bottom:.5vh}
+/* timer */
+.timer{position:absolute;right:clamp(16px,4vw,60px);bottom:clamp(60px,10vh,90px);display:flex;align-items:center;gap:1vw;background:var(--ink);color:#fff;border-radius:14px;padding:1.2vh 1.5vw;box-shadow:0 10px 30px rgba(31,42,68,.25);z-index:7}
+.slide.part .timer{background:#fff;color:var(--ink)}
+.timer .t{font-variant-numeric:tabular-nums;font-size:clamp(32px,5vw,72px);font-weight:700;line-height:1;min-width:3.2ch;text-align:center}
+.timer.done .t{color:#E05555;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:.3}}
+.timer button{background:rgba(127,127,127,.25);color:inherit;border:0;border-radius:8px;padding:.5em .9em;font-size:clamp(13px,1.4vw,18px);cursor:pointer;font-family:inherit}
+.timer button:hover,.timer button:focus-visible{background:rgba(127,127,127,.45);outline:2px solid currentColor;outline-offset:2px}
+
+html,body{height:100%}
+body{display:flex;flex-direction:column}
+.deck{flex:1;min-height:0;height:auto}
+.slide{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-block:4vh 4vh}
+.slide>.in{margin-block:auto;width:100%}
+.slide.full>.in{margin:0}
+.slide img[data-src]{background:var(--paper)}
+@media(max-aspect-ratio:1/1){
+  .slide.full{background:var(--ink);padding:3vh 0}
+  .slide.full>.in{margin-block:auto}
+  .slide.full img{position:relative;inset:auto;height:auto;object-fit:contain;display:block}
+  .slide.full .cap,.slide.full .cap.top{position:relative;background:none;padding:2.5vh clamp(16px,6vw,100px) 1vh}
+}
+.slide.lock{background:#fff var(--bg) center/cover no-repeat;text-align:center;padding:4vh 6vw}
+.slide.lock::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.3),rgba(250,249,245,.62))}
+.slide.lock>.in{position:relative}
+.lk-big{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(30px,6vw,76px);line-height:1.35;color:var(--ink);margin:0 auto 4.5vh;max-width:16em}
+.lk-big span{display:inline-block}
+.lk-btns{display:flex;flex-direction:column;align-items:center;gap:14px}
+.lk-btns a{font-family:"Noto Sans TC",sans-serif;font-weight:700;text-decoration:none;border-radius:999px;padding:.85em 2.2em;font-size:clamp(17px,2vw,22px)}
+.lk-main{color:#fff;background:linear-gradient(135deg,#FFB020,#FF8A3D);box-shadow:0 12px 28px rgba(255,138,61,.35)}
+.lk-line{color:#fff;background:#06C755;font-size:clamp(15px,1.6vw,18px)!important;padding:.7em 1.8em!important}
+.snav{flex:none;position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px clamp(10px,3vw,40px);background:#fff;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;z-index:9}
+.snav .prog{position:absolute;left:0;top:-1px;height:3px;background:#FF8A3D;width:0;transition:width .3s}
+.snav .pg{font-size:clamp(13px,1.4vw,16px);color:var(--muted);text-align:center;flex:1;white-space:nowrap}
+.snav button{font:inherit;font-size:clamp(14px,1.5vw,16px);font-weight:700;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:.55em 1.1em;cursor:pointer;white-space:nowrap}
+.snav button:disabled{opacity:.35;cursor:default}
+.snav button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.snav .fs{background:none;border:0;color:var(--muted);font-weight:500;padding:.55em .6em}
+@media(max-width:520px){.snav .fs{display:none}}
+.key-hint{position:absolute;top:1.5vh;right:clamp(12px,3vw,40px);font-size:13px;color:var(--muted);background:rgba(255,255,255,.7);padding:.15em .6em;border-radius:4px;z-index:5;pointer-events:none}
+@media(hover:none),(max-width:760px){.key-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.snav .prog{transition:none}.timer.done .t{animation:none}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<div class="key-hint">← → 鍵翻頁</div>
+<section class="slide full" data-n="1"><div class="in"><img src="mm-01.webp" alt="心智圖，把思考畫出來" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">強腦力 · 初階課程 · 3 小時</div><h2 style="font-size:clamp(34px,6vw,84px)">心智圖，把思考畫出來</h2><p>今天你會聽十幾個故事、親手畫三張圖、背起來四首唐詩。</p></div></div></section>
+<section class="slide" data-n="2"><div class="in"><div class="eyebrow">今天的三小時</div>
+  <h2>先聽故事，再動手，最後看見證</h2>
+  <div class="bar">
+    <div style="flex:60;background:var(--c5)">第一小時 · 故事：大腦、歷史、大師</div>
+    <div style="flex:10;background:#C9CED6;color:var(--text)">休息</div>
+    <div style="flex:60;background:var(--c1)">第二小時 · 動手：六大規則、三張圖、四首詩</div>
+    <div style="flex:50;background:var(--c2)">第三小時 · 見證與願景</div>
+  </div>
+  <div class="ticks"><span>0:00</span><span>1:00</span><span>1:10</span><span>2:10</span><span>3:00</span></div>
+  <div class="three" style="margin-top:3vh">
+    <div class="card" style="--k:var(--c5)"><h3>故事</h3><p>為什麼人類畫了一千七百年的樹，科學家為什麼都用圖想事情。</p></div>
+    <div class="card" style="--k:var(--c1)"><h3>動手</h3><p>六大規則、五個步驟、你自己的三張圖、四首唐詩現場背起來。</p></div>
+    <div class="card" style="--k:var(--c2)"><h3>見證</h3><p>學長姐的改變，和你一個月、一年後的樣子。</p></div>
+  </div></div></section>
+<section class="slide" data-n="3"><div class="in"><div class="eyebrow">今天的約定</div>
+  <h2>三件事</h2>
+  <ul>
+    <li><b>紙橫放，彩色筆打開。</b>今天不用電腦、不用手機。</li>
+    <li><b>畫醜沒關係。</b>心智圖是給自己看的地圖，不是作品。</li>
+    <li><b>畫錯翻面重來。</b>紙很多，不要用橡皮擦。</li>
+  </ul></div></section>
+<section class="slide full" data-n="4"><div class="in"><img data-src="mm-02.webp" alt="考前一週，小傑把課本抄了三遍" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">一個情境故事 · 一</div><h2>考前一週，小傑把課本抄了三遍</h2><p>越抄越慌，因為他發現抄完還是記不住。</p></div></div></section>
+<section class="slide full" data-n="5"><div class="in"><img data-src="mm-03.webp" alt="考前三天，他改做一件事：一課，一張圖" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">一個情境故事 · 二</div><h2>考前三天，他改做一件事：一課，一張圖</h2><p>把課本闔上，用四到六條主幹，把一課畫在一張紙上。</p></div></div></section>
+<section class="slide full" data-n="6"><div class="in"><img data-src="mm-04.webp" alt="考場上，他閉上眼睛，那張圖就在那裡" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">一個情境故事 · 三</div><h2>考場上，他閉上眼睛，那張圖就在那裡</h2><p>他不是背答案，他是看著腦中的圖，把答案「讀」出來。</p></div></div></section>
+<section class="slide" data-timer="3" data-n="7"><div class="in"><div class="eyebrow">暖身 · 3 分鐘</div>
+  <h2>先用你平常的方式，把這段文章記下來</h2>
+  <div class="article">
+    <h3>台南一日遊</h3>
+    <p>早上八點先到<b>赤崁樓</b>，這裡是荷蘭人在 1653 年建的普羅民遮城，走進去可以看到九塊贔屭石碑和老榕樹。旁邊巷子裡有一間賣碗粿的老店，建議先吃早餐再進去逛。</p>
+    <p>中午走路十分鐘到<b>國華街</b>。這條街最有名的是牛肉湯、春捲和豆花。牛肉湯要趁早，過了十二點常常賣完。吃完可以在街尾的布袋戲偶店停一下。</p>
+    <p>下午搭公車到<b>安平</b>。先看安平古堡，再去旁邊的樹屋，樹根把整間舊倉庫包起來，拍照很好看。四點左右走到港邊吃蝦捲和豆花，看漁船進港。</p>
+    <p>晚上回到市區的<b>神農街</b>。這條老街晚上點燈，兩邊是老房子改的咖啡店和手作小店，適合慢慢走、買伴手禮，結束一天。</p>
+  </div></div></section>
+<section class="slide" data-n="8"><div class="in"><div class="eyebrow">看看你的筆記</div>
+  <h2>三個問題</h2>
+  <ul>
+    <li>蓋住文章，你能說出<b>四個地點</b>嗎？</li>
+    <li>能說出<b>每個地點吃什麼</b>嗎？</li>
+    <li>你的筆記是<b>由上往下一行一行</b>寫的嗎？</li>
+  </ul>
+  <p class="lead">大部分人第三題的答案是「是」。這就是問題所在。</p></div></section>
+<section class="slide" data-n="9"><div class="in"><p class="big">「一圖勝千言。」</p>
+  <p class="by">這句話每個人都聽過，但很少人知道大腦為什麼真的這樣運作。</p></div></section>
+<section class="slide part" data-n="10"><div class="in"><div class="eyebrow">故事 · 第一章</div>
+  <h1>大腦怎麼記東西</h1>
+  <p class="lead">四個跟記憶有關的發現，心智圖剛好全用上。</p></div></section>
+<section class="slide" data-n="11"><div class="in"><div class="two img">
+    <img data-src="mm-05.webp" alt="大腦不是一行一行想的" decoding="async">
+    <div>
+      <div class="eyebrow">發現一 · 放射性思考</div>
+      <h2>大腦不是一行一行想的</h2>
+      <p>我說「台南」，你腦中同時跳出好幾個東西：牛肉湯、古蹟、熱、某個朋友。它們不是排隊出現的，是一起冒出來的。</p>
+      <p class="lead">這叫放射性思考。筆記如果是一行一行的，就是在逼大腦排隊。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="12"><div class="in"><div class="two img">
+    <img data-src="mm-06.webp" alt="圖加字，記得比只有字久" decoding="async">
+    <div>
+      <div class="eyebrow">發現二 · 雙重編碼</div>
+      <span class="kp">強腦力文章 · 圖像記憶法</span>
+      <h2>圖加字，記得比只有字久</h2>
+      <ul>
+        <li>1971 年，心理學家佩維奧（Paivio）提出<b>雙碼理論</b>：文字一條路、圖像一條路，兩條路一起存，等於存了兩份備份</li>
+        <li>1967 年 Shepard 的實驗：看過的圖片，比看過的文字更容易被認出來</li>
+      </ul>
+      <p class="src">出處：skybraining.com 〈圖像記憶法是什麼〉</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="13"><div class="in"><div class="two img">
+    <img data-src="mm-07.webp" alt="一次只能抓住 5 到 9 個東西" decoding="async">
+    <div>
+      <div class="eyebrow">發現三 · 分塊</div>
+      <h2>一次只能抓住 5 到 9 個東西</h2>
+      <ul>
+        <li>1956 年，米勒（George Miller）提出短期記憶容量大約是<b>7 加減 2</b></li>
+        <li>0912345678 很難記，0912-345-678 就好記，因為分成了三塊</li>
+        <li>把東西<b>分組</b>，每組不超過 7 個，就好記得多</li>
+      </ul>
+      <p class="lead">規則二「主幹 4 到 7 條」就是分塊。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="14"><div class="in"><div class="eyebrow">發現四 · 遺忘曲線</div>
+  <span class="kp">強腦力文章 · 遺忘曲線</span>
+  <h2>不複習，隔天就忘一大半</h2>
+  <div class="two">
+    <div class="curve">
+      <svg viewBox="0 0 400 240" aria-label="遺忘曲線">
+        <line x1="40" y1="200" x2="380" y2="200" stroke="var(--line)" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="200" stroke="var(--line)" stroke-width="2"/>
+        <path d="M40 30 C70 120,110 160,180 175 S330 192,380 195" fill="none" stroke="var(--c1)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M40 30 C60 70,80 80,100 60 C120 90,160 100,180 70 C210 100,260 100,300 80 C330 95,360 95,380 88" fill="none" stroke="var(--c3)" stroke-width="4" stroke-dasharray="7 5" stroke-linecap="round"/>
+        <text x="30" y="34" text-anchor="end" font-size="12" fill="var(--muted)">100%</text>
+        <text x="30" y="204" text-anchor="end" font-size="12" fill="var(--muted)">0</text>
+        <text x="60" y="222" font-size="12" fill="var(--muted)">當天</text>
+        <text x="150" y="222" font-size="12" fill="var(--muted)">1 天</text>
+        <text x="260" y="222" font-size="12" fill="var(--muted)">1 週</text>
+        <text x="340" y="222" font-size="12" fill="var(--muted)">1 個月</text>
+        <text x="250" y="170" font-size="13" fill="var(--c1)">不複習</text>
+        <text x="250" y="70" font-size="13" fill="var(--c3)">分次複習</text>
+      </svg>
+    </div>
+    <div>
+      <ul>
+        <li>1885 年艾賓浩斯用自己做實驗，畫出這條曲線：<b>前 24 小時</b>掉最快</li>
+        <li>2015 年 Murre 與 Dros 在《PLoS ONE》重做一次，結果大致一樣</li>
+        <li>2006 年 Cepeda 整合大量研究：同樣的總時間，<b>分次複習</b>的長期記憶比一次讀完好</li>
+      </ul>
+      <p class="src">出處：skybraining.com 〈遺忘曲線是什麼〉</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="15"><div class="in"><div class="eyebrow">強腦力的研究整理 · 一</div>
+  <span class="kp">強腦力文章 · 國小背課文技巧</span>
+  <h2>唸出聲，比默讀多認出 16 個百分點</h2>
+  <div class="three">
+    <div class="card" style="--k:var(--c1)"><div class="num">84%</div><h3>唸出聲的字</h3><p>事後辨認正確率</p></div>
+    <div class="card" style="--k:var(--muted)"><div class="num">68%</div><h3>默讀的字</h3><p>事後辨認正確率</p></div>
+    <div class="card" style="--k:var(--c4)"><h3>實驗</h3><p>2020 年，澳洲天主教大學，布里斯本一所小學，41 名 7 到 10 歲孩子，發表於《Child Development》。</p></div>
+  </div>
+  <p class="lead">做法：畫完心智圖，指著圖<b>唸出聲</b>講一遍。多開一條「聽覺」的路。</p>
+  <p class="src">出處：skybraining.com 〈國小背課文技巧〉。註：此研究測的是英文單字辨認，未追蹤長期記憶。</p></div></section>
+<section class="slide" data-n="16"><div class="in"><div class="eyebrow">強腦力的研究整理 · 二</div>
+  <span class="kp">強腦力文章 · 國中背書方法</span>
+  <h2>考過自己的章節，多答對 13 個百分點</h2>
+  <div class="tbl"><table>
+    <tr><th>同一本課本</th><th>有小考的章節</th><th>沒小考的章節</th></tr>
+    <tr><td>章節考</td><td style="color:var(--c3);font-weight:700">94%</td><td>81%</td></tr>
+    <tr><td>一、兩個月後再考</td><td style="color:var(--c3);font-weight:700">79%</td><td>67%</td></tr>
+  </table></div>
+  <p class="lead">Roediger 團隊 2011 年，美國一所中學六年級社會科。重點不是考試，是「闔上書，自己回想」這個動作。</p>
+  <p class="src">出處：skybraining.com 〈國中背書方法〉。註：研究僅涵蓋一所學校、一位老師。</p></div></section>
+<section class="slide" data-n="17"><div class="in"><div class="eyebrow">強腦力的研究整理 · 三</div>
+  <span class="kp">強腦力文章 · 國小記憶力訓練</span>
+  <h2>75 篇兒童實驗，找出 3 類確實有效的做法</h2>
+  <div class="three">
+    <div class="card" style="--k:var(--c1)"><h3>分散學習</h3><p>同樣的量分次做，中間隔開。</p></div>
+    <div class="card" style="--k:var(--c4)"><h3>提取練習</h3><p>讀完闔書，主動回想：小考、閃卡、默寫。</p></div>
+    <div class="card" style="--k:var(--c3)"><h3>深度編碼</h3><p>記的時候多留幾條日後找得到的路，最簡單的是唸出聲。</p></div>
+  </div>
+  <p class="lead">心智圖一張紙同時做到三件事：分次畫、蓋住重畫、圖像加唸出聲。</p>
+  <p class="src">出處：skybraining.com 〈國小記憶力訓練方法〉</p></div></section>
+<section class="slide" data-n="18"><div class="in"><div class="eyebrow">四個發現，一張圖</div>
+  <h2>心智圖就是把這四件事畫在同一張紙上</h2>
+  <div class="four">
+    <div class="card" style="--k:var(--c1)"><h3>放射</h3><p>從中心往外長，和腦子一樣。</p></div>
+    <div class="card" style="--k:var(--c4)"><h3>圖像</h3><p>多開一條記憶的路。</p></div>
+    <div class="card" style="--k:var(--c2)"><h3>分塊</h3><p>主幹 4 到 7 條。</p></div>
+    <div class="card" style="--k:var(--c3)"><h3>好複習</h3><p>一眼看完，一分鐘複習。</p></div>
+  </div></div></section>
+<section class="slide part" data-n="19"><div class="in"><div class="eyebrow">故事 · 第二章</div>
+  <h1>它從哪裡來</h1>
+  <p class="lead">把想法畫成樹，人類做了一千七百年。</p></div></section>
+<section class="slide" data-n="20"><div class="in"><div class="eyebrow">歷史</div>
+  <h2>從一棵樹，到一張圖</h2>
+  <div class="hist">
+    <div style="--k:var(--c5)"><b>3 世紀</b><strong>波菲利之樹</strong><p>希臘哲學家波菲利用樹狀圖整理亞里斯多德的分類，是最早的知識結構圖。</p></div>
+    <div style="--k:var(--c6)"><b>13 世紀</b><strong>拉蒙・柳利</strong><p>加泰隆尼亞哲學家用圓盤和分支圖組合概念，被視為視覺思考的先驅。</p></div>
+    <div style="--k:var(--c2)"><b>15 世紀</b><strong>達文西筆記</strong><p>圖文混排、關鍵字加草圖，最接近現代心智圖的精神。</p></div>
+    <div style="--k:var(--c1)"><b>1974</b><strong>東尼・博贊</strong><p>在 BBC 節目與《Use Your Head》提出「心智圖」這個名詞與畫法。</p></div>
+  </div></div></section>
+<section class="slide" data-n="21"><div class="in"><div class="two img">
+    <img data-src="mm-08.webp" alt="波菲利之樹：第一張分類樹" decoding="async">
+    <div>
+      <div class="eyebrow">歷史 · 3 世紀</div>
+      <h2>波菲利之樹：第一張分類樹</h2>
+      <p>哲學家波菲利為了解釋亞里斯多德的分類法，把「實體」往下拆成「有形、無形」，再拆成「有生命、無生命」，一路拆到「人」。中世紀的學生就靠這棵樹背邏輯學。</p>
+      <p class="lead">一個大概念拆成幾個小概念，再往下拆。這個動作一千七百年沒變過。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="22"><div class="in"><div class="eyebrow">歷史 · 1960 到 1970 年代</div>
+  <h2>科學家開始研究「概念怎麼連」</h2>
+  <div class="two">
+    <div class="card" style="--k:var(--c6)"><h3>語意網路 · 1960 年代</h3><p>柯林斯（Collins）與奎利恩（Quillian）提出：記憶裡的概念像一張網，「金絲雀」連到「鳥」，「鳥」連到「會飛」。越近的概念，想起來越快。</p></div>
+    <div class="card" style="--k:var(--c3)"><h3>概念圖 · 1970 年代</h3><p>康乃爾大學的諾瓦克（Novak）發展出「概念圖」，用方框和連線標示概念之間的關係，用來研究兒童怎麼學科學。</p></div>
+  </div>
+  <p class="lead">心智圖是在這個背景下誕生的，不是憑空想出來的。</p></div></section>
+<section class="slide full" data-n="23"><div class="in"><img data-src="mm-09.webp" alt="東尼・博贊給了它一個名字" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">歷史 · 1974 · 強腦力文章〈心智圖是誰發明的〉</div><h2>東尼・博贊給了它一個名字</h2><p>他自己說，放射狀的圖是「借來的老方法」。他做的是把規則整理清楚，然後讓全世界都看到。</p><p class="src" style="color:rgba(255,255,255,.7)">人物肖像為 AI 生成示意圖</p></div></div></section>
+<section class="slide" data-n="24"><div class="in"><div class="two img">
+    <img data-src="mm-10.webp" alt="從電視，到紙上，到螢幕上" decoding="async">
+    <div>
+      <div class="eyebrow">歷史 · 1990 年代到今天</div>
+      <h2>從電視，到紙上，到螢幕上</h2>
+      <ul>
+        <li><b>1974</b>：BBC 節目，心智圖第一次上電視</li>
+        <li><b>1990 年代</b>：MindManager 等軟體，進入企業會議室</li>
+        <li><b>2000 年代</b>：XMind、FreeMind 免費工具普及</li>
+        <li><b>今天</b>：AI 可以幫你生成心智圖，但<b>生成的不會進你腦子</b>，手畫的才會</li>
+      </ul>
+    </div>
+  </div></div></section>
+<section class="slide part" data-n="25"><div class="in"><div class="eyebrow">故事 · 第三章</div>
+  <h1>大師的那張圖</h1>
+  <p class="lead">12 位改變世界的人。他們沒有一個學過心智圖，但筆記本長得都很像。</p>
+  <p class="src" style="color:rgba(255,255,255,.7)">人物肖像為 AI 生成示意圖</p></div></section>
+<section class="slide full" data-n="26"><div class="in"><img data-src="mm-11.webp" alt="達文西：七千頁的圖文筆記" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">大師 · 一 · 1452 到 1519</div><h2>達文西：七千頁的圖文筆記</h2><p>幾乎每一頁都是圖和字混在一起。字只當註解，圖才是主角。</p></div></div></section>
+<section class="slide" data-n="27"><div class="in"><div class="two img">
+    <img data-src="mm-12.webp" alt="他早就在同一頁上「畫著想」" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 一 · 強腦力文章〈達文西的筆記本〉</div>
+      <h2>他早就在同一頁上「畫著想」</h2>
+      <ul>
+        <li>圖和字<b>放在同一頁</b>，互相解釋</li>
+        <li>一個想法沒想完，先畫下來，旁邊留空白</li>
+        <li>箭頭把兩張不相干的草圖連起來，新的想法就從那條箭頭長出來</li>
+      </ul>
+      <p class="lead">一個觀念：先畫，再寫。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="28"><div class="in"><div class="two img">
+    <img data-src="mm-13.webp" alt="達爾文：一棵歪歪扭扭的樹" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 二 · 1837 · 強腦力文章〈達爾文寫下「我想」的那一頁〉</div>
+      <h2>達爾文：一棵歪歪扭扭的樹</h2>
+      <p>1837 年 7 月，筆記本 B 第 36 頁，他畫了一棵分叉的樹，旁邊寫了兩個字：<b>I think</b>。22 年後，這棵樹變成《物種起源》裡唯一的一張插圖。</p>
+      <p class="lead">最重要的想法，往往先是一張草圖，不是一篇文章。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="29"><div class="in"><div class="two img">
+    <img data-src="mm-14.webp" alt="伽利略：把看到的畫下來，才算看到" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 三 · 1609</div>
+      <h2>伽利略：把看到的畫下來，才算看到</h2>
+      <p>1609 年他把自製望遠鏡對準月亮，發現月面不是光滑的，有山有谷。他沒有只用文字描述，他畫了一系列月相水彩，連陰影長度都畫出來，再用陰影算出山的高度。</p>
+      <p class="lead">畫，讓他看見文字看不見的東西：陰影的長度。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="30"><div class="in"><div class="two img">
+    <img data-src="mm-15.webp" alt="牛頓：一本什麼都畫的「廢紙簿」" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 四 · 1665</div>
+      <h2>牛頓：一本什麼都畫的「廢紙簿」</h2>
+      <p>1665 年倫敦鬧瘟疫，劍橋停課，牛頓回鄉下待了十八個月。他有一本自己叫做「Waste Book」的筆記本，裡面是三稜鏡分光的草圖、蘋果落地的推算、幾何圖形、問題清單，全部混在一起。微積分、光學、萬有引力，都是那十八個月在那本簿子上長出來的。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="31"><div class="in"><div class="two img">
+    <img data-src="mm-16.webp" alt="門得列夫：先把全部攤開，答案才會浮出來" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 五 · 1869 · 強腦力文章〈門得列夫的紙牌〉</div>
+      <h2>門得列夫：先把全部攤開，答案才會浮出來</h2>
+      <p>他把當時已知的 63 種元素一個一個寫在卡片上，像玩接龍一樣在桌上反覆排。排不順的地方他留空格，說「這裡應該有一個還沒發現的元素」。後來那些空格一個一個被填上了。</p>
+      <p class="lead">心智圖的第一步也是這樣：先把關鍵字全部攤開，再分組。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="32"><div class="in"><div class="two img">
+    <img data-src="mm-17.webp" alt="愛迪生：三千五百本筆記本" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 六 · 1847 到 1931</div>
+      <h2>愛迪生：三千五百本筆記本</h2>
+      <p>他一生留下約三千五百本筆記，裡面是草圖、關鍵字、箭頭、實驗數字。他要求實驗室每個人隨手記，有想法先畫下來，再討論。燈泡、留聲機，都是先出現在筆記本的角落。</p>
+      <p class="lead">靈感不是等來的，是畫出來的。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="33"><div class="in"><div class="two img">
+    <img data-src="mm-18.webp" alt="特斯拉：機器在腦中先跑過一遍" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 七 · 1856 到 1943 · 強腦力文章〈特斯拉的腦內工廠〉</div>
+      <h2>特斯拉：機器在腦中先跑過一遍</h2>
+      <p>他在自傳裡說，他設計一台馬達，不用畫圖、不用做模型，在腦中把它組裝起來，讓它運轉幾個星期，再「打開」看哪個零件磨損。他說腦中的畫面跟實物一樣清楚。</p>
+      <p class="lead">他是圖像記憶的極端案例。你不用做到他那樣，但方向是一樣的。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="34"><div class="in"><div class="two img">
+    <img data-src="mm-19.webp" alt="愛因斯坦：先有畫面，才有公式" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 八 · 1879 到 1955 · 強腦力文章〈愛因斯坦說：他思考的時候，幾乎不用文字〉</div>
+      <h2>愛因斯坦：先有畫面，才有公式</h2>
+      <p>數學家阿達瑪寄問卷問他怎麼思考。他回答：文字在他的思考裡幾乎不扮演角色，他用的是可以自由組合的畫面和符號，想清楚之後才費力翻成文字和公式。相對論的起點，是他十六歲時想像自己追著一道光跑。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="35"><div class="in"><div class="two img">
+    <img data-src="mm-20.webp" alt="「如果我追著一道光跑？」" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 八</div>
+      <h2>「如果我追著一道光跑？」</h2>
+      <p class="lead">一個十六歲少年的畫面，十年後變成相對論。</p>
+      <p>你的小孩說「我在發呆」的時候，有時候他是在做這件事。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="36"><div class="in"><div class="two img">
+    <img data-src="mm-21.webp" alt="費曼：把算不完的公式，畫成幾條線" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 九 · 1948 · 強腦力文章〈費曼圖〉</div>
+      <h2>費曼：把算不完的公式，畫成幾條線</h2>
+      <p>1948 年費曼發明「費曼圖」，用幾條線和一個點表示粒子的碰撞，原本好幾頁的計算變成一張小圖。今天全世界的物理系都在畫這種圖。他也以「費曼學習法」聞名：能用簡單的圖和話講給別人聽，才算真的懂。</p>
+    </div>
+  </div></div></section>
+<section class="slide" data-n="37"><div class="in"><div class="two img">
+    <img data-src="mm-22.webp" alt="講不出來，就是還沒懂。畫不出來，也是。" decoding="async">
+    <div>
+      <div class="eyebrow">大師 · 九</div>
+      <h2>講不出來，就是還沒懂。畫不出來，也是。</h2>
+      <p class="lead">等一下你畫心智圖卡住的地方，不要慌，那是你的大腦在告訴你：這裡要回去讀。</p>
+    </div>
+  </div></div></section>
+<section class="slide full" data-n="38"><div class="in"><img data-src="mm-23.webp" alt="柏納李：主管在封面寫「模糊，但令人興奮」" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">大師 · 十 · 1989 · 強腦力文章〈全球資訊網的起點，是一張泡泡加箭頭的手繪圖〉</div><h2>柏納李：主管在封面寫「模糊，但令人興奮」</h2><p>1989 年 3 月，他在 CERN 交出一份提案，附一張手繪的泡泡加箭頭圖。箭頭上寫著「包含」「寫了」「描述」。那張圖就是全球資訊網。</p></div></div></section>
+<section class="slide" data-n="39"><div class="in"><div class="eyebrow">大師 · 十 · 給心智圖的一個提醒</div>
+  <h2>只畫連線不夠，要寫出連線的意義</h2>
+  <div class="two">
+    <div>
+      <ul>
+        <li>柏納李的箭頭上有字：「包含」「寫了」「描述」</li>
+        <li>能說出兩件事<b>之間的關係</b>，比背定義更有助於學習</li>
+        <li>所以心智圖的分支上可以標：<b>因為、所以、例如、相反</b></li>
+        <li>跨主幹的箭頭，也寫上它為什麼連</li>
+      </ul>
+      <p class="src">出處：skybraining.com 〈全球資訊網的起點〉</p>
+    </div>
+    <svg viewBox="0 0 400 240" aria-label="關係詞示意">
+      <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--c6)"/></marker></defs>
+      <circle cx="80" cy="70" r="40" fill="#fff" stroke="var(--c1)" stroke-width="3"/><text x="80" y="76" text-anchor="middle" font-size="15" fill="var(--c1)">赤崁樓</text>
+      <circle cx="320" cy="70" r="40" fill="#fff" stroke="var(--c4)" stroke-width="3"/><text x="320" y="76" text-anchor="middle" font-size="15" fill="var(--c4)">荷蘭人</text>
+      <circle cx="200" cy="190" r="40" fill="#fff" stroke="var(--c2)" stroke-width="3"/><text x="200" y="196" text-anchor="middle" font-size="15" fill="var(--c2)">神農街</text>
+      <path d="M122 70 L278 70" stroke="var(--c6)" stroke-width="2.5" marker-end="url(#ar2)"/><text x="200" y="60" text-anchor="middle" font-size="13" fill="var(--c6)">1653 年建於</text>
+      <path d="M100 105 L170 160" stroke="var(--c6)" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ar2)"/><text x="110" y="150" text-anchor="middle" font-size="13" fill="var(--c6)">都是老房子</text>
+    </svg>
+  </div></div></section>
+<section class="slide full" data-n="40"><div class="in"><img data-src="mm-24.webp" alt="迪士尼：分鏡板的誕生" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">加映 · 1933 · 強腦力文章〈迪士尼把整部電影掛上牆〉</div><h2>迪士尼：分鏡板的誕生</h2><p>1930 年代工作室畫稿幾千張，沒有人看得完。動畫師 Webb Smith 把重點畫稿釘上牆，整部片一眼看完。《三隻小豬》之後成為標準流程。</p></div></div></section>
+<section class="slide full" data-n="41"><div class="in"><img data-src="mm-25.webp" alt="石川馨：把「為什麼」一路拆到底" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">加映 · 1943 · 強腦力文章〈石川馨的魚骨圖〉</div><h2>石川馨：把「為什麼」一路拆到底</h2><p>1943 年在川崎製鐵，他跟工程師討論品質問題時畫了一張圖：右邊寫問題，左邊斜出大刺代表原因類別，大刺再長小刺。大家叫它魚骨圖。</p></div></div></section>
+<section class="slide" data-n="42"><div class="in"><div class="eyebrow">12 位大師的共同點</div>
+  <h2>他們都不是「寫」筆記，是「畫」筆記</h2>
+  <div class="three">
+    <div class="card" style="--k:var(--c1)"><h3>圖是主角</h3><p>字只是圖的註解。達文西、愛迪生。</p></div>
+    <div class="card" style="--k:var(--c4)"><h3>想法先畫下來</h3><p>先有草圖，才有文章。達爾文早了 22 年，柏納李的提案也是先畫圖。</p></div>
+    <div class="card" style="--k:var(--c3)"><h3>攤開，才看得見</h3><p>幾頁的東西變成一張圖。門得列夫、費曼、迪士尼。</p></div>
+  </div>
+  <p class="lead">心智圖做的就是這三件事，只是多了一套規則讓你今天就學得會。</p></div></section>
+<section class="slide part" data-timer="10" data-n="43"><div class="in"><div class="eyebrow">休息</div>
+  <h1>10 分鐘</h1>
+  <p class="lead">回來之後，紙橫放、彩色筆打開。</p></div></section>
+<section class="slide part" data-n="44"><div class="in"><div class="eyebrow">第二小時 · 動手</div>
+  <h1>六大規則</h1>
+  <p class="lead">規則不多，但每一條都有理由，而且你剛剛都聽過了。</p></div></section>
+<section class="slide full" data-n="45"><div class="in"><img data-src="mm-26.webp" alt="中心圖、主幹、關鍵字、顏色、層次、圖像連結" decoding="async">
+  <div class="cap top"><div class="eyebrow" style="color:rgba(255,255,255,.7)">六大規則 · 總覽</div><h2>中心圖、主幹、關鍵字、顏色、層次、圖像連結</h2></div></div></section>
+<section class="slide" style="--k:var(--c1)" data-n="46"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則一</span>
+      <h2><span class="n">1</span>中心圖</h2>
+      <ul><li>畫在紙張<b>正中央</b>，紙要橫放</li><li>一定要有<b>圖</b>，不是只寫字框起來</li><li>至少用<b>三種顏色</b></li><li>兩分鐘內畫完，不求美</li></ul>
+      <p class="lead">理由：雙重編碼，多開一條路。</p>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="中心圖示意">
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <circle cx="160" cy="120" r="50" fill="#FFE2B8" stroke="var(--c1)" stroke-width="4"/>
+      <circle cx="140" cy="108" r="6" fill="var(--ink)"/><circle cx="180" cy="108" r="6" fill="var(--ink)"/>
+      <path d="M135 135 Q160 160 185 135" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M118 90 Q160 50 202 90" fill="none" stroke="var(--c4)" stroke-width="8" stroke-linecap="round"/>
+      <text x="160" y="200" text-anchor="middle" font-size="16" fill="var(--muted)">我</text>
+    </svg>
+  </div></div></section>
+<section class="slide" style="--k:var(--c2)" data-n="47"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則二</span>
+      <h2><span class="n">2</span>主幹</h2>
+      <ul><li>從中心<b>放射</b>出去的<b>曲線</b></li><li>由<b>粗到細</b>，像樹枝</li><li><b>4 到 7 條</b>，太多就合併</li><li>先決定主幹要放哪幾個大類，再動筆</li></ul>
+      <p class="lead">理由：放射性思考、米勒的 7 加減 2。</p>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="主幹示意">
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <path d="M160 120 C130 100,90 60,40 40" fill="none" stroke="var(--c1)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M160 120 C190 100,230 60,280 40" fill="none" stroke="var(--c4)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M160 120 C130 140,90 180,40 200" fill="none" stroke="var(--c3)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M160 120 C190 140,230 180,280 200" fill="none" stroke="var(--c2)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M160 120 C120 122,80 122,30 122" fill="none" stroke="var(--c5)" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="160" cy="120" r="30" fill="#fff" stroke="var(--ink)" stroke-width="3"/>
+    </svg>
+    </div></div></section>
+<section class="slide" style="--k:var(--c3)" data-n="48"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則三</span>
+      <h2><span class="n">3</span>關鍵字</h2>
+      <ul><li><b>一條線一個詞</b>，不寫句子</li><li>線的長度等於字的長度</li><li>名詞優先，動詞其次</li><li>想不出一個詞？代表這個分支要拆開</li></ul>
+      <p class="lead">理由：詞是鉤子，句子是繩子。回想時大腦抓鉤子，自己長出繩子。</p>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="關鍵字示意">
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <path d="M30 70 C80 60,130 60,180 55" fill="none" stroke="var(--c1)" stroke-width="5" stroke-linecap="round"/>
+      <text x="40" y="50" font-size="13" fill="var(--c1)">牛肉湯要趁早去不然會賣完</text>
+      <text x="190" y="60" font-size="22" fill="var(--c1)">✗</text>
+      <path d="M30 150 C60 148,90 148,110 146" fill="none" stroke="var(--c3)" stroke-width="5" stroke-linecap="round"/>
+      <text x="40" y="140" font-size="16" fill="var(--c3)">牛肉湯</text>
+      <path d="M110 146 C140 140,160 130,190 128" fill="none" stroke="var(--c3)" stroke-width="3.5" stroke-linecap="round"/>
+      <text x="140" y="124" font-size="14" fill="var(--c3)">趁早</text>
+      <path d="M110 146 C140 155,160 165,190 168" fill="none" stroke="var(--c3)" stroke-width="3.5" stroke-linecap="round"/>
+      <text x="140" y="185" font-size="14" fill="var(--c3)">12 點前</text>
+      <text x="215" y="155" font-size="22" fill="var(--c3)">✓</text>
+    </svg>
+  </div></div></section>
+<section class="slide" style="--k:var(--c4)" data-n="49"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則四</span>
+      <h2><span class="n">4</span>顏色</h2>
+      <ul><li><b>一條主幹一個顏色</b></li><li>整條分支、次分支<b>延用同色</b></li><li>顏色是地圖的「區域」，眼睛一掃就知道在哪一塊</li><li>全黑筆是初學者最常見的錯</li></ul>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="顏色示意">
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <path d="M160 120 C130 100,90 60,40 40" fill="none" stroke="var(--c1)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M40 40 C30 30,25 25,15 20" fill="none" stroke="var(--c1)" stroke-width="4"/>
+      <path d="M40 40 C30 50,25 60,15 65" fill="none" stroke="var(--c1)" stroke-width="4"/>
+      <path d="M160 120 C190 100,230 60,280 40" fill="none" stroke="var(--c4)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M280 40 C290 30,295 25,305 20" fill="none" stroke="var(--c4)" stroke-width="4"/>
+      <path d="M280 40 C290 50,295 60,305 65" fill="none" stroke="var(--c4)" stroke-width="4"/>
+      <path d="M160 120 C130 140,90 180,40 200" fill="none" stroke="var(--c3)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M40 200 C30 190,25 185,15 180" fill="none" stroke="var(--c3)" stroke-width="4"/>
+      <path d="M160 120 C190 140,230 180,280 200" fill="none" stroke="var(--c2)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M280 200 C290 210,295 215,305 220" fill="none" stroke="var(--c2)" stroke-width="4"/>
+      <circle cx="160" cy="120" r="30" fill="#fff" stroke="var(--ink)" stroke-width="3"/>
+    </svg>
+  </div></div></section>
+<section class="slide" style="--k:var(--c5)" data-n="50"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則五</span>
+      <h2><span class="n">5</span>層次</h2>
+      <ul><li>主幹、次分支、細節</li><li><b>由內往外、由大到小</b></li><li>線越外面越細，字越外面越小</li><li>檢查方法：問「這個底下還有什麼？」</li></ul>
+      <p class="lead">理由：波菲利之樹。一千七百年的分類法。</p>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="層次示意">
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <path d="M40 120 C90 118,130 118,170 115" fill="none" stroke="var(--c5)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M170 115 C200 100,220 80,250 70" fill="none" stroke="var(--c5)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M170 115 C200 130,220 150,250 160" fill="none" stroke="var(--c5)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M250 70 C270 60,285 55,300 50" fill="none" stroke="var(--c5)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M250 70 C270 80,285 85,300 90" fill="none" stroke="var(--c5)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M250 160 C270 170,285 175,300 180" fill="none" stroke="var(--c5)" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="60" y="108" font-size="18" font-weight="700" fill="var(--c5)">安平</text>
+      <text x="195" y="88" font-size="14" fill="var(--c5)">古堡</text>
+      <text x="195" y="150" font-size="14" fill="var(--c5)">港邊</text>
+      <text x="268" y="45" font-size="11" fill="var(--c5)">樹屋</text>
+      <text x="268" y="100" font-size="11" fill="var(--c5)">拍照</text>
+      <text x="268" y="192" font-size="11" fill="var(--c5)">蝦捲</text>
+    </svg>
+  </div></div></section>
+<section class="slide" style="--k:var(--c6)" data-n="51"><div class="in"><div class="rule">
+    <div>
+      <span class="tag">規則六</span>
+      <h2><span class="n">6</span>圖像與連結</h2>
+      <ul><li>重點旁邊加<b>小圖示</b>：星星、驚嘆號、簡筆畫</li><li>不同分支有關係，用<b>箭頭</b>連起來，箭頭上寫為什麼</li><li>圖是記憶的鉤子，不是裝飾</li><li>畫得醜沒關係，自己看得懂就好</li></ul>
+      <p class="lead">理由：達文西的箭頭、柏納李的關係詞。</p>
+    </div>
+    <svg viewBox="0 0 320 240" aria-label="圖像連結示意">
+      <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--c6)"/></marker></defs>
+      <rect x="10" y="10" width="300" height="220" rx="8" fill="var(--paper)"/>
+      <path d="M160 120 C130 100,90 60,40 40" fill="none" stroke="var(--c1)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M160 120 C190 140,230 180,280 200" fill="none" stroke="var(--c2)" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="160" cy="120" r="30" fill="#fff" stroke="var(--ink)" stroke-width="3"/>
+      <text x="40" y="30" text-anchor="middle" font-size="14" fill="var(--c1)">赤崁樓</text>
+      <text x="280" y="222" text-anchor="middle" font-size="14" fill="var(--c2)">神農街</text>
+      <text x="70" y="70" font-size="22">⭐</text>
+      <path d="M60 50 C120 20,250 60,270 185" fill="none" stroke="var(--c6)" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+      <text x="200" y="60" font-size="12" fill="var(--c6)">都是老房子</text>
+    </svg>
+  </div></div></section>
+<section class="slide" style="--k:var(--c4)" data-n="52"><div class="in"><div class="eyebrow">動筆的順序 · 強腦力文章〈心智圖怎麼畫？5 步驟〉</div>
+  <h2>畫一張心智圖的五個步驟</h2>
+  <ol class="steps">
+    <li>紙橫放，中間畫中心圖，兩分鐘</li>
+    <li>先想：主幹要放哪幾個大類？寫在旁邊的草稿紙</li>
+    <li>畫主幹，一支一色，寫上關鍵字</li>
+    <li>每條主幹往外長次分支，問「這個底下還有什麼」</li>
+    <li>最後加小圖示、畫連結箭頭</li>
+  </ol></div></section>
+<section class="slide full" data-n="53"><div class="in"><img data-src="mm-27.webp" alt="紙橫放，正中央畫中心圖" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">步驟一</div><h2>紙橫放，正中央畫中心圖</h2><p>兩分鐘。有圖、三種顏色、不求美。這張的主題是「我的一天」，中心畫了一個太陽。</p></div></div></section>
+<section class="slide full" data-n="54"><div class="in"><img data-src="mm-28.webp" alt="畫主幹：粗到細的曲線，一支一色" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">步驟二</div><h2>畫主幹：粗到細的曲線，一支一色</h2><p>先想好大類再畫。這張是五條：早上、工作、午餐、運動、晚上。先不寫字。</p></div></div></section>
+<section class="slide full" data-n="55"><div class="in"><img data-src="mm-29.webp" alt="每條主幹寫上一個關鍵字" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">步驟三</div><h2>每條主幹寫上一個關鍵字</h2><p>字寫在線上，跟線同色，一條線一個詞。</p></div></div></section>
+<section class="slide full" data-n="56"><div class="in"><img data-src="mm-30.webp" alt="往外長次分支，問「這個底下還有什麼」" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">步驟四</div><h2>往外長次分支，問「這個底下還有什麼」</h2><p>每條主幹長兩到三個細分支，同色，字更小。圖開始填滿紙。</p></div></div></section>
+<section class="slide full" data-n="57"><div class="in"><img data-src="mm-31.webp" alt="加小圖示、畫連結箭頭，完成" decoding="async">
+  <div class="cap"><div class="eyebrow" style="color:rgba(255,255,255,.7)">步驟五</div><h2>加小圖示、畫連結箭頭，完成</h2><p>重點旁邊加星星、愛心、小房子。運動和晚上有關係，畫一條虛線箭頭連起來。</p></div></div></section>
+<section class="slide" data-n="58"><div class="in"><div class="eyebrow">示範</div>
+  <h1>老師現場畫一張</h1>
+  <p class="lead">主題：今天這堂課。請看我每一步在做規則幾、步驟幾。</p></div></section>
+<section class="slide lock" data-n="59" style="--bg:url(mm-blur-59.webp)"><div class="in">
+  <p class="lk-big"><span>來免費課</span> <span>學習強腦力</span> <span>記憶超能力</span></p>
+  <div class="lk-btns"><a class="lk-main" href="/ad-live.html" target="_top" data-cta="ad-live">免費報名 10/31 場</a><a class="lk-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" data-cta="line">加 LINE 問 Sky 老師</a></div>
+</div></section>
+<section class="slide lock" data-n="60" style="--bg:url(mm-blur-66.webp)"><div class="in">
+  <p class="lk-big"><span>來免費課</span> <span>學習強腦力</span> <span>記憶超能力</span></p>
+  <div class="lk-btns"><a class="lk-main" href="/ad-live.html" target="_top" data-cta="ad-live">免費報名 10/31 場</a><a class="lk-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" data-cta="line">加 LINE 問 Sky 老師</a></div>
+</div></section>
+<section class="slide lock" data-n="61" style="--bg:url(mm-blur-75.webp)"><div class="in">
+  <p class="lk-big"><span>來免費課</span> <span>學習強腦力</span> <span>記憶超能力</span></p>
+  <div class="lk-btns"><a class="lk-main" href="/ad-live.html" target="_top" data-cta="ad-live">免費報名 10/31 場</a><a class="lk-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" data-cta="line">加 LINE 問 Sky 老師</a></div>
+</div></section>
+<section class="slide lock" data-n="62" style="--bg:url(mm-blur-86.webp)"><div class="in">
+  <p class="lk-big"><span>來免費課</span> <span>學習強腦力</span> <span>記憶超能力</span></p>
+  <div class="lk-btns"><a class="lk-main" href="/ad-live.html" target="_top" data-cta="ad-live">免費報名 10/31 場</a><a class="lk-line" href="https://lin.ee/9EGO8IT" target="_blank" rel="noopener" data-cta="line">加 LINE 問 Sky 老師</a></div>
+</div></section>
+</div>
+<div class="snav"><div class="prog" id="prog"></div><button type="button" id="bp" aria-label="上一頁">‹ 上一頁</button><span class="pg" id="pg" aria-live="polite"></span><button type="button" class="fs" id="fs">全螢幕</button><button type="button" id="bn" aria-label="下一頁">下一頁 ›</button></div>
+<script>
+(function(){
+  var FRAMED=false; try{FRAMED=window.parent!==window}catch(e){FRAMED=true}
+  if(!FRAMED){
+    var ok=false; try{for(var k=0;k<localStorage.length;k++){if(/^sb-.+-auth-token$/.test(localStorage.key(k))){ok=true;break}}}catch(e){ok=true}
+    if(!ok){location.replace('/mindmap-free.html');return}
+  }
+  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,total=slides.length,KEEP=58;
+  var pg=document.getElementById('pg'),prog=document.getElementById('prog'),bp=document.getElementById('bp'),bn=document.getElementById('bn');
+  var sent={};
+  function track(n){
+    if(sent[n])return; sent[n]=1;
+    try{
+      if(FRAMED)window.parent.postMessage({sbSlide:n},location.origin);
+      else if(typeof window.gtag==='function')window.gtag('event','mindmap_free_slide',{slide:n});
+    }catch(e){}
+  }
+  var CLOSE=Date.parse('2026-10-28T23:59:59+08:00');
+  function ctaSwap(){
+    if(Date.now()<=CLOSE)return;
+    [].forEach.call(document.querySelectorAll('.lk-main'),function(a){a.textContent='免費體驗課 10 倍聯想力';a.setAttribute('href','/free.html');a.setAttribute('data-cta','free')});
+  }
+  ctaSwap();
+  function load(k){var s=slides[k];if(!s)return;[].forEach.call(s.querySelectorAll('img[data-src]'),function(im){im.src=im.getAttribute('data-src');im.removeAttribute('data-src')})}
+  var timerEl=null,tick=null,remain=0,running=false;
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x}
+  function paint(box){box.querySelector('.t').textContent=fmt(remain);box.classList.toggle('done',remain===0)}
+  function reset(box,min){clearInterval(tick);running=false;remain=min*60;box.querySelector('[data-a=start]').textContent='開始';paint(box)}
+  function toggle(box){
+    var b=box.querySelector('[data-a=start]');
+    if(running){clearInterval(tick);running=false;b.textContent='繼續';return}
+    if(remain===0)return;
+    running=true;b.textContent='暫停';
+    tick=setInterval(function(){remain--;if(remain<=0){remain=0;clearInterval(tick);running=false;b.textContent='時間到'}paint(box)},1000);
+  }
+  function mountTimer(s){
+    if(timerEl){clearInterval(tick);timerEl.remove();timerEl=null}
+    var m=s.getAttribute('data-timer');if(!m)return;
+    var min=parseInt(m,10),box=document.createElement('div');box.className='timer';
+    box.innerHTML='<span class="t"></span><button type="button" data-a="start">開始</button><button type="button" data-a="reset">重設</button>';
+    box.querySelector('[data-a=start]').addEventListener('click',function(){toggle(box)});
+    box.querySelector('[data-a=reset]').addEventListener('click',function(){reset(box,min)});
+    reset(box,min);timerEl=box;s.appendChild(box);
+  }
+  function show(n){
+    n=Math.max(0,Math.min(total-1,n));
+    if(slides[i])slides[i].classList.remove('on');
+    i=n;var s=slides[i];s.classList.add('on');s.scrollTop=0;
+    load(i);load(i+1);load(i+2);load(i-1);
+    var num=i+1;
+    pg.textContent=num<=KEEP?('第 '+num+'／'+KEEP+' 頁'):('完整版預覽 '+(num-KEEP)+'／'+(total-KEEP));
+    prog.style.width=(Math.min(num,KEEP)/KEEP*100)+'%';
+    bp.disabled=i===0;bn.disabled=i===total-1;
+    ctaSwap();mountTimer(s);track(num);
+    try{history.replaceState(null,'','#s'+num)}catch(e){}
+  }
+  bp.addEventListener('click',function(){show(i-1)});
+  bn.addEventListener('click',function(){show(i+1)});
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();show(i+1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1)}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(total-1);
+  });
+  // 點畫面左右兩側翻頁；點到按鈕、連結、計時器就不翻
+  window.addEventListener('message',function(e){
+    if(e.origin!==location.origin||!e.data||typeof e.data.sbKey!=='string')return;
+    if(e.data.sbKey==='next')show(i+1);else if(e.data.sbKey==='prev')show(i-1);
+  });
+  document.getElementById('deck').addEventListener('click',function(e){
+    if(e.target.closest('a,button,.timer,.article,.tbl'))return;
+    var w=window.innerWidth,x=e.clientX;
+    if(x<w*0.25)show(i-1);else if(x>w*0.75)show(i+1);
+  });
+  var sx=null,sy=null;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(sx===null)return;var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)show(dx<0?i+1:i-1);
+  },{passive:true});
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-cta]');if(!a)return;
+    try{
+      if(FRAMED)window.parent.postMessage({sbCta:a.getAttribute('data-cta')},location.origin);
+      else if(typeof window.gtag==='function')window.gtag('event','mindmap_free_cta',{target:a.getAttribute('data-cta')});
+    }catch(x){}
+  });
+  var fsb=document.getElementById('fs'),de=document.documentElement;
+  if(!de.requestFullscreen){fsb.style.display='none'}
+  fsb.addEventListener('click',function(){
+    try{
+      if(document.fullscreenElement){document.exitFullscreen().catch(function(){})}
+      else{de.requestFullscreen().catch(function(){})}
+    }catch(e){}
+  });
+  if(!FRAMED){
+    var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4';document.head.appendChild(g);
+    window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','G-22EQNGV8C4');
+  }
+  var start=0,mm=/^#s(\d+)$/.exec(location.hash||'');
+  if(mm)start=parseInt(mm[1],10)-1;
+  show(start);
+})();
+</script>
+</body>
+</html>

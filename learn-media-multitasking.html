@@ -463,5 +463,124 @@ figure.fig figcaption{margin-top:9px;font-size:13.5px;line-height:1.7;color:var(
   document.addEventListener('keydown',function(e){if(e.key==='Escape')shut();});
 })();
 </script>
+<!-- SB-ANN:START v1 網站公告（tools/announcement/inject.js 產生，整段會被替換，不要手改） -->
+<style>
+.sb-ann-ov{position:fixed;inset:0;z-index:9990;background:rgba(21,23,49,.45);display:flex;align-items:center;justify-content:center;padding:20px;animation:sbAnnIn .25s ease}
+.sb-ann-box{position:relative;width:min(420px,100%);background:var(--paper,#FAF9F5);color:var(--indigo,#151731);border-radius:22px;padding:32px 26px 26px;text-align:center;box-shadow:0 24px 60px rgba(21,23,49,.3);border-top:5px solid var(--amber,#FFB020);font-family:"Noto Sans TC",sans-serif}
+.sb-ann-t{font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;font-size:21px;line-height:1.45;margin:0 0 8px;color:var(--indigo,#151731)}
+.sb-ann-b{font-size:15px;line-height:1.7;color:#5b5f7a;margin:0 0 20px}
+.sb-ann-go{display:inline-block;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;font-size:16px;color:#fff!important;background:linear-gradient(135deg,var(--amber,#FFB020),var(--orange,#FF8A3D));padding:12px 32px;border-radius:40px;text-decoration:none;box-shadow:0 10px 24px rgba(255,138,61,.35)}
+.sb-ann-x{position:absolute;top:8px;right:10px;width:38px;height:38px;border:0;background:none;font-size:26px;line-height:1;color:#8b90a5;cursor:pointer;border-radius:50%}
+.sb-ann-x:focus-visible{outline:2px solid var(--teal,#16B0A8)}
+.sb-ann-bar{position:fixed;left:10px;right:10px;bottom:10px;z-index:9990;display:flex;align-items:center;gap:10px;background:var(--indigo,#151731);color:#fff;border-radius:14px;padding:9px 6px 9px 14px;box-shadow:0 10px 30px rgba(21,23,49,.35);font-family:"Noto Sans TC",sans-serif}
+.sb-ann-bar .sb-ann-t{font-size:14px;margin:0;flex:1;line-height:1.45;color:#fff}
+.sb-ann-bar .sb-ann-go{font-size:13.5px;padding:8px 14px;box-shadow:none;white-space:nowrap}
+.sb-ann-bar .sb-ann-x{position:static;color:rgba(255,255,255,.75);width:34px;height:34px;flex:none;font-size:22px}
+@keyframes sbAnnIn{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.sb-ann-ov{animation:none}}
+</style>
+<script>
+(function(){
+  var MODE='site';
+  var SB='https://gfuqizxzihgydzyqywun.supabase.co',KEY='sb_publishable_4OkL-CDoS542x8odCTWbtQ_DzKR7dMv';
+  var LS='sb_ann_seen',SS='sb_ann_cache';
+  function today(){
+    try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei'}).format(new Date())}
+    catch(e){return new Date(Date.now()+288e5).toISOString().slice(0,10)}
+  }
+  function getSeen(){
+    try{var s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.d===today()&&s.ids instanceof Array)return s}catch(e){}
+    return {d:today(),site:0,login:0,ids:[]};
+  }
+  function setSeen(s){try{localStorage.setItem(LS,JSON.stringify(s))}catch(e){}}
+  var seen=getSeen();
+  if(seen[MODE])return;
+  if(MODE==='login'){
+    var ok=false;
+    try{for(var i=0;i<localStorage.length;i++){if(/^sb-.+-auth-token$/.test(localStorage.key(i))){ok=true;break}}}catch(e){}
+    if(!ok)return;
+  }
+  // 公告連結只收 https 或站內相對路徑，擋掉 javascript: 之類
+  function safeLink(u){
+    u=String(u||'').trim();
+    if(!u)return '';
+    if(/^https:\/\/[^\s"'<>]+$/i.test(u))return u;
+    if(/^[A-Za-z0-9_\-\/.#?=&%]+$/.test(u)&&u.indexOf('//')!==0)return u;
+    return '';
+  }
+  function samePage(u){
+    try{
+      var a=new URL(u,location.href),p=function(x){return x.replace(/\.html$/,'').replace(/\/$/,'')||'/'};
+      return a.origin===location.origin&&p(a.pathname)===p(location.pathname);
+    }catch(e){return false}
+  }
+  function pick(list){
+    var now=Date.now();
+    for(var i=0;i<list.length;i++){
+      var a=list[i];
+      if(!a||!a.active||!a.title)continue;
+      if(a.placement!=='both'&&a.placement!==MODE)continue;
+      if(Date.parse(a.starts_at)>now||Date.parse(a.ends_at)<now)continue;
+      if(seen.ids.indexOf(a.id)>-1)continue;
+      var l=safeLink(a.link);
+      if(l&&samePage(l))continue;
+      return a;
+    }
+    return null;
+  }
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  function ga(name,p){try{if(typeof window.gtag==='function')window.gtag('event',name,p)}catch(e){}}
+  function show(a){
+    var link=safeLink(a.link),mob=false;
+    try{mob=window.matchMedia('(max-width: 760px)').matches}catch(e){}
+    // Google 對手機「蓋住主要內容的彈窗」會扣排名：從 Google 搜尋進來的手機訪客改用底部小橫幅
+    var fromGoogle=/^https?:\/\/([a-z0-9-]+\.)*google\.[a-z.]+(\/|$)/i.test(document.referrer||'');
+    var bar=MODE==='site'&&mob&&fromGoogle;
+    var root,x=el('button','sb-ann-x','×'),go=null;
+    x.type='button';x.setAttribute('aria-label','關閉公告');
+    if(link){
+      go=el('a','sb-ann-go',a.btn_text||'看看');go.href=link;
+      if(/^https:/i.test(link)&&link.indexOf(location.origin+'/')!==0){go.target='_blank';go.rel='noopener'}
+      go.addEventListener('click',function(){ga('announcement_click',{announcement_id:a.id,mode:MODE})});
+    }
+    function done(){if(root.parentNode)root.parentNode.removeChild(root);document.removeEventListener('keydown',esc)}
+    function esc(e){if(e.key==='Escape')done()}
+    if(bar){
+      root=el('div','sb-ann-bar');root.setAttribute('role','region');root.setAttribute('aria-label','公告');
+      root.appendChild(el('p','sb-ann-t',a.title));if(go)root.appendChild(go);root.appendChild(x);
+    }else{
+      root=el('div','sb-ann-ov');
+      var box=el('div','sb-ann-box');box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label',a.title);
+      box.appendChild(x);box.appendChild(el('p','sb-ann-t',a.title));
+      if(a.body)box.appendChild(el('p','sb-ann-b',a.body));
+      if(go)box.appendChild(go);
+      root.appendChild(box);
+      root.addEventListener('click',function(e){if(e.target===root)done()});
+    }
+    x.addEventListener('click',done);document.addEventListener('keydown',esc);
+    document.body.appendChild(root);
+    seen[MODE]=1;seen.ids.push(a.id);setSeen(seen);
+    ga('announcement_view',{announcement_id:a.id,mode:MODE,style:bar?'bar':'modal'});
+    if(!bar){try{x.focus({preventScroll:true})}catch(e){}}
+  }
+  function run(list){try{var a=pick(list instanceof Array?list:[]);if(a)show(a)}catch(e){}}
+  function start(){
+    try{var c=JSON.parse(sessionStorage.getItem(SS)||'null');if(c&&Date.now()-c.t<6e5){run(c.list);return}}catch(e){}
+    if(!window.fetch)return;
+    fetch(SB+'/rest/v1/announcements?select=id,title,body,btn_text,link,starts_at,ends_at,placement,active&active=eq.true&order=starts_at.desc&limit=10',{headers:{apikey:KEY}})
+      .then(function(r){return r.ok?r.json():[]})
+      .then(function(list){
+        if(!(list instanceof Array))list=[];
+        try{sessionStorage.setItem(SS,JSON.stringify({t:Date.now(),list:list}))}catch(e){}
+        run(list);
+      })
+      .catch(function(){});
+  }
+  // 等頁面畫好再讀，不跟主要內容搶
+  if(document.readyState==='complete')setTimeout(start,800);
+  else window.addEventListener('load',function(){setTimeout(start,800)});
+})();
+</script>
+<!-- SB-ANN:END -->
 </body>
 </html>
