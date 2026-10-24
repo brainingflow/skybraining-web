@@ -501,6 +501,9 @@
   }
   function run(list){try{var a=pick(list instanceof Array?list:[]);if(a)show(a)}catch(e){}}
   function start(){
+    /* PREVIEW-MOCK:START 本機預覽假公告，內容同 supabase/sql/2026-10-25_announcements.sql 初始那筆。只認 hostname，線上永遠不成立；本機不連資料庫，表還沒建也不會出 404。上線前可整段刪，留著也無害 */
+    if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)){run([{id:'local-preview-ann',title:'10/31（六）高雄 3 小時體驗場 限時免費',body:'3 小時實體實戰，現場帶你練圖像記憶與心智圖。',btn_text:'免費報名',link:'ad-live.html',starts_at:'2026-10-24T00:00:00+08:00',ends_at:'2026-10-28T23:59:00+08:00',placement:'both',active:true}]);return}
+    /* PREVIEW-MOCK:END */
     try{var c=JSON.parse(sessionStorage.getItem(SS)||'null');if(c&&Date.now()-c.t<6e5){run(c.list);return}}catch(e){}
     if(!window.fetch)return;
     fetch(SB+'/rest/v1/announcements?select=id,title,body,btn_text,link,starts_at,ends_at,placement,active&active=eq.true&order=starts_at.desc&limit=10',{headers:{apikey:KEY}})

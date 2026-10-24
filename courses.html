@@ -511,8 +511,14 @@
   const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape','crimson','plum','techblue'];
 
   (async ()=>{
-    const { data:courses, error } = await supabase.from('courses')
+    let { data:courses, error } = await supabase.from('courses')
       .select('*').eq('is_published',true).order('sort_order').order('id');
+    /* PREVIEW-MOCK:START 本機預覽假資料，內容同 supabase/sql/2026-10-25_mindmap_free_course.sql。只認 hostname，線上永遠不成立；正式資料庫還沒有這筆時，本機也看得到心智圖免費課卡。上線前可整段刪，留著也無害 */
+    if(!error && courses && /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !courses.some(x=>x.id==='mindmap-free')){
+      courses = courses.concat([{ id:'mindmap-free', name:'心智圖免費課', subtitle:'免費・58 頁教學簡報', description:'你登入就能看強腦力高雄初階班的心智圖教學簡報前 58 頁：大腦怎麼記東西、大師的筆記、六大規則與五個步驟。', price:0, level:0, accent:'free', vimeo_id:null, is_published:true, sort_order:0, note:null, intro_url:'mindmap-free.html', default_ratio:'16:9', category:'brain' }])
+        .sort((a,b)=>((a.sort_order||0)-(b.sort_order||0)) || (a.id<b.id?-1:a.id>b.id?1:0));
+    }
+    /* PREVIEW-MOCK:END */
     if(error){ grid.innerHTML = `<div class="state" style="color:#d64545;">讀取課程失敗：${error.message}</div>`; return; }
     if(!courses || !courses.length){ grid.innerHTML = `<div class="state">目前尚無上架課程。</div>`; return; }
     const brainList  = courses.filter(x=>x.category!=='career' && !/^live-/.test(x.id) && !ONSITE.includes(x.id) && !(HIDE_BUNDLE && x.id==='bundle-all'));  // live-* 是 FB 廣告專用場次，只從廣告頁進來，不放公開課程列表；ONSITE 老闆 2026-10-05 要求不放列表，詳細頁與結帳照常
@@ -869,6 +875,9 @@
   }
   function run(list){try{var a=pick(list instanceof Array?list:[]);if(a)show(a)}catch(e){}}
   function start(){
+    /* PREVIEW-MOCK:START 本機預覽假公告，內容同 supabase/sql/2026-10-25_announcements.sql 初始那筆。只認 hostname，線上永遠不成立；本機不連資料庫，表還沒建也不會出 404。上線前可整段刪，留著也無害 */
+    if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)){run([{id:'local-preview-ann',title:'10/31（六）高雄 3 小時體驗場 限時免費',body:'3 小時實體實戰，現場帶你練圖像記憶與心智圖。',btn_text:'免費報名',link:'ad-live.html',starts_at:'2026-10-24T00:00:00+08:00',ends_at:'2026-10-28T23:59:00+08:00',placement:'both',active:true}]);return}
+    /* PREVIEW-MOCK:END */
     try{var c=JSON.parse(sessionStorage.getItem(SS)||'null');if(c&&Date.now()-c.t<6e5){run(c.list);return}}catch(e){}
     if(!window.fetch)return;
     fetch(SB+'/rest/v1/announcements?select=id,title,body,btn_text,link,starts_at,ends_at,placement,active&active=eq.true&order=starts_at.desc&limit=10',{headers:{apikey:KEY}})
