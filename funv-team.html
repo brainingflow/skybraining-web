@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+<script>
+  /* ?t= 開通碼：在 GA 之前收進 storage 並從網址拿掉，GA 與網址列才不會留下它 */
+  (function(){try{var q=new URLSearchParams(location.search),t=(q.get('t')||'').trim().slice(0,200);if(!t)return;
+  try{sessionStorage.setItem('funv_team_t',t);}catch(e){}
+  try{localStorage.setItem('funv_team_t',JSON.stringify({t:t,ts:Date.now()}));}catch(e){}
+  q.delete('t');q=q.toString();history.replaceState(null,'',location.pathname+(q?'?'+q:'')+location.hash);}catch(e){}})();
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-22EQNGV8C4"></script>
 <script>
@@ -68,6 +75,12 @@
   .tg.none{color:var(--ink-soft);font-weight:500;}
   .empty{padding:22px 16px;text-align:center;color:var(--ink-soft);font-size:14px;}
   .foot{text-align:center;padding:26px 14px 30px;font-size:12.5px;color:#8b90a5;}
+  .hush{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .msg-ok{color:var(--teal-deep);background:rgba(22,176,168,.1);border:1px solid rgba(22,176,168,.28);border-radius:12px;padding:12px 14px;font-weight:700;font-size:15px;margin-top:20px;}
+  .msg-ok small{display:block;font-weight:500;font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .ph{font-size:13.5px;color:var(--ink-soft);}
+  .tel{font-weight:700;color:var(--teal-deep);white-space:nowrap;}
+  @media (max-width:600px){ .tel{display:inline-block;padding:2px 12px;border-radius:16px;background:rgba(22,176,168,.12);} }
 </style>
 </head>
 <body>
@@ -81,6 +94,7 @@
 <div class="wrap">
   <h1>團隊報名名單</h1>
   <div class="sub">婦女再就業課程・各團隊負責人專用</div>
+  <div class="hush">名單只給你看，請勿轉傳</div>
   <div id="content"><div class="state"><div class="spin"></div>載入中…</div></div>
 </div>
 <div class="foot">© 2021 強腦力 SkyBraining LLC・skybraining.com・Sky強腦力media</div>
@@ -115,23 +129,25 @@
      用 hash 是因為本機 npx serve 會把 .html?query 301 掉並丟掉 query */
   const DEMO = (location.hash.match(/(?:^#|&)demo=(1|admin|none)(?:&|$)/) || [])[1] || '';
   const DEMO_ROWS = [
-    ['示範一','蘇姐團隊','green','2026-10-02T03:00:00Z'], ['示範二','蘇姐團隊','none','2026-10-05T09:30:00Z'],
-    ['示範三','蘇姐團隊','orange','2026-10-08T01:10:00Z'], ['示範四','蘇姐團隊','red','2026-10-11T12:40:00Z'],
-    ['示範五','珠珠姐','yellow','2026-10-03T05:20:00Z'], ['示範六','珠珠姐','blue','2026-10-09T07:00:00Z'],
-    ['示範七','羅總團隊','gray','2026-10-04T02:00:00Z']
-  ].map(d=>({ name:d[0], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+    ['示範一','蘇姐團隊','green','2026-10-02T03:00:00Z','0900-000-001'], ['示範二','蘇姐團隊','none','2026-10-05T09:30:00Z',''],
+    ['示範三','蘇姐團隊','orange','2026-10-08T01:10:00Z','0900000003'], ['示範四','蘇姐團隊','red','2026-10-11T12:40:00Z','0900-000-004'],
+    ['示範五','珠珠姐','yellow','2026-10-03T05:20:00Z','0900-000-005'], ['示範六','珠珠姐','blue','2026-10-09T07:00:00Z','0900-000-006'],
+    ['示範七','羅總團隊','gray','2026-10-04T02:00:00Z','0900-000-007']
+  ].map(d=>({ name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+  /* 示範的「我綁定的團隊」；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團，其他碼模擬失效 */
+  const demoBound = DEMO === 'none' ? [] : ['蘇姐團隊','珠珠姐','林慧雯'];
   const demoRoster = (team)=> team ? DEMO_ROWS.filter(r=>r.team===team)
-    : DEMO === 'none' ? []
-    : DEMO_ROWS.filter(r=>r.team!=='羅總團隊').concat([{ name:null, referrer:null, tag:null, status:null, created_at:null, team:'林慧雯' }]);
+    : demoBound.flatMap(t=>{ const rs = DEMO_ROWS.filter(r=>r.team===t); return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t }]; });
 
   $('logout').onclick = async ()=>{ if(!DEMO) await supabase.auth.signOut(); location.href = SELF; };
 
   const lineIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6C21.4 14.2 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>';
 
-  function showLogin(){
+  function showLogin(hasToken){
     $('content').innerHTML = `<div class="card gate">
       <div class="round" style="font-weight:800;font-size:19px;color:var(--indigo);">請先登入</div>
       <p>用你的 LINE 登入，就能看到你團隊的報名名單。</p>
+      ${hasToken ? '<p>這是你團隊的專屬連結，登入後會自動開通。</p>' : ''}
       <button class="btn-line" id="btnLine">${lineIcon}用 LINE 登入</button>
       <div><a class="alt" href="${esc(LOGIN_PAGE)}">用 Email 或 Google 登入</a></div>
       <div id="loginMsg"></div>
@@ -157,6 +173,11 @@
     location.href = LOGIN_PAGE;
   }
 
+  const telLink = (p)=>{
+    const s = String(p==null ? '' : p).trim(), n = s.replace(/[^\d+]/g, '').replace(/(?!^)\+/g, '');
+    return n ? `<a class="tel" href="tel:${esc(n)}">${esc(s)}</a>` : (s ? esc(s) : '—');
+  };
+
   function teamBlock(team, rows){
     const people = rows.filter(r=>r.created_at);
     const counts = {};
@@ -168,8 +189,9 @@
       return `<li>
         <div class="nm">${esc(r.name || '（沒填名字）')}</div>
         <div class="dt">${esc(fmtDay(r.created_at))}</div>
-        <div class="ref">推薦人：${esc(String(r.referrer||'').trim() || '—')}</div>
+        <div class="ph">電話：${telLink(r.phone)}</div>
         <div class="tg${t.key==='none'?' none':''}"><span class="tdot" style="background:${t.color}"></span>${esc(t.name)}</div>
+        <div class="ref">推薦人：${esc(String(r.referrer||'').trim() || '—')}</div>
       </li>`;
     }).join('')}</ul>` : `<div class="list"><div class="empty">這個團隊目前還沒有人報名。</div></div>`;
     return `<section class="team">
@@ -188,6 +210,35 @@
   async function roster(team){
     if(DEMO) return { data: demoRoster(team), error: null };
     return team ? supabase.rpc('funv_team_roster', { p_team: team }) : supabase.rpc('funv_team_roster');
+  }
+
+  /* 開通碼由 <head> 那段從網址收進來：sessionStorage 撐過同分頁的 LINE 登入來回；
+     localStorage 那份給「LINE App 授權完開新分頁回來」用，跟 sb_after_login 一樣只認 10 分鐘 */
+  const T_KEY = 'funv_team_t';
+  function peekToken(){
+    let t = '';
+    try{ t = sessionStorage.getItem(T_KEY) || ''; }catch(e){}
+    if(!t){
+      try{
+        const o = JSON.parse(localStorage.getItem(T_KEY) || 'null'), age = o ? Date.now() - o.ts : -1;
+        if(o && typeof o.t === 'string' && age >= 0 && age <= 10*60*1000) t = o.t;
+        else if(o) localStorage.removeItem(T_KEY);
+      }catch(e){}
+    }
+    return t;
+  }
+  function dropToken(){
+    try{ sessionStorage.removeItem(T_KEY); }catch(e){}
+    try{ localStorage.removeItem(T_KEY); }catch(e){}
+  }
+  async function claim(t){
+    if(DEMO){
+      const m = /^demo-([1-8])$/.exec(t), team = m ? TEAMS[m[1]-1] : '';
+      if(!team) return { data:null, error:{ message:'這個連結已經失效或不完整，請向 Sky 老師要新的連結' } };
+      if(DEMO !== 'admin' && !demoBound.includes(team)) demoBound.push(team);
+      return { data:team, error:null };
+    }
+    return supabase.rpc('funv_team_claim', { p_token: t });
   }
 
   function adminBar(){
@@ -222,23 +273,38 @@
 
   (async ()=>{
     let isAdmin = false, memberNo = '';
+    const pendingT = peekToken();
     if(DEMO){
       isAdmin = DEMO === 'admin';
       memberNo = 'SB00000';
     }else{
       const { data:{ session } } = await supabase.auth.getSession();
-      if(!session){ showLogin(); return; }
+      if(!session){ showLogin(!!pendingT); return; }
       try{ const { data } = await supabase.rpc('is_admin'); isAdmin = data === true; }catch(e){}
       try{ const { data:m } = await supabase.rpc('member_me'); if(m && m.ok) memberNo = m.member_no || ''; }catch(e){}
     }
     $('logout').style.display = '';
 
+    let note = '', claimed = '';
+    if(pendingT){
+      dropToken();
+      let res;
+      try{ res = await claim(pendingT); }catch(e){ res = { data:null, error:e }; }
+      if(res.error || !res.data){
+        const m = res.error && res.error.message ? res.error.message : '沒有回應';
+        note = `<div class="msg-err">開通失敗：${esc(m).split('Sky 老師').join('<span style="white-space:nowrap;">Sky 老師</span>')}${/失效|登入/.test(m) ? '' : '<br><span style="font-size:12.5px;">請把這段訊息截圖給 Sky 老師。</span>'}</div>`;
+      }else{
+        claimed = String(res.data);
+        note = `<div class="msg-ok">已開通：${esc(claimed)} 名單${isAdmin ? '<small>你是管理員，不會被綁進負責人清單；下面直接顯示這個團隊。</small>' : ''}</div>`;
+      }
+    }
+
     if(!isAdmin){
-      $('content').innerHTML = '<div id="rosterBox"></div>';
+      $('content').innerHTML = note + '<div id="rosterBox"></div>';
       await loadInto($('rosterBox'), '', false, memberNo);
       return;
     }
-    $('content').innerHTML = adminBar();
+    $('content').innerHTML = note + adminBar();
     const sel = $('selTeam');
     sel.onchange = ()=>{ $('otherWrap').style.display = sel.value === '__other' ? '' : 'none'; };
     $('btnTeam').onclick = ()=>{
@@ -246,7 +312,11 @@
       if(sel.value === '__other' && !team){ $('inTeam').focus(); return; }
       loadInto($('rosterBox'), team, true, memberNo);
     };
-    await loadInto($('rosterBox'), '', true, memberNo);
+    if(claimed){
+      if(TEAMS.includes(claimed)) sel.value = claimed;
+      else { sel.value = '__other'; $('otherWrap').style.display = ''; $('inTeam').value = claimed; }
+    }
+    await loadInto($('rosterBox'), claimed, true, memberNo);
   })();
 </script>
 </body>

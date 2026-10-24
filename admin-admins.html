@@ -74,6 +74,9 @@
   .spin{width:32px;height:32px;border:3px solid var(--hair);border-top-color:var(--orange);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
   .empty{padding:26px 0;text-align:center;color:var(--ink-soft);font-size:14px;}
+  .sub-h{font-family:var(--round);font-weight:800;font-size:15px;color:var(--indigo);margin:2px 0 4px;}
+  .lk-url{min-width:260px;font-size:12.5px;line-height:1.5;color:var(--indigo);word-break:break-all;}
+  .lk-ops{display:flex;gap:6px;flex-wrap:wrap;}
 </style>
 </head>
 <body>
@@ -106,7 +109,8 @@
       admins:[{ email:'demo-admin@example.com', is_owner:false, is_me:true, has_account:true, note:'（示範）', added_by:'（示範）', created_at:'2026-09-14T00:00:00Z' },
               { email:'demo-helper@example.com', is_owner:false, is_me:false, has_account:false, note:'（示範）助教', added_by:'（示範）', created_at:'2026-10-01T00:00:00Z' }],
       leads:[{ user_id:'demo-u1', team:'蘇姐團隊', note:'（示範）', display_name:'示範負責人一', member_no:'SB00001', created_at:'2026-10-18T02:00:00Z' },
-             { user_id:'demo-u2', team:'珠珠姐', note:'', display_name:null, member_no:'SB00002', created_at:'2026-10-18T03:00:00Z' }]
+             { user_id:'demo-u2', team:'珠珠姐', note:'', display_name:null, member_no:'SB00002', created_at:'2026-10-18T03:00:00Z' }],
+      links:[{ team:'蘇姐團隊', token:'0123456789abcdef'.repeat(4), created_at:'2026-10-24T02:00:00Z', revoked_at:null }]
     };
     supabase.rpc=async (fn,args)=>{
       if(fn==='admin_admins_list') return { data:demo.admins, error:null };
@@ -122,7 +126,18 @@
         const n=demo.leads.length; demo.leads=demo.leads.filter(l=>!(l.user_id===args.p_user_id&&l.team===args.p_team));
         return { data:{ ok:true, removed:n-demo.leads.length }, error:null };
       }
+      if(fn==='funv_team_link_issue'){
+        const team=String(args.p_team||'').trim();
+        const token=Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,'0')).join('');
+        demo.links=demo.links.filter(l=>l.team!==team).concat([{ team, token, created_at:new Date().toISOString(), revoked_at:null }]);
+        return { data:token, error:null };
+      }
       return { data:null, error:{ message:'示範模式不連資料庫' } };
+    };
+    supabase.from=(table)=>{
+      const q={ select:()=>q, order:()=>q,
+        then:(ok,ng)=>Promise.resolve(table==='funv_team_links' ? { data:demo.links.slice(), error:null } : { data:null, error:{ message:'示範模式不連資料庫' } }).then(ok,ng) };
+      return q;
     };
   }
 
@@ -168,9 +183,18 @@
             <h2><span class="bar"></span>團隊負責人（<span id="tlCnt">0</span>）</h2>
             <button class="btn btn-ghost btn-sm" id="btnTlReload">重新整理</button>
           </div>
+          <div class="sub-h">各團隊專屬連結</div>
           <div class="sub" style="margin-bottom:12px;">
-            婦女再就業各團隊的負責人綁在這裡。綁好後，對方用 LINE 登入 <a href="funv-team.html" target="_blank" rel="noopener">funv-team.html</a>，
-            只看得到<b>自己團隊</b>報名者的名字、推薦人、顏色標記，看不到手機、身分證等其他資料。
+            每個團隊一條連結。按「複製」傳給該團隊的負責人，他點開、用 LINE 登入就自動開通，只看得到<b>自己團隊</b>報名者的名字、電話、推薦人、顏色標記。
+            連結只傳給負責人本人；不小心外流就按「重新產生」，舊連結馬上失效，已經開通的人要停權，到下面清單按「解除」。
+          </div>
+          <div id="lkWrap"><div class="state"><div class="spin"></div>載入中…</div></div>
+          <div class="msg" id="lkMsg"></div>
+
+          <div class="sub-h" style="margin-top:26px;">用會員編號綁定</div>
+          <div class="sub" style="margin-bottom:12px;">
+            婦女再就業各團隊的負責人綁在這裡（用專屬連結開通的人也會列在下面）。綁好後，對方用 LINE 登入 <a href="funv-team.html" target="_blank" rel="noopener">funv-team.html</a>，
+            只看得到<b>自己團隊</b>報名者的名字、電話、推薦人、顏色標記，看不到身分證、地址、Email 等其他資料。
             會員編號：請對方先用 LINE 登入一次，打開那一頁就會顯示他的會員編號（會員中心最上面也有）。
             團隊比對的是報名表「邀請人」欄，要一字不差。
           </div>
@@ -335,10 +359,69 @@
       $('tlNo').value=''; $('tlNote').value=''; $('tlOther').value='';
       await tlLoad();
     };
-    $('btnTlReload').onclick=()=>tlLoad();
+    $('btnTlReload').onclick=()=>{ tlLoad(); lkLoad(); };
+
+    // ── 團隊專屬連結 ─────────────────────────────
+    const LINK_BASE='https://skybraining.com/funv-team.html?t=';
+    let links=[];
+    const lkMsg=(t,type)=>{ const m=$('lkMsg'); m.className='msg show '+type; m.textContent=t; };
+    const copyText=async (text)=>{
+      try{ await navigator.clipboard.writeText(text); return true; }catch(e){}
+      try{
+        const ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.top='0'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); ta.remove(); return ok;
+      }catch(e){ return false; }
+    };
+    const lkRender=()=>{
+      const by={}; links.forEach(l=>{ by[l.team]=l; });
+      const teams=TEAMS.concat(links.map(l=>l.team).filter(t=>!TEAMS.includes(t)));
+      const box=$('lkWrap');
+      box.innerHTML=`<div class="tbl-scroll"><table>
+        <thead><tr><th>團隊</th><th>專屬連結</th><th>產生日期</th><th>操作</th></tr></thead>
+        <tbody>${teams.map((t,i)=>{
+          const l=by[t], live=!!(l&&l.token&&!l.revoked_at);
+          return `<tr>
+          <td style="white-space:nowrap;"><div class="em">${esc(t)}</div></td>
+          <td>${live?`<div class="lk-url">${esc(LINK_BASE+l.token)}</div>`:`<span class="sm">${l?'已停用':'還沒產生'}</span>`}</td>
+          <td class="sm" style="white-space:nowrap;">${l?esc(fmtDate(l.created_at)):'—'}</td>
+          <td><div class="lk-ops">${live
+            ?`<button class="btn btn-sm btn-primary" data-cp="${i}">複製</button><button class="btn btn-sm btn-ghost" data-re="${i}">重新產生（舊連結失效）</button>`
+            :`<button class="btn btn-sm btn-orange" data-mk="${i}">產生連結</button>`}</div></td>
+        </tr>`; }).join('')}</tbody></table></div>`;
+      box.querySelectorAll('[data-cp]').forEach(b=>b.onclick=async ()=>{
+        const t=teams[+b.getAttribute('data-cp')];
+        if(await copyText(LINK_BASE+by[t].token)){
+          b.textContent='✓ 已複製'; setTimeout(()=>{ if(b.isConnected) b.textContent='複製'; },1800);
+          lkMsg(`已複製「${t}」的連結，直接貼給負責人就好。`,'ok');
+        }else lkMsg('複製失敗，請手動選取上面的連結。','error');
+      });
+      box.querySelectorAll('[data-mk]').forEach(b=>b.onclick=()=>lkIssue(teams[+b.getAttribute('data-mk')], b, false));
+      box.querySelectorAll('[data-re]').forEach(b=>b.onclick=()=>lkIssue(teams[+b.getAttribute('data-re')], b, true));
+    };
+    const lkLoad=async ()=>{
+      const { data, error } = await supabase.from('funv_team_links').select('team,token,created_at,revoked_at').order('team');
+      if(error){ $('lkWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'<br><span class="sm">如果訊息是找不到資料表，代表 2026-10-24_funv_team_links.sql 還沒在 Supabase 執行。</span></div>'; return; }
+      links=data||[]; lkRender();
+    };
+    const lkIssue=async (team, btn, again)=>{
+      if(again && btn.getAttribute('data-armed')!=='1'){
+        btn.setAttribute('data-armed','1'); btn.textContent='確認重新產生';
+        setTimeout(()=>{ if(btn.isConnected){ btn.setAttribute('data-armed','0'); btn.textContent='重新產生（舊連結失效）'; } },3500);
+        return;
+      }
+      btn.disabled=true;
+      const { error } = await supabase.rpc('funv_team_link_issue',{ p_team:team });
+      if(error){ btn.disabled=false; lkMsg((again?'重新產生':'產生')+'失敗：'+error.message,'error'); return; }
+      lkMsg(again
+        ? `✓ 已重新產生「${team}」的連結，舊連結已經失效。\n已經開通的人照樣看得到；要停權請到下面清單按「解除」。`
+        : `✓ 已產生「${team}」的連結，按「複製」貼給負責人。`, 'ok');
+      await lkLoad();
+    };
 
     load();
     tlLoad();
+    lkLoad();
   })();
 </script>
 <div style="text-align:center;padding:26px 14px 30px;font-size:12.5px;color:#8b90a5;">© 2021 強腦力 SkyBraining LLC・skybraining.com・Sky強腦力media</div>
