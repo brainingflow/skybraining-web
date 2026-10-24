@@ -149,6 +149,7 @@
   <a href="admin-funv.html">婦女再就業報名</a>
   <a href="admin-broadcast.html">群發信</a>
   <a href="admin-landings.html">廣告頁</a>
+  <a href="admin-announcements.html">公告</a>
   <a href="admin-admins.html">管理員</a>
 </div></div>
 <div id="content"><div class="state"><div class="spin"></div>確認管理員權限中…</div></div>
@@ -518,7 +519,7 @@
       if(!/^[a-z0-9][a-z0-9-]{1,48}$/.test(id)){ msg('課程代號只能用小寫英文、數字與 -（2~49 字）','error'); return; }
       if(!name){ msg('請填課程名稱','error'); return; }
       // 組章節，清掉全空的列
-      const cleanCh = chapters.map(ch=>({ title:(ch.title||'').trim(), lessons:(ch.lessons||[]).filter(l=>(l.title||'').trim()||vimeoId(l.vimeo_id)).map(l=>({ title:(l.title||'').trim(), vimeo_id:vimeoId(l.vimeo_id)||'', ratio:l.ratio==='9:16'?'9:16':'16:9', preview:!!l.preview, duration:(l.duration||'').trim() })) })).filter(ch=>ch.title||ch.lessons.length);
+      const cleanCh = chapters.map(ch=>({ title:(ch.title||'').trim(), lessons:(ch.lessons||[]).filter(l=>(l.title||'').trim()||vimeoId(l.vimeo_id)).map(l=>({ title:(l.title||'').trim(), vimeo_id:vimeoId(l.vimeo_id)||'', ratio:l.ratio==='9:16'?'9:16':'16:9', preview:!!l.preview, duration:(l.duration||'').trim(), ...(l.type==='html'?{ type:'html', html_url:String(l.html_url||'').trim() }:{}) })) })).filter(ch=>ch.title||ch.lessons.length);
       const priceRaw=($('fPrice').value||'').trim();
       const old=courses.find(x=>x.id===id);
       const p={
