@@ -209,6 +209,7 @@
   @media(max-width:980px){.course-grid{grid-template-columns:1fr;}}
   .course{background:var(--card);border:1px solid var(--hair);border-radius:26px;overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
   .course:hover{transform:translateY(-6px);box-shadow:var(--sh-2);}
+  .course-cover{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:#141330;}
   .course-top{padding:30px 30px 24px;color:#fff;position:relative;overflow:hidden;}
   .course-top.mem{background:linear-gradient(135deg,#FFB020,#FF8A3D);}
   .course-top.think{background:linear-gradient(135deg,#16B0A8,#0d8a83);}
@@ -483,6 +484,7 @@
     </div>
     <div class="course-grid">
       <div class="course reveal">
+        <img class="course-cover" src="cover-free.webp" width="1600" height="840" alt="10 倍聯想力" loading="lazy" decoding="async">
         <div class="course-top free">
           <span class="free-tag">免費</span>
           
@@ -504,6 +506,7 @@
         </div>
       </div>
       <div class="course reveal">
+        <img class="course-cover" src="cover-course-memory.webp" width="1600" height="840" alt="過目不忘" loading="lazy" decoding="async">
         <div class="course-top mem">
           
           <span class="course-lv">記憶力・Level 1・入門首選</span>
@@ -524,6 +527,7 @@
         </div>
       </div>
       <div class="course reveal">
+        <img class="course-cover" src="cover-course-thinking.webp" width="1600" height="840" alt="瘋狂心智圖" loading="lazy" decoding="async">
         <div class="course-top think">
           
           <span class="course-lv">思考力・Level 2・進階整合</span>

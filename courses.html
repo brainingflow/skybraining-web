@@ -306,9 +306,20 @@
   .bprice{font-size:19px;}
   .bgo{font-size:13.5px;}
 }
+/* 課程卡換封面 2026-10-25：封面在上、文字在下；沒有封面的課沿用色塊，同樣 2:1 讓卡片頂部對齊 */
+#grid .course{flex-direction:column;}
+#grid .bcov{width:auto;aspect-ratio:2/1;}
+.bimg{position:relative;aspect-ratio:2/1;overflow:hidden;background:#141330;flex:none;}
+.bimg img{display:block;width:100%;height:100%;object-fit:cover;}
+.bimg .bbadge{position:absolute;top:14px;left:14px;margin:0;color:#fff;background:rgba(15,17,48,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+.bbody .bcn{color:var(--indigo);margin-bottom:4px;}
+.course.free-spot .bbody .bcn{color:#fff;}
+.course.free-spot .bimg .bbadge{background:rgba(15,17,48,.62);}
 @media(max-width:760px){
   #grid{grid-template-columns:1fr;gap:14px;}
   .bcov{padding:16px 12px;}
+  .bimg .bbadge{top:10px;left:10px;}
+  .bbody .bcn{font-size:17px;}
   .bcov::after{width:90px;height:90px;right:-24px;top:-24px;}
   .bbadge{margin-bottom:8px;font-size:11px;padding:3px 9px;}
   .bcn{font-size:14.5px;line-height:1.4;}
@@ -495,6 +506,7 @@
   const LINE_URL = 'https://lin.ee/9EGO8IT';
   const INTRO = { 'super-memory':'course-memory.html', 'super-thinking':'course-thinking.html', 'strong-thinking-basic':'course-strong-thinking.html', 'onsite-basic':'course-onsite-basic.html', 'onsite-advanced':'course-onsite-advanced.html', 'bundle-all':'course-bundle.html' };
   const ONSITE = ['onsite-basic','onsite-advanced'];
+  const COVER = { 'free-warmup':'cover-free.webp', 'super-memory':'cover-course-memory.webp', 'super-thinking':'cover-course-thinking.webp', 'strong-thinking-basic':'cover-course-strong-thinking.webp', 'onsite-basic':'cover-course-onsite-basic.webp', 'onsite-advanced':'cover-course-onsite-advanced.webp', 'bundle-all':'cover-course-bundle.webp' };
   const HIDE_BUNDLE = false;
   const ACCENTS = ['amber','teal','violet','indigo','free','rose','gold','grape','crimson','plum','techblue'];
 
@@ -524,12 +536,14 @@
       : `<div class="bprice">NT$${Number(c.price).toLocaleString()}<small>${priceSub}</small></div>`;
     const href = isFree ? 'login.html' : (c.intro_url || INTRO[id] || '');
     const go = isFree ? '免費開通 →' : '了解課程 →';
+    const cover = COVER[id];
+    const head = cover
+      ? `<div class="bimg"><img src="${cover}" width="1600" height="840" alt="${c.name||''}" loading="lazy" decoding="async"><span class="bbadge">${badge}</span></div>`
+      : `<div class="bcov ${color}"><span class="bbadge">${badge}</span><div class="bcn">${c.name||''}</div></div>`;
     const inner = `
-      <div class="bcov ${color}">
-        <span class="bbadge">${badge}</span>
-        <div class="bcn">${c.name||''}</div>
-      </div>
+      ${head}
       <div class="bbody">
+        ${cover ? `<div class="bcn">${c.name||''}</div>` : ''}
         <div class="btitle">${c.subtitle||''}</div>
         <div class="bdesc">${c.description||''}</div>
         ${noteHtml}
