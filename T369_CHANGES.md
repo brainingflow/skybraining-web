@@ -24,3 +24,7 @@
 ## 上線前老闆要做
 1. Supabase SQL Editor 依序貼 2026-10-25_announcements.sql、2026-10-25_mindmap_free_course.sql。
 2. 驗收過再合進 main 部署；上線時 admin-landings 的 mindmap-free 狀態改 live。
+
+## 驗收退回修正（2026-10-25）
+- watch.html：播 HTML 簡報時 html 加 class slides-on，外層 html,body overscroll-behavior-x:none（手機往右滑不會被瀏覽器返回手勢帶離教室；影片課不加）；桌機簡報框高度 clamp(420px, 100svh−300px, 640px)，1200×800 首屏看得到完整翻頁列。
+- watch.html?preview=mindmap-free：**本機預覽用，上線時不影響**。程式判斷 location.hostname 只有 localhost／127.0.0.1 才成立，不用登入、不讀寫 Supabase（課程資料用頁內一份跟 SQL 相同的設定）；線上網域帶這個參數只會顯示「缺少課程參數」。預覽網址 http://localhost:8081/watch.html?preview=mindmap-free

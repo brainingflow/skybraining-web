@@ -62,7 +62,8 @@
   .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#0d0f22;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);}
   .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
   .video-frame.v916{aspect-ratio:9/16;max-width:min(400px,86vw);margin:0 auto;}
-  .video-frame.slides{aspect-ratio:16/10;background:#fff;}
+  .video-frame.slides{aspect-ratio:auto;height:clamp(420px,calc(100vh - 300px),640px);height:clamp(420px,calc(100svh - 300px),640px);background:#fff;}
+  html.slides-on,html.slides-on body{overscroll-behavior-x:none;}
   @media(max-width:860px){.video-frame.slides{aspect-ratio:auto;height:min(82svh,780px);min-height:420px;border-radius:14px;}}
   .ep .dur{margin-left:auto;font-size:11px;color:var(--ink-soft);flex:none;}
   .ep.locked{color:var(--ink-soft);cursor:default;}
@@ -169,23 +170,29 @@
 
   $('logout').onclick = async (e)=>{ e.preventDefault(); await supabase.auth.signOut(); location.href = LOGIN_PAGE; };
 
-  const courseId = new URLSearchParams(location.search).get('course');
+  // 本機預覽（老闆審核用）：只在 localhost／127.0.0.1 生效，線上 hostname 永遠不成立，不用登入、不寫資料庫
+  const LOCAL_PREVIEW = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && new URLSearchParams(location.search).get('preview')==='mindmap-free';
+  const PREVIEW_COURSE = { id:'mindmap-free', name:'心智圖免費課', subtitle:'免費・58 頁教學簡報',
+    description:'你登入就能看強腦力高雄初階班的心智圖教學簡報前 58 頁：大腦怎麼記東西、大師的筆記、六大規則與五個步驟。',
+    price:0, level:0, accent:'free', category:'brain', intro_url:'mindmap-free.html',
+    episodes:{ v:2, chapters:[{ title:'第 1 堂', lessons:[{ title:'心智圖，把思考畫出來（教學簡報 58 頁）', type:'html', html_url:'lessons/mindmap-free-7q4k/slides.html', vimeo_id:'', ratio:'16:9', preview:false, duration:'' }] }] } };
+  const courseId = LOCAL_PREVIEW ? 'mindmap-free' : new URLSearchParams(location.search).get('course');
 
   (async ()=>{
     if(!courseId){ $('content').innerHTML = msg('缺少課程參數','請從「我的課程」點選要觀看的課程。'); return; }
 
     // 必須登入
-    const { data:{ session } } = await supabase.auth.getSession();
+    const { data:{ session } } = LOCAL_PREVIEW ? { data:{ session:{ user:{ id:'local-preview' } } } } : await supabase.auth.getSession();
     if(!session){ location.href = LOGIN_PAGE + '?next=' + encodeURIComponent(location.href); return; }
 
     // 讀課程資料
-    const { data:course, error:cErr } = await supabase.from('courses').select('*').eq('id',courseId).maybeSingle();
+    const { data:course, error:cErr } = LOCAL_PREVIEW ? { data:PREVIEW_COURSE, error:null } : await supabase.from('courses').select('*').eq('id',courseId).maybeSingle();
     if(cErr || !course){ $('content').innerHTML = msg('找不到這門課程', cErr?cErr.message:'請確認課程是否存在。'); return; }
     $('crumbName').textContent = course.name;
 
     // === 購買比對：以「會員編號」為單位，同一個人的 Email／Google／LINE 帳號共用課程 ===
     let owned = false;
-    const { data:ownRes, error:ownErr } = await supabase.rpc('member_owns_course', { p_course_id: courseId });
+    const { data:ownRes, error:ownErr } = LOCAL_PREVIEW ? { data:false, error:null } : await supabase.rpc('member_owns_course', { p_course_id: courseId });
     if(ownErr){
       // member_scope.sql 尚未部署時的退路
       const { data:enroll } = await supabase.from('enrollments')
@@ -251,7 +258,7 @@
       && course.episodes.v===2 && Array.isArray(course.episodes.chapters))
       ? course.episodes.chapters : null;
 
-    let freeNote = '✅ 這堂免費課已放進「我的課程」，隨時都能回來複習。';
+    let freeNote = LOCAL_PREVIEW ? '🔧 本機預覽：不用登入、不寫資料庫，線上網址不會有這個模式。' : '✅ 這堂免費課已放進「我的課程」，隨時都能回來複習。';
     const renderChapters = (mode)=>{   // mode: 'full'（已購）| 'preview'（免費試看）
       const items=[];
       let listHtml = '<div class="ep-list-h">課程單元</div>';
@@ -292,6 +299,7 @@
         const p=$('player');
         p.classList.toggle('v916', it.ratio==='9:16');
         p.classList.toggle('slides', !!it.html);
+        document.documentElement.classList.toggle('slides-on', !!it.html);
         p.innerHTML = it.html ? slidesHtml(it.html, it.label) : iframeHtml(it.vid);
         $('nowPlaying').textContent=(it.html?'▶ 正在看：':'▶ 正在播放：')+it.label;
         document.querySelectorAll('.ep').forEach(x=>x.classList.remove('active'));
@@ -367,7 +375,7 @@
       }
     }else if((course.price||0)===0 && hasHtml && chapters){
       // 免費 HTML 簡報課：登入就直接看，背後自動開通放進「我的課程」（開通失敗也照樣能看）
-      const { error } = await supabase.from('enrollments')
+      const { error } = LOCAL_PREVIEW ? { error:null } : await supabase.from('enrollments')
         .insert({ user_id: session.user.id, course_id: courseId, source: 'free' });
       if(error && !/duplicate|unique|conflict/i.test(error.message)) freeNote = '🎁 這堂是免費課，登入就能看。';
       renderChapters('full');
