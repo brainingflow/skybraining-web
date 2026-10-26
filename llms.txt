@@ -73,7 +73,7 @@
 - [主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少](https://skybraining.com/learn-active-learning.html)：2019 年 PNAS 哈佛大學物理系研究，測驗分數與學生自評走向相反
 - [你家孩子查資料後就說「我懂了」？耶魯的一項研究發現，查過容易高估自己](https://skybraining.com/learn-search-illusion.html)：2015 年 Journal of Experimental Psychology: General 耶魯大學九個實驗
 - [線上課看不進去？哈佛的一項研究：每一小段停下來考自己一次](https://skybraining.com/learn-interpolated-testing.html)：2013 年 PNAS 哈佛大學心理系研究，21 分鐘線上課切四段、每段考一次
-- [一心多用的人，工作記憶差在哪？史丹佛的一項研究，和它沒說的事](https://skybraining.com/learn-media-multitasking.html)：2016 年 Psychonomic Bulletin & Review，媒體多工與工作記憶是關聯不是因果
+- [一心多用的人，工作記憶差在哪？史丹佛的一項研究](https://skybraining.com/learn-media-multitasking.html)：2016 年 Psychonomic Bulletin & Review，研究發現常一心多用的人工作記憶測驗表現較差，是關聯
 - [你家孩子說「我懂了」？耶魯的一項研究：請他講一遍，才知道懂到哪](https://skybraining.com/learn-explanatory-depth.html)：2002 年 Cognitive Science 耶魯大學 12 個研究，講一遍解釋後自評普遍下降
 - [你家孩子口語表達跟不上？牛津在 193 所小學做的 20 週口語課研究](https://skybraining.com/learn-oral-language-intervention.html)：牛津大學教育系在英國 193 所小學的大規模試驗
 - [同一個字要在不同的書裡遇到：牛津閱讀研究者談你家孩子閱讀量](https://skybraining.com/learn-reading-experience.html)：牛津大學 Kate Nation 談「詞彙遺產」，閱讀量與識字的四份研究回顧
