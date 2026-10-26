@@ -65,7 +65,7 @@
 - [背英文單字的方法：單字老是背不起來，問題出在哪？](https://skybraining.com/article-memorize-english-vocabulary.html)：關鍵字諧音法、圖像記憶、間隔複習、造句情境與主動回想 5 個方法
 - [小孩不專心怎麼辦？6 個練出專注力的方法](https://skybraining.com/article-focus.html)：從腦科學看專注力，6 個在家就能做的方法
 - [國小背課文技巧：孩子背不起來，先改這 2 件事](https://skybraining.com/article-memorize-textbook.html)：唸出聲與讀完考自己，附國小到國中的分齡做法
-- [國中背書方法：同一本課本，六個班只差一件事](https://skybraining.com/article-junior-high-study-method.html)：課堂小考與重讀的比較、在家五個動作與研究限制
+- [國中背書方法：同一本課本，六個班只差一件事](https://skybraining.com/article-junior-high-study-method.html)：課堂小考與重讀的比較、在家五個動作
 - [國小記憶力訓練方法：75 篇兒童實驗找出的三種做法](https://skybraining.com/article-elementary-memory-training.html)：分開幾天學、闔上書考自己、記的時候多開幾條路
 
 ## 頂尖論文期刊（研究解讀，每篇附原始出處）
@@ -78,7 +78,7 @@
 - [你家孩子口語表達跟不上？牛津在 193 所小學做的 20 週口語課研究](https://skybraining.com/learn-oral-language-intervention.html)：牛津大學教育系在英國 193 所小學的大規模試驗
 - [同一個字要在不同的書裡遇到：牛津閱讀研究者談你家孩子閱讀量](https://skybraining.com/learn-reading-experience.html)：牛津大學 Kate Nation 談「詞彙遺產」，閱讀量與識字的四份研究回顧
 - [線上思維課對誰有用？史丹佛的研究與三年後的整合分析](https://skybraining.com/learn-mindset-intervention.html)：史丹佛大學研究與 29 篇整合分析，效果集中在原本落後的學生
-- [你家孩子讀完就忘？考前複習先改這一個動作：提取練習](https://skybraining.com/learn-retrieval-practice.html)：提取練習是什麼、美國中學課堂量到什麼、今晚五分鐘怎麼做與研究限制
+- [你家孩子讀完就忘？考前複習先改這一個動作：提取練習](https://skybraining.com/learn-retrieval-practice.html)：提取練習是什麼、美國中學課堂量到什麼、今晚五分鐘怎麼做
 - [位置記憶法有用嗎？記憶宮殿的四十天訓練研究怎麼說](https://skybraining.com/learn-method-of-loci.html)：記憶宮殿四十天訓練研究量到什麼、今晚五個位置怎麼開始
 - [心智圖真的有效嗎？12 篇研究的回顧](https://skybraining.com/learn-mindmap-evidence.html)：2026 年 BMC Medical Education 收錄 12 篇研究的系統性回顧
 - [間隔複習怎麼做？一個紙盒，把遺忘曲線變成你家孩子的複習表](https://skybraining.com/learn-spaced-repetition.html)：萊特納盒七格怎麼運作，與家長今晚能做的四個動作
