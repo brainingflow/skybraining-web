@@ -163,6 +163,13 @@ article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-und
 .hero .banner{margin:4px 0 0;border-radius:22px;overflow:hidden;box-shadow:var(--sh-2);background:var(--paper-2);}
 .hero .banner img{width:100%;height:auto;display:block;}
 
+/* T399-STYLE:START 小標與結論加粗加大（老闆 2026-10-27「所有結論跟小標題都需要這樣」），整段可換 */
+article h2{font-size:clamp(22px,3.8vw,28px);font-weight:900;}
+article>h3{font-size:clamp(19px,2.6vw,23px);font-weight:900;}
+.big-q{display:block;font-family:var(--round);font-weight:900;font-size:clamp(19px,2.6vw,23px);line-height:1.5;color:var(--indigo);margin:26px 0 8px;}
+.concl-1{font-family:var(--round);font-weight:900;font-size:clamp(18px,2.4vw,21px);line-height:1.55;}
+.callout .concl-1{color:var(--indigo);}
+/* T399-STYLE:END */
 </style>
 </head>
 <body>
@@ -263,7 +270,7 @@ article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-und
       <details><summary>要不要讓孩子吃補腦的保健食品？</summary><div class="ans">這篇談學習方法；營養補充請諮詢醫師或營養師，不要單憑廣告決定。</div></details>
     </div>
 
-    <div class="callout"><span class="k">一句話講完</span>你家孩子的記性不是天生定好的，方法對了才會進步。<br>今晚就做一件：讓他早點睡，睡前闔上書講一次今天學的。</div>
+    <div class="callout"><span class="k">一句話講完</span><b class="concl-1">你家孩子的記性不是天生定好的，方法對了才會進步。</b><br>今晚就做一件：讓他早點睡，睡前闔上書講一次今天學的。</div>
 
     <div class="rel">
       <h2>延伸閱讀</h2>

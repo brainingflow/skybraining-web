@@ -163,6 +163,13 @@ article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-und
 .hero .banner{margin:4px 0 0;border-radius:22px;overflow:hidden;box-shadow:var(--sh-2);background:var(--paper-2);}
 .hero .banner img{width:100%;height:auto;display:block;}
 
+/* T399-STYLE:START 小標與結論加粗加大（老闆 2026-10-27「所有結論跟小標題都需要這樣」），整段可換 */
+article h2{font-size:clamp(22px,3.8vw,28px);font-weight:900;}
+article>h3{font-size:clamp(19px,2.6vw,23px);font-weight:900;}
+.big-q{display:block;font-family:var(--round);font-weight:900;font-size:clamp(19px,2.6vw,23px);line-height:1.5;color:var(--indigo);margin:26px 0 8px;}
+.concl-1{font-family:var(--round);font-weight:900;font-size:clamp(18px,2.4vw,21px);line-height:1.55;}
+.callout .concl-1{color:var(--indigo);}
+/* T399-STYLE:END */
 </style>
 </head>
 <body>
@@ -275,7 +282,7 @@ article p a,article li a,.ans a{color:#0d8a83;text-decoration:underline;text-und
       <details><summary>用單字卡 App 還需要自己動手寫嗎？</summary><div class="ans">需要。我建議難字先自己寫一次、配一個畫面，再交給 App 排複習。</div></details>
     </div>
 
-    <div class="callout"><span class="k">一句話講完</span>抄得多，不如方法對。<br>今晚就做一件：挑 5 個單字，每個配一個諧音畫面，明天遮起來考一次。</div>
+    <div class="callout"><span class="k">一句話講完</span><b class="concl-1">抄得多，不如方法對。</b><br>今晚就做一件：挑 5 個單字，每個配一個諧音畫面，明天遮起來考一次。</div>
 
     <div class="rel">
       <h2>你可以接著讀</h2>
