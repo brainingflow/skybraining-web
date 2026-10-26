@@ -168,6 +168,13 @@ article>h3{font-size:clamp(19px,2.6vw,23px);font-weight:900;}
 .big-q{display:block;font-family:var(--round);font-weight:900;font-size:clamp(19px,2.6vw,23px);line-height:1.5;color:var(--indigo);margin:26px 0 8px;}
 .concl-1{font-family:var(--round);font-weight:900;font-size:clamp(18px,2.4vw,21px);line-height:1.55;}
 .callout .concl-1{color:var(--indigo);}
+article .sb-big{font-family:var(--round);font-weight:900;font-size:clamp(19px,2.6vw,23px);line-height:1.55;color:var(--indigo);margin:26px 0 10px;}
+article .sb-big strong{font-weight:900;}
+.vs{background:var(--paper-2);border-radius:16px;padding:14px 18px;margin:18px 0;}
+.vs p{margin:4px 0;}
+.vs-mid{font-family:var(--round);font-weight:900;color:var(--orange);font-size:20px;letter-spacing:2px;text-align:center;}
+.data-fig{margin:22px 0;}
+.data-fig img{display:block;width:100%;height:auto;border-radius:14px;}
 /* T399-STYLE:END */
 </style>
 <style>
@@ -230,16 +237,38 @@ article>h3{font-size:clamp(19px,2.6vw,23px);font-weight:900;}
 
     <p>結果你猜怎樣？<br>自己動手做的那堂課，考試分數比較高，但<strong>「學習的感覺」卻「比較差」</strong>。</p>
 
+    <div class="vs">
+      <p>自己動手那堂課：考試分數<strong>高了 0.46 個標準差</strong>，覺得自己「學到很多」的分數卻<strong>低了 0.56 個標準差</strong></p>
+      <p class="vs-mid">VS</p>
+      <p>聽課學習那堂課：考試分數比較低，4 題感受（學到很多、喜歡這堂課、講師教得好、希望都這樣上）卻<strong>全部比較高</strong></p>
+    </div>
+
+    <p><strong>打個比方：假設聽講那堂平均剛好 60 分（及格邊緣），一個標準差算 15 分（這是我的假設），0.46 個標準差大概是 7 分，也就是 60 分對 67 分的差別。</strong><br>兩個主題、兩個學期都一樣。</p>
+
+    <figure class="data-fig" hidden><img data-src="skybraining-active-learning-score-vs-feeling.webp" width="1600" height="900" alt="學得多，卻覺得學得少：自己動手那堂課考試分數高 0.46 個標準差，覺得學到很多低 0.56 個標準差" loading="lazy" decoding="async"></figure>
+
+    <p class="sb-big">所以你看，<strong>動手拆解那堂，感受都比較差，卻學得更多。</strong></p>
+
+    <p>這兩個數字是標準差，不是百分比，論文也沒有換成滿分 100 的分數，所以上面的 60 對 67 只是打比方，不是論文算出來的分數，真正的差距只能用一個大概。<br>論文開頭的重點摘要（Significance）這一句（中譯）：<br><strong>「我們發現：主動教室裡的學生學得更多，但他們覺得自己學得比較少。」</strong></p>
+
+    <h3 class="sb-big">為什麼會這樣？</h3>
+
+    <p>研究團隊後來訪談 17 位學生：</p>
+
+    <div class="vs">
+      <p>自己動手那堂課：15 位學生覺得學習起來<strong>零碎、不流暢</strong></p>
+      <p class="vs-mid">VS</p>
+      <p>聽課學習那堂課：16 位學生覺得<strong>比較愉快、容易跟上</strong></p>
+    </div>
+
+    <p>作者的解讀是：雖然自己動手做的那堂課，學生表現優秀很多，測驗分數高了 0.46 個標準差（前面換算過，大約 60 對 67 分），<br>但是：</p>
+
     <ol>
-      <li>考卷分數：測驗分數高了 0.46 個標準差。<br><strong>打個比方：假設聽講那堂平均剛好 60 分（及格邊緣），一個標準差算 15 分（這是我的假設），0.46 個標準差大概是 7 分，也就是 60 分對 67 分的差別。</strong><br>兩個主題、兩個學期都一樣。</li>
-      <li>上課的感覺：「我覺得我從這堂課學到很多」這題，動手拆解那堂比聽講那堂低了 0.56 個標準差；連同「喜歡這堂課」在內，4 題感受全是聽講那堂比較高。</li>
+      <li>新手拿「聽起來順不順」判斷自己學了多少，聽講那堂很順，就自以為學了很多；</li>
+      <li>自己動手做遇到卡住、費力、需要思考的問題，就解讀成「我學不好」。</li>
     </ol>
 
-    <p>所以你看，<strong>動手拆解那堂，感受都比較差，卻學得更多。</strong></p>
-
-    <p>這兩個數字是標準差，不是百分比，論文也沒有換成滿分 100 的分數，所以上面的 60 對 67 只是打比方，不是論文算出來的分數，真正的差距只能用一個大概。<br>論文摘要這一句（中譯）：「我們發現主動教室裡的學生學得更多，但他們覺得自己學得比較少。」</p>
-
-    <p>為什麼會這樣？<br>研究團隊後來訪談 17 位學生：15 位覺得動手那堂零碎、不流暢；16 位覺得聽講那堂比較愉快、容易跟上。<br>作者的解讀是：新手拿「聽起來順不順」判斷自己學了多少，卡住、費力就被讀成「我沒學到」。<br>順，不等於會；卡，不等於沒學到。</p>
+    <p class="sb-big"><strong>順，不等於會；卡，不等於沒學到。</strong></p>
 
     <h2>家長今晚 3 個動作：先做題，再看解答</h2>
 
