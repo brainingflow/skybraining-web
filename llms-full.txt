@@ -5606,7 +5606,7 @@ VS
 
 - Taylor 與 Rohrer（2010），Applied Cognitive Psychology（https://doi.org/10.1002/acp.1598）：四年級學生，用角柱的面、邊、角、角度 4 種題目比兩種排法。隔天測驗，交錯練習組的分數大約是另一組的 2 倍。
 
-- Rohrer、Dedrick 與 Stershic（2015），Journal of Educational Psychology（https://doi.org/10.1037/edu0000001）：126 名七年級生、練習 3 個月，1 天後與 30 天後各考一次，交錯組都比較好，30 天後差距更大。
+- Rohrer、Dedrick 與 Stershic（2015），Journal of Educational Psychology（https://doi.org/10.1037/edu0000001）：126 名七年級生、練習 3 個月，1 天後與 30 天後各考一次，交錯組都比較好，30 天後差距更大（高 0.42 和 0.79 個標準差）。
 
 第 3 項規模大得多：Rohrer、Dedrick、Hartwig 與 Cheung（2020），Journal of Educational Psychology（https://doi.org/10.1037/edu0000367），787 名七年級生、54 個班，混著練或分區練 4 個月，結束 1 個月後考一場沒預告的測驗：
 
