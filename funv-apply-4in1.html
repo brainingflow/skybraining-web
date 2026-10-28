@@ -103,6 +103,12 @@
 .course-badge .cb-label{white-space:nowrap;}
 .course-badge b{color:var(--indigo);font-weight:700;}
 .f.bad input,.f.bad textarea,.f.bad .opt{border-color:#d7263d;}
+.bday{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
+.bday select{display:block;width:100%;min-width:0;min-height:52px;font-family:var(--sans);font-size:16px;color:var(--ink);line-height:1.7;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235a5e79' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 11px center/12px 8px;border:1.5px solid var(--hair);border-radius:14px;padding:13px 30px 13px 13px;-webkit-appearance:none;appearance:none;cursor:pointer;}
+.bday select:has(option[value=""]:checked){color:#a7abc2;}
+.bday option{color:var(--ink);}
+.bday select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(22,176,168,.16);}
+.f.bad .bday select{border-color:#d7263d;}
 .err{display:none;margin-top:7px;font-size:16px;line-height:1.7;color:#d7263d;font-weight:500;}
 .err.on{display:block;}
 .hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;}
@@ -251,8 +257,13 @@ fieldset.f legend{padding:0;}
       </div>
 
       <div class="f" data-name="birthday" data-kind="text" data-req="1" data-rule="birthday" data-msg="請選生日。">
-        <label class="q" for="q7">生日<span class="req">*</span></label>
-        <input type="date" id="q7" autocomplete="bday">
+        <label class="q" for="q7y">生日<span class="req">*</span></label>
+        <input type="hidden" id="q7">
+        <div class="bday">
+          <select id="q7y" aria-label="生日年" autocomplete="bday-year"><option value="">年</option></select>
+          <select id="q7m" aria-label="生日月" autocomplete="bday-month"><option value="">月</option></select>
+          <select id="q7d" aria-label="生日日" autocomplete="bday-day"><option value="">日</option></select>
+        </div>
         <p class="err"></p>
       </div>
 
@@ -973,7 +984,26 @@ fieldset.f legend{padding:0;}
   document.getElementById('q4').addEventListener('blur', function(){
     this.value = this.value.trim().toUpperCase();
   });
-  document.getElementById('q7').setAttribute('max', todayStr());
+  /* ── 生日：年／月／日三個下拉，三個都選才寫進 #q7（yyyy-mm-dd）── */
+  (function(){
+    var hid = document.getElementById('q7');
+    var y = document.getElementById('q7y'), m = document.getElementById('q7m'), d = document.getElementById('q7d');
+    var i, maxY = new Date().getFullYear() - 5;
+    for(i = maxY; i >= 1940; i--) y.add(new Option(String(i), String(i)));
+    for(i = 1; i <= 12; i++) m.add(new Option(String(i), String(i)));
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+    function sync(){
+      // 年還沒選時用閏年 2000 算，2 月先給 29 天，選了年再縮成 28
+      var n = m.value ? new Date(+y.value || 2000, +m.value, 0).getDate() : 31;
+      var keep = d.value;
+      while(d.options.length - 1 > n) d.remove(d.options.length - 1);
+      for(i = d.options.length; i <= n; i++) d.add(new Option(String(i), String(i)));
+      d.value = +keep > n ? '' : keep;
+      hid.value = (y.value && m.value && d.value) ? y.value + '-' + pad(+m.value) + '-' + pad(+d.value) : '';
+    }
+    [y, m, d].forEach(function(s){ s.addEventListener('change', sync); });
+    sync();
+  })();
 
   showStep(1);
   inited = true;
