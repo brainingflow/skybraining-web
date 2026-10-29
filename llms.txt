@@ -80,7 +80,7 @@
 - [線上思維課對誰有用？史丹佛的研究與三年後的整合分析](https://skybraining.com/learn-mindset-intervention.html)：史丹佛大學研究與 29 篇整合分析，效果集中在原本落後的學生
 - [你家孩子讀完就忘？考前複習先改這一個動作：提取練習](https://skybraining.com/learn-retrieval-practice.html)：提取練習是什麼、美國中學課堂量到什麼、今晚五分鐘怎麼做
 - [位置記憶法有用嗎？記憶宮殿的四十天訓練研究怎麼說](https://skybraining.com/learn-method-of-loci.html)：記憶宮殿四十天訓練研究量到什麼、今晚五個位置怎麼開始
-- [心智圖真的有效嗎？12 篇研究的回顧](https://skybraining.com/learn-mindmap-evidence.html)：2026 年 BMC Medical Education 收錄 12 篇研究的系統性回顧
+- [心智圖真的有效嗎？12 篇研究的回顧](https://skybraining.com/learn-mindmap-evidence.html)：2026 年 BMC Medical Education 收錄 12 篇研究的系統性回顧；另附 2002 年 Medical Education 倫敦醫學院 50 位醫學生的單篇實驗（Farrand）
 - [間隔複習怎麼做？一個紙盒，把遺忘曲線變成你家孩子的複習表](https://skybraining.com/learn-spaced-repetition.html)：萊特納盒七格怎麼運作，與家長今晚能做的四個動作
 - [交錯練習怎麼做？把舊題混進本週數學作業的複習法](https://skybraining.com/learn-interleaving.html)：把舊章節題目混進本週作業，練「這題該用哪一招」的判斷
 - [分散式學習：同樣的總時數，為什麼每天二十分鐘記得比較久](https://skybraining.com/learn-distributed-practice.html)：總時數不變只換排法，附上班族四個動作
