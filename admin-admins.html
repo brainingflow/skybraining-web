@@ -101,7 +101,7 @@
   const $=(id)=>document.getElementById(id);
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmtDate=(s)=> s ? String(s).slice(0,10) : '';
-  const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉'];
+  const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉','亭儀'];
 
   /* #demo=1：給老闆看版面用。不登入、不打 Supabase，資料全是假的（本機 npx serve 會丟掉 ?query，所以用 hash） */
   const DEMO=/(^|[#&])demo=?1?([&]|$)/.test(location.hash);
