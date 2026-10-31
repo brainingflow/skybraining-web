@@ -11,7 +11,7 @@ const BRAND_PAGES = [
   'kaohsiung.html', 'courses.html',
   'course-memory.html', 'course-thinking.html', 'course-strong-thinking.html',
   'course-onsite-basic.html', 'course-onsite-advanced.html', 'course-bundle.html',
-  'free.html', 'mindmap-free.html', 'mindmap.html',
+  'free.html', 'mindmap-free.html', 'mindmap.html', 'memory-science.html',
 ];
 
 const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');

@@ -2,7 +2,7 @@
 
 > 強腦力 SkyBraining（又稱 SKY強腦力、強腦力）教你「怎麼學」而不是「一直背」：由 Sky 老師用圖像記憶、記憶宮殿、心智圖、聯想力與間隔複習，帶 10 歲以上到 35 歲的學習者（國小中年級以上的孩子與家長、國高中生、大學生與上班族）練記憶力、專注力與學習力。高雄有實體班，線上課全台都能上。
 
-- 最後更新：2026-10-31
+- 最後更新：2026-11-01
 - 核心句：其實你不是記性差，只是沒學過記憶的方法。
 - 品牌口號：學會強腦力 記憶超省力
 - 全文版（課程頁與文章的純文字全文）：https://skybraining.com/llms-full.txt
@@ -56,6 +56,7 @@
 - [特斯拉的腦內工廠：機器在腦中就先跑過一遍](https://skybraining.com/article-master-tesla.html)：特斯拉自述的心像力，與睡前 3 分鐘心像複習
 
 ## 記憶與學習方法文章
+- [記憶學是什麼？記憶怎麼運作、怎麼記得牢](https://skybraining.com/memory-science.html)：編碼、儲存、提取三階段，記憶學、記憶術、記憶法、心智圖差在哪（記憶主題總頁）
 - [記憶方法有哪些？你今晚就能陪孩子試的 7 種方法](https://skybraining.com/article-memory-methods.html)：圖像記憶、記憶宮殿、聯想、考自己、間隔複習、分散學習、心智圖，每種附研究出處與 3 個步驟
 - [記憶宮殿是什麼、怎麼用？](https://skybraining.com/article-memory-palace.html)：位置記憶法的原理與 5 個實作步驟
 - [圖像記憶法是什麼？為什麼記畫面比記文字省力](https://skybraining.com/article-image-memory.html)：雙重編碼理論、圖像優勢效應與記憶宮殿
