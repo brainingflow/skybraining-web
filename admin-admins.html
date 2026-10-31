@@ -77,6 +77,7 @@
   .sub-h{font-family:var(--round);font-weight:800;font-size:15px;color:var(--indigo);margin:2px 0 4px;}
   .lk-url{min-width:260px;font-size:12.5px;line-height:1.5;color:var(--indigo);word-break:break-all;}
   .lk-ops{display:flex;gap:6px;flex-wrap:wrap;}
+  .st.course{background:rgba(255,138,61,.14);color:#b8541a;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -102,6 +103,13 @@
   const esc=(s)=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmtDate=(s)=> s ? String(s).slice(0,10) : '';
   const TEAMS=['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉','亭儀'];
+  /* 課程領導人：名單看「報名這門課」的人、不分邀請人；kw 跟 admin-funv.html COURSE_LIST 同一套，funv-team.html 也有一份 */
+  const COURSE_TEAMS=[
+    { team:'緹林（泰式高床）',     kw:'初階泰式高床按摩' },
+    { team:'史麗仙（頌缽）',       kw:'缽動筋膜調理' },
+    { team:'芳香協會（精油按摩）', kw:'芳香精油' },
+    { team:'小可（牛角筋絡）',     kw:'牛角筋絡調理' }
+  ];
 
   /* #demo=1：給老闆看版面用。不登入、不打 Supabase，資料全是假的（本機 npx serve 會丟掉 ?query，所以用 hash） */
   const DEMO=/(^|[#&])demo=?1?([&]|$)/.test(location.hash);
@@ -111,7 +119,7 @@
               { email:'demo-helper@example.com', is_owner:false, is_me:false, has_account:false, note:'（示範）助教', added_by:'（示範）', created_at:'2026-10-01T00:00:00Z' }],
       leads:[{ user_id:'demo-u1', team:'蘇姐團隊', note:'（示範）', display_name:'示範負責人一', member_no:'SB00001', created_at:'2026-10-18T02:00:00Z' },
              { user_id:'demo-u2', team:'珠珠姐', note:'', display_name:null, member_no:'SB00002', created_at:'2026-10-18T03:00:00Z' }],
-      links:[{ team:'蘇姐團隊', token:'0123456789abcdef'.repeat(4), created_at:'2026-10-24T02:00:00Z', revoked_at:null }]
+      links:[{ team:'蘇姐團隊', token:'0123456789abcdef'.repeat(4), created_at:'2026-10-24T02:00:00Z', revoked_at:null, course_kw:null }]
     };
     supabase.rpc=async (fn,args)=>{
       if(fn==='admin_admins_list') return { data:demo.admins, error:null };
@@ -128,9 +136,10 @@
         return { data:{ ok:true, removed:n-demo.leads.length }, error:null };
       }
       if(fn==='funv_team_link_issue'){
-        const team=String(args.p_team||'').trim();
+        const team=String(args.p_team||'').trim(), old=demo.links.find(l=>l.team===team);
+        const kw=String(args.p_course_kw||'').trim()||(old&&old.course_kw)||null;
         const token=Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,'0')).join('');
-        demo.links=demo.links.filter(l=>l.team!==team).concat([{ team, token, created_at:new Date().toISOString(), revoked_at:null }]);
+        demo.links=demo.links.filter(l=>l.team!==team).concat([{ team, token, created_at:new Date().toISOString(), revoked_at:null, course_kw:kw }]);
         return { data:token, error:null };
       }
       return { data:null, error:{ message:'示範模式不連資料庫' } };
@@ -188,6 +197,7 @@
           <div class="sub" style="margin-bottom:12px;">
             每個團隊一條連結。按「複製」傳給該團隊的負責人，他點開、用 LINE 登入就自動開通，只看得到<b>自己團隊</b>報名者的名字、電話、推薦人、顏色標記。
             連結只傳給負責人本人；不小心外流就按「重新產生」，舊連結馬上失效，已經開通的人要停權，到下面清單按「解除」。
+            標<span class="st course">依課程</span>的是課程領導人：看到的是<b>報名那門課</b>的所有學員（不分邀請人），一樣只有名字、電話、推薦人、顏色標記。
           </div>
           <div id="lkWrap"><div class="state"><div class="spin"></div>載入中…</div></div>
           <div class="msg" id="lkMsg"></div>
@@ -374,16 +384,18 @@
         document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); ta.remove(); return ok;
       }catch(e){ return false; }
     };
+    const kwOf=(team)=>{ const c=COURSE_TEAMS.find(x=>x.team===team); if(c) return c.kw; const l=links.find(x=>x.team===team); return (l&&l.course_kw)||''; };
     const lkRender=()=>{
       const by={}; links.forEach(l=>{ by[l.team]=l; });
-      const teams=TEAMS.concat(links.map(l=>l.team).filter(t=>!TEAMS.includes(t)));
+      const fixed=TEAMS.concat(COURSE_TEAMS.map(c=>c.team));
+      const teams=fixed.concat(links.map(l=>l.team).filter(t=>!fixed.includes(t)));
       const box=$('lkWrap');
       box.innerHTML=`<div class="tbl-scroll"><table>
         <thead><tr><th>團隊</th><th>專屬連結</th><th>產生日期</th><th>操作</th></tr></thead>
         <tbody>${teams.map((t,i)=>{
           const l=by[t], live=!!(l&&l.token&&!l.revoked_at);
           return `<tr>
-          <td style="white-space:nowrap;"><div class="em">${esc(t)}</div></td>
+          <td style="white-space:nowrap;"><div class="em">${esc(t)}</div>${kwOf(t)?`<span class="st course">依課程</span><div class="sm">報名課程含「${esc(kwOf(t))}」</div>`:''}</td>
           <td>${live?`<div class="lk-url">${esc(LINK_BASE+l.token)}</div>`:`<span class="sm">${l?'已停用':'還沒產生'}</span>`}</td>
           <td class="sm" style="white-space:nowrap;">${l?esc(fmtDate(l.created_at)):'—'}</td>
           <td><div class="lk-ops">${live
@@ -401,7 +413,11 @@
       box.querySelectorAll('[data-re]').forEach(b=>b.onclick=()=>lkIssue(teams[+b.getAttribute('data-re')], b, true));
     };
     const lkLoad=async ()=>{
-      const { data, error } = await supabase.from('funv_team_links').select('team,token,created_at,revoked_at').order('team');
+      let { data, error } = await supabase.from('funv_team_links').select('team,token,created_at,revoked_at,course_kw').order('team');
+      if(error && /course_kw/.test(error.message||'')){
+        ({ data, error } = await supabase.from('funv_team_links').select('team,token,created_at,revoked_at').order('team'));
+        if(!error) lkMsg('「依課程」那四列要先在 Supabase 執行 2026-10-30_funv_team_course.sql 才能產生。','error');
+      }
       if(error){ $('lkWrap').innerHTML='<div class="empty" style="color:var(--err);">讀取失敗：'+esc(error.message)+'<br><span class="sm">如果訊息是找不到資料表，代表 2026-10-24_funv_team_links.sql 還沒在 Supabase 執行。</span></div>'; return; }
       links=data||[]; lkRender();
     };
@@ -412,8 +428,9 @@
         return;
       }
       btn.disabled=true;
-      const { error } = await supabase.rpc('funv_team_link_issue',{ p_team:team });
-      if(error){ btn.disabled=false; lkMsg((again?'重新產生':'產生')+'失敗：'+error.message,'error'); return; }
+      const kw=kwOf(team);
+      const { error } = await supabase.rpc('funv_team_link_issue', kw ? { p_team:team, p_course_kw:kw } : { p_team:team });
+      if(error){ btn.disabled=false; lkMsg((again?'重新產生':'產生')+'失敗：'+error.message+(kw&&/p_course_kw|function/.test(error.message)?'\n（依課程連結要先在 Supabase 執行 2026-10-30_funv_team_course.sql）':''),'error'); return; }
       lkMsg(again
         ? `✓ 已重新產生「${team}」的連結，舊連結已經失效。\n已經開通的人照樣看得到；要停權請到下面清單按「解除」。`
         : `✓ 已產生「${team}」的連結，按「複製」貼給負責人。`, 'ok');

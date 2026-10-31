@@ -117,6 +117,14 @@
   ];
   const NO_TAG = { key:'none', name:'未標記', color:'#D1D5DB' };
   const TEAMS = ['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉','亭儀'];
+  /* 課程領導人：看的是「報名這門課」的人、不分邀請人；kw 跟 admin-funv.html COURSE_LIST 同一套，admin-admins.html 也有一份 */
+  const COURSE_TEAMS = [
+    { team:'緹林（泰式高床）',     kw:'初階泰式高床按摩' },
+    { team:'史麗仙（頌缽）',       kw:'缽動筋膜調理' },
+    { team:'芳香協會（精油按摩）', kw:'芳香精油' },
+    { team:'小可（牛角筋絡）',     kw:'牛角筋絡調理' }
+  ];
+  const courseKwOf = (team)=>{ const c = COURSE_TEAMS.find(x=>x.team===team); return c ? c.kw : ''; };
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const $ = (id)=>document.getElementById(id);
@@ -129,15 +137,22 @@
      用 hash 是因為本機 npx serve 會把 .html?query 301 掉並丟掉 query */
   const DEMO = (location.hash.match(/(?:^#|&)demo=(1|admin|none)(?:&|$)/) || [])[1] || '';
   const DEMO_ROWS = [
-    ['示範一','蘇姐團隊','green','2026-10-02T03:00:00Z','0900-000-001'], ['示範二','蘇姐團隊','none','2026-10-05T09:30:00Z',''],
-    ['示範三','蘇姐團隊','orange','2026-10-08T01:10:00Z','0900000003'], ['示範四','蘇姐團隊','red','2026-10-11T12:40:00Z','0900-000-004'],
-    ['示範五','珠珠姐','yellow','2026-10-03T05:20:00Z','0900-000-005'], ['示範六','珠珠姐','blue','2026-10-09T07:00:00Z','0900-000-006'],
-    ['示範七','羅總團隊','gray','2026-10-04T02:00:00Z','0900-000-007']
-  ].map(d=>({ name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
-  /* 示範的「我綁定的團隊」；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團，其他碼模擬失效 */
+    ['示範一','蘇姐團隊','green','2026-10-02T03:00:00Z','0900-000-001','緹林【初階泰式高床按摩】'], ['示範二','蘇姐團隊','none','2026-10-05T09:30:00Z','','小語【AI 短影音實戰班】'],
+    ['示範三','蘇姐團隊','orange','2026-10-08T01:10:00Z','0900000003','史麗仙【缽動筋膜調理】'], ['示範四','蘇姐團隊','red','2026-10-11T12:40:00Z','0900-000-004','小可【牛角筋絡調理】'],
+    ['示範五','珠珠姐','yellow','2026-10-03T05:20:00Z','0900-000-005','緹林【初階泰式高床按摩】'], ['示範六','珠珠姐','blue','2026-10-09T07:00:00Z','0900-000-006','芳香精油按摩【技能培訓班】'],
+    ['示範七','羅總團隊','gray','2026-10-04T02:00:00Z','0900-000-007','小可【牛角筋絡調理】'],
+    ['示範八','君蓉','none','2026-10-12T02:30:00Z','0900-000-008','緹林【初階泰式高床按摩】'], ['示範九','','green','2026-10-14T06:00:00Z','0900-000-009','芳香精油按摩【技能培訓班】'],
+    ['示範十','亭儀','yellow','2026-10-15T08:00:00Z','0900-000-010','史麗仙【缽動筋膜調理】'], ['示範十一','龎芸芸','none','2026-10-16T04:10:00Z','0900-000-011','華君【整體造型設計】']
+  ].map(d=>({ name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3], course:d[5] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+  /* 示範的「我綁定的團隊」；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團、demo-9～demo-12 模擬 COURSE_TEAMS 四位課程領導人，其他碼模擬失效 */
   const demoBound = DEMO === 'none' ? [] : ['蘇姐團隊','珠珠姐','林慧雯'];
-  const demoRoster = (team)=> team ? DEMO_ROWS.filter(r=>r.team===team)
-    : demoBound.flatMap(t=>{ const rs = DEMO_ROWS.filter(r=>r.team===t); return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t }]; });
+  const demoTeamRows = (t)=>{
+    const kw = courseKwOf(t);
+    const rs = DEMO_ROWS.filter(r=>kw ? r.course.indexOf(kw) >= 0 : r.team===t)
+      .map(r=>({ name:r.name, phone:r.phone, referrer:r.referrer, tag:r.tag, status:r.status, created_at:r.created_at, team:t, course_kw:kw||null }));
+    return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t, course_kw:kw||null }];
+  };
+  const demoRoster = (team)=> team ? demoTeamRows(team).filter(r=>r.created_at) : demoBound.flatMap(demoTeamRows);
 
   $('logout').onclick = async ()=>{ if(!DEMO) await supabase.auth.signOut(); location.href = SELF; };
 
@@ -178,7 +193,10 @@
     return n ? `<a class="tel" href="tel:${esc(n)}">${esc(s)}</a>` : (s ? esc(s) : '—');
   };
 
+  const kwOfRows = (team, rows)=>{ const r = rows.find(x=>x.course_kw); return r ? r.course_kw : courseKwOf(team); };
+
   function teamBlock(team, rows){
+    const kw = kwOfRows(team, rows);
     const people = rows.filter(r=>r.created_at);
     const counts = {};
     people.forEach(r=>{ const k = tagOf(r.tag).key; counts[k] = (counts[k]||0) + 1; });
@@ -193,17 +211,22 @@
         <div class="tg${t.key==='none'?' none':''}"><span class="tdot" style="background:${t.color}"></span>${esc(t.name)}</div>
         <div class="ref">推薦人：${esc(String(r.referrer||'').trim() || '—')}</div>
       </li>`;
-    }).join('')}</ul>` : `<div class="list"><div class="empty">這個團隊目前還沒有人報名。</div></div>`;
+    }).join('')}</ul>` : `<div class="list"><div class="empty">${kw ? '這門課目前還沒有人報名。' : '這個團隊目前還沒有人報名。'}</div></div>`;
     return `<section class="team">
-      <h2 class="team-h"><span class="bar"></span>${esc(team)}<span class="n">${people.length} 人</span></h2>
+      <h2 class="team-h"><span class="bar"></span>${kw ? `${esc(team)} 的學員名單（依課程）` : esc(team)}<span class="n">${people.length} 人</span></h2>
+      ${kw ? `<div class="sum">報名課程有「${esc(kw)}」的學員都在這裡，不分邀請人</div>` : ''}
       ${sum ? `<div class="sum">${sum}</div>` : ''}
       ${list}
     </section>`;
   }
 
-  function renderRoster(rows){
+  function renderRoster(rows, isAdmin){
     const order = [], byTeam = {};
     (rows||[]).forEach(r=>{ if(!byTeam[r.team]){ byTeam[r.team] = []; order.push(r.team); } byTeam[r.team].push(r); });
+    if(!isAdmin && order.length && order.every(t=>kwOfRows(t, byTeam[t]))){
+      document.querySelector('.wrap h1').textContent = '課程學員名單';
+      document.querySelector('.wrap .sub').textContent = '婦女再就業課程・課程領導人專用';
+    }
     return order.map(t=>teamBlock(t, byTeam[t])).join('');
   }
 
@@ -233,7 +256,8 @@
   }
   async function claim(t){
     if(DEMO){
-      const m = /^demo-([1-8])$/.exec(t), team = m ? TEAMS[m[1]-1] : '';
+      const m = /^demo-([1-9]|1[0-2])$/.exec(t), n = m ? +m[1] : 0;
+      const team = n >= 9 ? COURSE_TEAMS[n-9].team : n ? TEAMS[n-1] : '';
       if(!team) return { data:null, error:{ message:'這個連結已經失效或不完整，請向 Sky 老師要新的連結' } };
       if(DEMO !== 'admin' && !demoBound.includes(team)) demoBound.push(team);
       return { data:team, error:null };
@@ -244,7 +268,7 @@
   function adminBar(){
     return `<div class="adm">
       <div><label for="selTeam">管理員：看任一團隊</label>
-        <select id="selTeam"><option value="">我綁定的團隊</option>${TEAMS.map(t=>`<option>${esc(t)}</option>`).join('')}<option value="__other">其他（自填）</option></select></div>
+        <select id="selTeam"><option value="">我綁定的團隊</option>${TEAMS.map(t=>`<option>${esc(t)}</option>`).join('')}<optgroup label="課程領導人（依課程）">${COURSE_TEAMS.map(c=>`<option>${esc(c.team)}</option>`).join('')}</optgroup><option value="__other">其他（自填）</option></select></div>
       <div id="otherWrap" style="display:none;"><label for="inTeam">團隊名（跟報名表邀請人一字不差）</label><input id="inTeam" type="text"></div>
       <button class="go" id="btnTeam">查看</button>
     </div><div id="rosterBox"></div>`;
@@ -268,7 +292,7 @@
           </div>`;
       return;
     }
-    box.innerHTML = renderRoster(data);
+    box.innerHTML = renderRoster(data, isAdmin);
   }
 
   (async ()=>{
@@ -313,7 +337,7 @@
       loadInto($('rosterBox'), team, true, memberNo);
     };
     if(claimed){
-      if(TEAMS.includes(claimed)) sel.value = claimed;
+      if(TEAMS.includes(claimed) || courseKwOf(claimed)) sel.value = claimed;
       else { sel.value = '__other'; $('otherWrap').style.display = ''; $('inTeam').value = claimed; }
     }
     await loadInto($('rosterBox'), claimed, true, memberNo);
