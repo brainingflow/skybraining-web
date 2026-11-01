@@ -26,7 +26,7 @@
 - [免費體驗課「10 倍聯想力」](https://skybraining.com/free.html)：0 元，註冊會員就能看
 - [心智圖免費課](https://skybraining.com/mindmap-free.html)：0 元，高雄初階班心智圖教學簡報前 58 頁（大腦怎麼記東西、大師的筆記、六大規則與五個步驟），用 Gmail 登入就能看
 - [所有課程](https://skybraining.com/courses.html)：課程一覽
-- [高雄心智圖・記憶力課程總覽](https://skybraining.com/kaohsiung.html)：高雄實體小班的完整介紹、常見問題與高雄街頭實測影片
+- [高雄心智圖・記憶力課程總覽](https://skybraining.com/kaohsiung.html)：高雄心智圖與記憶力實體小班（初階、進階兩階段，10 歲以上），常見問題與高雄街頭實測影片
 - [實戰見證](https://skybraining.com/testimonials.html)：家長、學員與高雄街頭實測影片
 
 ## 退費政策
@@ -70,6 +70,7 @@
 - [國小記憶力訓練方法：75 篇兒童實驗找出的三種做法](https://skybraining.com/article-elementary-memory-training.html)：分開幾天學、闔上書考自己、記的時候多開幾條路
 
 ## 頂尖論文期刊（研究解讀，每篇附原始出處）
+- [頂尖論文期刊：學習與記憶研究白話版](https://skybraining.com/learning.html)：16 篇學習與記憶研究的白話版總覽
 - [考前複習怎麼排？十種讀書方法裡證據最強的兩種](https://skybraining.com/learn-study-strategies.html)：本單元入口文，Dunlosky 2013 年十種讀書方法評比，證據最強的是練習測驗與分散練習
 - [主動學習比聽講累？哈佛的一項研究發現：學得多，卻覺得學得少](https://skybraining.com/learn-active-learning.html)：2019 年 PNAS 哈佛大學物理系研究，測驗分數與學生自評走向相反
 - [你家孩子查資料後就說「我懂了」？耶魯的一項研究發現，查過容易高估自己](https://skybraining.com/learn-search-illusion.html)：2015 年 Journal of Experimental Psychology: General 耶魯大學九個實驗
