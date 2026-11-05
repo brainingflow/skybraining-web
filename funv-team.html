@@ -117,11 +117,12 @@
   ];
   const NO_TAG = { key:'none', name:'未標記', color:'#D1D5DB' };
   const TEAMS = ['蘇姐團隊','珠珠姐','羅總團隊','龎芸芸','林慧雯','美莉記者團隊','蕙禎團隊','君蓉','亭儀'];
-  /* 課程領導人：看的是「報名這門課」的人、不分邀請人；kw 跟 admin-funv.html COURSE_LIST 同一套，admin-admins.html 也有一份 */
+  /* 課程領導人：看的是「報名這門課」的人、不分邀請人；kw 跟 admin-funv.html COURSE_LIST 同一套，admin-admins.html 也有一份。
+     kw 可用 | 放多門課，但 DB 端要先跑 2026-11-05_cupping_assoc_team_kw.sql，不然帶 | 的連結名單會是 0 人 */
   const COURSE_TEAMS = [
     { team:'緹林（泰式高床）',     kw:'初階泰式高床按摩' },
     { team:'史麗仙（頌缽）',       kw:'缽動筋膜調理' },
-    { team:'芳香協會（精油按摩）', kw:'芳香精油|協會【溫罐調理' }, /* 多門課用 | 分隔；DB 端比對要先跑 2026-11-05_cupping_assoc_team_kw.sql */
+    { team:'芳香協會（精油按摩）', kw:'芳香精油' }, /* 老闆 11/05 定：芳香與溫罐名單分開 */
     { team:'小可（牛角筋絡）',     kw:'牛角筋絡調理' }
   ];
   const courseKwOf = (team)=>{ const c = COURSE_TEAMS.find(x=>x.team===team); return c ? c.kw : ''; };
