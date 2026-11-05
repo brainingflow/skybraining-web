@@ -79,6 +79,7 @@
 .f:last-child{margin-bottom:0;}
 .f .q{display:block;font-weight:700;font-size:16.5px;color:var(--indigo);line-height:1.65;margin-bottom:6px;}
 .f .req{color:#d7263d;margin-left:5px;}
+.f .qno{display:block;font-size:14px;font-weight:700;color:#d7263d;line-height:1.4;margin-bottom:2px;}
 .f .hint{font-size:16px;color:var(--ink-soft);line-height:1.8;margin:0 0 9px;}
 .f input[type=text],.f input[type=tel],.f input[type=email],.f input[type=date],.f input[type=month],.f textarea{
   display:block;width:100%;min-height:52px;font-family:var(--sans);font-size:16px;color:var(--ink);line-height:1.7;
@@ -643,6 +644,18 @@ fieldset.f legend{padding:0;}
   var picked = { front:null, back:null };
   var busy = {}, fileErr = {};
   var PAGE = location.pathname.replace(/^\//, '') || 'index.html';
+  var qNo = 0;
+
+  /* 題號由程式依序編，增減欄位不會錯號；固定值的課程徽章沒有 .q，不算題目 */
+  [].forEach.call(form.querySelectorAll('.f'), function(f){
+    var q = [].filter.call(f.children, function(c){ return c.classList.contains('q'); })[0];
+    if(!q) return;
+    var no = document.createElement('span');
+    no.className = 'qno';
+    no.textContent = '問題' + (++qNo);
+    q.insertBefore(document.createTextNode(' '), q.firstChild);
+    q.insertBefore(no, q.firstChild);
+  });
 
   /* ── 步驟切換 ── */
   function showStep(n){
