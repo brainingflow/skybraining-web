@@ -121,10 +121,12 @@
   const COURSE_TEAMS = [
     { team:'緹林（泰式高床）',     kw:'初階泰式高床按摩' },
     { team:'史麗仙（頌缽）',       kw:'缽動筋膜調理' },
-    { team:'芳香協會（精油按摩）', kw:'芳香精油' },
+    { team:'芳香協會（精油按摩）', kw:'芳香精油|協會【溫罐調理' }, /* 多門課用 | 分隔；DB 端比對要先跑 2026-11-05_cupping_assoc_team_kw.sql */
     { team:'小可（牛角筋絡）',     kw:'牛角筋絡調理' }
   ];
   const courseKwOf = (team)=>{ const c = COURSE_TEAMS.find(x=>x.team===team); return c ? c.kw : ''; };
+  const kwHit = (course, kw)=>String(kw||'').split('|').some(k=>k && String(course||'').indexOf(k) >= 0);
+  const kwText = (kw)=>String(kw||'').split('|').filter(Boolean).map(k=>'「'+esc(k)+'」').join('或');
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
   const $ = (id)=>document.getElementById(id);
@@ -142,13 +144,14 @@
     ['示範五','珠珠姐','yellow','2026-10-03T05:20:00Z','0900-000-005','緹林【初階泰式高床按摩】'], ['示範六','珠珠姐','blue','2026-10-09T07:00:00Z','0900-000-006','芳香精油按摩【技能培訓班】'],
     ['示範七','羅總團隊','gray','2026-10-04T02:00:00Z','0900-000-007','小可【牛角筋絡調理】'],
     ['示範八','君蓉','none','2026-10-12T02:30:00Z','0900-000-008','緹林【初階泰式高床按摩】'], ['示範九','','green','2026-10-14T06:00:00Z','0900-000-009','芳香精油按摩【技能培訓班】'],
-    ['示範十','亭儀','yellow','2026-10-15T08:00:00Z','0900-000-010','史麗仙【缽動筋膜調理】'], ['示範十一','龎芸芸','none','2026-10-16T04:10:00Z','0900-000-011','華君【整體造型設計】']
+    ['示範十','亭儀','yellow','2026-10-15T08:00:00Z','0900-000-010','史麗仙【缽動筋膜調理】'], ['示範十一','龎芸芸','none','2026-10-16T04:10:00Z','0900-000-011','華君【整體造型設計】'],
+    ['示範十二','','none','2026-10-17T03:00:00Z','0900-000-012','台灣全人芳香身心養生協會【溫罐調理實戰班】']
   ].map(d=>({ name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3], course:d[5] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
   /* 示範的「我綁定的團隊」；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團、demo-9～demo-12 模擬 COURSE_TEAMS 四位課程領導人，其他碼模擬失效 */
   const demoBound = DEMO === 'none' ? [] : ['蘇姐團隊','珠珠姐','林慧雯'];
   const demoTeamRows = (t)=>{
     const kw = courseKwOf(t);
-    const rs = DEMO_ROWS.filter(r=>kw ? r.course.indexOf(kw) >= 0 : r.team===t)
+    const rs = DEMO_ROWS.filter(r=>kw ? kwHit(r.course, kw) : r.team===t)
       .map(r=>({ name:r.name, phone:r.phone, referrer:r.referrer, tag:r.tag, status:r.status, created_at:r.created_at, team:t, course_kw:kw||null }));
     return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t, course_kw:kw||null }];
   };
@@ -214,7 +217,7 @@
     }).join('')}</ul>` : `<div class="list"><div class="empty">${kw ? '這門課目前還沒有人報名。' : '這個團隊目前還沒有人報名。'}</div></div>`;
     return `<section class="team">
       <h2 class="team-h"><span class="bar"></span>${kw ? `${esc(team)} 的學員名單（依課程）` : esc(team)}<span class="n">${people.length} 人</span></h2>
-      ${kw ? `<div class="sum">報名課程有「${esc(kw)}」的學員都在這裡，不分邀請人</div>` : ''}
+      ${kw ? `<div class="sum">報名課程有${kwText(kw)}的學員都在這裡，不分邀請人</div>` : ''}
       ${sum ? `<div class="sum">${sum}</div>` : ''}
       ${list}
     </section>`;
