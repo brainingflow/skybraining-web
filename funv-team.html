@@ -36,11 +36,11 @@
   a{color:var(--teal-deep);text-decoration:none;}
   h1,h2,h3,.round{font-family:var(--round);}
   nav{background:rgba(250,249,245,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:20;}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;max-width:760px;margin:0 auto;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;max-width:1180px;margin:0 auto;}
   .brand{font-family:var(--round);font-weight:800;font-size:26px;line-height:1.08;color:var(--indigo);letter-spacing:1px;}
   .wm-accent{background:linear-gradient(120deg,#FFB020,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .out{font-family:var(--round);font-weight:700;font-size:13.5px;color:var(--ink-soft);background:#fff;border:1.5px solid var(--hair);border-radius:30px;padding:6px 14px;cursor:pointer;}
-  .wrap{max-width:760px;margin:0 auto;padding:22px 16px 70px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 16px 70px;}
   h1{font-weight:800;font-size:clamp(24px,6vw,32px);color:var(--indigo);line-height:1.3;}
   .sub{color:var(--ink-soft);font-size:14.5px;margin-top:4px;}
   .state{padding:60px 0;text-align:center;color:var(--ink-soft);}
@@ -81,6 +81,58 @@
   .ph{font-size:13.5px;color:var(--ink-soft);}
   .tel{font-weight:700;color:var(--teal-deep);white-space:nowrap;}
   @media (max-width:600px){ .tel{display:inline-block;padding:2px 12px;border-radius:16px;background:rgba(22,176,168,.12);} }
+  /* 團隊分頁：一次只看一團 */
+  .ttabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+  .ttab{display:inline-flex;align-items:center;gap:7px;font-family:var(--round);font-weight:700;font-size:14.5px;color:var(--ink-soft);background:#fff;border:1.5px solid var(--hair);border-radius:24px;padding:8px 14px;min-height:40px;cursor:pointer;}
+  .ttab .n{font-size:12px;font-weight:800;color:var(--teal-deep);background:rgba(22,176,168,.12);border-radius:12px;padding:0 8px;}
+  .ttab.on{color:#fff;background:linear-gradient(120deg,#FFB020,#FF8A3D);border-color:transparent;}
+  .ttab.on .n{color:#fff;background:rgba(255,255,255,.28);}
+  /* 名單表：一位學生一列，左到右 */
+  .tbl-wrap{margin-top:12px;background:#fff;border:1px solid var(--hair);border-radius:14px;box-shadow:var(--shadow-sm);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .stb-tb{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;min-width:980px;}
+  .stb-tb th{position:sticky;top:0;background:#F4F3FA;color:var(--ink-soft);font-weight:700;font-size:12.5px;text-align:left;padding:10px;white-space:nowrap;border-bottom:1px solid var(--hair);}
+  .stb-tb td{padding:8px 10px;border-bottom:1px solid var(--hair);vertical-align:middle;background:#fff;}
+  .stb-tb tr.zb>td{background:#F6F7F9;}
+  .stb-tb tr.rd>td{background:#FDECEC;}
+  .stb-tb tbody tr:last-child>td{border-bottom:none;}
+  .stb-tb .c-no{width:46px;min-width:46px;max-width:46px;padding-left:4px;padding-right:4px;text-align:center;color:var(--ink-soft);font-size:13px;}
+  .stb-tb td.c-nm{font-weight:700;font-size:15px;color:var(--ink);white-space:nowrap;}
+  /* 手機橫捲時編號＋姓名釘在左邊 */
+  .stb-tb .c-no{position:sticky;left:0;z-index:1;}
+  .stb-tb .c-nm{position:sticky;left:46px;z-index:1;box-shadow:inset -1px 0 0 var(--hair);}
+  .stb-tb th.c-no,.stb-tb th.c-nm{z-index:2;}
+  .stb-tb td.c-ph{white-space:nowrap;}
+  .stb-tb td.c-st{font-size:12.5px;color:var(--ink-soft);min-width:13em;}
+  .stb-tb td.c-st .d{white-space:nowrap;}
+  .stb-tb td.c-rf{font-size:13px;color:var(--ink-soft);min-width:6em;max-width:9em;}
+  .rf{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+  .rf.full{white-space:normal;overflow:visible;}
+  .stb{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:10px;background:rgba(124,108,240,.14);color:#4B37D8;white-space:nowrap;}
+  .stb.new{background:rgba(255,176,32,.18);color:#a86b00;}
+  .crs{display:inline-block;font-size:12.5px;font-weight:700;color:#c85f1a;background:rgba(255,138,61,.13);border-radius:10px;padding:1px 9px;margin:0 6px 3px 0;white-space:nowrap;cursor:help;}
+  .crs:focus{outline:2px solid var(--orange);}
+  .crs.full{white-space:normal;}
+  .tg{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--ink);white-space:nowrap;}
+  /* 16px 以下 iPhone 點輸入框會自動放大整頁 */
+  .stb-tb input.e-cd,.stb-tb textarea.e-ln{display:block;width:100%;font-family:var(--sans);font-size:16px;line-height:1.45;color:var(--ink);background:#fff;border:1.5px solid var(--hair);border-radius:9px;padding:6px 9px;}
+  .stb-tb td.c-cd{width:9.5em;min-width:8em;}
+  .stb-tb td.c-ln{min-width:16em;}
+  .stb-tb textarea.e-ln{min-height:38px;height:38px;resize:vertical;overflow:hidden;}
+  .stb-tb input.e-cd:focus,.stb-tb textarea.e-ln:focus{outline:none;border-color:var(--orange);}
+  .stb-tb tr.dirty input.e-cd,.stb-tb tr.dirty textarea.e-ln{border-color:rgba(255,138,61,.6);}
+  .e-msg{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin-top:2px;}
+  .e-msg:empty{display:none;}
+  .e-msg.ok{color:var(--teal-deep);}
+  .e-msg.err{color:var(--err);font-weight:500;}
+  .stb-tb .c-pd{width:5em;text-align:center;}
+  .paid{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1.5px solid var(--hair);border-radius:12px;background:#fff;cursor:pointer;}
+  .paid input{width:22px;height:22px;margin:0;accent-color:#2FA84F;cursor:pointer;}
+  .paid.on{border-color:#2FA84F;background:rgba(47,168,79,.12);}
+  .p-msg{display:block;font-size:12px;font-weight:700;color:var(--teal-deep);margin-top:2px;}
+  .p-msg:empty{display:none;}
+  .p-msg.err{color:var(--err);font-weight:500;min-width:8em;text-align:left;}
+  .swipe{display:none;}
+  @media (max-width:600px){ .stb-tb{font-size:13.5px;} .swipe{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:10px;text-align:right;} }
 </style>
 </head>
 <body>
@@ -124,7 +176,7 @@
     { team:'史麗仙（頌缽）',       kw:'缽動筋膜調理' },
     { team:'芳香協會（精油按摩）', kw:'芳香精油' }, /* 老闆 11/05 定：芳香與溫罐名單分開 */
     { team:'小可（牛角筋絡）',     kw:'牛角筋絡調理' },
-    { team:'張玉諳（溫罐調理）',   kw:'溫罐調理實戰班' } /* team 字串要跟 DB funv_team_links 那列一字不差，既有 token 才對得上；舊補助班與協會班都含這串 */
+    { team:'張玉諳（溫罐調理）',   kw:'溫罐調理實戰班' } /* team 字串要跟 DB funv_team_links 那列一字不差，既有 token 才對得上；老闆 11/11 定舊補助班併入協會班，這串兩種都涵蓋 */
   ];
   const courseKwOf = (team)=>{ const c = COURSE_TEAMS.find(x=>x.team===team); return c ? c.kw : ''; };
   const kwHit = (course, kw)=>String(kw||'').split('|').some(k=>k && String(course||'').indexOf(k) >= 0);
@@ -140,6 +192,7 @@
   /* #demo=1（負責人畫面）、#demo=admin（管理員畫面）、#demo=none（沒開通畫面）：不登入、不打 Supabase，資料全是假的。
      用 hash 是因為本機 npx serve 會把 .html?query 301 掉並丟掉 query */
   const DEMO = (location.hash.match(/(?:^#|&)demo=(1|admin|none)(?:&|$)/) || [])[1] || '';
+  const DEMO_CLASS = { '示範一':['12/12','（示範）已加 LINE，提醒帶筆記本'], '示範三':['11/21-22',''], '示範五':['12/12','（示範）週六要接小孩，可能晚到'], '示範六':['1/5',''] };
   const DEMO_ROWS = [
     ['示範一','蘇姐團隊','green','2026-10-02T03:00:00Z','0900-000-001','緹林【初階泰式高床按摩】'], ['示範二','蘇姐團隊','none','2026-10-05T09:30:00Z','','小語【AI 短影音實戰班】'],
     ['示範三','蘇姐團隊','orange','2026-10-08T01:10:00Z','0900000003','史麗仙【缽動筋膜調理】'], ['示範四','蘇姐團隊','red','2026-10-11T12:40:00Z','0900-000-004','小可【牛角筋絡調理】'],
@@ -148,15 +201,21 @@
     ['示範八','君蓉','none','2026-10-12T02:30:00Z','0900-000-008','緹林【初階泰式高床按摩】'], ['示範九','','green','2026-10-14T06:00:00Z','0900-000-009','芳香精油按摩【技能培訓班】'],
     ['示範十','亭儀','yellow','2026-10-15T08:00:00Z','0900-000-010','史麗仙【缽動筋膜調理】'], ['示範十一','龎芸芸','none','2026-10-16T04:10:00Z','0900-000-011','華君【整體造型設計】'],
     ['示範十二','','none','2026-10-17T03:00:00Z','0900-000-012','台灣全人芳香身心養生協會【溫罐調理實戰班】'],
-    ['示範十三','','none','2026-10-13T05:00:00Z','0900-000-013','張玉諳【溫罐調理實戰班】']
-  ].map(d=>({ name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3], course:d[5] })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
-  /* 示範的「我綁定的團隊」；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團、demo-9～demo-13 模擬 COURSE_TEAMS 五位課程領導人，其他碼模擬失效 */
-  const demoBound = DEMO === 'none' ? [] : ['蘇姐團隊','珠珠姐','林慧雯'];
+    ['示範十三','','none','2026-10-13T05:00:00Z','0900-000-013','台灣全人芳香身心養生協會【溫罐調理實戰班】'],
+    ['示範十四','蘇姐團隊','none','2026-10-18T02:00:00Z','0900-000-014','小語【AI 短影音實戰班】'], ['示範十五','蘇姐團隊','gray','2026-10-19T03:00:00Z','0900-000-015','小語【AI 短影音實戰班】'],
+    ['示範十六','蘇姐團隊','none','2026-10-20T04:00:00Z','0900-000-016','Sky【心智圖講師班】']
+  ].map((d,i)=>({ id:'demo-'+String(i+1).padStart(4,'0'), name:d[0], phone:d[4], referrer:d[1], team:d[1], tag:d[2], status:'new', created_at:d[3], course:d[5],
+    class_date:DEMO_CLASS[d[0]] ? DEMO_CLASS[d[0]][0] : null, leader_note:DEMO_CLASS[d[0]] ? DEMO_CLASS[d[0]][1] || null : null,
+    leader_note_updated_at:DEMO_CLASS[d[0]] ? '2026-11-09T06:30:00Z' : null, leader_paid:d[0]==='示範一'||d[0]==='示範五' })).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+  /* 示範的「我綁定的團隊」（沒帶 ?t= 時＝管多團／多門課的人）；網址帶 ?t=demo-1～demo-8 會模擬開通 TEAMS 第 1～8 團、demo-9～demo-13 模擬 COURSE_TEAMS 五位課程領導人，其他碼模擬失效 */
+  const demoBound = DEMO === 'none' ? [] : ['蘇姐團隊','珠珠姐','小可（牛角筋絡）','緹林（泰式高床）'];
   const demoTeamRows = (t)=>{
     const kw = courseKwOf(t);
     const rs = DEMO_ROWS.filter(r=>kw ? kwHit(r.course, kw) : r.team===t)
-      .map(r=>({ name:r.name, phone:r.phone, referrer:r.referrer, tag:r.tag, status:r.status, created_at:r.created_at, team:t, course_kw:kw||null }));
-    return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t, course_kw:kw||null }];
+      .map(r=>({ name:r.name, phone:r.phone, referrer:r.referrer, tag:r.tag, status:r.status, created_at:r.created_at, team:t, course_kw:kw||null,
+                 id:r.id, class_date:r.class_date, leader_note:r.leader_note, leader_note_updated_at:r.leader_note_updated_at, leader_paid:r.leader_paid, course_choice:r.course }));
+    return rs.length ? rs : [{ name:null, phone:null, referrer:null, tag:null, status:null, created_at:null, team:t, course_kw:kw||null,
+                               id:null, class_date:null, leader_note:null, leader_note_updated_at:null, leader_paid:null, course_choice:null }];
   };
   const demoRoster = (team)=> team ? demoTeamRows(team).filter(r=>r.created_at) : demoBound.flatMap(demoTeamRows);
 
@@ -201,31 +260,162 @@
 
   const kwOfRows = (team, rows)=>{ const r = rows.find(x=>x.course_kw); return r ? r.course_kw : courseKwOf(team); };
 
-  function teamBlock(team, rows){
+  /* 上課日期、備註、已收款：資料庫還沒跑 2026-11-10 那份 SQL 時名單不會帶 id／leader_paid，這幾欄就不顯示 */
+  async function saveInfo(id, cd, ln){
+    if(DEMO){
+      await new Promise(ok=>setTimeout(ok, 350));
+      if(ln.indexOf('測試失敗') >= 0) return { data:null, error:{ message:'（示範）模擬存檔失敗：網路斷線' } };
+      const d = DEMO_ROWS.find(x=>x.id===id);
+      if(!d) return { data:null, error:{ message:'沒有權限：這位學員不在你的名單裡' } };
+      d.class_date = cd || null; d.leader_note = ln || null; d.leader_note_updated_at = new Date().toISOString();
+      return { data:[{ id, class_date:d.class_date, leader_note:d.leader_note, leader_note_updated_at:d.leader_note_updated_at }], error:null };
+    }
+    return supabase.rpc('funv_team_set_class_info', { p_id:id, p_class_date:cd, p_leader_note:ln });
+  }
+  async function setPaid(id, paid, tr){
+    if(DEMO){
+      await new Promise(ok=>setTimeout(ok, 350));
+      const t = tr && tr.querySelector('.e-ln');
+      if(t && t.value.indexOf('測試失敗') >= 0) return { data:null, error:{ message:'（示範）模擬存檔失敗：網路斷線' } };
+      const d = DEMO_ROWS.find(x=>x.id===id);
+      if(!d) return { data:null, error:{ message:'沒有權限：這位學員不在你的名單裡' } };
+      d.leader_paid = paid;
+      return { data:[{ id, leader_paid:paid, leader_paid_at:new Date().toISOString() }], error:null };
+    }
+    return supabase.rpc('funv_team_set_paid', { p_id:id, p_paid:paid });
+  }
+  const friendly = (e)=>{
+    const m = String((e && e.message) || e || '');
+    if(/funv_team_set_class_info|funv_team_set_paid|schema cache|Could not find the function/i.test(m)) return '這個功能還沒開通，請告訴 Sky 老師';
+    if(/JWT|session/i.test(m)) return '登入過期了，請重新整理頁面再登入';
+    if(/Failed to fetch|NetworkError|Load failed|network/i.test(m)) return '網路不穩，請再改一次';
+    return m || '沒有回應，請再改一次';
+  };
+  const setMsg = (el, txt, cls)=>{ if(!el) return; el.className = 'e-msg' + (cls ? ' ' + cls : ''); el.textContent = txt; };
+  const sameRows = (id)=>[...document.querySelectorAll('tr.st')].filter(x=>x.getAttribute('data-id') === id);
+  const rowOf = (tr)=>{ const id = tr.getAttribute('data-id'); return { id, cd:tr.querySelector('.e-cd'), ln:tr.querySelector('.e-ln'), msg:tr.querySelector('.e-msg') }; };
+
+  /* 上課日期、備註：離開欄位（失焦）且內容有變就自動存 */
+  async function saveInfoRow(tr){
+    const r = rowOf(tr); if(!r.cd || !r.ln) return;
+    const cd = r.cd.value.trim(), ln = r.ln.value.trim();
+    if(cd === (r.cd.getAttribute('data-saved')||'') && ln === (r.ln.getAttribute('data-saved')||'')){ tr.classList.remove('dirty'); setMsg(r.msg, '', ''); return; }
+    setMsg(r.msg, '儲存中…', '');
+    let res;
+    try{ res = await saveInfo(r.id, cd, ln); }catch(e){ res = { data:null, error:e }; }
+    const row = res && !res.error ? (Array.isArray(res.data) ? res.data[0] : res.data) : null;
+    if(!row){ setMsg(r.msg, '存不起來：' + friendly(res && res.error), 'err'); return; }
+    /* 同一位學員可能同時在團隊與課程兩個分頁，兩邊一起更新 */
+    sameRows(r.id).forEach(x=>{
+      const o = rowOf(x);
+      /* 存的期間使用者可能已經在這列打別的字，正在打的那列不覆蓋 */
+      if(x !== tr){ o.cd.value = row.class_date || ''; o.ln.value = row.leader_note || ''; }
+      o.cd.setAttribute('data-saved', row.class_date || ''); o.ln.setAttribute('data-saved', row.leader_note || '');
+      const still = o.cd.value.trim() !== (row.class_date || '') || o.ln.value.trim() !== (row.leader_note || '');
+      x.classList.toggle('dirty', still);
+      setMsg(o.msg, still ? '還沒存（離開欄位就存）' : (DEMO ? '✓ 已存（示範）' : '✓ 已存'), still ? '' : 'ok');
+    });
+  }
+  /* 已收款：勾／取消就存 */
+  async function savePaid(cb){
+    const tr = cb.closest('tr.st'), id = tr.getAttribute('data-id'), want = cb.checked, msg = tr.querySelector('.p-msg');
+    cb.disabled = true; msg.className = 'p-msg'; msg.textContent = '儲存中…';
+    let res;
+    try{ res = await setPaid(id, want, tr); }catch(e){ res = { data:null, error:e }; }
+    cb.disabled = false;
+    const row = res && !res.error ? (Array.isArray(res.data) ? res.data[0] : res.data) : null;
+    if(!row){ cb.checked = !want; msg.className = 'p-msg err'; msg.textContent = '存不起來：' + friendly(res && res.error); return; }
+    sameRows(id).forEach(x=>{
+      const c = x.querySelector('.e-paid'); c.checked = !!row.leader_paid;
+      x.querySelector('.paid').classList.toggle('on', !!row.leader_paid);
+      const m = x.querySelector('.p-msg'); m.className = 'p-msg'; m.textContent = '✓';
+    });
+  }
+  function bindEditors(box){
+    box.onclick = (e)=>{
+      const rf = e.target.closest('.rf');
+      if(rf){ rf.classList.toggle('full'); return; }
+      const cr = e.target.closest('.crs');
+      if(cr){ const full = cr.getAttribute('title'); const sh = cr.getAttribute('data-short') || cr.textContent;
+        if(cr.classList.toggle('full')){ cr.setAttribute('data-short', sh); cr.textContent = full; } else cr.textContent = cr.getAttribute('data-short');
+        return; }
+      const tb = e.target.closest('.ttab'); if(!tb) return;
+      const k = tb.getAttribute('data-k');
+      box.querySelectorAll('.ttab').forEach(b=>{ const on = b === tb; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
+      box.querySelectorAll('.tpanel').forEach(p=>{ p.hidden = p.getAttribute('data-k') !== k; });
+      fitNotes(box);
+    };
+    box.onchange = (e)=>{ if(e.target.classList.contains('e-paid')) savePaid(e.target); };
+    box.oninput = (e)=>{
+      const tr = e.target.closest('tr.st'); if(!tr || e.target.classList.contains('e-paid')) return;
+      tr.classList.add('dirty'); setMsg(tr.querySelector('.e-msg'), '還沒存（離開欄位就存）', '');
+      if(e.target.classList.contains('e-ln')) fitNote(e.target);
+    };
+    /* 管理員每按一次「查看」都會再進來一次，focusout 只能用 addEventListener，所以記號擋重複綁 */
+    if(box.getAttribute('data-bound')) return;
+    box.setAttribute('data-bound', '1');
+    box.addEventListener('focusout', (e)=>{
+      if(!e.target.classList || !(e.target.classList.contains('e-cd') || e.target.classList.contains('e-ln'))) return;
+      saveInfoRow(e.target.closest('tr.st'));
+    });
+  }
+  /* 備註依內容自動長高，長備註整段看得到 */
+  const fitNote = (t)=>{ if(!t.offsetParent) return; t.style.height = 'auto'; t.style.height = Math.max(38, t.scrollHeight + 3) + 'px'; };
+  const fitNotes = (root)=>root.querySelectorAll('textarea.e-ln').forEach(fitNote);
+  window.addEventListener('beforeunload', (e)=>{ if(document.querySelector('tr.st.dirty')){ e.preventDefault(); e.returnValue = ''; } });
+
+  const ST_NAME = { 'new':'新報名' };
+  /* 課名短名：取【】裡的課名，去掉「實戰班／培訓班／調理」這類尾巴；【】裡只剩班別就改用【】前面那段。全名放 title，滑過或長按看 */
+  const SUFFIX = /(實戰班|技能培訓班|培訓班|技巧班|實作班|講師班|講座|班)$/;
+  function courseShort(full){
+    const m = /^(.*?)【([^】]*)】/.exec(full);
+    if(!m) return full;
+    let t = m[2].replace(SUFFIX, '').replace(/調理$/, '').trim();
+    if(!t) t = m[1].trim();
+    return t || full;
+  }
+  const courseChips = (c)=>{
+    if(typeof c !== 'string' || !c.trim()) return '';
+    return c.split(/[、,，]/).map(x=>x.trim()).filter(Boolean)
+      .map(x=>`<span class="crs" title="${esc(x)}" tabindex="0">${esc(courseShort(x))}</span>`).join('');
+  };
+  const stBadge = (s)=>{ const v = s || 'new'; return `<span class="stb${v==='new'?' new':''}">${esc(ST_NAME[v] || v)}</span>`; };
+  function stuRow(r, i){
+    const t = tagOf(r.tag), edit = !!r.id, paidOk = edit && typeof r.leader_paid === 'boolean';
+    /* 跟學生管理系統一樣：每 5 人一組交替淡灰，不符資格／退出整列淡紅 */
+    const cls = 'st' + (Math.floor(i/5) % 2 ? ' zb' : '') + (t.key === 'red' || t.key === 'gray' ? ' rd' : '');
+    return `<tr class="${cls}"${edit ? ` data-id="${esc(r.id)}"` : ''}>
+      <td class="c-no">${i+1}</td>
+      <td class="c-nm">${esc(r.name || '（沒填名字）')}</td>
+      <td class="c-ph">${telLink(r.phone)}</td>
+      <td class="c-st">${courseChips(r.course_choice)}<span class="d">${esc(fmtDay(r.created_at))}</span> ${stBadge(r.status)} <span class="tg${t.key==='none'?' none':''}"><span class="tdot" style="background:${t.color}"></span>${esc(t.name)}</span></td>
+      <td class="c-rf"><span class="rf" title="${esc(String(r.referrer||'').trim())}" tabindex="0">${esc(String(r.referrer||'').trim() || '—')}</span></td>
+      ${edit ? `<td class="c-cd"><input class="e-cd" type="text" maxlength="100" placeholder="例：12/12" aria-label="上課日期" value="${esc(r.class_date||'')}" data-saved="${esc(r.class_date||'')}"></td>
+      <td class="c-ln"><textarea class="e-ln" maxlength="500" rows="1" placeholder="聯絡狀況、上課提醒…" aria-label="備註" data-saved="${esc(r.leader_note||'')}">${esc(r.leader_note||'')}</textarea><span class="e-msg"></span></td>` : ''}
+      ${paidOk ? `<td class="c-pd"><label class="paid${r.leader_paid ? ' on' : ''}"><input type="checkbox" class="e-paid" aria-label="已收款"${r.leader_paid ? ' checked' : ''}></label><span class="p-msg"></span></td>` : ''}
+    </tr>`;
+  }
+  function teamPanel(team, rows, k, active){
     const kw = kwOfRows(team, rows);
     const people = rows.filter(r=>r.created_at);
+    const edit = people.some(r=>r.id), paidOk = people.some(r=>typeof r.leader_paid === 'boolean');
     const counts = {};
-    people.forEach(r=>{ const k = tagOf(r.tag).key; counts[k] = (counts[k]||0) + 1; });
+    people.forEach(r=>{ const kk = tagOf(r.tag).key; counts[kk] = (counts[kk]||0) + 1; });
     const sum = TAGS.concat([NO_TAG]).filter(t=>counts[t.key])
       .map(t=>`<span><span class="tdot" style="background:${t.color}"></span> ${esc(t.name)} ${counts[t.key]}</span>`).join('');
-    const list = people.length ? `<ul class="list">${people.map(r=>{
-      const t = tagOf(r.tag);
-      return `<li>
-        <div class="nm">${esc(r.name || '（沒填名字）')}</div>
-        <div class="dt">${esc(fmtDay(r.created_at))}</div>
-        <div class="ph">電話：${telLink(r.phone)}</div>
-        <div class="tg${t.key==='none'?' none':''}"><span class="tdot" style="background:${t.color}"></span>${esc(t.name)}</div>
-        <div class="ref">推薦人：${esc(String(r.referrer||'').trim() || '—')}</div>
-      </li>`;
-    }).join('')}</ul>` : `<div class="list"><div class="empty">${kw ? '這門課目前還沒有人報名。' : '這個團隊目前還沒有人報名。'}</div></div>`;
-    return `<section class="team">
+    const table = people.length ? `<div class="swipe">左右滑動，看上課日期、備註、已收款 →</div><div class="tbl-wrap"><table class="stb-tb">
+        <thead><tr><th class="c-no">編號</th><th class="c-nm">姓名</th><th>電話</th><th>報名情況</th><th>推薦人</th>${edit ? '<th>上課日期</th><th>備註</th>' : ''}${paidOk ? '<th class="c-pd">已收款</th>' : ''}</tr></thead>
+        <tbody>${people.map(stuRow).join('')}</tbody></table></div>`
+      : `<div class="list"><div class="empty">${kw ? '這門課目前還沒有人報名。' : '這個團隊目前還沒有人報名。'}</div></div>`;
+    return `<section class="team tpanel" data-k="${k}"${active ? '' : ' hidden'}>
       <h2 class="team-h"><span class="bar"></span>${kw ? `${esc(team)} 的學員名單（依課程）` : esc(team)}<span class="n">${people.length} 人</span></h2>
       ${kw ? `<div class="sum">報名課程有${kwText(kw)}的學員都在這裡，不分邀請人</div>` : ''}
       ${sum ? `<div class="sum">${sum}</div>` : ''}
-      ${list}
+      ${table}
     </section>`;
   }
 
+  /* 一次只看一個團隊（或一門課）；管好幾團的人用上面的分頁切換 */
   function renderRoster(rows, isAdmin){
     const order = [], byTeam = {};
     (rows||[]).forEach(r=>{ if(!byTeam[r.team]){ byTeam[r.team] = []; order.push(r.team); } byTeam[r.team].push(r); });
@@ -233,7 +423,12 @@
       document.querySelector('.wrap h1').textContent = '課程學員名單';
       document.querySelector('.wrap .sub').textContent = '婦女再就業課程・課程領導人專用';
     }
-    return order.map(t=>teamBlock(t, byTeam[t])).join('');
+    const canEdit = (rows||[]).some(r=>r.id);
+    const tabs = order.length > 1 ? `<div class="ttabs" role="tablist">${order.map((t,i)=>
+      `<button type="button" class="ttab${i ? '' : ' on'}" role="tab" aria-selected="${i ? 'false' : 'true'}" data-k="${i}">${esc(t)}<span class="n">${byTeam[t].filter(r=>r.created_at).length}</span></button>`).join('')}</div>` : '';
+    return tabs
+      + (canEdit ? '<div class="hush" style="margin-top:12px;">上課日期、備註填完離開欄位就自動存；已收款勾了就存。Sky 老師和看得到這位學員的負責人都看得到。</div>' : '')
+      + order.map((t,i)=>teamPanel(t, byTeam[t], i, i === 0)).join('');
   }
 
   async function roster(team){
@@ -265,7 +460,8 @@
       const m = /^demo-([1-9]|1[0-3])$/.exec(t), n = m ? +m[1] : 0;
       const team = n >= 9 ? COURSE_TEAMS[n-9].team : n ? TEAMS[n-1] : '';
       if(!team) return { data:null, error:{ message:'這個連結已經失效或不完整，請向 Sky 老師要新的連結' } };
-      if(DEMO !== 'admin' && !demoBound.includes(team)) demoBound.push(team);
+      /* 帶專屬連結進來＝只管這一團的團隊長，示範時只綁這一團 */
+      if(DEMO !== 'admin') demoBound.splice(0, demoBound.length, team);
       return { data:team, error:null };
     }
     return supabase.rpc('funv_team_claim', { p_token: t });
@@ -282,13 +478,14 @@
 
   async function loadInto(box, team, isAdmin, memberNo){
     box.innerHTML = '<div class="state"><div class="spin"></div>讀取名單中…</div>';
+    bindEditors(box);
     const { data, error } = await roster(team);
     if(error){
       box.innerHTML = `<div class="msg-err">讀取名單失敗：${esc(error.message)}<br><span style="font-size:12.5px;">請把這段訊息截圖給 Sky 老師。</span></div>`;
       return;
     }
     if(!data || !data.length){
-      if(team){ box.innerHTML = teamBlock(team, []); return; }
+      if(team){ box.innerHTML = teamPanel(team, [], 0, true); return; }
       box.innerHTML = isAdmin
         ? '<div class="card gate"><p>你的帳號沒有綁定團隊。用上面的選單挑一個團隊來看。</p></div>'
         : `<div class="card gate">
@@ -299,6 +496,7 @@
       return;
     }
     box.innerHTML = renderRoster(data, isAdmin);
+    fitNotes(box);
   }
 
   (async ()=>{
